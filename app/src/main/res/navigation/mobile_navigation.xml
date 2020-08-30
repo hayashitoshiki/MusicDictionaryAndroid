@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@+id/navigation_home">
+
+    <fragment
+        android:id="@+id/navigation_home"
+        android:name="com.example.musicdictionaryandroid.ui.home.HomeFragment"
+        android:label="@string/title_home"
+        tools:layout="@layout/fragment_home" >
+        <action
+            android:id="@+id/action_navigation_home_to_navigation_result"
+            app:destination="@id/navigation_result" />
+        <action
+            android:id="@+id/action_navigation_home_to_category_search"
+            app:destination="@id/categorySearchFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/categorySearchFragment"
+        android:name="com.example.musicdictionaryandroid.ui.home.CategorySearchFragment"
+        android:label="CategorySearchFragment"
+        tools:layout="@layout/fragment_category_search">
+        <action
+            android:id="@+id/action_category_search_to_navigation_result"
+            app:destination="@id/navigation_result" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_result"
+        android:name="com.example.musicdictionaryandroid.ui.home.ResultFragment"
+        android:label="ResultFragment"
+        tools:layout="@layout/fragment_result" >
+        <argument
+            android:name="data"
+            app:argType="com.example.musicdictionaryandroid.model.entity.ArtistsForm" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_mypage"
+        android:name="com.example.musicdictionaryandroid.ui.mypage.MyPageTopFragment"
+        android:label="@string/title_mypage"
+        tools:layout="@layout/fragment_mypage_top" >
+        <action
+            android:id="@+id/action_navigation_mypage_to_my_page_artist"
+            app:destination="@id/navigation_mypage_artist" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_mypage_artist"
+        android:name="com.example.musicdictionaryandroid.ui.mypage.MyPageArtistFragment"
+        android:label="MyPageArtistFragment"
+        tools:layout="@layout/fragment_mypage_artist_list">
+        <action
+            android:id="@+id/action_navigation_mypage_artist_to_myPageArtistAddFragment"
+            app:destination="@id/navigation_mypage_artist_add" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_mypage_artist_add"
+        android:name="com.example.musicdictionaryandroid.ui.mypage.MyPageArtistAddFragment"
+        android:label="MyPageArtistAddFragment"
+        tools:layout="@layout/fragment_mypage_artist_add">
+        <argument
+            android:name="data"
+            app:argType="com.example.musicdictionaryandroid.model.entity.ArtistsForm"
+            app:nullable="true" />
+    </fragment>
+
+
+</navigation>

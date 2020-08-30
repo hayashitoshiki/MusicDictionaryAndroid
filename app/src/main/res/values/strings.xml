@@ -1,0 +1,21 @@
+<resources>
+    <string name="app_name">MusicDictionaryAndroid</string>
+    <string name="title_home">ホーム</string>
+    <string name="title_mypage">マイページ</string>
+
+
+    <string name="app_title">Music Dictionary</string>
+
+    <string name="category_button_name">カテゴリ検索</string>
+    <string name="recommend_button_name">おすすめ</string>
+
+    <string name="mypage_title">設定</string>
+    <string name="mypage_artist_list_button">アーティスト一覧</string>
+    <string name="mypage_artist_list_title">アーティスト一覧</string>
+    <string name="mypage_artist_add_button">新規追加</string>
+
+    <string name="change"><u>編集</u></string>
+    <string name="delete"><u>削除</u></string>
+
+    <string name="nothing_match_artist_text">該当するアーティストはまだ登録されていません</string>
+</resources>
