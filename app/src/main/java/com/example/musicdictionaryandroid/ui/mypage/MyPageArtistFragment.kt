@@ -65,10 +65,9 @@ class MyPageArtistFragment : Fragment() {
         is Status.Success -> {
             hideProgressbar()
             hideNoDataView()
-            state.data?.let {
-                if (it.size == 0) showNoDataView()
-                else viewUpDate(state.data)
-            } ?: run {
+            if (!state.data.isNullOrEmpty()) {
+                viewUpDate(state.data)
+            } else {
                 showNoDataView()
             }
         }

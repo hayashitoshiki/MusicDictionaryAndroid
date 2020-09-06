@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".view.authentication.StartActivity">
+
+    <TextView
+        android:id="@+id/new_user_text_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:text="ログイン画面"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <LinearLayout
+        android:id="@+id/linearLayout6"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/new_user_text_view"
+        app:layout_constraintVertical_bias="0.060000002">
+
+        <Button
+            android:id="@+id/button6"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="signInButton"
+            android:text="ログイン" />
+
+        <Button
+            android:id="@+id/button7"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="signUpButton"
+            android:text="新規作成" />
+    </LinearLayout>
+
+<!--    <RelativeLayout-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_below="@+id/new_user_text_view"-->
+<!--        android:layout_marginTop="8dp"-->
+<!--        app:layout_constraintBottom_toBottomOf="parent"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/linearLayout6"-->
+<!--        app:layout_constraintVertical_bias="0.0">-->
+
+<!--        <Button-->
+<!--            android:id="@+id/login_user_button"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_below="@+id/password_edit_text"-->
+<!--            android:layout_centerHorizontal="true"-->
+<!--            android:layout_marginTop="10dp"-->
+<!--            android:background="@color/colorPrimary"-->
+<!--            android:onClick="signInButton"-->
+<!--            android:text="ログイン"-->
+<!--            android:textAppearance="?android:attr/textAppearanceMedium"-->
+<!--            android:textColor="@android:color/white"-->
+<!--            android:textStyle="bold" />-->
+
+<!--        <EditText-->
+<!--            android:id="@+id/password_edit_text"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_below="@+id/email_edit_text"-->
+<!--            android:layout_toRightOf="@+id/password_text"-->
+<!--            android:inputType="textPassword"-->
+<!--            android:text="" />-->
+
+<!--        <EditText-->
+<!--            android:id="@+id/email_edit_text"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_toRightOf="@id/email_text"-->
+<!--            android:text="" />-->
+
+<!--        <TextView-->
+<!--            android:id="@+id/password_text"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_alignTop="@+id/password_edit_text"-->
+<!--            android:layout_alignBottom="@+id/password_edit_text"-->
+<!--            android:gravity="center"-->
+<!--            android:text="Password:"-->
+<!--            android:textAppearance="?android:attr/textAppearanceMedium"-->
+<!--            android:textColor="@android:color/black" />-->
+
+<!--        <TextView-->
+<!--            android:id="@+id/email_text"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_alignTop="@+id/email_edit_text"-->
+<!--            android:layout_alignRight="@+id/password_text"-->
+<!--            android:layout_alignBottom="@+id/email_edit_text"-->
+<!--            android:gravity="center"-->
+<!--            android:text="Email:"-->
+<!--            android:textAppearance="?android:attr/textAppearanceMedium"-->
+<!--            android:textColor="@android:color/black" />-->
+<!--    </RelativeLayout>-->
+
+    <FrameLayout
+        android:id="@+id/fragment"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout6"
+        app:layout_constraintVertical_bias="0.0">
+
+    </FrameLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

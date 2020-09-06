@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="area_spinner_list">
+        <item>未選択</item>
+        <item>東京</item>
+        <item>神奈川</item>
+        <item>千葉</item>
+        <item>静岡</item>
+        <item>埼玉</item>
+    </string-array>
+    <string-array name="birthday_spinner_list">
+        <item>未選択</item>
+        <item>1996</item>
+        <item>1997</item>
+        <item>1998</item>
+        <item>1999</item>
+        <item>2000</item>
+    </string-array>
+</resources>

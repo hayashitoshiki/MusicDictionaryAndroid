@@ -6,16 +6,34 @@
 
     <string name="app_title">Music Dictionary</string>
 
+    <string name="sign_up_title">新規作成画面</string>
+    <string name="sign_up_name_label">名前：</string>
+    <string name="sign_up_email_label">Email：</string>
+    <string name="sign_up_password_label">パスワード：</string>
+    <string name="sign_up_gender_label">性別：</string>
+    <string name="sign_up_area_label">地域：</string>
+    <string name="sign_up_birthday_label">生年月日：</string>
+
     <string name="category_button_name">カテゴリ検索</string>
     <string name="recommend_button_name">おすすめ</string>
 
     <string name="mypage_title">設定</string>
+    <string name="mypage_logout">ログアウト</string>
     <string name="mypage_artist_list_button">アーティスト一覧</string>
     <string name="mypage_artist_list_title">アーティスト一覧</string>
     <string name="mypage_artist_add_button">新規追加</string>
 
     <string name="change"><u>編集</u></string>
     <string name="delete"><u>削除</u></string>
+
+    <string name="gender_men">男</string>
+    <string name="gender_women">女</string>
+    <string name="length_short">短い</string>
+    <string name="length_long">長い</string>
+    <string name="voice_low">低い</string>
+    <string name="voice_hiegth">高い</string>
+    <string name="lyric_english">英語</string>
+    <string name="lyric_japanese">日本語</string>
 
     <string name="nothing_match_artist_text">該当するアーティストはまだ登録されていません</string>
 </resources>

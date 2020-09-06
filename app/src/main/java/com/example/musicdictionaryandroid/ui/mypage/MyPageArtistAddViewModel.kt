@@ -6,7 +6,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.musicdictionaryandroid.model.entity.ArtistsForm
 import com.example.musicdictionaryandroid.model.repository.ApiServerRepositoryImp
-import com.example.musicdictionaryandroid.model.repository.FireBaseRepositoryMock
+import com.example.musicdictionaryandroid.model.repository.FireBaseRepository
+import com.example.musicdictionaryandroid.model.repository.FireBaseRepositoryImp
 import com.example.musicdictionaryandroid.model.util.Status
 import com.example.tosik.musicdictionary_androlid.model.net.CallBackData
 import kotlinx.coroutines.Dispatchers
@@ -24,6 +25,8 @@ class MyPageArtistAddViewModel : ViewModel() {
         private const val TAG = "SettingAddArtistPresenter"
     }
 
+    private val firebaseRepository: FireBaseRepository = FireBaseRepositoryImp()
+
     // アーティスト登録
     private fun addArtist(): Job = viewModelScope.launch {
         // バリデート
@@ -32,7 +35,7 @@ class MyPageArtistAddViewModel : ViewModel() {
                 artistForm.length != 0 &&
                 artistForm.voice != 0 &&
                 artistForm.lyrics != 0) {
-            val email = FireBaseRepositoryMock().getEmail()
+            val email = firebaseRepository.getEmail()
             runCatching { withContext(Dispatchers.IO) { ApiServerRepositoryImp().addArtist(artistForm, email) } }
                 .onSuccess { status.value = Status.Success(it.body()) }
                 .onFailure { status.value = Status.Failure(it) }
@@ -52,7 +55,7 @@ class MyPageArtistAddViewModel : ViewModel() {
             artistForm.length != 0 &&
             artistForm.voice != 0 &&
             artistForm.lyrics != 0) {
-            val email = FireBaseRepositoryMock().getEmail()
+            val email = firebaseRepository.getEmail()
             runCatching { withContext(Dispatchers.IO) { ApiServerRepositoryImp().updateArtist(artistForm, oldArtistName, email) } }
                 .onSuccess { status.value = Status.Success(it.body()) }
                 .onFailure { status.value = Status.Failure(it) }
