@@ -6,6 +6,7 @@
 
     <string name="app_title">Music Dictionary</string>
 
+    <!-- ログイン系画面-->
     <string name="sign_up_title">新規作成画面</string>
     <string name="sign_up_name_label">名前：</string>
     <string name="sign_up_email_label">Email：</string>
@@ -13,11 +14,15 @@
     <string name="sign_up_gender_label">性別：</string>
     <string name="sign_up_area_label">地域：</string>
     <string name="sign_up_birthday_label">生年月日：</string>
+    <string name="favorite_label">登録アーティスト数</string>
 
     <string name="category_button_name">カテゴリ検索</string>
     <string name="recommend_button_name">おすすめ</string>
 
+    <!-- 設定系画面-->
     <string name="mypage_title">設定</string>
+    <string name="mypage_user_title">ユーザー情報</string>
+    <string name="mypage_userinfo">アカウント情報</string>
     <string name="mypage_logout">ログアウト</string>
     <string name="mypage_artist_list_button">アーティスト一覧</string>
     <string name="mypage_artist_list_title">アーティスト一覧</string>

@@ -9,6 +9,7 @@ import com.example.musicdictionaryandroid.model.repository.FireBaseRepositoryImp
 import com.example.musicdictionaryandroid.model.repository.PreferenceRepositoryImp
 import com.example.musicdictionaryandroid.model.repository.UserRepositoryImp
 import com.example.musicdictionaryandroid.model.util.Status
+import com.example.musicdictionaryandroid.model.util.UserInfoChangeListUtil
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -48,8 +49,9 @@ class SignInViewModel : ViewModel() {
                                     PreferenceRepositoryImp.setEmail(user.email)
                                     PreferenceRepositoryImp.setName(user.name)
                                     PreferenceRepositoryImp.setGender(user.gender)
-                                    PreferenceRepositoryImp.setBirthday(user.birthday)
+                                    PreferenceRepositoryImp.setBirthday(UserInfoChangeListUtil.changeBirthdayString(user.birthday))
                                     PreferenceRepositoryImp.setArea(user.area)
+                                    PreferenceRepositoryImp.setFavorite(user.artist_count)
                                 }
                                 status.value = Status.Success("success")
                             }

@@ -5,4 +5,7 @@
 
     <dimen name="category_title">28dp</dimen>
     <dimen name="category_value">16dp</dimen>
+
+    <dimen name="mypage_user_category_title">20dp</dimen>
+    <dimen name="mypage_user_category_value">24dp</dimen>
 </resources>

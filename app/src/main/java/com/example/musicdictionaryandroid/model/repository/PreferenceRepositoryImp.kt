@@ -19,47 +19,57 @@ object PreferenceRepositoryImp {
         // 地域
         AREA,
         // 生年月日
-        BIRTHDAY
+        BIRTHDAY,
+        // 登録数
+        FAVORITE
     }
 
-    fun setEmail(name: String) {
-        setString(Key.EMAIL, name)
+    fun setEmail(value: String) {
+        setString(Key.EMAIL, value)
     }
 
     fun getEmail() : String? {
         return getString(Key.EMAIL)
     }
 
-    fun setName(name: String) {
-        setString(Key.NAME, name)
+    fun setName(value: String) {
+        setString(Key.NAME, value)
     }
 
     fun getName() : String? {
         return getString(Key.NAME)
     }
 
-    fun setGender(gender: Int) {
-        setInt(Key.GENDER, gender)
+    fun setGender(value: Int) {
+        setInt(Key.GENDER, value)
     }
 
-    fun getGender() : String? {
-        return getString(Key.GENDER)
+    fun getGender() : Int {
+        return getInt(Key.GENDER)
     }
 
-    fun setArea(area: Int) {
-        setInt(Key.AREA, area)
+    fun setArea(value: Int) {
+        setInt(Key.AREA, value)
     }
 
-    fun getArea() : String? {
-        return getString(Key.AREA)
+    fun getArea() : Int {
+        return getInt(Key.AREA)
     }
 
-    fun setBirthday(name: String) {
-        setString(Key.BIRTHDAY, name)
+    fun setBirthday(value: Int) {
+        setInt(Key.BIRTHDAY, value)
     }
 
-    fun getBirthday() : String? {
-        return getString(Key.BIRTHDAY)
+    fun getBirthday() : Int {
+        return getInt(Key.BIRTHDAY)
+    }
+
+    fun setFavorite(value: Int) {
+        setInt(Key.FAVORITE, value)
+    }
+
+    fun getFavorite() : Int {
+        return getInt(Key.FAVORITE)
     }
 
     fun removeAll() {
@@ -68,6 +78,7 @@ object PreferenceRepositoryImp {
         remove(Key.BIRTHDAY)
         remove(Key.AREA)
         remove(Key.GENDER)
+        remove(Key.FAVORITE)
     }
 
     private fun setString(key: Key, value: String) {
@@ -87,6 +98,10 @@ object PreferenceRepositoryImp {
         val editor = preferences.edit()
         editor.putInt(key.name, value)
         editor.apply()
+    }
+    private fun getInt(key: Key, default: Int = 0) : Int {
+        val preferences = context.getSharedPreferences("mucisDictionary", Context.MODE_PRIVATE)
+        return preferences.getInt(key.name, default)
     }
 
     private fun remove(key: Key) {

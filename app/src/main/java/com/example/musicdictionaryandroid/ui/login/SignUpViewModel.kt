@@ -9,8 +9,8 @@ import com.example.musicdictionaryandroid.model.repository.FireBaseRepository
 import com.example.musicdictionaryandroid.model.repository.FireBaseRepositoryImp
 import com.example.musicdictionaryandroid.model.repository.PreferenceRepositoryImp
 import com.example.musicdictionaryandroid.model.repository.UserRepositoryImp
-import com.example.musicdictionaryandroid.model.util.BirthdayList
 import com.example.musicdictionaryandroid.model.util.Status
+import com.example.musicdictionaryandroid.model.util.UserInfoChangeListUtil
 import com.google.gson.Gson
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -64,10 +64,10 @@ class SignUpViewModel : ViewModel() {
                 return
             }
             else -> {
-                val birthday = BirthdayList.getBirthday(birthdaySelectedPosition.value!!)
-                val user = User(emailText.value!!, nameText.value!!, genderInt.value!!, areaSelectedPosition.value!!, birthday)
+                val birthday = UserInfoChangeListUtil.getBirthday(birthdaySelectedPosition.value!!)
+                val user = User(emailText.value!!, nameText.value!!, genderInt.value!!, areaSelectedPosition.value!!, birthday,0)
                 val json: String = Gson().toJson(user)
-                Log.d("TAG","res Fons:" + user)
+                Log.d("TAG","respons:" + user)
                 fireBaseRepository.signUp(emailText.value!!, passwordText.value!!, {
                     // APIから情報取得
                     viewModelScope.launch {
@@ -76,8 +76,9 @@ class SignUpViewModel : ViewModel() {
                                 PreferenceRepositoryImp.setEmail(user.email)
                                 PreferenceRepositoryImp.setName(user.name)
                                 PreferenceRepositoryImp.setGender(user.gender)
-                                PreferenceRepositoryImp.setBirthday(user.birthday)
+                                PreferenceRepositoryImp.setBirthday(birthdaySelectedPosition.value!!)
                                 PreferenceRepositoryImp.setArea(user.area)
+                                PreferenceRepositoryImp.setFavorite(0)
                                 status.value = Status.Success(it.body()?.status)
                             }
                             .onFailure { status.value = Status.Failure(it) }

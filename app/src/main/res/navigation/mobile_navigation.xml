@@ -46,6 +46,9 @@
         <action
             android:id="@+id/action_navigation_mypage_to_my_page_artist"
             app:destination="@id/navigation_mypage_artist" />
+        <action
+            android:id="@+id/action_navigation_mypage_to_navigation_mypage_userinfo"
+            app:destination="@id/navigation_mypage_user" />
     </fragment>
 
     <fragment
@@ -68,6 +71,12 @@
             app:argType="com.example.musicdictionaryandroid.model.entity.ArtistsForm"
             app:nullable="true" />
     </fragment>
+
+    <fragment
+        android:id="@+id/navigation_mypage_user"
+        android:name="com.example.musicdictionaryandroid.ui.mypage.MyPageUserFragment"
+        android:label="MyPageUserInfoFragment"
+        tools:layout="@layout/fragment_mypage_user"/>
 
 
 </navigation>

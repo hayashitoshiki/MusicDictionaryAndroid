@@ -34,11 +34,16 @@ class MyPageTopFragment : Fragment() {
         super.onActivityCreated(savedInstanceState)
         viewModel.authStatus.observe(viewLifecycleOwner, Observer { onStateChanged(it) })
 
+        // アーティスト一覧ボタン
         artist_list_button.setOnClickListener {
             val action = MyPageTopFragmentDirections.actionNavigationMypageToMyPageArtist()
             findNavController().navigate(action)
         }
-
+        // ユーザー情報ボタン
+        userinfo_button.setOnClickListener {
+            val action = MyPageTopFragmentDirections.actionNavigationMypageToNavigationMypageUserinfo()
+            findNavController().navigate(action)
+        }
         // ログアウトボタン
         logout.setOnClickListener {
             viewModel.signOut()

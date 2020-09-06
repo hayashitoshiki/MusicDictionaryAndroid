@@ -7,6 +7,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.musicdictionaryandroid.model.entity.ArtistsForm
 import com.example.musicdictionaryandroid.model.repository.ApiServerRepositoryImp
 import com.example.musicdictionaryandroid.model.repository.FireBaseRepositoryMock
+import com.example.musicdictionaryandroid.model.repository.PreferenceRepositoryImp
 import com.example.musicdictionaryandroid.model.util.Status
 import kotlinx.coroutines.*
 
@@ -20,7 +21,9 @@ class MyPageArtistViewModel : ViewModel() {
         status.value = Status.Loading
         val email = FireBaseRepositoryMock().getEmail()
         runCatching { withContext(Dispatchers.IO) { ApiServerRepositoryImp().getArtistsByEmail(email) } }
-            .onSuccess { status.value = Status.Success(it.body()) }
+            .onSuccess {
+                PreferenceRepositoryImp.setFavorite(it.body()!!.size)
+                status.value = Status.Success(it.body()) }
             .onFailure { status.value = Status.Failure(it) }
     }
 
@@ -32,6 +35,7 @@ class MyPageArtistViewModel : ViewModel() {
         runCatching { withContext(Dispatchers.IO) { ApiServerRepositoryImp().deleteArtist(artist.name, email) } }
             .onSuccess {
                 artistList.remove(artist)
+                PreferenceRepositoryImp.setFavorite(artistList.size)
                 status.value = Status.Success(artistList) }
             .onFailure { status.value = Status.Failure(it) }
     }

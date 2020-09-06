@@ -5,5 +5,6 @@ data class User (
     val name: String,
     val gender: Int,
     val area: Int,
-    val birthday: String
+    val birthday: String,
+    val artist_count: Int
 ) : java.io.Serializable
