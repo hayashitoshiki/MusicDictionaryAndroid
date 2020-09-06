@@ -13,6 +13,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.example.musicdictionaryandroid.R
 import com.example.musicdictionaryandroid.databinding.FragmentHomeBinding
+import com.example.musicdictionaryandroid.model.repository.PreferenceRepositoryImp
 import kotlinx.android.synthetic.main.fragment_home.*
 import kotlinx.android.synthetic.main.fragment_home.view.*
 
@@ -63,6 +64,30 @@ class HomeFragment : Fragment() {
         submit.setOnClickListener {
             val action = HomeFragmentDirections.actionNavigationHomeToNavigationResult(viewModel.artistsFrom)
             findNavController().navigate(action)
+        }
+
+        // 検索ボタンのバリデート
+        val count = PreferenceRepositoryImp.getFavorite()
+        if (count == 0) {
+            submit.isClickable = false
+            search_bar.isEnabled = false
+            submit_button_enable.visibility = View.VISIBLE
+        }
+        if (count < 3) {
+            category_button.isClickable = false
+            category_button_enable.visibility = View.VISIBLE
+        }
+        if (count < 5) {
+            detail_button.isClickable = false
+            detail_button_enable.visibility = View.VISIBLE
+        }
+        if (count < 8) {
+            soaring_button.isClickable = false
+            soaring_button_enable.visibility = View.VISIBLE
+        }
+        if (count < 10) {
+            recommend_button.isClickable = false
+            recommend_button_enable.visibility = View.VISIBLE
         }
     }
 
