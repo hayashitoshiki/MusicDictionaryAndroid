@@ -34,11 +34,14 @@
     <string name="mypage_logout">ログアウト</string>
     <string name="mypage_artist_list_button">アーティスト一覧</string>
     <string name="mypage_artist_list_title">アーティスト一覧</string>
-    <string name="mypage_artist_add_button">新規追加</string>
+    <string name="mypage_artist_add_button">追加</string>
+    <string name="mypage_artist_change_button">変更</string>
 
     <string name="change"><u>編集</u></string>
     <string name="delete"><u>削除</u></string>
 
+    <string name="artist_add_title">アーティスト登録</string>
+    <string name="artist_change_title">アーティスト編集</string>
     <string name="category_search_title">カテゴリ検索</string>
     <string name="category_title_gender">性別</string>
     <string name="category_title_length">長さ</string>

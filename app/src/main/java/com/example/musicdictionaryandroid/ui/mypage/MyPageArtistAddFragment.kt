@@ -2,6 +2,7 @@ package com.example.musicdictionaryandroid.ui.mypage
 
 import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -68,7 +69,14 @@ class MyPageArtistAddFragment : Fragment() {
         super.onActivityCreated(savedInstanceState)
         viewModel.status.observe(viewLifecycleOwner, Observer { onStateChanged(it) })
         viewModel.searchText.observe(viewLifecycleOwner, Observer { viewModel.changeArtistName(it) })
-        args.data?.let { init(it) }
+        args.data?.let {
+            fragment_title.text = getString(R.string.artist_change_title)
+            submit.text = getString(R.string.mypage_artist_change_button)
+            init(it)
+        } ?: run {
+            fragment_title.text = getString(R.string.artist_add_title)
+            submit.text = getString(R.string.mypage_artist_add_button)
+        }
     }
 
     private fun init(artist: ArtistsForm) {
@@ -108,6 +116,7 @@ class MyPageArtistAddFragment : Fragment() {
     private fun onStateChanged(state: Status<CallBackData?>) = when (state) {
         is Status.Loading -> { showProgressbar() }
         is Status.Success -> {
+            Log.d("TAG","Success:${state.data}")
             hideProgressbar()
             state.data?.let {
                 if (it.status == "200") back()
@@ -118,6 +127,7 @@ class MyPageArtistAddFragment : Fragment() {
             }
         }
         is Status.Failure -> {
+            Log.d("TAG","Failure:${state.throwable}")
             hideProgressbar()
             showServerError()
         }
