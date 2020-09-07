@@ -39,6 +39,14 @@
     <string name="change"><u>編集</u></string>
     <string name="delete"><u>削除</u></string>
 
+    <string name="category_search_title">カテゴリ検索</string>
+    <string name="category_title_gender">性別</string>
+    <string name="category_title_length">長さ</string>
+    <string name="category_title_voice">高さ</string>
+    <string name="category_title_lyric">歌詞</string>
+
+    <string name="submit">検索</string>
+
     <string name="gender_men">男</string>
     <string name="gender_women">女</string>
     <string name="length_short">短い</string>

@@ -7,7 +7,7 @@
                 android:bottomRightRadius="200dp"
                 />
             <solid
-                android:color="#202f55"
+                android:color="@color/colorPrimaryDark"
                 />
         </shape>
     </item>

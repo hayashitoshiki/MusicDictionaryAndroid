@@ -1,6 +1,7 @@
 package com.example.musicdictionaryandroid.ui.home
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,6 +13,7 @@ import androidx.navigation.fragment.findNavController
 import com.example.musicdictionaryandroid.R
 import com.example.musicdictionaryandroid.databinding.FragmentCategorySearchBinding
 import com.example.musicdictionaryandroid.model.entity.ArtistsForm
+import kotlinx.android.synthetic.main.fragment_category_search.*
 
 class CategorySearchFragment : Fragment() {
 
@@ -31,12 +33,15 @@ class CategorySearchFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        viewModel.searchData.observe(viewLifecycleOwner, Observer { goResultView(it) })
-    }
 
-    // 検索結果画面へ遷移
-    private fun goResultView(data: ArtistsForm) {
-        val action = CategorySearchFragmentDirections.actionCategorySearchToNavigationResult(data)
-        findNavController().navigate(action)
+        // 検索結果画面へ遷移
+        submit.setOnClickListener{
+            if (viewModel.artistForm.gender != 0 || viewModel.artistForm.length != 0 || viewModel.artistForm.voice != 0 || viewModel.artistForm.lyrics != 0) {
+                val action = CategorySearchFragmentDirections.actionCategorySearchToNavigationResult(viewModel.artistForm)
+                findNavController().navigate(action)
+            } else {
+                Log.d("TAG", "どれか一つ以上入力してください")
+            }
+        }
     }
 }
