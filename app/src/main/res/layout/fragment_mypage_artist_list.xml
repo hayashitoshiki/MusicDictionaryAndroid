@@ -40,6 +40,8 @@
             android:textColor="@color/main_text_color"
             android:textSize="@dimen/category_title"
             android:background="@drawable/accent_button"
+            android:stateListAnimator="@drawable/button_state_list_anim_material"
+            android:elevation="6dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/title" />

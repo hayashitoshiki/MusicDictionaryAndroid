@@ -9,28 +9,17 @@
     </data>
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <TextView
-            android:id="@+id/new_user_text_view"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:text="@string/sign_up_title"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.0" />
+        android:layout_height="match_parent"
+        android:focusableInTouchMode="true">
 
         <LinearLayout
             android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/new_user_text_view"
+            android:layout_margin="8dp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/new_user_text_view"
+            app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.0">
 
             <TextView
@@ -40,7 +29,7 @@
                 android:gravity="center"
                 android:text="@string/sign_up_email_label"
                 android:textAppearance="?android:attr/textAppearanceMedium"
-                android:textColor="@android:color/black" />
+                android:textColor="@color/main_text_color" />
 
             <EditText
                 android:id="@+id/email_edit_text"
@@ -55,7 +44,7 @@
                 android:gravity="center"
                 android:text="@string/sign_up_password_label"
                 android:textAppearance="?android:attr/textAppearanceMedium"
-                android:textColor="@android:color/black" />
+                android:textColor="@color/main_text_color" />
 
             <EditText
                 android:id="@+id/password_edit_text"
@@ -71,7 +60,7 @@
                 android:gravity="center"
                 android:text="@string/sign_up_name_label"
                 android:textAppearance="?android:attr/textAppearanceMedium"
-                android:textColor="@android:color/black" />
+                android:textColor="@color/main_text_color" />
 
             <EditText
                 android:id="@+id/name_edit_text"
@@ -86,7 +75,7 @@
                 android:gravity="center"
                 android:text="@string/sign_up_gender_label"
                 android:textAppearance="?android:attr/textAppearanceMedium"
-                android:textColor="@android:color/black" />
+                android:textColor="@color/main_text_color" />
 
             <LinearLayout
                 android:orientation="horizontal"
@@ -105,6 +94,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/gender_men"
+                        android:textColor="@color/sub_text_color"
                         android:textSize="24dp" />
 
                     <RadioButton
@@ -116,6 +106,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/gender_women"
+                        android:textColor="@color/sub_text_color"
                         android:textSize="24dp" />
                     <RadioButton
                         android:id="@+id/gender2"
@@ -133,8 +124,8 @@
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:text="@string/sign_up_area_label"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:textColor="@android:color/black" />
+                android:textColor="@color/main_text_color"
+                android:textAppearance="?android:attr/textAppearanceMedium" />
 
             <Spinner
                 android:id="@+id/area_spinner"
@@ -151,8 +142,8 @@
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:text="@string/sign_up_birthday_label"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:textColor="@android:color/black" />
+                android:textColor="@color/main_text_color"
+                android:textAppearance="?android:attr/textAppearanceMedium" />
 
             <Spinner
                 android:id="@+id/birthday_spinner"
@@ -167,10 +158,13 @@
                 android:id="@+id/sign_up_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:background="@color/colorPrimary"
-                android:text="新規作成"
+                android:layout_gravity="center"
+                android:layout_margin="10dp"
+                android:stateListAnimator="@drawable/button_state_list_anim_material"
+                android:elevation="6dp"
+                android:background="@drawable/accent_button"
                 android:onClick="@{() -> viewModel.signUp()}"
+                android:text="@string/sign_up_title"
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:textColor="@android:color/white"
                 android:textStyle="bold" />

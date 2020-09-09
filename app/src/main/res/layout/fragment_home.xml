@@ -123,7 +123,8 @@
                 android:layout_marginBottom="4dp"
                 android:layout_weight="1"
                 android:background="@drawable/home_button"
-                android:elevation="5dp"
+                android:stateListAnimator="@drawable/button_state_list_anim_material"
+                android:elevation="6dp"
                 android:text="@string/home_category_button"
                 android:textColor="@android:color/white"
                 android:textSize="24sp"
@@ -139,7 +140,8 @@
                 android:layout_marginBottom="4dp"
                 android:layout_weight="1"
                 android:background="@drawable/home_button"
-                android:elevation="20dp"
+                android:stateListAnimator="@drawable/button_state_list_anim_material"
+                android:elevation="6dp"
                 android:text="@string/home_detail_button_name"
                 android:textColor="@android:color/white"
                 android:textSize="24sp"
@@ -170,7 +172,6 @@
                 android:layout_marginBottom="4dp"
                 android:layout_weight="1"
                 android:background="@drawable/home_button_disabled"
-                android:elevation="5dp"
                 android:visibility="invisible">
 
                 <TextView
@@ -199,7 +200,6 @@
                 android:layout_marginBottom="4dp"
                 android:layout_weight="1"
                 android:background="@drawable/home_button_disabled"
-                android:elevation="5dp"
                 android:visibility="invisible">
 
                 <TextView
@@ -237,6 +237,8 @@
                 android:layout_marginEnd="4dp"
                 android:layout_marginBottom="4dp"
                 android:layout_weight="1"
+                android:stateListAnimator="@drawable/button_state_list_anim_material"
+                android:elevation="6dp"
                 android:background="@drawable/home_button"
                 android:text="@string/home_Soaring_button"
                 android:textColor="@android:color/white"
@@ -253,6 +255,8 @@
                 android:layout_marginBottom="4dp"
                 android:layout_weight="1"
                 android:background="@drawable/home_button"
+                android:stateListAnimator="@drawable/button_state_list_anim_material"
+                android:elevation="6dp"
                 android:text="@string/home_recommend_button"
                 android:textAllCaps="false"
                 android:textColor="@android:color/white"
@@ -282,7 +286,8 @@
                 android:layout_marginBottom="4dp"
                 android:layout_weight="1"
                 android:background="@drawable/home_button_disabled"
-                android:elevation="5dp"
+                android:stateListAnimator="@drawable/button_state_list_anim_material"
+                android:elevation="6dp"
                 android:visibility="invisible">
 
                 <TextView
@@ -310,7 +315,8 @@
                 android:layout_marginBottom="4dp"
                 android:layout_weight="1"
                 android:background="@drawable/home_button_disabled"
-                android:elevation="5dp"
+                android:stateListAnimator="@drawable/button_state_list_anim_material"
+                android:elevation="6dp"
                 android:visibility="invisible">
 
                 <TextView

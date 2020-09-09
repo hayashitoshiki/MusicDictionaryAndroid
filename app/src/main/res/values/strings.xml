@@ -7,7 +7,8 @@
     <string name="app_title">Music Dictionary</string>
 
     <!-- ログイン系画面-->
-    <string name="sign_up_title">新規作成画面</string>
+    <string name="sign_in_title">ログイン</string>
+    <string name="sign_up_title">新規作成</string>
     <string name="sign_up_name_label">名前：</string>
     <string name="sign_up_email_label">Email：</string>
     <string name="sign_up_password_label">パスワード：</string>

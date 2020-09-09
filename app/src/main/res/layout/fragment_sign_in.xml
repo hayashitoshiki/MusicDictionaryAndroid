@@ -9,27 +9,16 @@
     </data>
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <TextView
-            android:id="@+id/new_user_text_view"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:text="ログイン"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.0" />
+        android:layout_height="match_parent"
+        android:focusableInTouchMode="true"
+        android:layout_margin="8dp">
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/new_user_text_view"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/new_user_text_view"
+            app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.0">
 
             <TextView
@@ -42,7 +31,7 @@
                 android:gravity="center"
                 android:text="Email:"
                 android:textAppearance="?android:attr/textAppearanceMedium"
-                android:textColor="@android:color/black" />
+                android:textColor="@color/main_text_color" />
 
             <TextView
                 android:id="@+id/password_text"
@@ -53,7 +42,7 @@
                 android:gravity="center"
                 android:text="Password:"
                 android:textAppearance="?android:attr/textAppearanceMedium"
-                android:textColor="@android:color/black" />
+                android:textColor="@color/main_text_color" />
 
             <EditText
                 android:id="@+id/email_edit_text"
@@ -77,9 +66,11 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/password_edit_text"
                 android:layout_centerHorizontal="true"
-                android:layout_marginTop="10dp"
-                android:background="@color/colorPrimary"
-                android:text="ログイン"
+                android:layout_margin="10dp"
+                android:background="@drawable/accent_button"
+                android:stateListAnimator="@drawable/button_state_list_anim_material"
+                android:elevation="6dp"
+                android:text="@string/sign_in_title"
                 android:onClick="@{() -> viewModel.signIn()}"
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:textColor="@android:color/white"
