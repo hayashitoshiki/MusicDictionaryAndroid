@@ -6,9 +6,19 @@
             name="viewModel"
             type="com.example.musicdictionaryandroid.ui.mypage.MyPageUserViewModel" />
     </data>
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="64dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="128dp"
+        android:background="@drawable/home_button"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
         <TextView
             android:id="@+id/new_user_text_view"
@@ -16,6 +26,10 @@
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
             android:text="@string/mypage_user_title"
+            android:textColor="@color/header_color"
+            android:textSize="@dimen/category_header"
+            android:layout_marginTop="16dp"
+            android:textStyle="bold"
             android:textAppearance="?android:attr/textAppearanceLarge"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -24,11 +38,13 @@
             app:layout_constraintVertical_bias="0.0" />
 
         <LinearLayout
-            android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/new_user_text_view"
+            android:layout_marginStart="8dp"
+            android:orientation="vertical"
             app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/new_user_text_view"
             app:layout_constraintVertical_bias="0.0">
 
@@ -36,18 +52,20 @@
                 android:id="@+id/email_label"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
                 android:gravity="center"
                 android:text="@string/sign_up_email_label"
-                android:textSize="@dimen/mypage_user_category_title"
                 android:textAppearance="?android:attr/textAppearanceMedium"
-                android:textColor="@android:color/black" />
+                android:textColor="@color/sub_text_color"
+                android:textSize="@dimen/mypage_user_category_title"
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/email_text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@={viewModel.emailText}"
-                android:textColor="@android:color/black"
+                android:textColor="@color/main_text_color"
                 android:textSize="@dimen/mypage_user_category_value"
                 android:textStyle="bold" />
 
@@ -55,96 +73,106 @@
                 android:id="@+id/name_label"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
                 android:gravity="center"
                 android:text="@string/sign_up_name_label"
-                android:textSize="@dimen/mypage_user_category_title"
                 android:textAppearance="?android:attr/textAppearanceMedium"
-                android:textColor="@android:color/black" />
+                android:textColor="@color/sub_text_color"
+                android:textSize="@dimen/mypage_user_category_title"
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/name_text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textStyle="bold"
-                android:textColor="@android:color/black"
+                android:text="@={viewModel.nameText}"
+                android:textColor="@color/main_text_color"
                 android:textSize="@dimen/mypage_user_category_value"
-                android:text="@={viewModel.nameText}" />
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/gender_label"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
                 android:gravity="center"
                 android:text="@string/sign_up_gender_label"
-                android:textSize="@dimen/mypage_user_category_title"
                 android:textAppearance="?android:attr/textAppearanceMedium"
-                android:textColor="@android:color/black" />
+                android:textColor="@color/sub_text_color"
+                android:textSize="@dimen/mypage_user_category_title"
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/gender_text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textStyle="bold"
-                android:textColor="@android:color/black"
+                android:text="@={viewModel.genderText}"
+                android:textColor="@color/main_text_color"
                 android:textSize="@dimen/mypage_user_category_value"
-                android:text="@={viewModel.genderText}" />
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/area_label"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
                 android:gravity="center"
                 android:text="@string/sign_up_area_label"
-                android:textSize="@dimen/mypage_user_category_title"
                 android:textAppearance="?android:attr/textAppearanceMedium"
-                android:textColor="@android:color/black" />
+                android:textColor="@color/sub_text_color"
+                android:textSize="@dimen/mypage_user_category_title"
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/area_text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textStyle="bold"
-                android:textColor="@android:color/black"
+                android:text="@={viewModel.areaText}"
+                android:textColor="@color/main_text_color"
                 android:textSize="@dimen/mypage_user_category_value"
-                android:text="@={viewModel.areaText}" />
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/birthday_label"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
                 android:gravity="center"
                 android:text="@string/sign_up_birthday_label"
-                android:textSize="@dimen/mypage_user_category_title"
                 android:textAppearance="?android:attr/textAppearanceMedium"
-                android:textColor="@android:color/black" />
+                android:textColor="@color/sub_text_color"
+                android:textSize="@dimen/mypage_user_category_title"
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/birthday_text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textStyle="bold"
-                android:textColor="@android:color/black"
+                android:text="@={viewModel.birthdayText}"
+                android:textColor="@color/main_text_color"
                 android:textSize="@dimen/mypage_user_category_value"
-                android:text="@={viewModel.birthdayText}" />
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/favorite_label"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
                 android:gravity="center"
                 android:text="@string/favorite_label"
                 android:textAppearance="?android:attr/textAppearanceMedium"
-                android:textColor="@android:color/black"
-                android:textSize="@dimen/mypage_user_category_title" />
+                android:textColor="@color/sub_text_color"
+                android:textSize="@dimen/mypage_user_category_title"
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/favorite_text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textStyle="bold"
-                android:textColor="@android:color/black"
+                android:text="@={viewModel.favoriteText}"
+                android:textColor="@color/main_text_color"
                 android:textSize="@dimen/mypage_user_category_value"
-                android:text="@={viewModel.favoriteText}" />
+                android:textStyle="bold" />
 
         </LinearLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>

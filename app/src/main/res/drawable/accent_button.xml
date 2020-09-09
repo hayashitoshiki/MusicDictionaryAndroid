@@ -9,7 +9,7 @@
                 android:topLeftRadius="10dp"
                 />
             <solid
-                android:color="@color/colorPrimaryDark"
+                android:color="@color/colorAccent"
                 />
         </shape>
     </item>

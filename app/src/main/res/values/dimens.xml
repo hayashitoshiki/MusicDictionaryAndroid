@@ -12,4 +12,6 @@
 
     <dimen name="mypage_user_category_title">20dp</dimen>
     <dimen name="mypage_user_category_value">24dp</dimen>
+
+    <dimen name="item_list_title">24sp</dimen>
 </resources>
