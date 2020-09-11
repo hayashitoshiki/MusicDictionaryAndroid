@@ -60,6 +60,11 @@ class HomeFragment : Fragment() {
             val action = HomeFragmentDirections.actionNavigationHomeToCategorySearch()
             findNavController().navigate(action)
         }
+        // 詳細検索ボタン
+        detail_button.setOnClickListener {
+            val action = HomeFragmentDirections.actionNavigationHomeToNavigationDetailsSearch()
+            findNavController().navigate(action)
+        }
         // 検索ボタン
         submit.setOnClickListener {
             val action = HomeFragmentDirections.actionNavigationHomeToNavigationResult(viewModel.artistsFrom)

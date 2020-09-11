@@ -1,5 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string-array name="category_spinner_list">
+        <item>未選択</item>
+        <item>性別</item>
+        <item>登録数</item>
+        <item>登録地域</item>
+        <item>登録世代</item>
+    </string-array>
+
+    <string-array name="gender_spinner_list">
+        <item>未選択</item>
+        <item>男</item>
+        <item>女</item>
+    </string-array>
+
+    <string-array name="registration_spinner_list">
+        <item>未選択</item>
+        <item>多い</item>
+        <item>少ない</item>
+    </string-array>
+
     <string-array name="area_spinner_list">
         <item>未選択</item>
         <item>東京</item>
@@ -8,6 +28,7 @@
         <item>静岡</item>
         <item>埼玉</item>
     </string-array>
+
     <string-array name="birthday_spinner_list">
         <item>未選択</item>
         <item>1996</item>
