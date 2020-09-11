@@ -12,4 +12,8 @@
     <color name="sub_text_color">#99FFFFFF</color>
     <color name="error_text_color">#B00020</color>
 
+    <color name="icon_focus_color">#FFFFFF</color>
+    <color name="icon_active_color">#B3FFFFFF</color>
+    <color name="icon_inactive_color">#80FFFFFF</color>
+
 </resources>

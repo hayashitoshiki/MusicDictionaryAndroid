@@ -43,8 +43,9 @@
 
             <EditText
                 android:id="@+id/search_bar"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
                 android:layout_marginBottom="3dp"
                 android:ems="10"
                 android:gravity="center"
@@ -53,18 +54,17 @@
                 android:text="@={HomeViewModel.searchText}"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/submit"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <Button
+            <ImageButton
                 android:id="@+id/submit"
-                android:layout_width="wrap_content"
+                android:layout_width="48dp"
                 android:layout_height="48dp"
                 android:layout_gravity="center"
                 android:background="@drawable/home_search_button"
-                android:text="検索"
-                android:textColor="@android:color/white"
-                android:textSize="20sp"
-                android:textStyle="bold|italic"
+                android:src="@mipmap/baseline_search_black_36"
+                android:tint="@color/icon_active_color"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -90,6 +90,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
                 android:text="@string/home_button_validate1"
                 android:textColor="@color/error_text_color"
                 android:textStyle="bold"
