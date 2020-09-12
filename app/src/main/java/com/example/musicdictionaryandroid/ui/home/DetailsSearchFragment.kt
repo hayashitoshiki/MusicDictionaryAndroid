@@ -1,6 +1,10 @@
 package com.example.musicdictionaryandroid.ui.home
 
 import android.os.Bundle
+import android.transition.ChangeBounds
+import android.transition.ChangeClipBounds
+import android.transition.ChangeTransform
+import android.transition.TransitionSet
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -12,6 +16,9 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.example.musicdictionaryandroid.R
 import com.example.musicdictionaryandroid.databinding.FragmentDetailsSearchBinding
+import com.example.musicdictionaryandroid.ui.transition.FabTransform
+import com.example.musicdictionaryandroid.ui.transition.HOME_CATEGORY_BUTTON
+import com.example.musicdictionaryandroid.ui.transition.HOME_DETAILS_BUTTON
 import kotlinx.android.synthetic.main.fragment_details_search.*
 
 class DetailsSearchFragment : Fragment() {
@@ -25,6 +32,16 @@ class DetailsSearchFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        val transition = TransitionSet().apply {
+            addTransition(ChangeBounds())
+            addTransition(ChangeTransform())
+            addTransition(ChangeClipBounds())
+        }
+        val  trans = FabTransform(resources.getColor(R.color.colorPrimary), R.drawable.round_primary_dark_button, HOME_DETAILS_BUTTON)
+        sharedElementEnterTransition = trans
+        // sharedElementReturnTransition = trans
+        sharedElementReturnTransition = transition
+
         val binding: FragmentDetailsSearchBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_details_search, container, false)
         binding.lifecycleOwner = viewLifecycleOwner
         binding.viewModel = viewModel

@@ -10,11 +10,15 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
 import com.example.musicdictionaryandroid.R
 import com.example.musicdictionaryandroid.databinding.FragmentHomeBinding
 import com.example.musicdictionaryandroid.model.repository.PreferenceRepositoryImp
+import com.example.musicdictionaryandroid.ui.home.HomeFragmentDirections.Companion.actionNavigationHomeToCategorySearch
+import kotlinx.android.synthetic.main.fragment_category_search.*
 import kotlinx.android.synthetic.main.fragment_home.*
+import kotlinx.android.synthetic.main.fragment_home.submit
 import kotlinx.android.synthetic.main.fragment_home.view.*
 
 class HomeFragment : Fragment() {
@@ -57,13 +61,14 @@ class HomeFragment : Fragment() {
         viewModel.searchText.observe(viewLifecycleOwner, Observer { changeSubmitButton(it.length) })
         // カテゴリボタン
         category_button.setOnClickListener {
-            val action = HomeFragmentDirections.actionNavigationHomeToCategorySearch()
-            findNavController().navigate(action)
+            val extras = FragmentNavigatorExtras(it to "end_category_view_transition")
+            findNavController().navigate(R.id.action_navigation_home_to_category_search, null, null, extras)
+            //findNavController().navigate(action,anim)
         }
         // 詳細検索ボタン
         detail_button.setOnClickListener {
-            val action = HomeFragmentDirections.actionNavigationHomeToNavigationDetailsSearch()
-            findNavController().navigate(action)
+            val extras = FragmentNavigatorExtras(it to "end_detail_view_transition")
+            findNavController().navigate(R.id.action_navigation_home_to_navigation_details_search, null, null, extras)
         }
         // 検索ボタン
         submit.setOnClickListener {
