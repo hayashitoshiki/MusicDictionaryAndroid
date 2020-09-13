@@ -1,20 +1,27 @@
 package com.example.musicdictionaryandroid.ui.mypage
 
 import android.os.Bundle
+import android.transition.ChangeBounds
+import android.transition.ChangeClipBounds
+import android.transition.ChangeTransform
+import android.transition.TransitionSet
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.AnimationUtils
 import android.widget.AdapterView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
 import com.example.musicdictionaryandroid.R
 import com.example.musicdictionaryandroid.model.entity.ArtistsForm
 import com.example.musicdictionaryandroid.model.util.Status
 import com.example.musicdictionaryandroid.ui.adapter.SettingBaseAdapter
 import kotlinx.android.synthetic.main.fragment_mypage_artist_list.*
+import kotlinx.android.synthetic.main.fragment_mypage_artist_list.view.*
 import kotlinx.android.synthetic.main.fragment_result.no_data_text
 import kotlinx.android.synthetic.main.fragment_result.progressBar
 
@@ -30,6 +37,18 @@ class MyPageArtistFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         val root = inflater.inflate(R.layout.fragment_mypage_artist_list, container, false)
+
+        val anim = AnimationUtils.loadAnimation(requireContext(),R.anim.fade_in_offset_300_anim)
+        val transition = TransitionSet().apply {
+            addTransition(ChangeBounds())
+            addTransition(ChangeTransform())
+            addTransition(ChangeClipBounds())
+        }
+        sharedElementEnterTransition = transition
+        sharedElementReturnTransition = transition
+        root.artist_add_button.startAnimation(anim)
+        root.artist_list.startAnimation(anim)
+
         return root
     }
 
@@ -40,7 +59,8 @@ class MyPageArtistFragment : Fragment() {
 
         artist_add_button.setOnClickListener {
             val action = MyPageArtistFragmentDirections.actionNavigationMypageArtistToMyPageArtistAddFragment(null)
-            findNavController().navigate(action)
+            val extras = FragmentNavigatorExtras(it to "end_artist_add_view_transition")
+            findNavController().navigate(action, extras)
         }
 
         // リストビューの各項目タップ

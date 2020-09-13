@@ -21,6 +21,12 @@ class MyPageArtistAddViewModel : ViewModel() {
     var oldArtistName: String = ""
     val searchText = MutableLiveData<String>()
     val status = MutableLiveData<Status<CallBackData?>>()
+    val isCheckedGender = MutableLiveData<Int>(0)
+    val isCheckedLength = MutableLiveData<Int>(0)
+    val isCheckedVoice = MutableLiveData<Int>(0)
+    val isCheckedLyrics = MutableLiveData<Int>(0)
+
+
     companion object {
         private const val TAG = "SettingAddArtistPresenter"
     }
@@ -65,6 +71,18 @@ class MyPageArtistAddViewModel : ViewModel() {
             result.status = "000"
             status.value = Status.Success(result)
         }
+    }
+
+
+    fun init(artist: ArtistsForm) {
+        searchText.value = artist.name
+        oldArtistName = artist.name
+        artistForm = artist
+
+        isCheckedGender.value = artist.gender
+        isCheckedLength.value = artist.length
+        isCheckedVoice.value = artist.voice
+        isCheckedLyrics.value = artist.lyrics
     }
 
     // 送信

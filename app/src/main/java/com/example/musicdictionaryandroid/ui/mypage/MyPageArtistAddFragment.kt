@@ -2,10 +2,15 @@ package com.example.musicdictionaryandroid.ui.mypage
 
 import android.content.Context
 import android.os.Bundle
+import android.transition.ChangeBounds
+import android.transition.ChangeClipBounds
+import android.transition.ChangeTransform
+import android.transition.TransitionSet
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.AnimationUtils
 import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
@@ -16,28 +21,10 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.example.musicdictionaryandroid.R
 import com.example.musicdictionaryandroid.databinding.FragmentMypageArtistAddBinding
-import com.example.musicdictionaryandroid.model.entity.ArtistsForm
 import com.example.musicdictionaryandroid.model.util.Status
 import com.example.tosik.musicdictionary_androlid.model.net.CallBackData
-import kotlinx.android.synthetic.main.fragment_category_search.lyric1
-import kotlinx.android.synthetic.main.fragment_category_search.lyric2
-import kotlinx.android.synthetic.main.fragment_category_search.lyric3
-import kotlinx.android.synthetic.main.fragment_category_search.lyric4
-import kotlinx.android.synthetic.main.fragment_category_search.lyric5
-import kotlinx.android.synthetic.main.fragment_category_search.voice1
-import kotlinx.android.synthetic.main.fragment_category_search.voice2
-import kotlinx.android.synthetic.main.fragment_category_search.voice3
-import kotlinx.android.synthetic.main.fragment_category_search.voice4
-import kotlinx.android.synthetic.main.fragment_category_search.voice5
-import kotlinx.android.synthetic.main.fragment_home.view.*
 import kotlinx.android.synthetic.main.fragment_mypage_artist_add.*
-import kotlinx.android.synthetic.main.fragment_mypage_artist_add.gender1
-import kotlinx.android.synthetic.main.fragment_mypage_artist_add.gender2
-import kotlinx.android.synthetic.main.fragment_mypage_artist_add.lenght1
-import kotlinx.android.synthetic.main.fragment_mypage_artist_add.lenght2
-import kotlinx.android.synthetic.main.fragment_mypage_artist_add.lenght3
-import kotlinx.android.synthetic.main.fragment_mypage_artist_add.lenght4
-import kotlinx.android.synthetic.main.fragment_mypage_artist_add.lenght5
+import kotlinx.android.synthetic.main.fragment_mypage_artist_add.view.*
 
 class MyPageArtistAddFragment : Fragment() {
 
@@ -49,7 +36,30 @@ class MyPageArtistAddFragment : Fragment() {
     // 初期画面にHome画面をセット
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val root: FragmentMypageArtistAddBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_mypage_artist_add, container, false)
+        root.lifecycleOwner = viewLifecycleOwner
         root.viewModel = viewModel
+
+        val anim1 = AnimationUtils.loadAnimation(requireContext(),R.anim.fade_in_offset_300_anim)
+        val anim2 = AnimationUtils.loadAnimation(requireContext(),R.anim.fade_in_offset_400_anim)
+        val anim3 = AnimationUtils.loadAnimation(requireContext(),R.anim.fade_in_offset_500_anim)
+        val transition = TransitionSet().apply {
+            addTransition(ChangeBounds())
+            addTransition(ChangeTransform())
+            addTransition(ChangeClipBounds())
+        }
+        sharedElementEnterTransition = transition
+        sharedElementReturnTransition = transition
+        root.root.search_bar.startAnimation(anim1)
+        root.root.category_title1.startAnimation(anim1)
+        root.root.category_value1.startAnimation(anim1)
+        root.root.category_title2.startAnimation(anim2)
+        root.root.category_value2.startAnimation(anim2)
+        root.root.category_title3.startAnimation(anim3)
+        root.root.category_value3.startAnimation(anim3)
+        root.root.category_title4.startAnimation(anim3)
+        root.root.category_value4.startAnimation(anim3)
+        root.root.submit.startAnimation(anim3)
+
 
         // editTextフォーカス制御
         root.root.search_bar.setOnFocusChangeListener { v, hasFocus ->
@@ -67,48 +77,17 @@ class MyPageArtistAddFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
+
         viewModel.status.observe(viewLifecycleOwner, Observer { onStateChanged(it) })
         viewModel.searchText.observe(viewLifecycleOwner, Observer { viewModel.changeArtistName(it) })
+
         args.data?.let {
             fragment_title.text = getString(R.string.artist_change_title)
             submit.text = getString(R.string.mypage_artist_change_button)
-            init(it)
+            viewModel.init(it)
         } ?: run {
             fragment_title.text = getString(R.string.artist_add_title)
             submit.text = getString(R.string.mypage_artist_add_button)
-        }
-    }
-
-    private fun init(artist: ArtistsForm) {
-
-        viewModel.searchText.value = artist.name
-        viewModel.oldArtistName = artist.name
-        viewModel.artistForm = artist
-
-        when (artist.gender) {
-            1 -> gender1.isChecked = true
-            2 -> gender2.isChecked = true
-        }
-        when (artist.length) {
-            1 -> lenght1.isChecked = true
-            2 -> lenght2.isChecked = true
-            3 -> lenght3.isChecked = true
-            4 -> lenght4.isChecked = true
-            5 -> lenght5.isChecked = true
-        }
-        when (artist.voice) {
-            1 -> voice1.isChecked = true
-            2 -> voice2.isChecked = true
-            3 -> voice3.isChecked = true
-            4 -> voice4.isChecked = true
-            5 -> voice5.isChecked = true
-        }
-        when (artist.lyrics) {
-            1 -> lyric1.isChecked = true
-            2 -> lyric2.isChecked = true
-            3 -> lyric3.isChecked = true
-            4 -> lyric4.isChecked = true
-            5 -> lyric5.isChecked = true
         }
     }
 

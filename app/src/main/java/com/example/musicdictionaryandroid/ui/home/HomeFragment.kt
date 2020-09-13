@@ -2,9 +2,11 @@ package com.example.musicdictionaryandroid.ui.home
 
 import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.AnimationUtils
 import android.view.inputmethod.InputMethodManager
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
@@ -14,9 +16,6 @@ import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
 import com.example.musicdictionaryandroid.R
 import com.example.musicdictionaryandroid.databinding.FragmentHomeBinding
-import com.example.musicdictionaryandroid.model.repository.PreferenceRepositoryImp
-import com.example.musicdictionaryandroid.ui.home.HomeFragmentDirections.Companion.actionNavigationHomeToCategorySearch
-import kotlinx.android.synthetic.main.fragment_category_search.*
 import kotlinx.android.synthetic.main.fragment_home.*
 import kotlinx.android.synthetic.main.fragment_home.submit
 import kotlinx.android.synthetic.main.fragment_home.view.*
@@ -34,13 +33,22 @@ class HomeFragment : Fragment() {
         ViewModelProvider.NewInstanceFactory().create(HomeViewModel::class.java)
     }
 
+    private var firstCreateFrg = true
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         val root: FragmentHomeBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_home, container, false)
-        root.homeViewModel = viewModel
+        root.viewModel = viewModel
+        root.lifecycleOwner = viewLifecycleOwner
+
+        if (firstCreateFrg) {
+            val anim = AnimationUtils.loadAnimation(requireContext(),R.anim.home_start_anim)
+            root.root.home_view.startAnimation(anim)
+            firstCreateFrg = false
+        }
 
         // editTextフォーカス制御
         root.root.search_bar.setOnFocusChangeListener { v, hasFocus ->
@@ -58,12 +66,14 @@ class HomeFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        viewModel.searchText.observe(viewLifecycleOwner, Observer { changeSubmitButton(it.length) })
+
+        viewModel.init()
+        viewModel.searchText.observe(viewLifecycleOwner, Observer { viewModel.changeSubmitButton(it.length) })
+
         // カテゴリボタン
         category_button.setOnClickListener {
             val extras = FragmentNavigatorExtras(it to "end_category_view_transition")
             findNavController().navigate(R.id.action_navigation_home_to_category_search, null, null, extras)
-            //findNavController().navigate(action,anim)
         }
         // 詳細検索ボタン
         detail_button.setOnClickListener {
@@ -74,40 +84,6 @@ class HomeFragment : Fragment() {
         submit.setOnClickListener {
             val action = HomeFragmentDirections.actionNavigationHomeToNavigationResult(viewModel.artistsFrom)
             findNavController().navigate(action)
-        }
-
-        // 検索ボタンのバリデート
-        val count = PreferenceRepositoryImp.getFavorite()
-        if (count == 0) {
-            submit.isClickable = false
-            search_bar.isEnabled = false
-            submit_button_enable.visibility = View.VISIBLE
-        }
-        if (count < 3) {
-            category_button.isClickable = false
-            category_button_enable.visibility = View.VISIBLE
-        }
-        if (count < 5) {
-            detail_button.isClickable = false
-            detail_button_enable.visibility = View.VISIBLE
-        }
-        if (count < 8) {
-            soaring_button.isClickable = false
-            soaring_button_enable.visibility = View.VISIBLE
-        }
-        if (count < 10) {
-            recommend_button.isClickable = false
-            recommend_button_enable.visibility = View.VISIBLE
-        }
-    }
-
-    // 検索ボタン活性・非活性
-    private fun changeSubmitButton(count: Int) = when (count) {
-        0 -> {
-            submit.isClickable = false
-        } else -> {
-            viewModel.artistsFrom.name = viewModel.searchText.value.toString()
-            submit.isClickable = true
         }
     }
 }

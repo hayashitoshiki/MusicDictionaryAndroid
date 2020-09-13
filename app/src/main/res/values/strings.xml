@@ -38,7 +38,7 @@
 
     <!-- 設定系画面-->
     <string name="mypage_title">設定</string>
-    <string name="mypage_user_title">ユーザー情報</string>
+    <string name="mypage_user_title">アカウント情報</string>
     <string name="mypage_userinfo">アカウント情報</string>
     <string name="mypage_logout">ログアウト</string>
     <string name="mypage_artist_list_button">アーティスト一覧</string>

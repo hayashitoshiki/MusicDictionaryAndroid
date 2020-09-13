@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<set xmlns:android="http://schemas.android.com/apk/res/android"
+    android:interpolator="@android:anim/accelerate_interpolator" >
+
+    <!-- ホームアイコンからホーム画面が浮き出てくるアニメーション -->
+    <scale
+        android:interpolator="@android:anim/decelerate_interpolator"
+        android:fromXScale="0.0"
+        android:toXScale="1.0"
+        android:fromYScale="0.0"
+        android:toYScale="1.0"
+        android:pivotX="50%"
+        android:pivotY="50%"
+        android:fillAfter="true"
+        android:duration="@integer/bottom_nav_duration" />
+    <alpha
+        android:fromAlpha="0"
+        android:toAlpha="1"
+        android:duration="@integer/bottom_nav_duration" >
+    </alpha>
+    <translate
+        android:fromXDelta="-25%p"
+        android:toXDelta="0%p"
+        android:fromYDelta="100%p"
+        android:toYDelta="0%p"
+        android:duration="@integer/bottom_nav_duration" />
+
+</set>

@@ -8,6 +8,7 @@
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/user_info_card"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginStart="8dp"
@@ -31,6 +32,7 @@
             android:layout_marginTop="16dp"
             android:textStyle="bold"
             android:textAppearance="?android:attr/textAppearanceLarge"
+            android:transitionName="end_user_info_view_transition"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -38,6 +40,7 @@
             app:layout_constraintVertical_bias="0.0" />
 
         <LinearLayout
+            android:id="@+id/info_list_container"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/new_user_text_view"
