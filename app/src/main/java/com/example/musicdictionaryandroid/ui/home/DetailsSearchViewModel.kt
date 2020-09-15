@@ -1,6 +1,5 @@
 package com.example.musicdictionaryandroid.ui.home
 
-import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.musicdictionaryandroid.model.entity.ArtistsForm
@@ -91,8 +90,16 @@ class DetailsSearchViewModel : ViewModel() {
     }
 
     // 絞り込みジャンル変更
-    fun changeGenreKey(categoryName: String?, KeySpinner: MutableLiveData<Array<String>>, valueSpinner: MutableLiveData<Boolean>) {
-        val data = when(categoryName) {
+    fun changeGenreKey(position: Int, index: Int) {
+        when (position) {
+            1 -> changeGenreKey(genre1KeyList.value?.get(index), genre1ValueList, isSortGenre1ValueList)
+            2 -> changeGenreKey(genre2KeyList.value?.get(index), genre2ValueList, isSortGenre2ValueList)
+            3 -> changeGenreKey(genre3KeyList.value?.get(index), genre3ValueList, isSortGenre3ValueList)
+            4 -> changeGenreKey(genre4KeyList.value?.get(index), genre4ValueList, isSortGenre4ValueList)
+        }
+    }
+    private fun changeGenreKey(categoryName: String?, KeySpinner: MutableLiveData<Array<String>>, valueSpinner: MutableLiveData<Boolean>) {
+        val data = when (categoryName) {
             genreKeyList[1] -> genre1List
             genreKeyList[2] -> genre2List
             genreKeyList[3] -> genre3List
@@ -104,29 +111,17 @@ class DetailsSearchViewModel : ViewModel() {
             valueSpinner.value = true
         }?: run {
             valueSpinner.value = false
-            Log.d("TAG", "ジャンルを設定できません name:$categoryName")
         }
     }
 
     // 絞り込みジャンル追加ボタン
-    fun addSortList(position: Int){
+    fun addSortList(position: Int) {
         when (position) {
             1 -> {listFilter(genre1KeyList.value, genre1KeyInt.value, genre2KeyList, isGenreButtonArea1, isSortContainer2, isSortGenre1Key, isSortGenre1Label)}
             2 -> {listFilter(genre2KeyList.value, genre2KeyInt.value, genre3KeyList, isGenreButtonArea2, isSortContainer3, isSortGenre2Key, isSortGenre2Label)}
             3 -> {listFilter(genre3KeyList.value, genre3KeyInt.value, genre4KeyList, isGenreButtonArea3, isSortContainer4, isSortGenre3Key, isSortGenre3Label)}
         }
     }
-
-    // 絞り込みジャンル削除ボタン
-    fun deleteSortButton(position: Int) {
-        when (position) {
-            2 -> deleteGenre(isGenreButtonArea1, isSortContainer2, isSortGenre1Key, isSortGenre1Label)
-            3 -> deleteGenre(isGenreButtonArea2, isSortContainer3, isSortGenre2Key, isSortGenre2Label)
-            4 -> deleteGenre(isGenreButtonArea3, isSortContainer4, isSortGenre3Key, isSortGenre3Label)
-        }
-    }
-
-    // 絞り込みジャンル追加
     private fun listFilter(keyList:Array<String>?, position: Int?, newList: MutableLiveData<Array<String>>,
                            buttonArea: MutableLiveData<Boolean>, newSortArea: MutableLiveData<Boolean>,
                            sortKeySelect: MutableLiveData<Boolean>, sortKeyLabel: MutableLiveData<Boolean>
@@ -140,12 +135,18 @@ class DetailsSearchViewModel : ViewModel() {
                 sortKeySelect.value = false
             }
         }
-        Log.d("TAG","リストを追加できません keyList:$keyList, position:$position")
     }
 
-    // 絞り込みジャンル削除
+    // 絞り込みジャンル削除ボタン
+    fun deleteSortButton(position: Int) {
+        when (position) {
+            2 -> deleteGenre(isGenreButtonArea1, isSortContainer2, isSortGenre1Key, isSortGenre1Label)
+            3 -> deleteGenre(isGenreButtonArea2, isSortContainer3, isSortGenre2Key, isSortGenre2Label)
+            4 -> deleteGenre(isGenreButtonArea3, isSortContainer4, isSortGenre3Key, isSortGenre3Label)
+        }
+    }
     private fun deleteGenre(buttonArea: MutableLiveData<Boolean>, newSortArea: MutableLiveData<Boolean>,
-                            sortKeySelect: MutableLiveData<Boolean>, sortKeyLabel: MutableLiveData<Boolean>){
+                            sortKeySelect: MutableLiveData<Boolean>, sortKeyLabel: MutableLiveData<Boolean>) {
         buttonArea.value = true
         newSortArea.value = false
         sortKeyLabel.value = false
@@ -153,7 +154,14 @@ class DetailsSearchViewModel : ViewModel() {
     }
 
     // カテゴリの各項目設定
-    fun changeGenreValue(position: Int, button: MutableLiveData<Boolean>) {
+    fun changeGenreValue(position: Int, index: Int) {
+        when (position) {
+            1 -> changeGenreValue(index, isGenreAddButton1)
+            2 -> changeGenreValue(index, isGenreAddButton2)
+            3 -> changeGenreValue(index, isGenreAddButton3)
+        }
+    }
+    private fun changeGenreValue(position: Int, button: MutableLiveData<Boolean>) {
         button.value = when(position) {
             0 -> false
             else -> true

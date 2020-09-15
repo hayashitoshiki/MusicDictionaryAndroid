@@ -17,7 +17,6 @@ import androidx.navigation.fragment.findNavController
 import com.example.musicdictionaryandroid.R
 import com.example.musicdictionaryandroid.databinding.FragmentDetailsSearchBinding
 import com.example.musicdictionaryandroid.ui.transition.FabTransform
-import com.example.musicdictionaryandroid.ui.transition.HOME_CATEGORY_BUTTON
 import com.example.musicdictionaryandroid.ui.transition.HOME_DETAILS_BUTTON
 import kotlinx.android.synthetic.main.fragment_details_search.*
 
@@ -39,7 +38,6 @@ class DetailsSearchFragment : Fragment() {
         }
         val  trans = FabTransform(resources.getColor(R.color.colorPrimary), R.drawable.round_primary_dark_button, HOME_DETAILS_BUTTON)
         sharedElementEnterTransition = trans
-        // sharedElementReturnTransition = trans
         sharedElementReturnTransition = transition
 
         val binding: FragmentDetailsSearchBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_details_search, container, false)
@@ -51,27 +49,21 @@ class DetailsSearchFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-        viewModel.init(resources.getStringArray(R.array.category_spinner_list),
+        viewModel.init(
+            resources.getStringArray(R.array.category_spinner_list),
             resources.getStringArray(R.array.gender_spinner_list),
-            resources.getStringArray(R.array.registration_spinner_list) ,
+            resources.getStringArray(R.array.registration_spinner_list),
             resources.getStringArray(R.array.area_spinner_list),
-            resources.getStringArray(R.array.birthday_spinner_list))
+            resources.getStringArray(R.array.birthday_spinner_list)
+        )
 
-        viewModel.genre1KeyInt.observe(viewLifecycleOwner, Observer {
-            viewModel.changeGenreKey(viewModel.genre1KeyList.value?.get(it), viewModel.genre1ValueList, viewModel.isSortGenre1ValueList)
-        })
-        viewModel.genre2KeyInt.observe(viewLifecycleOwner, Observer {
-            viewModel.changeGenreKey(viewModel.genre2KeyList.value?.get(it), viewModel.genre2ValueList, viewModel.isSortGenre2ValueList)
-        })
-        viewModel.genre3KeyInt.observe(viewLifecycleOwner, Observer {
-            viewModel.changeGenreKey(viewModel.genre3KeyList.value?.get(it), viewModel.genre3ValueList, viewModel.isSortGenre3ValueList)
-        })
-        viewModel.genre4KeyInt.observe(viewLifecycleOwner, Observer {
-            viewModel.changeGenreKey(viewModel.genre4KeyList.value?.get(it), viewModel.genre4ValueList, viewModel.isSortGenre4ValueList)
-        })
-        viewModel.genre1ValueInt.observe(viewLifecycleOwner, Observer { viewModel.changeGenreValue(it, viewModel.isGenreAddButton1) })
-        viewModel.genre2ValueInt.observe(viewLifecycleOwner, Observer { viewModel.changeGenreValue(it, viewModel.isGenreAddButton2) })
-        viewModel.genre3ValueInt.observe(viewLifecycleOwner, Observer { viewModel.changeGenreValue(it, viewModel.isGenreAddButton3) })
+        viewModel.genre1KeyInt.observe(viewLifecycleOwner, Observer { viewModel.changeGenreKey(1, it) })
+        viewModel.genre2KeyInt.observe(viewLifecycleOwner, Observer { viewModel.changeGenreKey(2, it) })
+        viewModel.genre3KeyInt.observe(viewLifecycleOwner, Observer { viewModel.changeGenreKey(3, it) })
+        viewModel.genre4KeyInt.observe(viewLifecycleOwner, Observer { viewModel.changeGenreKey(4, it) })
+        viewModel.genre1ValueInt.observe(viewLifecycleOwner, Observer { viewModel.changeGenreValue(1,it) })
+        viewModel.genre2ValueInt.observe(viewLifecycleOwner, Observer { viewModel.changeGenreValue(2, it) })
+        viewModel.genre3ValueInt.observe(viewLifecycleOwner, Observer { viewModel.changeGenreValue(3, it) })
 
         // 検索結果画面へ遷移
         submit.setOnClickListener {

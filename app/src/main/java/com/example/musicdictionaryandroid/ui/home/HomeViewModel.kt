@@ -5,7 +5,9 @@ import androidx.lifecycle.ViewModel
 import com.example.musicdictionaryandroid.model.entity.ArtistsForm
 import com.example.musicdictionaryandroid.model.repository.PreferenceRepositoryImp
 
-class HomeViewModel : ViewModel() {
+class HomeViewModel(
+    private val preferenceRepository: PreferenceRepositoryImp
+) : ViewModel() {
 
     val artistsFrom = ArtistsForm()
     val searchText = MutableLiveData<String>("")
@@ -22,10 +24,8 @@ class HomeViewModel : ViewModel() {
     val isEnableSoaringButton = MutableLiveData<Boolean>(false)
     val isEnableRecommendButton = MutableLiveData<Boolean>(false)
 
-
-
-    fun init() {
-        val count = PreferenceRepositoryImp.getFavorite()
+    init {
+        val count = preferenceRepository.getFavorite()
 
         if (count == 0) {
             isSubmitButton.value = false
@@ -40,7 +40,7 @@ class HomeViewModel : ViewModel() {
             isDetailsButton.value = false
             isEnableDetailsButton.value = true
         }
-        if (count < 8) {
+        if (count < 7) {
             isSoaringButton.value = false
             isEnableSoaringButton.value = true
         }

@@ -4,19 +4,18 @@ import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.musicdictionaryandroid.model.repository.FireBaseRepository
-import com.example.musicdictionaryandroid.model.repository.FireBaseRepositoryImp
-import com.example.musicdictionaryandroid.model.repository.PreferenceRepositoryImp
-import com.example.musicdictionaryandroid.model.repository.UserRepositoryImp
+import com.example.musicdictionaryandroid.model.repository.*
 import com.example.musicdictionaryandroid.model.util.Status
 import com.example.musicdictionaryandroid.model.util.UserInfoChangeListUtil
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-class SignInViewModel : ViewModel() {
+class SignInViewModel(
+    private val fireBaseRepository: FireBaseRepository,
+    private val userRepository: UserRepository
+) : ViewModel() {
 
-    private val fireBaseRepository: FireBaseRepository = FireBaseRepositoryImp()
 
     val status = MutableLiveData<Status<String?>>()
     val emailText = MutableLiveData<String>("")
@@ -29,12 +28,10 @@ class SignInViewModel : ViewModel() {
 
         when {
             emailText.value.isNullOrEmpty() -> {
-                Log.d("TAG", "emailText is null error")
                 status.value = Status.Success("error1")
                 return
             }
             passwordText.value.isNullOrEmpty() -> {
-                Log.d("TAG", "passwordText is null error")
                 status.value = Status.Success("error2")
                 return
             }
@@ -42,7 +39,7 @@ class SignInViewModel : ViewModel() {
                 fireBaseRepository.signIn(emailText.value!!, passwordText.value!!, {
                     // APIから情報取得
                     viewModelScope.launch {
-                        runCatching { withContext(Dispatchers.IO) { UserRepositoryImp().getUserByEmail(emailText.value!!) } }
+                        runCatching { withContext(Dispatchers.IO) { userRepository.getUserByEmail(emailText.value!!) } }
                             .onSuccess {
                                 Log.d("TAG","respons:" + it.body())
                                 it.body()?.let { user ->

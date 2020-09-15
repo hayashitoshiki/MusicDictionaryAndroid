@@ -16,7 +16,6 @@ import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.example.musicdictionaryandroid.R
@@ -25,13 +24,12 @@ import com.example.musicdictionaryandroid.model.util.Status
 import com.example.tosik.musicdictionary_androlid.model.net.CallBackData
 import kotlinx.android.synthetic.main.fragment_mypage_artist_add.*
 import kotlinx.android.synthetic.main.fragment_mypage_artist_add.view.*
+import org.koin.android.viewmodel.ext.android.viewModel
 
 class MyPageArtistAddFragment : Fragment() {
 
     private val args: MyPageArtistAddFragmentArgs by navArgs()
-    private val viewModel: MyPageArtistAddViewModel by lazy {
-        ViewModelProvider.NewInstanceFactory().create(MyPageArtistAddViewModel::class.java)
-    }
+    private val viewModel: MyPageArtistAddViewModel by viewModel()
 
     // 初期画面にHome画面をセット
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {

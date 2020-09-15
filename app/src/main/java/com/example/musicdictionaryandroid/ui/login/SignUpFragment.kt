@@ -10,18 +10,15 @@ import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import com.example.musicdictionaryandroid.R
 import com.example.musicdictionaryandroid.databinding.FragmentSignUpBinding
 import com.example.musicdictionaryandroid.model.util.Status
-import kotlinx.android.synthetic.main.fragment_home.view.*
 import kotlinx.android.synthetic.main.fragment_sign_up.view.*
+import org.koin.android.viewmodel.ext.android.viewModel
 
 class SignUpFragment : Fragment() {
 
-    private val viewModel: SignUpViewModel by lazy {
-        ViewModelProvider.NewInstanceFactory().create(SignUpViewModel::class.java)
-    }
+    private val viewModel: SignUpViewModel by viewModel()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {

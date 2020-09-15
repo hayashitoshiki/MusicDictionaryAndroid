@@ -5,10 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.musicdictionaryandroid.model.entity.User
-import com.example.musicdictionaryandroid.model.repository.FireBaseRepository
-import com.example.musicdictionaryandroid.model.repository.FireBaseRepositoryImp
-import com.example.musicdictionaryandroid.model.repository.PreferenceRepositoryImp
-import com.example.musicdictionaryandroid.model.repository.UserRepositoryImp
+import com.example.musicdictionaryandroid.model.repository.*
 import com.example.musicdictionaryandroid.model.util.Status
 import com.example.musicdictionaryandroid.model.util.UserInfoChangeListUtil
 import com.google.gson.Gson
@@ -16,9 +13,10 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-class SignUpViewModel : ViewModel() {
-
-    private val fireBaseRepository: FireBaseRepository = FireBaseRepositoryImp()
+class SignUpViewModel(
+    private val fireBaseRepository: FireBaseRepository,
+    private val userRepository: UserRepository
+) : ViewModel() {
 
     val status = MutableLiveData<Status<String?>>()
     val emailText = MutableLiveData<String>()
@@ -34,32 +32,26 @@ class SignUpViewModel : ViewModel() {
         status.value = Status.Loading
         when {
             emailText.value.isNullOrEmpty() -> {
-                Log.d("TAG","emailText is null error")
                 status.value = Status.Success("error1")
                 return
             }
             passwordText.value.isNullOrEmpty() -> {
-                Log.d("TAG","passwordText is null error")
                 status.value = Status.Success("error2")
                 return
             }
             nameText.value.isNullOrEmpty() -> {
-                Log.d("TAG","nameText is null error")
                 status.value = Status.Success("error3")
                 return
             }
             genderInt.value == 0 -> {
-                Log.d("TAG","genderInt is null error")
                 status.value = Status.Success("error4")
                 return
             }
             areaSelectedPosition.value == 0 -> {
-                Log.d("TAG","areaSelectedPosition is null error")
                 status.value = Status.Success("error5")
                 return
             }
             birthdaySelectedPosition.value == 0 -> {
-                Log.d("TAG","birthdaySelectedPosition is null error")
                 status.value = Status.Success("error6")
                 return
             }
@@ -67,11 +59,10 @@ class SignUpViewModel : ViewModel() {
                 val birthday = UserInfoChangeListUtil.getBirthday(birthdaySelectedPosition.value!!)
                 val user = User(emailText.value!!, nameText.value!!, genderInt.value!!, areaSelectedPosition.value!!, birthday,0)
                 val json: String = Gson().toJson(user)
-                Log.d("TAG","respons:" + user)
                 fireBaseRepository.signUp(emailText.value!!, passwordText.value!!, {
                     // APIから情報取得
                     viewModelScope.launch {
-                        runCatching { withContext(Dispatchers.IO) { UserRepositoryImp().createUser(json) } }
+                        runCatching { withContext(Dispatchers.IO) { userRepository.createUser(json) } }
                             .onSuccess {
                                 PreferenceRepositoryImp.setEmail(user.email)
                                 PreferenceRepositoryImp.setName(user.name)

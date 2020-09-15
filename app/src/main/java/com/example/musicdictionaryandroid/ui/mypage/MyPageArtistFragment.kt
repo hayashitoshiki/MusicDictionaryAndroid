@@ -13,7 +13,6 @@ import android.view.animation.AnimationUtils
 import android.widget.AdapterView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
 import com.example.musicdictionaryandroid.R
@@ -24,12 +23,11 @@ import kotlinx.android.synthetic.main.fragment_mypage_artist_list.*
 import kotlinx.android.synthetic.main.fragment_mypage_artist_list.view.*
 import kotlinx.android.synthetic.main.fragment_result.no_data_text
 import kotlinx.android.synthetic.main.fragment_result.progressBar
+import org.koin.android.viewmodel.ext.android.viewModel
 
 class MyPageArtistFragment : Fragment() {
 
-    private val viewModel: MyPageArtistViewModel by lazy {
-        ViewModelProvider.NewInstanceFactory().create(MyPageArtistViewModel::class.java)
-    }
+    private val viewModel: MyPageArtistViewModel by viewModel()
 
     override fun onCreateView(
         inflater: LayoutInflater,

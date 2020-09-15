@@ -10,18 +10,16 @@ import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import com.example.musicdictionaryandroid.R
 import com.example.musicdictionaryandroid.databinding.FragmentSignInBinding
 import com.example.musicdictionaryandroid.model.util.Status
 import kotlinx.android.synthetic.main.fragment_sign_in.view.*
+import org.koin.android.viewmodel.ext.android.viewModel
 
 
 class SignInFragment : Fragment() {
 
-    private val viewModel: SignInViewModel by lazy {
-        ViewModelProvider.NewInstanceFactory().create(SignInViewModel::class.java)
-    }
+    private val viewModel: SignInViewModel by viewModel()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val binding: FragmentSignInBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_sign_in, container, false)

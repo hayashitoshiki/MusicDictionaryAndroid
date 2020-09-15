@@ -6,21 +6,18 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.navArgs
 import com.example.musicdictionaryandroid.R
 import com.example.musicdictionaryandroid.model.entity.ArtistsForm
 import com.example.musicdictionaryandroid.model.util.Status
 import com.example.musicdictionaryandroid.ui.adapter.CustomBaseAdapter
 import kotlinx.android.synthetic.main.fragment_result.*
+import org.koin.android.viewmodel.ext.android.viewModel
 
 class ResultFragment : Fragment() {
 
-    val args: ResultFragmentArgs by navArgs()
-
-    private val viewModel: ResultViewModel by lazy {
-        ViewModelProvider.NewInstanceFactory().create(ResultViewModel::class.java)
-    }
+    private val args: ResultFragmentArgs by navArgs()
+    private val viewModel: ResultViewModel by viewModel()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_result, container, false)

@@ -16,9 +16,11 @@ import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
 import com.example.musicdictionaryandroid.R
 import com.example.musicdictionaryandroid.databinding.FragmentHomeBinding
+import com.example.musicdictionaryandroid.ui.login.SignInViewModel
 import kotlinx.android.synthetic.main.fragment_home.*
 import kotlinx.android.synthetic.main.fragment_home.submit
 import kotlinx.android.synthetic.main.fragment_home.view.*
+import org.koin.android.viewmodel.ext.android.viewModel
 
 class HomeFragment : Fragment() {
 
@@ -29,9 +31,7 @@ class HomeFragment : Fragment() {
         }
     }
 
-    private val viewModel: HomeViewModel by lazy {
-        ViewModelProvider.NewInstanceFactory().create(HomeViewModel::class.java)
-    }
+    private val viewModel: HomeViewModel by viewModel()
 
     private var firstCreateFrg = true
 
@@ -44,11 +44,8 @@ class HomeFragment : Fragment() {
         root.viewModel = viewModel
         root.lifecycleOwner = viewLifecycleOwner
 
-        if (firstCreateFrg) {
-            val anim = AnimationUtils.loadAnimation(requireContext(),R.anim.home_start_anim)
-            root.root.home_view.startAnimation(anim)
-            firstCreateFrg = false
-        }
+        val anim = AnimationUtils.loadAnimation(requireContext(),R.anim.home_start_anim)
+        root.root.home_view.startAnimation(anim)
 
         // editTextフォーカス制御
         root.root.search_bar.setOnFocusChangeListener { v, hasFocus ->
@@ -67,7 +64,6 @@ class HomeFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-        viewModel.init()
         viewModel.searchText.observe(viewLifecycleOwner, Observer { viewModel.changeSubmitButton(it.length) })
 
         // カテゴリボタン
