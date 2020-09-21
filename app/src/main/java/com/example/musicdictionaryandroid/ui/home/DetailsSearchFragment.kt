@@ -5,7 +5,6 @@ import android.transition.ChangeBounds
 import android.transition.ChangeClipBounds
 import android.transition.ChangeTransform
 import android.transition.TransitionSet
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -67,12 +66,8 @@ class DetailsSearchFragment : Fragment() {
 
         // 検索結果画面へ遷移
         submit.setOnClickListener {
-            if (viewModel.artistForm.gender != 0 || viewModel.artistForm.length != 0 || viewModel.artistForm.voice != 0 || viewModel.artistForm.lyrics != 0) {
-                val action = DetailsSearchFragmentDirections.actionNavigationDetailsSearchToNavigationResult(viewModel.artistForm)
-                findNavController().navigate(action)
-            } else {
-                Log.d("TAG", "どれか一つ以上入力してください")
-            }
+            val action = DetailsSearchFragmentDirections.actionNavigationDetailsSearchToNavigationResult(viewModel.artistForm)
+            findNavController().navigate(action)
         }
     }
 

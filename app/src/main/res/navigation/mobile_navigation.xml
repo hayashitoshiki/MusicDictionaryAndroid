@@ -19,6 +19,12 @@
         <action
             android:id="@+id/action_navigation_home_to_navigation_details_search"
             app:destination="@id/navigation_details_search" />
+        <action
+            android:id="@+id/action_navigation_home_to_navigation_result_soaring"
+            app:destination="@id/navigation_result_soaring" />
+        <action
+            android:id="@+id/action_navigation_home_to_navigation_result_recommend"
+            app:destination="@id/navigation_result_recommend" />
     </fragment>
 
     <fragment
@@ -50,6 +56,18 @@
             android:name="data"
             app:argType="com.example.musicdictionaryandroid.model.entity.ArtistsForm" />
     </fragment>
+
+    <fragment
+        android:id="@+id/navigation_result_recommend"
+        android:name="com.example.musicdictionaryandroid.ui.home.ResultRecommendFragment"
+        android:label="ResultRecommendFragment"
+        tools:layout="@layout/fragment_result_recommend"/>
+
+    <fragment
+        android:id="@+id/navigation_result_soaring"
+        android:name="com.example.musicdictionaryandroid.ui.home.ResultSoaringFragment"
+        android:label="ResultSoaringFragment"
+        tools:layout="@layout/fragment_result_soaring"/>
 
     <fragment
         android:id="@+id/navigation_mypage"
@@ -90,7 +108,6 @@
         android:name="com.example.musicdictionaryandroid.ui.mypage.MyPageUserFragment"
         android:label="MyPageUserInfoFragment"
         tools:layout="@layout/fragment_mypage_user"/>
-
 
 
 </navigation>

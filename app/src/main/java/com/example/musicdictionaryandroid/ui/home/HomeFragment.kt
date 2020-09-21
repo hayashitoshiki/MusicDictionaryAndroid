@@ -2,7 +2,6 @@ package com.example.musicdictionaryandroid.ui.home
 
 import android.content.Context
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,12 +10,10 @@ import android.view.inputmethod.InputMethodManager
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
 import com.example.musicdictionaryandroid.R
 import com.example.musicdictionaryandroid.databinding.FragmentHomeBinding
-import com.example.musicdictionaryandroid.ui.login.SignInViewModel
 import kotlinx.android.synthetic.main.fragment_home.*
 import kotlinx.android.synthetic.main.fragment_home.submit
 import kotlinx.android.synthetic.main.fragment_home.view.*
@@ -32,8 +29,6 @@ class HomeFragment : Fragment() {
     }
 
     private val viewModel: HomeViewModel by viewModel()
-
-    private var firstCreateFrg = true
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -75,6 +70,16 @@ class HomeFragment : Fragment() {
         detail_button.setOnClickListener {
             val extras = FragmentNavigatorExtras(it to "end_detail_view_transition")
             findNavController().navigate(R.id.action_navigation_home_to_navigation_details_search, null, null, extras)
+        }
+        // 急上昇ボタン
+        soaring_button.setOnClickListener {
+            val action = HomeFragmentDirections.actionNavigationHomeToNavigationResultSoaring()
+            findNavController().navigate(action)
+        }
+        // おすすめボタン
+        recommend_button.setOnClickListener {
+            val action = HomeFragmentDirections.actionNavigationHomeToNavigationResultRecommend()
+            findNavController().navigate(action)
         }
         // 検索ボタン
         submit.setOnClickListener {

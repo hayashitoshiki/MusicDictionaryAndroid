@@ -13,6 +13,16 @@ class ApiServerRepositoryImp : ApiServerRepository {
         return Provider.api().search(artists.getMapList()).execute()
     }
 
+    // おすすめアーティストリストを返す
+    override fun getArtistsByRecommend(email: String): Response<ArrayList<ArtistsForm>> {
+        return Provider.api().getRecommend(email).execute()
+    }
+
+    // 急上昇アーティストリストを返す
+    override fun getArtistsBySoaring(): Response<ArrayList<ArtistsForm>> {
+        return Provider.api().getSoaring().execute()
+    }
+
     // ユーザー登録したアーティスト取得
     override fun getArtistsByEmail(email: String): Response<ArrayList<ArtistsForm>> {
         return Provider.api().findByEmail(email).execute()

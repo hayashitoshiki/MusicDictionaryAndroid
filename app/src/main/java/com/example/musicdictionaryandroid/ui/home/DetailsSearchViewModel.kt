@@ -167,5 +167,10 @@ class DetailsSearchViewModel : ViewModel() {
             else -> true
         }
     }
+    val isSubmit = MutableLiveData<Boolean>(false)
+    private fun checkValidate() {
+        isSubmit.value =
+            !(artistForm.gender != 0 || artistForm.length != 0 || artistForm.voice != 0 || artistForm.lyrics != 0)
+    }
 
 }

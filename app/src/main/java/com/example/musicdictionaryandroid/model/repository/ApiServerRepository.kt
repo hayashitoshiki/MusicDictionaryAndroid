@@ -12,6 +12,12 @@ interface ApiServerRepository {
     // 検索条件に一致するアーティスト取得
     fun getArtistsBy(artists: ArtistsForm): Response<ArrayList<ArtistsForm>>
 
+    // おすすめアーティスト取得
+    fun getArtistsByRecommend(email: String): Response<ArrayList<ArtistsForm>>
+
+    // 急上昇アーティスト取得
+    fun getArtistsBySoaring(): Response<ArrayList<ArtistsForm>>
+
     /*----------------------------------------
         設定タブ
      ----------------------------------------*/

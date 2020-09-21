@@ -11,6 +11,12 @@ interface ApiService {
     @GET("artist/find.json")
     fun search(@QueryMap stringParams: Map<String, String>): Call<ArrayList<ArtistsForm>>
 
+    @GET("artist/find/recommend.json")
+    fun getRecommend(@Query("email") email: String): Call<ArrayList<ArtistsForm>>
+
+    @GET("artist/find/soaring.json")
+    fun getSoaring(): Call<ArrayList<ArtistsForm>>
+
     // @GET("findByEmail.json")
     @GET("artist/find/email.json")
     fun findByEmail(@Query("email") email: String): Call<ArrayList<ArtistsForm>>
