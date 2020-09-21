@@ -24,5 +24,5 @@ interface ArtistsRepository {
     fun findByName(name: String): Artist
 
     // アーティスト全取得
-    fun getArtistAll(): Array<Artist>
+    fun getArtistAll(): ArrayList<ArtistsForm>
 }

@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.musicdictionaryandroid.model.entity.ArtistsForm
 import com.example.musicdictionaryandroid.model.repository.ApiServerRepository
+import com.example.musicdictionaryandroid.model.repository.ArtistsRepository
 import com.example.musicdictionaryandroid.model.repository.FireBaseRepository
 import com.example.musicdictionaryandroid.model.util.Status
 import com.example.tosik.musicdictionary_androlid.model.net.CallBackData
@@ -15,7 +16,8 @@ import kotlinx.coroutines.withContext
 
 class MyPageArtistAddViewModel(
     private val firebaseRepository: FireBaseRepository,
-    private val apiServerRepositoryImp: ApiServerRepository
+    private val apiServerRepositoryImp: ApiServerRepository,
+    private val artistsRepository: ArtistsRepository
 ) : ViewModel() {
 
     private var email = ""
@@ -52,14 +54,19 @@ class MyPageArtistAddViewModel(
     // アーティスト登録
     private fun addArtist(artist: ArtistsForm): Job = viewModelScope.launch {
         runCatching { withContext(Dispatchers.IO) { apiServerRepositoryImp.addArtist(artist, email) } }
-            .onSuccess { status.value = Status.Success(it.body()) }
+            .onSuccess {
+                artistsRepository.addArtist(artist)
+                status.value = Status.Success(it.body()) }
             .onFailure { status.value = Status.Failure(it) }
     }
 
     // アーティスト更新
     private fun updateArtist(artist: ArtistsForm): Job = viewModelScope.launch {
         runCatching { withContext(Dispatchers.IO) { apiServerRepositoryImp.updateArtist(artist, oldArtistName, email) } }
-            .onSuccess { status.value = Status.Success(it.body()) }
+            .onSuccess {
+                artistsRepository.deleteAll()
+                artistsRepository.updateArtist(artist, oldArtistName)
+                status.value = Status.Success(it.body()) }
             .onFailure { status.value = Status.Failure(it) }
     }
 

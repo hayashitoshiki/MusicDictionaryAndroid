@@ -1,9 +1,7 @@
 package com.example.musicdictionaryandroid.model.repository
 
-import android.util.Log
 import com.example.musicdictionaryandroid.model.entity.Artist
 import com.example.musicdictionaryandroid.model.entity.ArtistsForm
-import com.example.musicdictionaryandroid.model.entity.DataStock
 import io.realm.Realm
 import io.realm.RealmConfiguration
 
@@ -25,17 +23,16 @@ class ArtistsRepositoryImp : ArtistsRepository {
     // DB更新
     override fun updateAll(artists: ArrayList<ArtistsForm>) {
         updateRealm()
-        Log.d(TAG, "データ更新")
-
         for (artist in artists) {
             realm.executeTransaction {
-                var art = realm.createObject(Artist::class.java, getAutoIncrementId(realm))
-                art.name = artist.name
-                art.gender = artist.gender
-                art.voice = artist.voice
-                art.length = artist.length
-                art.lyrics = artist.lyrics
-                realm.copyToRealm(art)
+                val data = realm.createObject(Artist::class.java, getAutoIncrementId(realm)).also {
+                    it.name = artist.name
+                    it.gender = artist.gender
+                    it.voice = artist.voice
+                    it.length = artist.length
+                    it.lyrics = artist.lyrics
+                }
+                realm.copyToRealm(data)
             }
         }
         realm.close()
@@ -45,10 +42,7 @@ class ArtistsRepositoryImp : ArtistsRepository {
     override fun deleteAll() {
         updateRealm()
         val count = getAutoIncrementId(realm) - 1
-        Log.d(TAG, "データリセット" + count)
-
         if (count != 0) {
-            Log.d(TAG, "データリセット開始")
             realm.executeTransaction {
                 val book = realm.where(Artist::class.java).findAll()
                 book.deleteAllFromRealm()
@@ -59,24 +53,21 @@ class ArtistsRepositoryImp : ArtistsRepository {
     // アーティスト登録
     override fun addArtist(artist: ArtistsForm) {
         updateRealm()
-
         realm.executeTransaction {
-            val art = realm.createObject(Artist::class.java, getAutoIncrementId(realm))
-            art.name = artist.name
-            art.gender = artist.gender
-            art.voice = artist.voice
-            art.length = artist.length
-            art.lyrics = artist.lyrics
-            realm.copyToRealm(art)
+            val data = realm.createObject(Artist::class.java, getAutoIncrementId(realm)).also {
+                it.name = artist.name
+                it.gender = artist.gender
+                it.voice = artist.voice
+                it.length = artist.length
+                it.lyrics = artist.lyrics
+            }
+            realm.copyToRealm(data)
         }
-        DataStock.count++
     }
 
     // アーティスト更新
     override fun updateArtist(artist: ArtistsForm, beforeName: String) {
         updateRealm()
-
-        Log.d(TAG, "アーティスト更新開始")
         realm.executeTransaction {
             val art = realm.where(Artist::class.java).equalTo("name", beforeName).findFirst()!!
             art.name = artist.name
@@ -91,8 +82,6 @@ class ArtistsRepositoryImp : ArtistsRepository {
     // アーティスト削除
     override fun deleteArtist(name: String) {
         updateRealm()
-
-        Log.d(TAG, "データリセット開始")
         realm.executeTransaction {
             val book = realm.where(Artist::class.java).equalTo("name", name).findFirst()
             book!!.deleteFromRealm()
@@ -100,19 +89,30 @@ class ArtistsRepositoryImp : ArtistsRepository {
     }
 
     // アーティスト全取得
-    override fun getArtistAll(): Array<Artist> {
+    override fun getArtistAll(): ArrayList<ArtistsForm> {
         updateRealm()
-        Log.d(TAG, "全アーティスト取得")
-        val artistList = realm.where(Artist::class.java).findAll()
-        val artists: Array<Artist> = artistList.toTypedArray()
+        val artistsCache = realm.where(Artist::class.java).findAll()
+        val artistList: ArrayList<ArtistsForm> = arrayListOf()
+        artistsCache.forEach {
+            val artist = ArtistsForm(
+                it.name!!,
+                it.gender!!,
+                it.voice!!,
+                it.length!!,
+                it.lyrics!!,
+                it.genre1,
+                it.genre2,
+                null
+            )
+            artistList.add(artist)
+        }
 
-        return artists
+        return artistList
     }
 
     // アーティスト名一致取得
     override fun findByName(name: String): Artist {
         updateRealm()
-        Log.d(TAG, "全アーティスト取得")
         val artist = realm.where(Artist::class.java).equalTo("name", name).findFirst()
 
         return artist!!
@@ -120,7 +120,6 @@ class ArtistsRepositoryImp : ArtistsRepository {
 
     // 自動連番Id取得
     private fun getAutoIncrementId(realm: Realm): Int {
-
         // 初期化
         var nextUserId: Int = 1
         // userIdの最大値を取得

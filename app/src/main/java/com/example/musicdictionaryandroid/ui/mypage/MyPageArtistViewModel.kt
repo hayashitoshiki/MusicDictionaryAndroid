@@ -1,5 +1,6 @@
 package com.example.musicdictionaryandroid.ui.mypage
 
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -10,7 +11,8 @@ import kotlinx.coroutines.*
 
 class MyPageArtistViewModel(
     private val firebaseRepository: FireBaseRepository,
-    private val apiServerRepository: ApiServerRepository
+    private val apiServerRepository: ApiServerRepository,
+    private val artistsRepository: ArtistsRepository
 ) : ViewModel() {
 
     val status = MutableLiveData<Status<ArrayList<ArtistsForm>?>>()
@@ -25,9 +27,15 @@ class MyPageArtistViewModel(
         status.value = Status.Loading
         runCatching { withContext(Dispatchers.IO) { apiServerRepository.getArtistsByEmail(email) } }
             .onSuccess {
-                PreferenceRepositoryImp.setFavorite(it.body()!!.size)
+                it.body()?.let { artistsFormList ->
+                    PreferenceRepositoryImp.setFavorite(artistsFormList.size)
+                    artistsRepository.deleteAll()
+                    artistsRepository.updateAll(artistsFormList)
+                }
                 status.value = Status.Success(it.body()) }
-            .onFailure { status.value = Status.Failure(it) }
+            .onFailure {
+                val artist = artistsRepository.getArtistAll()
+                status.value = Status.Success(artist) }
     }
 
     // アーティスト削除
@@ -38,6 +46,7 @@ class MyPageArtistViewModel(
             .onSuccess {
                 artistList.remove(artist)
                 PreferenceRepositoryImp.setFavorite(artistList.size)
+                artistsRepository.deleteArtist(artist.name)
                 status.value = Status.Success(artistList) }
             .onFailure { status.value = Status.Failure(it) }
     }

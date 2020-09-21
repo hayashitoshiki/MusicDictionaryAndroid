@@ -9,7 +9,6 @@ import android.view.animation.AnimationUtils
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
 import com.example.musicdictionaryandroid.R
@@ -17,11 +16,12 @@ import com.example.musicdictionaryandroid.model.util.Status
 import com.example.musicdictionaryandroid.ui.login.StartActivity
 import kotlinx.android.synthetic.main.fragment_mypage_top.*
 import kotlinx.android.synthetic.main.fragment_mypage_top.view.*
+import org.koin.android.viewmodel.ext.android.viewModel
 
 
 class MyPageTopFragment : Fragment() {
 
-    private lateinit var viewModel: MyPageTopViewModel
+    private val viewModel: MyPageTopViewModel by viewModel()
 
     private var firstCreateFrg = true
 
@@ -31,7 +31,6 @@ class MyPageTopFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        viewModel = ViewModelProviders.of(this).get(MyPageTopViewModel::class.java)
         val root = inflater.inflate(R.layout.fragment_mypage_top, container, false)
 
         if (firstCreateFrg) {

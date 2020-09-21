@@ -10,6 +10,7 @@ import com.example.musicdictionaryandroid.ui.login.SignInViewModel
 import com.example.musicdictionaryandroid.ui.login.SignUpViewModel
 import com.example.musicdictionaryandroid.ui.mypage.MyPageArtistAddViewModel
 import com.example.musicdictionaryandroid.ui.mypage.MyPageArtistViewModel
+import com.example.musicdictionaryandroid.ui.mypage.MyPageTopViewModel
 import io.realm.Realm
 import io.realm.RealmConfiguration
 import org.koin.android.ext.koin.androidContext
@@ -45,8 +46,9 @@ class MyApplication : Application() {
     // Koinモジュール
     private val module: Module = module {
 
-        viewModel { MyPageArtistAddViewModel(get(), get()) }
-        viewModel { MyPageArtistViewModel(get(), get()) }
+        viewModel { MyPageTopViewModel(get(), get()) }
+        viewModel { MyPageArtistAddViewModel(get(), get(), get()) }
+        viewModel { MyPageArtistViewModel(get(), get(), get()) }
         viewModel { SignInViewModel(get(), get()) }
         viewModel { SignUpViewModel(get(), get()) }
         viewModel { ResultViewModel(get()) }
@@ -57,6 +59,7 @@ class MyApplication : Application() {
         factory <FireBaseRepository> { FireBaseRepositoryImp() }
         factory <ApiServerRepository> { ApiServerRepositoryImp() }
         factory <UserRepository> { UserRepositoryImp() }
+        factory <ArtistsRepository> { ArtistsRepositoryImp() }
         factory <PreferenceRepositoryImp> { PreferenceRepositoryImp }
     }
 

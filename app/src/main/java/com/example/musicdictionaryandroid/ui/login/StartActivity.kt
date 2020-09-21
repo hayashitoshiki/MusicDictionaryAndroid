@@ -5,12 +5,10 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
-import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import com.example.musicdictionaryandroid.MainActivity
+import com.example.musicdictionaryandroid.ui.MainActivity
 import com.example.musicdictionaryandroid.R
-import com.example.musicdictionaryandroid.model.entity.ArtistsForm
 import com.example.musicdictionaryandroid.model.util.Status
 
 class StartActivity : AppCompatActivity(){

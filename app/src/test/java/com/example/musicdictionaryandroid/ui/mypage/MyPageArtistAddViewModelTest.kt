@@ -3,6 +3,7 @@ package com.example.musicdictionaryandroid.ui.mypage
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.example.musicdictionaryandroid.model.entity.ArtistsForm
 import com.example.musicdictionaryandroid.model.repository.ApiServerRepository
+import com.example.musicdictionaryandroid.model.repository.ArtistsRepository
 import com.example.musicdictionaryandroid.model.repository.FireBaseRepository
 import com.example.musicdictionaryandroid.model.util.Status
 import com.example.tosik.musicdictionary_androlid.model.net.CallBackData
@@ -68,7 +69,10 @@ class MyPageArtistAddViewModelTest {
         val apiServerRepository = mockk<ApiServerRepository> ().also {
             coEvery { it.addArtist(any(), "aaa") } returns response
         }
-        val viewModel = MyPageArtistAddViewModel(firebaseRepository, apiServerRepository)
+        val artistsRepository = mockk<ArtistsRepository> ().also {
+            coEvery { it.addArtist(any()) } returns Unit
+        }
+        val viewModel = MyPageArtistAddViewModel(firebaseRepository, apiServerRepository, artistsRepository)
 
         // 実行
         viewModel.changeArtistName("test")
@@ -95,7 +99,10 @@ class MyPageArtistAddViewModelTest {
         val apiServerRepository = mockk<ApiServerRepository> ().also {
             coEvery { it.addArtist(any(), "aaa") } returns response
         }
-        val viewModel = MyPageArtistAddViewModel(firebaseRepository, apiServerRepository)
+        val artistsRepository = mockk<ArtistsRepository> ().also {
+            coEvery { it.addArtist(any()) } returns Unit
+        }
+        val viewModel = MyPageArtistAddViewModel(firebaseRepository, apiServerRepository, artistsRepository)
 
         // 実行
         viewModel.submit()
@@ -132,7 +139,10 @@ class MyPageArtistAddViewModelTest {
         val apiServerRepository = mockk<ApiServerRepository>().also{
             coEvery { it.updateArtist(any(),"test", "aaa") } returns response
         }
-        val viewModel = MyPageArtistAddViewModel(firebaseRepository, apiServerRepository)
+        val artistsRepository = mockk<ArtistsRepository> ().also {
+            coEvery { it.updateArtist(any(),"test") } returns Unit
+        }
+        val viewModel = MyPageArtistAddViewModel(firebaseRepository, apiServerRepository, artistsRepository)
         val artist = ArtistsForm("test",1,1,1,1)
 
         // 実行
