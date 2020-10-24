@@ -17,9 +17,9 @@ MVVM
 * Retrofit
 * OkHttp
 * Gson
-* coroutines
+* Coroutine
 * ktLint
-* firebase
+* Firebase
 * Room
 * LiveData
 * DataBinding
