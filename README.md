@@ -20,9 +20,9 @@ MVVM
 * coroutines
 * ktLint
 * firebase
-* realm
-* livedata
-* databinding
+* Room
+* LiveData
+* DataBinding
 
 ## イメージ
 ホーム画面
