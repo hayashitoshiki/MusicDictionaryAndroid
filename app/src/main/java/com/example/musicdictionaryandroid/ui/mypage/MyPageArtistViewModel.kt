@@ -29,13 +29,17 @@ class MyPageArtistViewModel(
             .onSuccess {
                 it.body()?.let { artistsFormList ->
                     PreferenceRepositoryImp.setFavorite(artistsFormList.size)
-                    artistsRepository.deleteAll()
-                    artistsRepository.updateAll(artistsFormList)
+                    viewModelScope.launch(Dispatchers.IO) {
+                        artistsRepository.deleteAll()
+                        artistsRepository.updateAll(artistsFormList)
+                    }
                 }
                 status.value = Status.Success(it.body()) }
             .onFailure {
-                val artist = artistsRepository.getArtistAll()
-                status.value = Status.Success(artist) }
+                viewModelScope.launch(Dispatchers.IO) {
+                    val artist = artistsRepository.getArtistAll()
+                status.postValue(Status.Success(artist))
+                }}
     }
 
     // アーティスト削除
@@ -46,7 +50,9 @@ class MyPageArtistViewModel(
             .onSuccess {
                 artistList.remove(artist)
                 PreferenceRepositoryImp.setFavorite(artistList.size)
-                artistsRepository.deleteArtist(artist.name)
+                viewModelScope.launch(Dispatchers.IO) {
+                    artistsRepository.deleteArtist(artist.name)
+                }
                 status.value = Status.Success(artistList) }
             .onFailure { status.value = Status.Failure(it) }
     }

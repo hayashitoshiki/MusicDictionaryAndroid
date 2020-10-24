@@ -55,7 +55,9 @@ class MyPageArtistAddViewModel(
     private fun addArtist(artist: ArtistsForm): Job = viewModelScope.launch {
         runCatching { withContext(Dispatchers.IO) { apiServerRepositoryImp.addArtist(artist, email) } }
             .onSuccess {
-                artistsRepository.addArtist(artist)
+                viewModelScope.launch(Dispatchers.IO) {
+                    artistsRepository.addArtist(artist)
+                }
                 status.value = Status.Success(it.body()) }
             .onFailure { status.value = Status.Failure(it) }
     }
@@ -64,8 +66,10 @@ class MyPageArtistAddViewModel(
     private fun updateArtist(artist: ArtistsForm): Job = viewModelScope.launch {
         runCatching { withContext(Dispatchers.IO) { apiServerRepositoryImp.updateArtist(artist, oldArtistName, email) } }
             .onSuccess {
-                artistsRepository.deleteAll()
-                artistsRepository.updateArtist(artist, oldArtistName)
+                viewModelScope.launch(Dispatchers.IO) {
+                    artistsRepository.deleteAll()
+                    artistsRepository.updateArtist(artist, oldArtistName)
+                }
                 status.value = Status.Success(it.body()) }
             .onFailure { status.value = Status.Failure(it) }
     }

@@ -1,6 +1,8 @@
 package com.example.musicdictionaryandroid.ui
 
 import android.app.Application
+import androidx.room.Room
+import com.example.musicdictionaryandroid.model.dao.AppDatabase
 import com.example.musicdictionaryandroid.model.repository.*
 import com.example.musicdictionaryandroid.ui.home.HomeViewModel
 import com.example.musicdictionaryandroid.ui.home.ResultRecommendViewModel
@@ -11,8 +13,6 @@ import com.example.musicdictionaryandroid.ui.login.SignUpViewModel
 import com.example.musicdictionaryandroid.ui.mypage.MyPageArtistAddViewModel
 import com.example.musicdictionaryandroid.ui.mypage.MyPageArtistViewModel
 import com.example.musicdictionaryandroid.ui.mypage.MyPageTopViewModel
-import io.realm.Realm
-import io.realm.RealmConfiguration
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.context.startKoin
 import org.koin.core.module.Module
@@ -29,18 +29,24 @@ class MyApplication : Application() {
         fun getInstance(): MyApplication {
             return sInstance
         }
+        lateinit var database: AppDatabase
     }
 
     override fun onCreate() {
         super.onCreate()
-        Realm.init(this)
-        val config = RealmConfiguration.Builder().build()
         PreferenceRepositoryImp.init(applicationContext)
 
         startKoin {
             androidContext(applicationContext)
             modules(module)
         }
+
+        // AppDatabaseをビルドする
+        database = Room.databaseBuilder(
+            applicationContext,
+            AppDatabase::class.java,
+            "app_database"
+        ).build()
     }
 
     // Koinモジュール
