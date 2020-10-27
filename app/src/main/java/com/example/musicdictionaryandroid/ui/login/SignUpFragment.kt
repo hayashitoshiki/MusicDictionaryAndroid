@@ -24,6 +24,7 @@ class SignUpFragment : Fragment() {
                               savedInstanceState: Bundle?): View? {
         val binding: FragmentSignUpBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_sign_up, container, false)
         binding.viewModel = viewModel
+        binding.lifecycleOwner = viewLifecycleOwner
 
         // editTextフォーカス制御
         binding.root.email_edit_text.setOnFocusChangeListener { v, hasFocus ->
@@ -62,10 +63,9 @@ class SignUpFragment : Fragment() {
     private fun onStateChanged(state: Status<String?>) = when (state) {
         is Status.Loading -> {}
         is Status.Success -> {
-            state.data?.let{ when(it) {
-                    "error1", "error2", "error3", "error4", "error5", "error6" -> (activity as StartActivity).showErrorEmailPassword()
-                    else -> (activity as StartActivity).startApp()
-            } }?: run {
+            state.data?.let{
+                (activity as StartActivity).startApp()
+             }?: run {
                 (activity as StartActivity).showErrorEmailPassword()
             }
         }

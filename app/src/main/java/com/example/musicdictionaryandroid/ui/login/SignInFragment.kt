@@ -3,12 +3,12 @@ package com.example.musicdictionaryandroid.ui.login
 
 import android.content.Context
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import com.example.musicdictionaryandroid.R
 import com.example.musicdictionaryandroid.databinding.FragmentSignInBinding
@@ -24,6 +24,7 @@ class SignInFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val binding: FragmentSignInBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_sign_in, container, false)
         binding.viewModel = viewModel
+        binding.lifecycleOwner = viewLifecycleOwner
 
         // editTextフォーカス制御
         binding.root.email_edit_text.setOnFocusChangeListener { v, hasFocus ->
@@ -55,10 +56,9 @@ class SignInFragment : Fragment() {
     private fun onStateChanged(state: Status<String?>) = when (state) {
         is Status.Loading -> {}
         is Status.Success -> {
-            state.data?.let{ when(it) {
-                "error1", "error2" -> (activity as StartActivity).showErrorEmailPassword()
-                else -> (activity as StartActivity).startApp()
-            } }?: run {
+            state.data?.let{
+                (activity as StartActivity).startApp()
+             }?: run {
                 (activity as StartActivity).showErrorEmailPassword()
             }
         }

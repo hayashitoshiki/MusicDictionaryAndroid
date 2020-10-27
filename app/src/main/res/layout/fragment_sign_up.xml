@@ -35,6 +35,8 @@
                 android:id="@+id/email_edit_text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:hint="@string/sign_email_validate"
+                android:inputType="text"
                 android:text="@={viewModel.emailText}" />
 
             <TextView
@@ -50,6 +52,7 @@
                 android:id="@+id/password_edit_text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:hint="@string/sign_password_validate"
                 android:inputType="textPassword"
                 android:text="@={viewModel.passwordText}" />
 
@@ -66,6 +69,8 @@
                 android:id="@+id/name_edit_text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:hint="@string/sign_name_validate"
+                android:inputType="text"
                 android:text="@={viewModel.nameText}" />
 
             <TextView
@@ -162,7 +167,8 @@
                 android:layout_margin="10dp"
                 android:stateListAnimator="@drawable/button_state_list_anim_material"
                 android:elevation="6dp"
-                android:background="@drawable/accent_button"
+                android:background="@drawable/accent_button_selector"
+                android:enabled="@{viewModel.isEnableSubmitButton}"
                 android:onClick="@{() -> viewModel.signUp()}"
                 android:text="@string/sign_up_title"
                 android:textAppearance="?android:attr/textAppearanceMedium"

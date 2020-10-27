@@ -35,6 +35,15 @@
     <string name="home_button_validate3">5件以上登録する必要があります</string>
     <string name="home_button_validate4">8件以上登録する必要があります</string>
     <string name="home_button_validate5">10件以上登録する必要があります</string>
+    <string name="sign_password_validate">６文字以上入力する必要があります</string>
+    <string name="sign_email_validate">６文字以上入力する必要があります</string>
+    <string name="sign_name_validate">６文字以上入力する必要があります</string>
+
+    <!-- 成功文言 -->
+    <string name="success_login">同期しました</string>
+    <!-- エラー文言 -->
+    <string name="error_email_password">EmailかPasswordが違います</string>
+    <string name="error_network">通信環境の良いところでお試しください</string>
 
     <!-- 設定系画面-->
     <string name="mypage_title">設定</string>
