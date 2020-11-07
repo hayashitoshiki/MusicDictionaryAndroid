@@ -10,6 +10,10 @@ import androidx.lifecycle.ViewModelProvider
 import com.example.musicdictionaryandroid.R
 import com.example.musicdictionaryandroid.databinding.FragmentCategorySearchBinding
 
+/**
+ * カテゴリ検索画面
+ *
+ */
 class CategorySearchFragment : Fragment() {
 
     private val viewModel: CategorySearchViewModel by lazy {
@@ -29,6 +33,5 @@ class CategorySearchFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-
     }
 }

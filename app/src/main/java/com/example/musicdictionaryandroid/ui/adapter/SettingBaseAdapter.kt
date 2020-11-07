@@ -9,6 +9,15 @@ import com.example.musicdictionaryandroid.R
 import com.example.musicdictionaryandroid.model.entity.ArtistsForm
 import java.util.ArrayList
 
+/**
+ * アーティスト一覧画面(アーティストリスト)用Adapter
+ *
+ * @constructor
+ * TODO
+ *
+ * @param context
+ * @param items
+ */
 class SettingBaseAdapter(context: Context?, items: ArrayList<ArtistsForm>) : BaseAdapter() {
 
     private val inflater: LayoutInflater

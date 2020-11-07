@@ -31,11 +31,9 @@ import androidx.interpolator.view.animation.LinearOutSlowInInterpolator
 import com.example.musicdictionaryandroid.R
 import kotlin.math.hypot
 
-
 class FabTransform : Transition {
     private val color: Int
     private val icon: Int
-
 
     private var customMode: Int = 0
     private val startX: Int
@@ -84,8 +82,8 @@ class FabTransform : Transition {
         try {
             a = context.obtainStyledAttributes(attrs, R.styleable.FabTransform)
             require(
-                !(!a.hasValue(R.styleable.FabTransform_fabColor)
-                        || !a.hasValue(R.styleable.FabTransform_fabIcon))
+                !(!a.hasValue(R.styleable.FabTransform_fabColor) ||
+                        !a.hasValue(R.styleable.FabTransform_fabIcon))
             ) { "Must provide both color & icon." }
             color = a.getColor(R.styleable.FabTransform_fabColor, Color.TRANSPARENT)
             icon = a.getResourceId(R.styleable.FabTransform_fabIcon, 0)
@@ -137,7 +135,7 @@ class FabTransform : Transition {
         }
         val (translationX: Int, translationY: Int) =
             if (customMode != 0) {
-                Pair(startX ,startY)
+                Pair(startX, startY)
             } else {
                 Pair(startBounds.centerX() - endBounds.centerX(), startBounds.centerY() - endBounds.centerY())
             }
@@ -306,7 +304,8 @@ class FabTransform : Transition {
          * Configure `intent` with the extras needed to initialize this transition.
          */
         fun addExtras(
-            intent: Intent, @ColorInt fabColor: Int,
+            intent: Intent,
+            @ColorInt fabColor: Int,
             @DrawableRes fabIconResId: Int
         ) {
             intent.putExtra(EXTRA_FAB_COLOR, fabColor)

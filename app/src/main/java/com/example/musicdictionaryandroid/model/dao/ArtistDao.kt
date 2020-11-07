@@ -3,6 +3,9 @@ package com.example.musicdictionaryandroid.model.dao
 import androidx.room.*
 import com.example.musicdictionaryandroid.model.entity.Artist
 
+/**
+ * DB呼び出しクエリ管理
+ */
 @Dao
 interface ArtistDao {
 

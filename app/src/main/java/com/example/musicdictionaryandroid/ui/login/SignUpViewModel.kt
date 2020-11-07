@@ -1,6 +1,5 @@
 package com.example.musicdictionaryandroid.ui.login
 
-import android.util.Log
 import androidx.lifecycle.*
 import com.example.musicdictionaryandroid.model.entity.User
 import com.example.musicdictionaryandroid.model.repository.*
@@ -11,6 +10,12 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
+/**
+ * 新規登録画面_UIロジック
+ *
+ * @property fireBaseRepository
+ * @property userRepository
+ */
 class SignUpViewModel(
     private val fireBaseRepository: FireBaseRepository,
     private val userRepository: UserRepository
@@ -27,14 +32,16 @@ class SignUpViewModel(
     val isEnableSubmitButton: LiveData<Boolean>
         get() = isButton
 
-
+    /**
+     * バリデート処理
+     */
     init {
-        isButton.addSource(emailText){ validateSubmit() }
-        isButton.addSource(passwordText){ validateSubmit() }
-        isButton.addSource(nameText){ validateSubmit() }
-        isButton.addSource(genderInt){ validateSubmit() }
-        isButton.addSource(areaSelectedPosition){ validateSubmit() }
-        isButton.addSource(birthdaySelectedPosition){ validateSubmit() }
+        isButton.addSource(emailText) { validateSubmit() }
+        isButton.addSource(passwordText) { validateSubmit() }
+        isButton.addSource(nameText) { validateSubmit() }
+        isButton.addSource(genderInt) { validateSubmit() }
+        isButton.addSource(areaSelectedPosition) { validateSubmit() }
+        isButton.addSource(birthdaySelectedPosition) { validateSubmit() }
     }
 
     // ボタンのバリデート
@@ -43,7 +50,7 @@ class SignUpViewModel(
     }
 
     // email入力欄
-    private fun validateEmail() : Boolean {
+    private fun validateEmail(): Boolean {
         emailText.value?.let {
             if (it.length > 5) {
                 return true
@@ -53,7 +60,7 @@ class SignUpViewModel(
     }
 
     // password入力欄
-    private fun validatePassword() : Boolean {
+    private fun validatePassword(): Boolean {
         passwordText.value?.let {
             if (it.length > 5) {
                 return true
@@ -63,7 +70,7 @@ class SignUpViewModel(
     }
 
     // 名前入力欄
-    private fun validateName() : Boolean {
+    private fun validateName(): Boolean {
         nameText.value?.let {
             if (it.length > 5) {
                 return true
@@ -73,7 +80,7 @@ class SignUpViewModel(
     }
 
     // 性別入力欄
-    private fun validateGender() : Boolean {
+    private fun validateGender(): Boolean {
         genderInt.value?.let {
             if (it != 0) {
                 return true
@@ -83,7 +90,7 @@ class SignUpViewModel(
     }
 
     // 地域入力欄
-    private fun validateArea() : Boolean {
+    private fun validateArea(): Boolean {
         areaSelectedPosition.value?.let {
             if (it != 0) {
                 return true
@@ -93,7 +100,7 @@ class SignUpViewModel(
     }
 
     // 年齢入力欄
-    private fun validateBirthday() : Boolean {
+    private fun validateBirthday(): Boolean {
         birthdaySelectedPosition.value?.let {
             if (it != 0) {
                 return true
@@ -102,11 +109,13 @@ class SignUpViewModel(
         return false
     }
 
-    // 新規作成
+    /**
+     * 新規作成
+     */
     fun signUp() {
         status.value = Status.Loading
         val birthday = UserInfoChangeListUtil.getBirthday(birthdaySelectedPosition.value!!)
-        val user = User(emailText.value!!, nameText.value!!, genderInt.value!!, areaSelectedPosition.value!!, birthday,0)
+        val user = User(emailText.value!!, nameText.value!!, genderInt.value!!, areaSelectedPosition.value!!, birthday, 0)
         val json: String = Gson().toJson(user)
         fireBaseRepository.signUp(emailText.value!!, passwordText.value!!, {
             // APIから情報取得
@@ -134,5 +143,4 @@ class SignUpViewModel(
     fun checkedChangeGender(checkedId: Int) {
         genderInt.value = checkedId
     }
-
 }

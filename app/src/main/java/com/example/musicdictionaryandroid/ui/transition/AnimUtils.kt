@@ -117,7 +117,6 @@ class AnimUtils {
         override fun start() {
             mAnimator.start()
         }
-
     }
 
     private class AnimatorListenerWrapper internal constructor(
@@ -140,7 +139,6 @@ class AnimUtils {
         override fun onAnimationRepeat(animator: Animator) {
             mListener.onAnimationRepeat(mAnimator)
         }
-
     }
 }
 

@@ -18,13 +18,14 @@ import kotlinx.android.synthetic.main.fragment_mypage_top.*
 import kotlinx.android.synthetic.main.fragment_mypage_top.view.*
 import org.koin.android.viewmodel.ext.android.viewModel
 
-
+/**
+ * 設定画面
+ */
 class MyPageTopFragment : Fragment() {
 
     private val viewModel: MyPageTopViewModel by viewModel()
 
     private var firstCreateFrg = true
-
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -34,7 +35,7 @@ class MyPageTopFragment : Fragment() {
         val root = inflater.inflate(R.layout.fragment_mypage_top, container, false)
 
         if (firstCreateFrg) {
-            val anim = AnimationUtils.loadAnimation(requireContext(),R.anim.mypage_start_anim)
+            val anim = AnimationUtils.loadAnimation(requireContext(), R.anim.mypage_start_anim)
             root.mypage_top_card.startAnimation(anim)
             firstCreateFrg = false
         }
@@ -64,9 +65,9 @@ class MyPageTopFragment : Fragment() {
 
     // ステータス監視
     private fun onStateChanged(state: Status<*>) = when (state) {
-        is Status.Loading -> {  }
+        is Status.Loading -> { }
         is Status.Success -> {
-            if (state.data != "error" ) {
+            if (state.data != "error") {
                 activityFinish()
             } else {
                 showErrorNetwork()
@@ -75,14 +76,14 @@ class MyPageTopFragment : Fragment() {
         is Status.Failure -> { showErrorNetwork() }
     }
 
-    //終了
+    // 終了
     private fun activityFinish() {
         val intent = Intent(activity, StartActivity::class.java)
         startActivity(intent)
         requireActivity().finish()
     }
 
-    //通信エラーダイアログ
+    // 通信エラーダイアログ
     private fun showErrorNetwork() {
         Toast.makeText(requireContext(), "通信環境の良いところでお試しください", Toast.LENGTH_LONG).show()
     }

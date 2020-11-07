@@ -12,7 +12,7 @@ import org.junit.rules.TestRule
  * ホーム画面
  */
 
-class HomeViewModelTest{
+class HomeViewModelTest {
 
     // LiveData用
     @get:Rule

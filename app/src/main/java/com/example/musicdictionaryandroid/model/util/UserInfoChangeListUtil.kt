@@ -2,16 +2,16 @@ package com.example.musicdictionaryandroid.model.util
 
 object UserInfoChangeListUtil {
 
-    fun changeGender(code: Int) : String {
-        return when(code) {
+    fun changeGender(code: Int): String {
+        return when (code) {
             1 -> "男"
             2 -> "女"
             else -> "未選択"
         }
     }
 
-    fun changeArea(code: Int) : String {
-        return when(code) {
+    fun changeArea(code: Int): String {
+        return when (code) {
             1 -> "東京"
             2 -> "神奈川"
             3 -> "千葉"
@@ -20,7 +20,7 @@ object UserInfoChangeListUtil {
         }
     }
 
-    fun getBirthday(code: Int) : String{
+    fun getBirthday(code: Int): String {
         return when (code) {
             1 -> "1996"
             2 -> "1997"
@@ -30,7 +30,7 @@ object UserInfoChangeListUtil {
             else -> ""
         }
     }
-    fun changeBirthdayString(code: String) : Int{
+    fun changeBirthdayString(code: String): Int {
         return when (code) {
             "1996" -> 1
             "1997" -> 2

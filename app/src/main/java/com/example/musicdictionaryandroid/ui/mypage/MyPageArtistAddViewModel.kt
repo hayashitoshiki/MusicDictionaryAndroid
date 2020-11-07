@@ -4,16 +4,23 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.musicdictionaryandroid.model.entity.ArtistsForm
+import com.example.musicdictionaryandroid.model.entity.CallBackData
 import com.example.musicdictionaryandroid.model.repository.ApiServerRepository
 import com.example.musicdictionaryandroid.model.repository.ArtistsRepository
 import com.example.musicdictionaryandroid.model.repository.FireBaseRepository
 import com.example.musicdictionaryandroid.model.util.Status
-import com.example.tosik.musicdictionary_androlid.model.net.CallBackData
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
+/**
+ * アーティスト情報登録・追加画面_UIロジック
+ *
+ * @property firebaseRepository
+ * @property apiServerRepositoryImp
+ * @property artistsRepository
+ */
 class MyPageArtistAddViewModel(
     private val firebaseRepository: FireBaseRepository,
     private val apiServerRepositoryImp: ApiServerRepository,
@@ -36,7 +43,9 @@ class MyPageArtistAddViewModel(
         artistForm.value = artist
     }
 
-    // 送信
+    /**
+     * 送信処理
+     */
     fun submit() {
         artistForm.value?.let { when {
             it.name == "" -> status.value = Status.Success(CallBackData("001"))
@@ -68,7 +77,7 @@ class MyPageArtistAddViewModel(
             .onSuccess {
                 viewModelScope.launch(Dispatchers.IO) {
                     artistsRepository.deleteAll()
-                    artistsRepository.updateArtist(artist, oldArtistName)
+                    artistsRepository.updateArtist(oldArtistName, artist)
                 }
                 status.value = Status.Success(it.body()) }
             .onFailure { status.value = Status.Failure(it) }

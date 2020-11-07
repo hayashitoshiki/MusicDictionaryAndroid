@@ -4,6 +4,10 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.musicdictionaryandroid.model.entity.ArtistsForm
 
+/**
+ * カテゴリ検索画面_UIロジック
+ *
+ */
 class CategorySearchViewModel : ViewModel() {
 
     var artistForm = ArtistsForm()

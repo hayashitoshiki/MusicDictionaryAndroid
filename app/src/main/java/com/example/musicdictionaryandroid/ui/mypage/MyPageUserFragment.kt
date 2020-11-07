@@ -16,6 +16,9 @@ import com.example.musicdictionaryandroid.R
 import com.example.musicdictionaryandroid.databinding.FragmentMypageUserBinding
 import kotlinx.android.synthetic.main.fragment_mypage_user.view.*
 
+/**
+ * ユーザー情報画面
+ */
 class MyPageUserFragment : Fragment() {
 
     private val viewModel: MyPageUserViewModel by lazy {
@@ -30,9 +33,9 @@ class MyPageUserFragment : Fragment() {
         val root: FragmentMypageUserBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_mypage_user, container, false)
         root.viewModel = viewModel
 
-        val anim1 = AnimationUtils.loadAnimation(requireContext(),R.anim.fade_in_offset_300_anim)
-        val anim2 = AnimationUtils.loadAnimation(requireContext(),R.anim.fade_in_offset_400_anim)
-        val anim3 = AnimationUtils.loadAnimation(requireContext(),R.anim.fade_in_offset_500_anim)
+        val anim1 = AnimationUtils.loadAnimation(requireContext(), R.anim.fade_in_offset_300_anim)
+        val anim2 = AnimationUtils.loadAnimation(requireContext(), R.anim.fade_in_offset_400_anim)
+        val anim3 = AnimationUtils.loadAnimation(requireContext(), R.anim.fade_in_offset_500_anim)
         val transition = TransitionSet().apply {
             addTransition(ChangeBounds())
             addTransition(ChangeTransform())
@@ -60,5 +63,4 @@ class MyPageUserFragment : Fragment() {
         super.onActivityCreated(savedInstanceState)
         viewModel.init()
     }
-
 }

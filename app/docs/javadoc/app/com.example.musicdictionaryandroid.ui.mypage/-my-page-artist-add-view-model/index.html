@@ -1,0 +1,110 @@
+<HTML>
+<HEAD>
+<meta charset="UTF-8">
+<title>MyPageArtistAddViewModel - app</title>
+<link rel="stylesheet" href="../../../style.css">
+</HEAD>
+<BODY>
+<a href="../../index.html">app</a>&nbsp;/&nbsp;<a href="../index.html">com.example.musicdictionaryandroid.ui.mypage</a>&nbsp;/&nbsp;<a href="./index.html">MyPageArtistAddViewModel</a><br/>
+<br/>
+<h1>MyPageArtistAddViewModel</h1>
+<code><span class="keyword">class </span><span class="identifier">MyPageArtistAddViewModel</span>&nbsp;<span class="symbol">:</span>&nbsp;<span class="identifier">ViewModel</span></code>
+<p>アーティスト情報登録・追加画面_UIロジック</p>
+<h3>Constructors</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="-init-.html">&lt;init&gt;</a></p>
+</td>
+<td>
+<code><span class="identifier">MyPageArtistAddViewModel</span><span class="symbol">(</span><span class="identifier" id="com.example.musicdictionaryandroid.ui.mypage.MyPageArtistAddViewModel$<init>(com.example.musicdictionaryandroid.model.repository.FireBaseRepository, com.example.musicdictionaryandroid.model.repository.ApiServerRepository, com.example.musicdictionaryandroid.model.repository.ArtistsRepository)/firebaseRepository">firebaseRepository</span><span class="symbol">:</span>&nbsp;<a href="../../com.example.musicdictionaryandroid.model.repository/-fire-base-repository/index.html"><span class="identifier">FireBaseRepository</span></a><span class="symbol">, </span><span class="identifier" id="com.example.musicdictionaryandroid.ui.mypage.MyPageArtistAddViewModel$<init>(com.example.musicdictionaryandroid.model.repository.FireBaseRepository, com.example.musicdictionaryandroid.model.repository.ApiServerRepository, com.example.musicdictionaryandroid.model.repository.ArtistsRepository)/apiServerRepositoryImp">apiServerRepositoryImp</span><span class="symbol">:</span>&nbsp;<a href="../../com.example.musicdictionaryandroid.model.repository/-api-server-repository/index.html"><span class="identifier">ApiServerRepository</span></a><span class="symbol">, </span><span class="identifier" id="com.example.musicdictionaryandroid.ui.mypage.MyPageArtistAddViewModel$<init>(com.example.musicdictionaryandroid.model.repository.FireBaseRepository, com.example.musicdictionaryandroid.model.repository.ApiServerRepository, com.example.musicdictionaryandroid.model.repository.ArtistsRepository)/artistsRepository">artistsRepository</span><span class="symbol">:</span>&nbsp;<a href="../../com.example.musicdictionaryandroid.model.repository/-artists-repository/index.html"><span class="identifier">ArtistsRepository</span></a><span class="symbol">)</span></code>
+<p>アーティスト情報登録・追加画面_UIロジック</p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3>Properties</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="artist-form.html">artistForm</a></p>
+</td>
+<td>
+<code><span class="keyword">var </span><span class="identifier">artistForm</span><span class="symbol">: </span><span class="identifier">MutableLiveData</span><span class="symbol">&lt;</span><a href="../../com.example.musicdictionaryandroid.model.entity/-artists-form/index.html"><span class="identifier">ArtistsForm</span></a><span class="symbol">&gt;</span></code></td>
+</tr>
+<tr>
+<td>
+<p><a href="search-text.html">searchText</a></p>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">searchText</span><span class="symbol">: </span><span class="identifier">MutableLiveData</span><span class="symbol">&lt;</span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">&gt;</span></code></td>
+</tr>
+<tr>
+<td>
+<p><a href="status.html">status</a></p>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">status</span><span class="symbol">: </span><span class="identifier">MutableLiveData</span><span class="symbol">&lt;</span><a href="../../com.example.musicdictionaryandroid.model.util/-status/index.html"><span class="identifier">Status</span></a><span class="symbol">&lt;</span><a href="../../com.example.musicdictionaryandroid.model.entity/-call-back-data/index.html"><span class="identifier">CallBackData</span></a><span class="symbol">?</span><span class="symbol">&gt;</span><span class="symbol">&gt;</span></code></td>
+</tr>
+</tbody>
+</table>
+<h3>Functions</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="change-artist-name.html">changeArtistName</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">changeArtistName</span><span class="symbol">(</span><span class="identifier" id="com.example.musicdictionaryandroid.ui.mypage.MyPageArtistAddViewModel$changeArtistName(kotlin.String)/name">name</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+</tr>
+<tr>
+<td>
+<p><a href="checked-change-gender.html">checkedChangeGender</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">checkedChangeGender</span><span class="symbol">(</span><span class="identifier" id="com.example.musicdictionaryandroid.ui.mypage.MyPageArtistAddViewModel$checkedChangeGender(kotlin.Int)/checkedId">checkedId</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+</tr>
+<tr>
+<td>
+<p><a href="checked-change-length.html">checkedChangeLength</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">checkedChangeLength</span><span class="symbol">(</span><span class="identifier" id="com.example.musicdictionaryandroid.ui.mypage.MyPageArtistAddViewModel$checkedChangeLength(kotlin.Int)/checkedId">checkedId</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+</tr>
+<tr>
+<td>
+<p><a href="checked-change-lyric.html">checkedChangeLyric</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">checkedChangeLyric</span><span class="symbol">(</span><span class="identifier" id="com.example.musicdictionaryandroid.ui.mypage.MyPageArtistAddViewModel$checkedChangeLyric(kotlin.Int)/checkedId">checkedId</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+</tr>
+<tr>
+<td>
+<p><a href="checked-change-voice.html">checkedChangeVoice</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">checkedChangeVoice</span><span class="symbol">(</span><span class="identifier" id="com.example.musicdictionaryandroid.ui.mypage.MyPageArtistAddViewModel$checkedChangeVoice(kotlin.Int)/checkedId">checkedId</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+</tr>
+<tr>
+<td>
+<p><a href="init.html">init</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">init</span><span class="symbol">(</span><span class="identifier" id="com.example.musicdictionaryandroid.ui.mypage.MyPageArtistAddViewModel$init(com.example.musicdictionaryandroid.model.entity.ArtistsForm)/artist">artist</span><span class="symbol">:</span>&nbsp;<a href="../../com.example.musicdictionaryandroid.model.entity/-artists-form/index.html"><span class="identifier">ArtistsForm</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+</tr>
+<tr>
+<td>
+<p><a href="submit.html">submit</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">submit</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
+<p>送信処理</p>
+</td>
+</tr>
+</tbody>
+</table>
+</BODY>
+</HTML>

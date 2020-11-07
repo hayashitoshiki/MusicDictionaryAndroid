@@ -15,6 +15,10 @@ import com.example.musicdictionaryandroid.ui.adapter.CustomBaseAdapter
 import kotlinx.android.synthetic.main.fragment_result.*
 import org.koin.android.viewmodel.ext.android.viewModel
 
+/**
+ * おすすめアーティスト検索結果画面
+ *
+ */
 class ResultRecommendFragment : Fragment() {
 
     private val viewModel: ResultRecommendViewModel by viewModel()
@@ -76,5 +80,4 @@ class ResultRecommendFragment : Fragment() {
     private fun hideProgressbar() {
         progressBar.visibility = View.GONE
     }
-
 }

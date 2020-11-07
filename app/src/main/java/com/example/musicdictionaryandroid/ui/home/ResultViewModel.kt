@@ -11,13 +11,23 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
+/**
+ * 検索結果画面_UIロジック
+ *
+ * @property apiServerRepository
+ */
 class ResultViewModel(
-    private val apiServerRepository : ApiServerRepository
+    private val apiServerRepository: ApiServerRepository
 ) : ViewModel() {
 
     val status = MutableLiveData<Status<ArrayList<ArtistsForm>?>>()
 
-    // 指定した条件でアーティストを検索
+    /**
+     * アーティスト検索
+     *
+     * @param artist 検索するアーティストの条件
+     * @return 一致したアーティスト一覧
+     */
     fun getArtists(artist: ArtistsForm): Job = viewModelScope.launch {
         status.value = Status.Loading
         runCatching { withContext(Dispatchers.IO) { apiServerRepository.getArtistsBy(artist) } }

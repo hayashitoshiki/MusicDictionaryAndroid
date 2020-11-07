@@ -1,0 +1,15 @@
+$dokka.format:html
+$dokka.linkExtension:html
+
+com.example.musicdictionaryandroid.model.dao
+com.example.musicdictionaryandroid.model.entity
+com.example.musicdictionaryandroid.model.net
+com.example.musicdictionaryandroid.model.repository
+com.example.musicdictionaryandroid.model.util
+com.example.musicdictionaryandroid.ui
+com.example.musicdictionaryandroid.ui.adapter
+com.example.musicdictionaryandroid.ui.home
+com.example.musicdictionaryandroid.ui.login
+com.example.musicdictionaryandroid.ui.mypage
+com.example.musicdictionaryandroid.ui.transition
+com.example.tosik.musicdictionary_androlid.model.net

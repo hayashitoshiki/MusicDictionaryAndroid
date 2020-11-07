@@ -12,8 +12,8 @@ import com.example.musicdictionaryandroid.R
 import com.example.musicdictionaryandroid.model.entity.ArtistsForm
 import java.util.ArrayList
 
-/*
- *CustomListViewの生成用クラス
+/**
+ * CustomListViewの生成用クラス
  */
 
 internal class CustomBaseAdapter(context: Context?, private val resourcedId: Int, items: ArrayList<ArtistsForm>) : BaseAdapter() {

@@ -28,11 +28,11 @@ import retrofit2.Response
  * 新規登録画面
  */
 
-class SignUpViewModelTest{
+class SignUpViewModelTest {
 
     private val testDispatcher = TestCoroutineDispatcher()
     private val testScope = TestCoroutineScope(testDispatcher)
-    private val responseUser: Response<User> = Response.success<User>(User( "testEmail", "testName", 1, 1, "1999",1))
+    private val responseUser: Response<User> = Response.success<User>(User("testEmail", "testName", 1, 1, "1999", 1))
 
     // LiveData用
     @get:Rule
@@ -59,34 +59,34 @@ class SignUpViewModelTest{
     fun onSignUp() = runBlocking {
         // テストクラス作成
         val firebaseRepository = mockk<FireBaseRepository>().also {
-            every { it.signUp("testEmail", "aaa", any(),any()) } returns Unit
+            every { it.signUp("testEmail", "aaa", any(), any()) } returns Unit
             every { it.getEmail() } returns "testEmail"
         }
         val userRepository = mockk<UserRepository> ().also {
-            coEvery { it.getUserByEmail( "testEmail") } returns responseUser
+            coEvery { it.getUserByEmail("testEmail") } returns responseUser
         }
         val viewModel = SignUpViewModel(firebaseRepository, userRepository)
 
         // 実行
         viewModel.signUp()
-        assertEquals(viewModel.status.value, Status.Success( "error1"))
+        assertEquals(viewModel.status.value, Status.Success("error1"))
         viewModel.emailText.value = "testEmail"
         viewModel.signUp()
-        assertEquals(viewModel.status.value, Status.Success( "error2"))
+        assertEquals(viewModel.status.value, Status.Success("error2"))
         viewModel.passwordText.value = "aaa"
         viewModel.signUp()
-        assertEquals(viewModel.status.value, Status.Success( "error3"))
+        assertEquals(viewModel.status.value, Status.Success("error3"))
         viewModel.nameText.value = "aaa"
         viewModel.signUp()
-        assertEquals(viewModel.status.value, Status.Success( "error4"))
+        assertEquals(viewModel.status.value, Status.Success("error4"))
         viewModel.genderInt.value = 1
         viewModel.signUp()
-        assertEquals(viewModel.status.value, Status.Success( "error5"))
+        assertEquals(viewModel.status.value, Status.Success("error5"))
         viewModel.areaSelectedPosition.value = 1
         viewModel.signUp()
-        assertEquals(viewModel.status.value, Status.Success( "error6"))
+        assertEquals(viewModel.status.value, Status.Success("error6"))
         viewModel.birthdaySelectedPosition.value = 1
         viewModel.signUp()
-        coVerify{firebaseRepository.signUp("testEmail", "aaa", any(),any())}
+        coVerify { firebaseRepository.signUp("testEmail", "aaa", any(), any()) }
     }
 }

@@ -1,8 +1,8 @@
 package com.example.musicdictionaryandroid.model.repository
 
 import com.example.musicdictionaryandroid.model.entity.ArtistsForm
-import com.example.tosik.musicdictionary_androlid.model.net.CallBackData
-import com.example.tosik.musicdictionary_androlid.model.net.Provider
+import com.example.musicdictionaryandroid.model.entity.CallBackData
+import com.example.musicdictionaryandroid.model.net.Provider
 import java.util.*
 import retrofit2.Response
 

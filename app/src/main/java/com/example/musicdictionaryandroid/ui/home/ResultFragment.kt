@@ -14,6 +14,10 @@ import com.example.musicdictionaryandroid.ui.adapter.CustomBaseAdapter
 import kotlinx.android.synthetic.main.fragment_result.*
 import org.koin.android.viewmodel.ext.android.viewModel
 
+/**
+ * 検索結果画面
+ *
+ */
 class ResultFragment : Fragment() {
 
     private val args: ResultFragmentArgs by navArgs()

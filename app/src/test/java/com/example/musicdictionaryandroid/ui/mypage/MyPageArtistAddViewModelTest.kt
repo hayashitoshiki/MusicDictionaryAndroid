@@ -25,7 +25,7 @@ import retrofit2.Response
 
 class MyPageArtistAddViewModelTest {
 
-    companion object{
+    companion object {
         const val NAME = "test1"
         const val GENDER = 1
         const val VOICE = 2
@@ -52,7 +52,6 @@ class MyPageArtistAddViewModelTest {
         Dispatchers.resetMain()
         testScope.cleanupTestCoroutines()
     }
-
 
     /**
      * アーティスト登録（正常系）
@@ -81,7 +80,7 @@ class MyPageArtistAddViewModelTest {
         viewModel.checkedChangeVoice(1)
         viewModel.checkedChangeLyric(1)
         viewModel.submit()
-        coVerify{apiServerRepository.addArtist(any(), "aaa")}
+        coVerify { apiServerRepository.addArtist(any(), "aaa") }
     }
 
     /**
@@ -121,7 +120,7 @@ class MyPageArtistAddViewModelTest {
         Assert.assertEquals((viewModel.status.value as Status.Success).data!!.status, "005")
         viewModel.checkedChangeLyric(1)
         viewModel.submit()
-        coVerify{apiServerRepository.addArtist(any(), "aaa")}
+        coVerify { apiServerRepository.addArtist(any(), "aaa") }
     }
 
     /**
@@ -136,14 +135,14 @@ class MyPageArtistAddViewModelTest {
         val firebaseRepository = mockk<FireBaseRepository>().also {
             every { it.getEmail() } returns "aaa"
         }
-        val apiServerRepository = mockk<ApiServerRepository>().also{
-            coEvery { it.updateArtist(any(),"test", "aaa") } returns response
+        val apiServerRepository = mockk<ApiServerRepository>().also {
+            coEvery { it.updateArtist(any(), "test", "aaa") } returns response
         }
         val artistsRepository = mockk<ArtistsRepository> ().also {
-            coEvery { it.updateArtist(any(),"test") } returns Unit
+            coEvery { it.updateArtist(any(), "test") } returns Unit
         }
         val viewModel = MyPageArtistAddViewModel(firebaseRepository, apiServerRepository, artistsRepository)
-        val artist = ArtistsForm("test",1,1,1,1)
+        val artist = ArtistsForm("test", 1, 1, 1, 1)
 
         // 実行
         viewModel.init(artist)
@@ -158,8 +157,6 @@ class MyPageArtistAddViewModelTest {
         Assert.assertEquals(viewModel.artistForm.value!!.lyrics, LYRIC)
         Assert.assertEquals(viewModel.artistForm.value!!.length, LENGTH)
         Assert.assertEquals(viewModel.artistForm.value!!.gender, GENDER)
-        coVerify{apiServerRepository.updateArtist(any(),"test", "aaa")}
+        coVerify { apiServerRepository.updateArtist(any(), "test", "aaa") }
     }
-
-
 }

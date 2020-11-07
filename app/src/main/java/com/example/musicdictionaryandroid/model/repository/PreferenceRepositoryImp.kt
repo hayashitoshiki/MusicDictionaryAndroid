@@ -2,11 +2,14 @@ package com.example.musicdictionaryandroid.model.repository
 
 import android.content.Context
 
+/**
+ * SharedPreferences管理
+ */
 object PreferenceRepositoryImp {
 
     private lateinit var context: Context
 
-    fun init(context: Context){
+    fun init(context: Context) {
         this.context = context
     }
     private enum class Key {
@@ -28,7 +31,7 @@ object PreferenceRepositoryImp {
         setString(Key.EMAIL, value)
     }
 
-    fun getEmail() : String? {
+    fun getEmail(): String? {
         return getString(Key.EMAIL)
     }
 
@@ -36,7 +39,7 @@ object PreferenceRepositoryImp {
         setString(Key.NAME, value)
     }
 
-    fun getName() : String? {
+    fun getName(): String? {
         return getString(Key.NAME)
     }
 
@@ -44,7 +47,7 @@ object PreferenceRepositoryImp {
         setInt(Key.GENDER, value)
     }
 
-    fun getGender() : Int {
+    fun getGender(): Int {
         return getInt(Key.GENDER)
     }
 
@@ -52,7 +55,7 @@ object PreferenceRepositoryImp {
         setInt(Key.AREA, value)
     }
 
-    fun getArea() : Int {
+    fun getArea(): Int {
         return getInt(Key.AREA)
     }
 
@@ -60,7 +63,7 @@ object PreferenceRepositoryImp {
         setInt(Key.BIRTHDAY, value)
     }
 
-    fun getBirthday() : Int {
+    fun getBirthday(): Int {
         return getInt(Key.BIRTHDAY)
     }
 
@@ -68,7 +71,7 @@ object PreferenceRepositoryImp {
         setInt(Key.FAVORITE, value)
     }
 
-    fun getFavorite() : Int {
+    fun getFavorite(): Int {
         return getInt(Key.FAVORITE)
     }
 
@@ -88,7 +91,7 @@ object PreferenceRepositoryImp {
         editor.apply()
     }
 
-    private fun getString(key: Key, default: String = "") : String? {
+    private fun getString(key: Key, default: String = ""): String? {
         val preferences = context.getSharedPreferences("mucisDictionary", Context.MODE_PRIVATE)
         return preferences.getString(key.name, default)
     }
@@ -99,7 +102,7 @@ object PreferenceRepositoryImp {
         editor.putInt(key.name, value)
         editor.apply()
     }
-    private fun getInt(key: Key, default: Int = 0) : Int {
+    private fun getInt(key: Key, default: Int = 0): Int {
         val preferences = context.getSharedPreferences("mucisDictionary", Context.MODE_PRIVATE)
         return preferences.getInt(key.name, default)
     }

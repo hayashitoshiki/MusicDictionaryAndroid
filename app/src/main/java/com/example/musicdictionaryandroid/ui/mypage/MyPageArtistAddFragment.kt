@@ -20,12 +20,15 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.example.musicdictionaryandroid.R
 import com.example.musicdictionaryandroid.databinding.FragmentMypageArtistAddBinding
+import com.example.musicdictionaryandroid.model.entity.CallBackData
 import com.example.musicdictionaryandroid.model.util.Status
-import com.example.tosik.musicdictionary_androlid.model.net.CallBackData
 import kotlinx.android.synthetic.main.fragment_mypage_artist_add.*
 import kotlinx.android.synthetic.main.fragment_mypage_artist_add.view.*
 import org.koin.android.viewmodel.ext.android.viewModel
 
+/**
+ * アーティスト情報登録・追加画面
+ */
 class MyPageArtistAddFragment : Fragment() {
 
     private val args: MyPageArtistAddFragmentArgs by navArgs()
@@ -37,9 +40,9 @@ class MyPageArtistAddFragment : Fragment() {
         root.lifecycleOwner = viewLifecycleOwner
         root.viewModel = viewModel
 
-        val anim1 = AnimationUtils.loadAnimation(requireContext(),R.anim.fade_in_offset_300_anim)
-        val anim2 = AnimationUtils.loadAnimation(requireContext(),R.anim.fade_in_offset_400_anim)
-        val anim3 = AnimationUtils.loadAnimation(requireContext(),R.anim.fade_in_offset_500_anim)
+        val anim1 = AnimationUtils.loadAnimation(requireContext(), R.anim.fade_in_offset_300_anim)
+        val anim2 = AnimationUtils.loadAnimation(requireContext(), R.anim.fade_in_offset_400_anim)
+        val anim3 = AnimationUtils.loadAnimation(requireContext(), R.anim.fade_in_offset_500_anim)
         val transition = TransitionSet().apply {
             addTransition(ChangeBounds())
             addTransition(ChangeTransform())
@@ -57,7 +60,6 @@ class MyPageArtistAddFragment : Fragment() {
         root.root.category_title4.startAnimation(anim3)
         root.root.category_value4.startAnimation(anim3)
         root.root.submit.startAnimation(anim3)
-
 
         // editTextフォーカス制御
         root.root.search_bar.setOnFocusChangeListener { v, hasFocus ->
@@ -93,7 +95,7 @@ class MyPageArtistAddFragment : Fragment() {
     private fun onStateChanged(state: Status<CallBackData?>) = when (state) {
         is Status.Loading -> { showProgressbar() }
         is Status.Success -> {
-            Log.d("TAG","Success:${state.data}")
+            Log.d("TAG", "Success:${state.data}")
             hideProgressbar()
             state.data?.let {
                 if (it.status == "200") back()
@@ -104,7 +106,7 @@ class MyPageArtistAddFragment : Fragment() {
             }
         }
         is Status.Failure -> {
-            Log.d("TAG","Failure:${state.throwable}")
+            Log.d("TAG", "Failure:${state.throwable}")
             hideProgressbar()
             showServerError()
         }
@@ -120,7 +122,7 @@ class MyPageArtistAddFragment : Fragment() {
     }
 
     // 入力不足エラー
-    fun showErrorToastValidate() {
+    private fun showErrorToastValidate() {
         Toast.makeText(requireContext(), "全て入力してください", Toast.LENGTH_SHORT).show()
     }
 

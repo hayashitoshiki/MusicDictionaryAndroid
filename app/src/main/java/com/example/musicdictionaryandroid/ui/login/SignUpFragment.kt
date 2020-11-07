@@ -1,14 +1,13 @@
 package com.example.musicdictionaryandroid.ui.login
 
-
 import android.content.Context
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import com.example.musicdictionaryandroid.R
 import com.example.musicdictionaryandroid.databinding.FragmentSignUpBinding
@@ -16,12 +15,18 @@ import com.example.musicdictionaryandroid.model.util.Status
 import kotlinx.android.synthetic.main.fragment_sign_up.view.*
 import org.koin.android.viewmodel.ext.android.viewModel
 
+/**
+ * 新規登録画面
+ */
 class SignUpFragment : Fragment() {
 
     private val viewModel: SignUpViewModel by viewModel()
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         val binding: FragmentSignUpBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_sign_up, container, false)
         binding.viewModel = viewModel
         binding.lifecycleOwner = viewLifecycleOwner
@@ -58,14 +63,13 @@ class SignUpFragment : Fragment() {
         viewModel.status.observe(viewLifecycleOwner, Observer { onStateChanged(it) })
     }
 
-
     // ステータス監視
     private fun onStateChanged(state: Status<String?>) = when (state) {
         is Status.Loading -> {}
         is Status.Success -> {
-            state.data?.let{
+            state.data?.let {
                 (activity as StartActivity).startApp()
-             }?: run {
+             } ?: run {
                 (activity as StartActivity).showErrorEmailPassword()
             }
         }
@@ -80,5 +84,4 @@ class SignUpFragment : Fragment() {
             return fragment
         }
     }
-
 }

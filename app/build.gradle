@@ -3,9 +3,15 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
 apply from: '../gradle/ktlint/ktlint.gradle'
-// firebase
 apply plugin: 'com.android.application'
 apply plugin: 'com.google.gms.google-services'
+apply plugin: 'org.jetbrains.dokka-android'
+
+dokka {
+    outputFormat = 'html'
+    includes = ['docs/module_package.md']
+    outputDirectory = "$buildDir/javadoc"
+}
 
 android {
     compileSdkVersion 29
@@ -39,7 +45,7 @@ android {
             buildConfigField "String", "webServer", "\"https://demo-musicdic-dionary.herokuapp.com/\""
         }
         staging {
-            applicationId "com.example.musicdictionaryandroid.staging"
+            applicationId "com.example.musicdictionaryandroid"
 
             buildConfigField "String", "webServer", "\"https://demo-musicdic-dionary.herokuapp.com/\""
         }

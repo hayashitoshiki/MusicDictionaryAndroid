@@ -14,10 +14,10 @@ import com.example.musicdictionaryandroid.ui.mypage.MyPageArtistAddViewModel
 import com.example.musicdictionaryandroid.ui.mypage.MyPageArtistViewModel
 import com.example.musicdictionaryandroid.ui.mypage.MyPageTopViewModel
 import org.koin.android.ext.koin.androidContext
+import org.koin.android.viewmodel.dsl.viewModel
 import org.koin.core.context.startKoin
 import org.koin.core.module.Module
 import org.koin.dsl.module
-import org.koin.android.viewmodel.dsl.viewModel
 
 class MyApplication : Application() {
 
@@ -68,5 +68,4 @@ class MyApplication : Application() {
         factory <ArtistsRepository> { ArtistsRepositoryImp() }
         factory <PreferenceRepositoryImp> { PreferenceRepositoryImp }
     }
-
 }

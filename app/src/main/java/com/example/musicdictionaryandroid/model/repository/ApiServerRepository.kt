@@ -1,33 +1,72 @@
 package com.example.musicdictionaryandroid.model.repository
 
 import com.example.musicdictionaryandroid.model.entity.ArtistsForm
-import com.example.tosik.musicdictionary_androlid.model.net.CallBackData
+import com.example.musicdictionaryandroid.model.entity.CallBackData
 import java.util.*
 import retrofit2.Response
 
+/**
+ * 通信呼び出し関連のRepository
+ */
 interface ApiServerRepository {
     /*----------------------------------------
         検索タブ
      ----------------------------------------*/
-    // 検索条件に一致するアーティスト取得
+
+    /**
+     * 検索条件に一致するアーティスト取得
+     *
+     * @param artists アーティスト検索条件
+     * @return アーティストの検索結果一覧
+     */
     fun getArtistsBy(artists: ArtistsForm): Response<ArrayList<ArtistsForm>>
-
-    // おすすめアーティスト取得
+    /**
+     * おすすめアーティスト検索
+     *
+     * @param email ユーザのEmail
+     * @return レコメンドアーティスト一覧
+     */
     fun getArtistsByRecommend(email: String): Response<ArrayList<ArtistsForm>>
-
-    // 急上昇アーティスト取得
+    /**
+     * 急上昇アーティスト取得
+     *
+     * @return 急上昇アーティスト一覧
+     */
     fun getArtistsBySoaring(): Response<ArrayList<ArtistsForm>>
 
     /*----------------------------------------
         設定タブ
      ----------------------------------------*/
-    // ユーザーの登録したアーティスト取得
+    /**
+     * ユーザの登録したアーティスト取得
+     *
+     * @param email ユーザーのemail
+     * @return 登録済みアーティスト一覧
+     */
     fun getArtistsByEmail(email: String): Response<ArrayList<ArtistsForm>>
-
-    // アーティスト登録
+    /**
+     * アーティスト登録
+     *
+     * @param artist 登録したいアーティスト
+     * @param email ユーザのemail
+     * @return 登録正常完了判定結果
+     */
     fun addArtist(artist: ArtistsForm, email: String): Response<CallBackData>
-    // アーティスト編集
+    /**
+     * アーティスト更新
+     *
+     * @param artist 更新したいアーティストの新しいデータ
+     * @param beforeName 更新したいアーティストの元の名前
+     * @param email ユーザのemail
+     * @return 更新正常完了判定結果
+     */
     fun updateArtist(artist: ArtistsForm, beforeName: String, email: String): Response<CallBackData>
-    // アーティスト削除
+    /**
+     * アーティスト削除
+     *
+     * @param name 削除したいアーティストの名前
+     * @param email ユーザのemail
+     * @return 削除正常完了判定結果
+     */
     fun deleteArtist(name: String, email: String): Response<CallBackData>
 }

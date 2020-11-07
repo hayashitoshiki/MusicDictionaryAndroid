@@ -19,6 +19,10 @@ import kotlinx.android.synthetic.main.fragment_home.submit
 import kotlinx.android.synthetic.main.fragment_home.view.*
 import org.koin.android.viewmodel.ext.android.viewModel
 
+/**
+ * HOME画面
+ *
+ */
 class HomeFragment : Fragment() {
 
     companion object {
@@ -39,7 +43,7 @@ class HomeFragment : Fragment() {
         root.viewModel = viewModel
         root.lifecycleOwner = viewLifecycleOwner
 
-        val anim = AnimationUtils.loadAnimation(requireContext(),R.anim.home_start_anim)
+        val anim = AnimationUtils.loadAnimation(requireContext(), R.anim.home_start_anim)
         root.root.home_view.startAnimation(anim)
 
         // editTextフォーカス制御

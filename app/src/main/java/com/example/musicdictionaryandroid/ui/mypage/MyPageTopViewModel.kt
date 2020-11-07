@@ -10,6 +10,12 @@ import com.example.musicdictionaryandroid.model.util.Status
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
+/**
+ * 設定画面_UIロジック
+ *
+ * @property artistsRepository
+ * @property fireBaseRepository
+ */
 class MyPageTopViewModel(
     private val artistsRepository: ArtistsRepository,
     private val fireBaseRepository: FireBaseRepository
@@ -17,8 +23,11 @@ class MyPageTopViewModel(
 
     val authStatus = MutableLiveData<Status<*>>()
 
-    //ログアウト
-    fun signOut(){
+    /**
+     * ログアウト
+     *
+     */
+    fun signOut() {
         authStatus.value = Status.Loading
         fireBaseRepository.signOut({
             PreferenceRepositoryImp.removeAll()
@@ -26,7 +35,7 @@ class MyPageTopViewModel(
                 artistsRepository.deleteAll()
             }
             authStatus.value = Status.Success("success")
-        },{
+        }, {
             authStatus.value = Status.Success("error")
         })
     }

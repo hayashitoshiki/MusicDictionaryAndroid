@@ -6,6 +6,9 @@ import java.util.concurrent.TimeUnit
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 
+/**
+ * API呼び出詳細設定
+ */
 object OkHttpClientBuilder {
     fun build(): OkHttpClient {
         val interceptor = HttpLoggingInterceptor()

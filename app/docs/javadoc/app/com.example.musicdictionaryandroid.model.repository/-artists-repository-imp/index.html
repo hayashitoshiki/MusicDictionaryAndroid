@@ -1,0 +1,93 @@
+<HTML>
+<HEAD>
+<meta charset="UTF-8">
+<title>ArtistsRepositoryImp - app</title>
+<link rel="stylesheet" href="../../../style.css">
+</HEAD>
+<BODY>
+<a href="../../index.html">app</a>&nbsp;/&nbsp;<a href="../index.html">com.example.musicdictionaryandroid.model.repository</a>&nbsp;/&nbsp;<a href="./index.html">ArtistsRepositoryImp</a><br/>
+<br/>
+<h1>ArtistsRepositoryImp</h1>
+<code><span class="keyword">class </span><span class="identifier">ArtistsRepositoryImp</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="../-artists-repository/index.html"><span class="identifier">ArtistsRepository</span></a></code>
+<h3>Constructors</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="-init-.html">&lt;init&gt;</a></p>
+</td>
+<td>
+<code><span class="identifier">ArtistsRepositoryImp</span><span class="symbol">(</span><span class="symbol">)</span></code></td>
+</tr>
+</tbody>
+</table>
+<h3>Functions</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="add-artist.html">addArtist</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">addArtist</span><span class="symbol">(</span><span class="identifier" id="com.example.musicdictionaryandroid.model.repository.ArtistsRepositoryImp$addArtist(com.example.musicdictionaryandroid.model.entity.ArtistsForm)/artist">artist</span><span class="symbol">:</span>&nbsp;<a href="../../com.example.musicdictionaryandroid.model.entity/-artists-form/index.html"><span class="identifier">ArtistsForm</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
+<p>アーティスト追加</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="delete-all.html">deleteAll</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">deleteAll</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
+<p>DBリセット</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="delete-artist.html">deleteArtist</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">deleteArtist</span><span class="symbol">(</span><span class="identifier" id="com.example.musicdictionaryandroid.model.repository.ArtistsRepositoryImp$deleteArtist(kotlin.String)/name">name</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
+<p>アーティスト削除</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="find-by-name.html">findByName</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">findByName</span><span class="symbol">(</span><span class="identifier" id="com.example.musicdictionaryandroid.model.repository.ArtistsRepositoryImp$findByName(kotlin.String)/name">name</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="../../com.example.musicdictionaryandroid.model.entity/-artist/index.html"><span class="identifier">Artist</span></a></code>
+<p>アーティスト取得</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="get-artist-all.html">getArtistAll</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">getArtistAll</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-array-list/index.html"><span class="identifier">ArrayList</span></a><span class="symbol">&lt;</span><a href="../../com.example.musicdictionaryandroid.model.entity/-artists-form/index.html"><span class="identifier">ArtistsForm</span></a><span class="symbol">&gt;</span></code>
+<p>全アーティスト取得</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="update-all.html">updateAll</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">updateAll</span><span class="symbol">(</span><span class="identifier" id="com.example.musicdictionaryandroid.model.repository.ArtistsRepositoryImp$updateAll(java.util.ArrayList((com.example.musicdictionaryandroid.model.entity.ArtistsForm)))/artists">artists</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-array-list/index.html"><span class="identifier">ArrayList</span></a><span class="symbol">&lt;</span><a href="../../com.example.musicdictionaryandroid.model.entity/-artists-form/index.html"><span class="identifier">ArtistsForm</span></a><span class="symbol">&gt;</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
+<p>DB更新</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="update-artist.html">updateArtist</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">updateArtist</span><span class="symbol">(</span><span class="identifier" id="com.example.musicdictionaryandroid.model.repository.ArtistsRepositoryImp$updateArtist(kotlin.String, com.example.musicdictionaryandroid.model.entity.ArtistsForm)/beforeName">beforeName</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">, </span><span class="identifier" id="com.example.musicdictionaryandroid.model.repository.ArtistsRepositoryImp$updateArtist(kotlin.String, com.example.musicdictionaryandroid.model.entity.ArtistsForm)/artist">artist</span><span class="symbol">:</span>&nbsp;<a href="../../com.example.musicdictionaryandroid.model.entity/-artists-form/index.html"><span class="identifier">ArtistsForm</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
+<p>アーティスト更新</p>
+</td>
+</tr>
+</tbody>
+</table>
+</BODY>
+</HTML>

@@ -1,11 +1,13 @@
-package com.example.tosik.musicdictionary_androlid.model.net
+package com.example.musicdictionaryandroid.model.net
 
-import com.example.musicdictionaryandroid.model.net.OkHttpClientBuilder
 import com.example.musicdictionaryandroid.model.util.Constant
 import com.google.gson.GsonBuilder
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
+/**
+ * API接続先設定
+ */
 object Provider {
 
     fun api(): ApiService {

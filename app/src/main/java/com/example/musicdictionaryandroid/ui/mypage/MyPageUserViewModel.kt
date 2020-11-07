@@ -5,6 +5,9 @@ import androidx.lifecycle.ViewModel
 import com.example.musicdictionaryandroid.model.repository.PreferenceRepositoryImp
 import com.example.musicdictionaryandroid.model.util.UserInfoChangeListUtil
 
+/**
+ * ユーザー情報画面_UIロジック
+ */
 class MyPageUserViewModel : ViewModel() {
 
     val emailText = MutableLiveData<String>()
@@ -22,6 +25,4 @@ class MyPageUserViewModel : ViewModel() {
         birthdayText.value = UserInfoChangeListUtil.getBirthday(PreferenceRepositoryImp.getBirthday())
         favoriteText.value = PreferenceRepositoryImp.getFavorite().toString()
     }
-
-
 }

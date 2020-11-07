@@ -25,11 +25,11 @@ import retrofit2.Response
  * ログイン画面
  */
 
-class SignInViewModelTest{
+class SignInViewModelTest {
 
     private val testDispatcher = TestCoroutineDispatcher()
     private val testScope = TestCoroutineScope(testDispatcher)
-    private val responseUser: Response<User> = Response.success<User>(User( "testEmail", "testName", 1, 1, "1999",1))
+    private val responseUser: Response<User> = Response.success<User>(User("testEmail", "testName", 1, 1, "1999", 1))
 
     // LiveData用
     @get:Rule
@@ -56,23 +56,22 @@ class SignInViewModelTest{
     fun onSignIn() = runBlocking {
         // テストクラス作成
         val firebaseRepository = mockk<FireBaseRepository>().also {
-            every { it.signIn("testEmail", "aaa", any(),any()) } returns Unit
+            every { it.signIn("testEmail", "aaa", any(), any()) } returns Unit
             every { it.getEmail() } returns "testEmail"
         }
         val userRepository = mockk<UserRepository> ().also {
-            coEvery { it.getUserByEmail( "testEmail") } returns responseUser
+            coEvery { it.getUserByEmail("testEmail") } returns responseUser
         }
         val viewModel = SignInViewModel(firebaseRepository, userRepository)
 
         // 実行
         viewModel.signIn()
-        assertEquals(viewModel.status.value, Status.Success( "error1"))
+        assertEquals(viewModel.status.value, Status.Success("error1"))
         viewModel.emailText.value = "testEmail"
         viewModel.signIn()
-        assertEquals(viewModel.status.value, Status.Success( "error2"))
+        assertEquals(viewModel.status.value, Status.Success("error2"))
         viewModel.passwordText.value = "aaa"
         viewModel.signIn()
-        coVerify{firebaseRepository.signIn("testEmail", "aaa", any(),any())}
+        coVerify { firebaseRepository.signIn("testEmail", "aaa", any(), any()) }
     }
-
 }

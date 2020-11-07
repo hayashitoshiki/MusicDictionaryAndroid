@@ -5,6 +5,11 @@ import androidx.lifecycle.ViewModel
 import com.example.musicdictionaryandroid.model.entity.ArtistsForm
 import com.example.musicdictionaryandroid.model.repository.PreferenceRepositoryImp
 
+/**
+ * HOME画面_UIロジック
+ *
+ * @property preferenceRepository
+ */
 class HomeViewModel(
     private val preferenceRepository: PreferenceRepositoryImp
 ) : ViewModel() {
@@ -24,6 +29,9 @@ class HomeViewModel(
     val isEnableSoaringButton = MutableLiveData<Boolean>(false)
     val isEnableRecommendButton = MutableLiveData<Boolean>(false)
 
+    /**
+     * タップ可能ボタンのバリデート
+     */
     init {
         val count = preferenceRepository.getFavorite()
 
@@ -50,7 +58,11 @@ class HomeViewModel(
         }
     }
 
-    // 検索ボタン活性・非活性
+    /**
+     * 検索ボタン活性・非活性制御
+     *
+     * @param count 検索バーの入力文字数
+     */
     fun changeSubmitButton(count: Int) {
         isSubmitButton.value = count != 0
         artistsFrom.name = searchText.value.toString()

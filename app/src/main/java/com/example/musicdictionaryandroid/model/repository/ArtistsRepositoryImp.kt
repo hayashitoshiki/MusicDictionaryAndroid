@@ -29,7 +29,7 @@ class ArtistsRepositoryImp : ArtistsRepository {
     }
 
     // アーティスト更新
-    override fun updateArtist(artist: ArtistsForm, beforeName: String) {
+    override fun updateArtist(beforeName: String, artist: ArtistsForm) {
         dao.update(Artist(0, artist.name, artist.gender, artist.voice, artist.length, artist.lyrics))
     }
 
@@ -41,7 +41,7 @@ class ArtistsRepositoryImp : ArtistsRepository {
     // アーティスト全取得
     override fun getArtistAll(): ArrayList<ArtistsForm> {
         val artistList = arrayListOf<ArtistsForm>()
-        dao.getAll().forEach{
+        dao.getAll().forEach {
             val artist = ArtistsForm(
                 it.name!!,
                 it.gender!!,

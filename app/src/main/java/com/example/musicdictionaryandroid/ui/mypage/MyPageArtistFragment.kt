@@ -25,6 +25,9 @@ import kotlinx.android.synthetic.main.fragment_result.no_data_text
 import kotlinx.android.synthetic.main.fragment_result.progressBar
 import org.koin.android.viewmodel.ext.android.viewModel
 
+/**
+ * 登録済みアーティスト一覧画面
+ */
 class MyPageArtistFragment : Fragment() {
 
     private val viewModel: MyPageArtistViewModel by viewModel()
@@ -36,7 +39,7 @@ class MyPageArtistFragment : Fragment() {
     ): View? {
         val root = inflater.inflate(R.layout.fragment_mypage_artist_list, container, false)
 
-        val anim = AnimationUtils.loadAnimation(requireContext(),R.anim.fade_in_offset_300_anim)
+        val anim = AnimationUtils.loadAnimation(requireContext(), R.anim.fade_in_offset_300_anim)
         val transition = TransitionSet().apply {
             addTransition(ChangeBounds())
             addTransition(ChangeTransform())

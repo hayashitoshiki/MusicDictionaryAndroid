@@ -1,0 +1,63 @@
+<HTML>
+<HEAD>
+<meta charset="UTF-8">
+<title>MyPageArtistViewModel - app</title>
+<link rel="stylesheet" href="../../../style.css">
+</HEAD>
+<BODY>
+<a href="../../index.html">app</a>&nbsp;/&nbsp;<a href="../index.html">com.example.musicdictionaryandroid.ui.mypage</a>&nbsp;/&nbsp;<a href="./index.html">MyPageArtistViewModel</a><br/>
+<br/>
+<h1>MyPageArtistViewModel</h1>
+<code><span class="keyword">class </span><span class="identifier">MyPageArtistViewModel</span>&nbsp;<span class="symbol">:</span>&nbsp;<span class="identifier">ViewModel</span></code>
+<h3>Constructors</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="-init-.html">&lt;init&gt;</a></p>
+</td>
+<td>
+<code><span class="identifier">MyPageArtistViewModel</span><span class="symbol">(</span><span class="identifier" id="com.example.musicdictionaryandroid.ui.mypage.MyPageArtistViewModel$<init>(com.example.musicdictionaryandroid.model.repository.FireBaseRepository, com.example.musicdictionaryandroid.model.repository.ApiServerRepository, com.example.musicdictionaryandroid.model.repository.ArtistsRepository)/firebaseRepository">firebaseRepository</span><span class="symbol">:</span>&nbsp;<a href="../../com.example.musicdictionaryandroid.model.repository/-fire-base-repository/index.html"><span class="identifier">FireBaseRepository</span></a><span class="symbol">, </span><span class="identifier" id="com.example.musicdictionaryandroid.ui.mypage.MyPageArtistViewModel$<init>(com.example.musicdictionaryandroid.model.repository.FireBaseRepository, com.example.musicdictionaryandroid.model.repository.ApiServerRepository, com.example.musicdictionaryandroid.model.repository.ArtistsRepository)/apiServerRepository">apiServerRepository</span><span class="symbol">:</span>&nbsp;<a href="../../com.example.musicdictionaryandroid.model.repository/-api-server-repository/index.html"><span class="identifier">ApiServerRepository</span></a><span class="symbol">, </span><span class="identifier" id="com.example.musicdictionaryandroid.ui.mypage.MyPageArtistViewModel$<init>(com.example.musicdictionaryandroid.model.repository.FireBaseRepository, com.example.musicdictionaryandroid.model.repository.ApiServerRepository, com.example.musicdictionaryandroid.model.repository.ArtistsRepository)/artistsRepository">artistsRepository</span><span class="symbol">:</span>&nbsp;<a href="../../com.example.musicdictionaryandroid.model.repository/-artists-repository/index.html"><span class="identifier">ArtistsRepository</span></a><span class="symbol">)</span></code></td>
+</tr>
+</tbody>
+</table>
+<h3>Properties</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="email.html">email</a></p>
+</td>
+<td>
+<code><span class="keyword">var </span><span class="identifier">email</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a></code></td>
+</tr>
+<tr>
+<td>
+<p><a href="status.html">status</a></p>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">status</span><span class="symbol">: </span><span class="identifier">MutableLiveData</span><span class="symbol">&lt;</span><a href="../../com.example.musicdictionaryandroid.model.util/-status/index.html"><span class="identifier">Status</span></a><span class="symbol">&lt;</span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-array-list/index.html"><span class="identifier">ArrayList</span></a><span class="symbol">&lt;</span><a href="../../com.example.musicdictionaryandroid.model.entity/-artists-form/index.html"><span class="identifier">ArtistsForm</span></a><span class="symbol">&gt;</span><span class="symbol">?</span><span class="symbol">&gt;</span><span class="symbol">&gt;</span></code></td>
+</tr>
+</tbody>
+</table>
+<h3>Functions</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="delete-artist.html">deleteArtist</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">deleteArtist</span><span class="symbol">(</span><span class="identifier" id="com.example.musicdictionaryandroid.ui.mypage.MyPageArtistViewModel$deleteArtist(com.example.musicdictionaryandroid.model.entity.ArtistsForm)/artist">artist</span><span class="symbol">:</span>&nbsp;<a href="../../com.example.musicdictionaryandroid.model.entity/-artists-form/index.html"><span class="identifier">ArtistsForm</span></a><span class="symbol">)</span><span class="symbol">: </span><span class="identifier">Job</span></code></td>
+</tr>
+<tr>
+<td>
+<p><a href="get-artists-by-email.html">getArtistsByEmail</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">getArtistsByEmail</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><span class="identifier">Job</span></code></td>
+</tr>
+</tbody>
+</table>
+</BODY>
+</HTML>

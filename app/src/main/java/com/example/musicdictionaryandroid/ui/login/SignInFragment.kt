@@ -1,6 +1,5 @@
 package com.example.musicdictionaryandroid.ui.login
 
-
 import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -16,7 +15,9 @@ import com.example.musicdictionaryandroid.model.util.Status
 import kotlinx.android.synthetic.main.fragment_sign_in.view.*
 import org.koin.android.viewmodel.ext.android.viewModel
 
-
+/**
+ * ログイン画面
+ */
 class SignInFragment : Fragment() {
 
     private val viewModel: SignInViewModel by viewModel()
@@ -51,14 +52,13 @@ class SignInFragment : Fragment() {
         viewModel.status.observe(viewLifecycleOwner, Observer { onStateChanged(it) })
     }
 
-
     // ステータス監視
     private fun onStateChanged(state: Status<String?>) = when (state) {
         is Status.Loading -> {}
         is Status.Success -> {
-            state.data?.let{
+            state.data?.let {
                 (activity as StartActivity).startApp()
-             }?: run {
+             } ?: run {
                 (activity as StartActivity).showErrorEmailPassword()
             }
         }
@@ -73,6 +73,4 @@ class SignInFragment : Fragment() {
             return fragment
         }
     }
-
-
 }

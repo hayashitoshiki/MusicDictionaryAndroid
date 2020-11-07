@@ -4,6 +4,10 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.musicdictionaryandroid.model.entity.ArtistsForm
 
+/**
+ * 詳細検索画面_UIロジック
+ *
+ */
 class DetailsSearchViewModel : ViewModel() {
 
     var artistForm = ArtistsForm()
@@ -54,13 +58,14 @@ class DetailsSearchViewModel : ViewModel() {
     val isGenreAddButton2 = MutableLiveData<Boolean>(true)
     val isGenreAddButton3 = MutableLiveData<Boolean>(true)
 
-
     // 初期化
-    fun init(genreKeyList: Array<String>,
-             genre1List: Array<String>,
-             genre2List: Array<String>,
-             genre3List: Array<String>,
-             genre4List: Array<String>) {
+    fun init(
+        genreKeyList: Array<String>,
+        genre1List: Array<String>,
+        genre2List: Array<String>,
+        genre3List: Array<String>,
+        genre4List: Array<String>
+    ) {
         this.genreKeyList = genreKeyList
         this.genre1List = genre1List
         this.genre2List = genre2List
@@ -89,7 +94,12 @@ class DetailsSearchViewModel : ViewModel() {
         artistForm.lyrics = checkedId
     }
 
-    // 絞り込みジャンル変更
+    /**
+     * 絞り込みジャンル変更処理
+     *
+     * @param position 絞り込みジャンルの種類のインデックス
+     * @param index 絞り込みジャンルの中の値のインデックス
+     */
     fun changeGenreKey(position: Int, index: Int) {
         when (position) {
             1 -> changeGenreKey(genre1KeyList.value?.get(index), genre1ValueList, isSortGenre1ValueList)
@@ -109,22 +119,31 @@ class DetailsSearchViewModel : ViewModel() {
         data?.let {
             KeySpinner.value = data
             valueSpinner.value = true
-        }?: run {
+        } ?: run {
             valueSpinner.value = false
         }
     }
 
-    // 絞り込みジャンル追加ボタン
+    /**
+     * 絞り込みジャンル追加ボタン処理
+     *
+     * @param position
+     */
     fun addSortList(position: Int) {
         when (position) {
-            1 -> {listFilter(genre1KeyList.value, genre1KeyInt.value, genre2KeyList, isGenreButtonArea1, isSortContainer2, isSortGenre1Key, isSortGenre1Label)}
-            2 -> {listFilter(genre2KeyList.value, genre2KeyInt.value, genre3KeyList, isGenreButtonArea2, isSortContainer3, isSortGenre2Key, isSortGenre2Label)}
-            3 -> {listFilter(genre3KeyList.value, genre3KeyInt.value, genre4KeyList, isGenreButtonArea3, isSortContainer4, isSortGenre3Key, isSortGenre3Label)}
+            1 -> { listFilter(genre1KeyList.value, genre1KeyInt.value, genre2KeyList, isGenreButtonArea1, isSortContainer2, isSortGenre1Key, isSortGenre1Label) }
+            2 -> { listFilter(genre2KeyList.value, genre2KeyInt.value, genre3KeyList, isGenreButtonArea2, isSortContainer3, isSortGenre2Key, isSortGenre2Label) }
+            3 -> { listFilter(genre3KeyList.value, genre3KeyInt.value, genre4KeyList, isGenreButtonArea3, isSortContainer4, isSortGenre3Key, isSortGenre3Label) }
         }
     }
-    private fun listFilter(keyList:Array<String>?, position: Int?, newList: MutableLiveData<Array<String>>,
-                           buttonArea: MutableLiveData<Boolean>, newSortArea: MutableLiveData<Boolean>,
-                           sortKeySelect: MutableLiveData<Boolean>, sortKeyLabel: MutableLiveData<Boolean>
+    private fun listFilter(
+        keyList: Array<String>?,
+        position: Int?,
+        newList: MutableLiveData<Array<String>>,
+        buttonArea: MutableLiveData<Boolean>,
+        newSortArea: MutableLiveData<Boolean>,
+        sortKeySelect: MutableLiveData<Boolean>,
+        sortKeyLabel: MutableLiveData<Boolean>
     ) {
         keyList?.also { genreList ->
             position?.also { position ->
@@ -145,8 +164,12 @@ class DetailsSearchViewModel : ViewModel() {
             4 -> deleteGenre(isGenreButtonArea3, isSortContainer4, isSortGenre3Key, isSortGenre3Label)
         }
     }
-    private fun deleteGenre(buttonArea: MutableLiveData<Boolean>, newSortArea: MutableLiveData<Boolean>,
-                            sortKeySelect: MutableLiveData<Boolean>, sortKeyLabel: MutableLiveData<Boolean>) {
+    private fun deleteGenre(
+        buttonArea: MutableLiveData<Boolean>,
+        newSortArea: MutableLiveData<Boolean>,
+        sortKeySelect: MutableLiveData<Boolean>,
+        sortKeyLabel: MutableLiveData<Boolean>
+    ) {
         buttonArea.value = true
         newSortArea.value = false
         sortKeyLabel.value = false
@@ -162,15 +185,9 @@ class DetailsSearchViewModel : ViewModel() {
         }
     }
     private fun changeGenreValue(position: Int, button: MutableLiveData<Boolean>) {
-        button.value = when(position) {
+        button.value = when (position) {
             0 -> false
             else -> true
         }
     }
-    val isSubmit = MutableLiveData<Boolean>(false)
-    private fun checkValidate() {
-        isSubmit.value =
-            !(artistForm.gender != 0 || artistForm.length != 0 || artistForm.voice != 0 || artistForm.lyrics != 0)
-    }
-
 }

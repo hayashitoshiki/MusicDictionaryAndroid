@@ -1,0 +1,168 @@
+<HTML>
+<HEAD>
+<meta charset="UTF-8">
+<title>AnimUtils.NoPauseAnimator - app</title>
+<link rel="stylesheet" href="../../../../style.css">
+</HEAD>
+<BODY>
+<a href="../../../index.html">app</a>&nbsp;/&nbsp;<a href="../../index.html">com.example.musicdictionaryandroid.ui.transition</a>&nbsp;/&nbsp;<a href="../index.html">AnimUtils</a>&nbsp;/&nbsp;<a href="./index.html">NoPauseAnimator</a><br/>
+<br/>
+<h1>NoPauseAnimator</h1>
+<code><span class="keyword">class </span><span class="identifier">NoPauseAnimator</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="https://developer.android.com/reference/android/animation/Animator.html"><span class="identifier">Animator</span></a></code>
+<p>https://halfthought.wordpress.com/2014/11/07/reveal-transition/</p>
+<p>Interrupting Activity transitions can yield an OperationNotSupportedException when the
+transition tries to pause the animator. Yikes! We can fix this by wrapping the Animator:</p>
+<h3>Constructors</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="-init-.html">&lt;init&gt;</a></p>
+</td>
+<td>
+<code><span class="identifier">NoPauseAnimator</span><span class="symbol">(</span><span class="identifier" id="com.example.musicdictionaryandroid.ui.transition.AnimUtils.NoPauseAnimator$<init>(android.animation.Animator)/mAnimator">mAnimator</span><span class="symbol">:</span>&nbsp;<a href="https://developer.android.com/reference/android/animation/Animator.html"><span class="identifier">Animator</span></a><span class="symbol">)</span></code>
+<p>https://halfthought.wordpress.com/2014/11/07/reveal-transition/</p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3>Functions</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="add-listener.html">addListener</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">addListener</span><span class="symbol">(</span><span class="identifier" id="com.example.musicdictionaryandroid.ui.transition.AnimUtils.NoPauseAnimator$addListener(android.animation.Animator.AnimatorListener)/listener">listener</span><span class="symbol">:</span>&nbsp;<a href="https://developer.android.com/reference/android/animation/Animator/AnimatorListener.html"><span class="identifier">AnimatorListener</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+</tr>
+<tr>
+<td>
+<p><a href="cancel.html">cancel</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">cancel</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+</tr>
+<tr>
+<td>
+<p><a href="end.html">end</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">end</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+</tr>
+<tr>
+<td>
+<p><a href="get-duration.html">getDuration</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">getDuration</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html"><span class="identifier">Long</span></a></code></td>
+</tr>
+<tr>
+<td>
+<p><a href="get-interpolator.html">getInterpolator</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">getInterpolator</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://developer.android.com/reference/android/animation/TimeInterpolator.html"><span class="identifier">TimeInterpolator</span></a></code></td>
+</tr>
+<tr>
+<td>
+<p><a href="get-listeners.html">getListeners</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">getListeners</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://developer.android.com/reference/java/util/ArrayList.html"><span class="identifier">ArrayList</span></a><span class="symbol">&lt;</span><a href="https://developer.android.com/reference/android/animation/Animator/AnimatorListener.html"><span class="identifier">AnimatorListener</span></a><span class="symbol">&gt;</span></code></td>
+</tr>
+<tr>
+<td>
+<p><a href="get-start-delay.html">getStartDelay</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">getStartDelay</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html"><span class="identifier">Long</span></a></code></td>
+</tr>
+<tr>
+<td>
+<p><a href="is-paused.html">isPaused</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">isPaused</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html"><span class="identifier">Boolean</span></a></code></td>
+</tr>
+<tr>
+<td>
+<p><a href="is-running.html">isRunning</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">isRunning</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html"><span class="identifier">Boolean</span></a></code></td>
+</tr>
+<tr>
+<td>
+<p><a href="is-started.html">isStarted</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">isStarted</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html"><span class="identifier">Boolean</span></a></code></td>
+</tr>
+<tr>
+<td>
+<p><a href="remove-all-listeners.html">removeAllListeners</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">removeAllListeners</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+</tr>
+<tr>
+<td>
+<p><a href="remove-listener.html">removeListener</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">removeListener</span><span class="symbol">(</span><span class="identifier" id="com.example.musicdictionaryandroid.ui.transition.AnimUtils.NoPauseAnimator$removeListener(android.animation.Animator.AnimatorListener)/listener">listener</span><span class="symbol">:</span>&nbsp;<a href="https://developer.android.com/reference/android/animation/Animator/AnimatorListener.html"><span class="identifier">AnimatorListener</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+</tr>
+<tr>
+<td>
+<p><a href="set-duration.html">setDuration</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">setDuration</span><span class="symbol">(</span><span class="identifier" id="com.example.musicdictionaryandroid.ui.transition.AnimUtils.NoPauseAnimator$setDuration(kotlin.Long)/durationMS">durationMS</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html"><span class="identifier">Long</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://developer.android.com/reference/android/animation/Animator.html"><span class="identifier">Animator</span></a></code></td>
+</tr>
+<tr>
+<td>
+<p><a href="set-interpolator.html">setInterpolator</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">setInterpolator</span><span class="symbol">(</span><span class="identifier" id="com.example.musicdictionaryandroid.ui.transition.AnimUtils.NoPauseAnimator$setInterpolator(android.animation.TimeInterpolator)/timeInterpolator">timeInterpolator</span><span class="symbol">:</span>&nbsp;<a href="https://developer.android.com/reference/android/animation/TimeInterpolator.html"><span class="identifier">TimeInterpolator</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+</tr>
+<tr>
+<td>
+<p><a href="set-start-delay.html">setStartDelay</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">setStartDelay</span><span class="symbol">(</span><span class="identifier" id="com.example.musicdictionaryandroid.ui.transition.AnimUtils.NoPauseAnimator$setStartDelay(kotlin.Long)/delayMS">delayMS</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html"><span class="identifier">Long</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+</tr>
+<tr>
+<td>
+<p><a href="set-target.html">setTarget</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">setTarget</span><span class="symbol">(</span><span class="identifier" id="com.example.musicdictionaryandroid.ui.transition.AnimUtils.NoPauseAnimator$setTarget(kotlin.Any)/target">target</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-any/index.html"><span class="identifier">Any</span></a><span class="symbol">?</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+</tr>
+<tr>
+<td>
+<p><a href="setup-end-values.html">setupEndValues</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">setupEndValues</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+</tr>
+<tr>
+<td>
+<p><a href="setup-start-values.html">setupStartValues</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">setupStartValues</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+</tr>
+<tr>
+<td>
+<p><a href="start.html">start</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">start</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+</tr>
+</tbody>
+</table>
+</BODY>
+</HTML>

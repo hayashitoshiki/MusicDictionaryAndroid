@@ -1,0 +1,110 @@
+<HTML>
+<HEAD>
+<meta charset="UTF-8">
+<title>SignUpViewModel - app</title>
+<link rel="stylesheet" href="../../../style.css">
+</HEAD>
+<BODY>
+<a href="../../index.html">app</a>&nbsp;/&nbsp;<a href="../index.html">com.example.musicdictionaryandroid.ui.login</a>&nbsp;/&nbsp;<a href="./index.html">SignUpViewModel</a><br/>
+<br/>
+<h1>SignUpViewModel</h1>
+<code><span class="keyword">class </span><span class="identifier">SignUpViewModel</span>&nbsp;<span class="symbol">:</span>&nbsp;<span class="identifier">ViewModel</span></code>
+<p>新規登録画面_UIロジック</p>
+<h3>Constructors</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="-init-.html">&lt;init&gt;</a></p>
+</td>
+<td>
+<code><span class="identifier">SignUpViewModel</span><span class="symbol">(</span><span class="identifier" id="com.example.musicdictionaryandroid.ui.login.SignUpViewModel$<init>(com.example.musicdictionaryandroid.model.repository.FireBaseRepository, com.example.musicdictionaryandroid.model.repository.UserRepository)/fireBaseRepository">fireBaseRepository</span><span class="symbol">:</span>&nbsp;<a href="../../com.example.musicdictionaryandroid.model.repository/-fire-base-repository/index.html"><span class="identifier">FireBaseRepository</span></a><span class="symbol">, </span><span class="identifier" id="com.example.musicdictionaryandroid.ui.login.SignUpViewModel$<init>(com.example.musicdictionaryandroid.model.repository.FireBaseRepository, com.example.musicdictionaryandroid.model.repository.UserRepository)/userRepository">userRepository</span><span class="symbol">:</span>&nbsp;<a href="../../com.example.musicdictionaryandroid.model.repository/-user-repository/index.html"><span class="identifier">UserRepository</span></a><span class="symbol">)</span></code>
+<p>新規登録画面_UIロジック</p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3>Properties</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="area-selected-position.html">areaSelectedPosition</a></p>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">areaSelectedPosition</span><span class="symbol">: </span><span class="identifier">MutableLiveData</span><span class="symbol">&lt;</span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">&gt;</span></code></td>
+</tr>
+<tr>
+<td>
+<p><a href="birthday-selected-position.html">birthdaySelectedPosition</a></p>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">birthdaySelectedPosition</span><span class="symbol">: </span><span class="identifier">MutableLiveData</span><span class="symbol">&lt;</span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">&gt;</span></code></td>
+</tr>
+<tr>
+<td>
+<p><a href="email-text.html">emailText</a></p>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">emailText</span><span class="symbol">: </span><span class="identifier">MutableLiveData</span><span class="symbol">&lt;</span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">&gt;</span></code></td>
+</tr>
+<tr>
+<td>
+<p><a href="gender-int.html">genderInt</a></p>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">genderInt</span><span class="symbol">: </span><span class="identifier">MutableLiveData</span><span class="symbol">&lt;</span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">&gt;</span></code></td>
+</tr>
+<tr>
+<td>
+<p><a href="is-enable-submit-button.html">isEnableSubmitButton</a></p>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">isEnableSubmitButton</span><span class="symbol">: </span><span class="identifier">LiveData</span><span class="symbol">&lt;</span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html"><span class="identifier">Boolean</span></a><span class="symbol">&gt;</span></code></td>
+</tr>
+<tr>
+<td>
+<p><a href="name-text.html">nameText</a></p>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">nameText</span><span class="symbol">: </span><span class="identifier">MutableLiveData</span><span class="symbol">&lt;</span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">&gt;</span></code></td>
+</tr>
+<tr>
+<td>
+<p><a href="password-text.html">passwordText</a></p>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">passwordText</span><span class="symbol">: </span><span class="identifier">MutableLiveData</span><span class="symbol">&lt;</span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">&gt;</span></code></td>
+</tr>
+<tr>
+<td>
+<p><a href="status.html">status</a></p>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">status</span><span class="symbol">: </span><span class="identifier">MutableLiveData</span><span class="symbol">&lt;</span><a href="../../com.example.musicdictionaryandroid.model.util/-status/index.html"><span class="identifier">Status</span></a><span class="symbol">&lt;</span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">?</span><span class="symbol">&gt;</span><span class="symbol">&gt;</span></code></td>
+</tr>
+</tbody>
+</table>
+<h3>Functions</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="checked-change-gender.html">checkedChangeGender</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">checkedChangeGender</span><span class="symbol">(</span><span class="identifier" id="com.example.musicdictionaryandroid.ui.login.SignUpViewModel$checkedChangeGender(kotlin.Int)/checkedId">checkedId</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+</tr>
+<tr>
+<td>
+<p><a href="sign-up.html">signUp</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">signUp</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
+<p>新規作成</p>
+</td>
+</tr>
+</tbody>
+</table>
+</BODY>
+</HTML>

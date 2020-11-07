@@ -6,16 +6,21 @@ import androidx.lifecycle.viewModelScope
 import com.example.musicdictionaryandroid.model.entity.ArtistsForm
 import com.example.musicdictionaryandroid.model.repository.ApiServerRepository
 import com.example.musicdictionaryandroid.model.repository.FireBaseRepository
-import com.example.musicdictionaryandroid.model.repository.PreferenceRepositoryImp
 import com.example.musicdictionaryandroid.model.util.Status
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
+/**
+ * おすすめアーティスト検索結果画面_UIロジック
+ *
+ * @property firebaseRepository
+ * @property apiServerRepository
+ */
 class ResultRecommendViewModel(
     private val firebaseRepository: FireBaseRepository,
-    private val apiServerRepository : ApiServerRepository
+    private val apiServerRepository: ApiServerRepository
 ) : ViewModel() {
 
     val status = MutableLiveData<Status<ArrayList<ArtistsForm>?>>()
@@ -23,7 +28,11 @@ class ResultRecommendViewModel(
 
     init { email = firebaseRepository.getEmail() }
 
-    // 指定した条件でアーティストを検索
+    /**
+     * アーティスト検索
+     *
+     * @return おすすめアーティスト一覧
+     */
     fun getRecommend(): Job = viewModelScope.launch {
         if (email.isNotEmpty()) {
             status.value = Status.Loading

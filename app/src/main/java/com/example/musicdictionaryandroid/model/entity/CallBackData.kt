@@ -1,3 +1,8 @@
-package com.example.tosik.musicdictionary_androlid.model.net
+package com.example.musicdictionaryandroid.model.entity
 
-class CallBackData (var status: String = "true")
+/**
+ * APIコールバック
+ *
+ * @property status API処理判定ステータス
+ */
+class CallBackData(var status: String = "true")

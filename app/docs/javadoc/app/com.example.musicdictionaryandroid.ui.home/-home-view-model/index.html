@@ -1,0 +1,138 @@
+<HTML>
+<HEAD>
+<meta charset="UTF-8">
+<title>HomeViewModel - app</title>
+<link rel="stylesheet" href="../../../style.css">
+</HEAD>
+<BODY>
+<a href="../../index.html">app</a>&nbsp;/&nbsp;<a href="../index.html">com.example.musicdictionaryandroid.ui.home</a>&nbsp;/&nbsp;<a href="./index.html">HomeViewModel</a><br/>
+<br/>
+<h1>HomeViewModel</h1>
+<code><span class="keyword">class </span><span class="identifier">HomeViewModel</span>&nbsp;<span class="symbol">:</span>&nbsp;<span class="identifier">ViewModel</span></code>
+<p>HOME画面_UIロジック</p>
+<h3>Constructors</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="-init-.html">&lt;init&gt;</a></p>
+</td>
+<td>
+<code><span class="identifier">HomeViewModel</span><span class="symbol">(</span><span class="identifier" id="com.example.musicdictionaryandroid.ui.home.HomeViewModel$<init>(com.example.musicdictionaryandroid.model.repository.PreferenceRepositoryImp)/preferenceRepository">preferenceRepository</span><span class="symbol">:</span>&nbsp;<a href="../../com.example.musicdictionaryandroid.model.repository/-preference-repository-imp/index.html"><span class="identifier">PreferenceRepositoryImp</span></a><span class="symbol">)</span></code>
+<p>HOME画面_UIロジック</p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3>Properties</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="artists-from.html">artistsFrom</a></p>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">artistsFrom</span><span class="symbol">: </span><a href="../../com.example.musicdictionaryandroid.model.entity/-artists-form/index.html"><span class="identifier">ArtistsForm</span></a></code></td>
+</tr>
+<tr>
+<td>
+<p><a href="is-category-button.html">isCategoryButton</a></p>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">isCategoryButton</span><span class="symbol">: </span><span class="identifier">MutableLiveData</span><span class="symbol">&lt;</span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html"><span class="identifier">Boolean</span></a><span class="symbol">&gt;</span></code></td>
+</tr>
+<tr>
+<td>
+<p><a href="is-details-button.html">isDetailsButton</a></p>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">isDetailsButton</span><span class="symbol">: </span><span class="identifier">MutableLiveData</span><span class="symbol">&lt;</span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html"><span class="identifier">Boolean</span></a><span class="symbol">&gt;</span></code></td>
+</tr>
+<tr>
+<td>
+<p><a href="is-enable-category-button.html">isEnableCategoryButton</a></p>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">isEnableCategoryButton</span><span class="symbol">: </span><span class="identifier">MutableLiveData</span><span class="symbol">&lt;</span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html"><span class="identifier">Boolean</span></a><span class="symbol">&gt;</span></code></td>
+</tr>
+<tr>
+<td>
+<p><a href="is-enable-details-button.html">isEnableDetailsButton</a></p>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">isEnableDetailsButton</span><span class="symbol">: </span><span class="identifier">MutableLiveData</span><span class="symbol">&lt;</span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html"><span class="identifier">Boolean</span></a><span class="symbol">&gt;</span></code></td>
+</tr>
+<tr>
+<td>
+<p><a href="is-enable-recommend-button.html">isEnableRecommendButton</a></p>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">isEnableRecommendButton</span><span class="symbol">: </span><span class="identifier">MutableLiveData</span><span class="symbol">&lt;</span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html"><span class="identifier">Boolean</span></a><span class="symbol">&gt;</span></code></td>
+</tr>
+<tr>
+<td>
+<p><a href="is-enable-soaring-button.html">isEnableSoaringButton</a></p>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">isEnableSoaringButton</span><span class="symbol">: </span><span class="identifier">MutableLiveData</span><span class="symbol">&lt;</span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html"><span class="identifier">Boolean</span></a><span class="symbol">&gt;</span></code></td>
+</tr>
+<tr>
+<td>
+<p><a href="is-enable-submit-button.html">isEnableSubmitButton</a></p>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">isEnableSubmitButton</span><span class="symbol">: </span><span class="identifier">MutableLiveData</span><span class="symbol">&lt;</span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html"><span class="identifier">Boolean</span></a><span class="symbol">&gt;</span></code></td>
+</tr>
+<tr>
+<td>
+<p><a href="is-recommend-button.html">isRecommendButton</a></p>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">isRecommendButton</span><span class="symbol">: </span><span class="identifier">MutableLiveData</span><span class="symbol">&lt;</span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html"><span class="identifier">Boolean</span></a><span class="symbol">&gt;</span></code></td>
+</tr>
+<tr>
+<td>
+<p><a href="is-search-bar.html">isSearchBar</a></p>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">isSearchBar</span><span class="symbol">: </span><span class="identifier">MutableLiveData</span><span class="symbol">&lt;</span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html"><span class="identifier">Boolean</span></a><span class="symbol">&gt;</span></code></td>
+</tr>
+<tr>
+<td>
+<p><a href="is-soaring-button.html">isSoaringButton</a></p>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">isSoaringButton</span><span class="symbol">: </span><span class="identifier">MutableLiveData</span><span class="symbol">&lt;</span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html"><span class="identifier">Boolean</span></a><span class="symbol">&gt;</span></code></td>
+</tr>
+<tr>
+<td>
+<p><a href="is-submit-button.html">isSubmitButton</a></p>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">isSubmitButton</span><span class="symbol">: </span><span class="identifier">MutableLiveData</span><span class="symbol">&lt;</span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html"><span class="identifier">Boolean</span></a><span class="symbol">&gt;</span></code></td>
+</tr>
+<tr>
+<td>
+<p><a href="search-text.html">searchText</a></p>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">searchText</span><span class="symbol">: </span><span class="identifier">MutableLiveData</span><span class="symbol">&lt;</span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">&gt;</span></code></td>
+</tr>
+</tbody>
+</table>
+<h3>Functions</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="change-submit-button.html">changeSubmitButton</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">changeSubmitButton</span><span class="symbol">(</span><span class="identifier" id="com.example.musicdictionaryandroid.ui.home.HomeViewModel$changeSubmitButton(kotlin.Int)/count">count</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
+<p>検索ボタン活性・非活性制御</p>
+</td>
+</tr>
+</tbody>
+</table>
+</BODY>
+</HTML>

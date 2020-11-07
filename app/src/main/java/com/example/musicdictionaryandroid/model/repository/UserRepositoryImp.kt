@@ -1,11 +1,11 @@
 package com.example.musicdictionaryandroid.model.repository
 
+import com.example.musicdictionaryandroid.model.entity.CallBackData
 import com.example.musicdictionaryandroid.model.entity.User
-import com.example.tosik.musicdictionary_androlid.model.net.CallBackData
-import com.example.tosik.musicdictionary_androlid.model.net.Provider
+import com.example.musicdictionaryandroid.model.net.Provider
 import retrofit2.Response
 
-class UserRepositoryImp: UserRepository {
+class UserRepositoryImp : UserRepository {
 
     // ユーザー取得
     override fun getUserByEmail(email: String): Response<User> {

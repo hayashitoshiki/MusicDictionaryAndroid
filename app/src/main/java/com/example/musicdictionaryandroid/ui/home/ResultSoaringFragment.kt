@@ -15,7 +15,11 @@ import com.example.musicdictionaryandroid.ui.adapter.CustomBaseAdapter
 import kotlinx.android.synthetic.main.fragment_result.*
 import org.koin.android.viewmodel.ext.android.viewModel
 
-class ResultSoaringFragment  : Fragment() {
+/**
+ * 急上昇アーティスト一覧画面
+ *
+ */
+class ResultSoaringFragment : Fragment() {
 
     private val viewModel: ResultSoaringViewModel by viewModel()
 

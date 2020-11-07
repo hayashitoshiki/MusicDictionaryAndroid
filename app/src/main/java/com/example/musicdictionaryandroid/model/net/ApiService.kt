@@ -1,9 +1,14 @@
-package com.example.tosik.musicdictionary_androlid.model.net
+package com.example.musicdictionaryandroid.model.net
 
 import com.example.musicdictionaryandroid.model.entity.ArtistsForm
+import com.example.musicdictionaryandroid.model.entity.CallBackData
 import com.example.musicdictionaryandroid.model.entity.User
 import retrofit2.Call
 import retrofit2.http.*
+
+/**
+ * 各URLの管理
+ */
 
 interface ApiService {
 
@@ -37,7 +42,8 @@ interface ApiService {
     fun getUserByEmail(@Query("email") email: String): Call<User>
 
     @GET("/user/save.json")
-    fun createUser(@Query("user") user: String
+    fun createUser(
+        @Query("user") user: String
     ): Call<CallBackData>
 
     @GET("user/update.json")

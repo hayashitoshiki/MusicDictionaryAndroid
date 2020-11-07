@@ -19,6 +19,9 @@ import com.example.musicdictionaryandroid.ui.transition.FabTransform
 import com.example.musicdictionaryandroid.ui.transition.HOME_DETAILS_BUTTON
 import kotlinx.android.synthetic.main.fragment_details_search.*
 
+/**
+ * 詳細検索画面
+ */
 class DetailsSearchFragment : Fragment() {
 
     private val viewModel: DetailsSearchViewModel by lazy {
@@ -35,7 +38,7 @@ class DetailsSearchFragment : Fragment() {
             addTransition(ChangeTransform())
             addTransition(ChangeClipBounds())
         }
-        val  trans = FabTransform(resources.getColor(R.color.colorPrimary), R.drawable.round_primary_dark_button, HOME_DETAILS_BUTTON)
+        val trans = FabTransform(resources.getColor(R.color.colorPrimary), R.drawable.round_primary_dark_button, HOME_DETAILS_BUTTON)
         sharedElementEnterTransition = trans
         sharedElementReturnTransition = transition
 
@@ -60,7 +63,7 @@ class DetailsSearchFragment : Fragment() {
         viewModel.genre2KeyInt.observe(viewLifecycleOwner, Observer { viewModel.changeGenreKey(2, it) })
         viewModel.genre3KeyInt.observe(viewLifecycleOwner, Observer { viewModel.changeGenreKey(3, it) })
         viewModel.genre4KeyInt.observe(viewLifecycleOwner, Observer { viewModel.changeGenreKey(4, it) })
-        viewModel.genre1ValueInt.observe(viewLifecycleOwner, Observer { viewModel.changeGenreValue(1,it) })
+        viewModel.genre1ValueInt.observe(viewLifecycleOwner, Observer { viewModel.changeGenreValue(1, it) })
         viewModel.genre2ValueInt.observe(viewLifecycleOwner, Observer { viewModel.changeGenreValue(2, it) })
         viewModel.genre3ValueInt.observe(viewLifecycleOwner, Observer { viewModel.changeGenreValue(3, it) })
 
@@ -70,5 +73,4 @@ class DetailsSearchFragment : Fragment() {
             findNavController().navigate(action)
         }
     }
-
 }

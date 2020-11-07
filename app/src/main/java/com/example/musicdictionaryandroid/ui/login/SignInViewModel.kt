@@ -9,11 +9,13 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
+/**
+ * ログイン画面_UIロジック
+ */
 class SignInViewModel(
     private val fireBaseRepository: FireBaseRepository,
     private val userRepository: UserRepository
 ) : ViewModel() {
-
 
     val status = MutableLiveData<Status<String?>>()
     val emailText = MutableLiveData<String>("")
@@ -22,18 +24,21 @@ class SignInViewModel(
     val isEnableSubmitButton: LiveData<Boolean>
         get() = isButton
 
+    /**
+     * ボタンバリデート
+     */
     init {
-        isButton.addSource(emailText){ validateSubmit() }
-        isButton.addSource(passwordText){ validateSubmit() }
+        isButton.addSource(emailText) { validateSubmit() }
+        isButton.addSource(passwordText) { validateSubmit() }
     }
 
-    // ボタンのバリデート
+    // バリデート判定
     private fun validateSubmit() {
         isButton.value = validateEmail() && validatePassword()
     }
 
-    // email入力欄
-    private fun validateEmail() : Boolean {
+    // email入力欄バリデート
+    private fun validateEmail(): Boolean {
         emailText.value?.let {
             if (it.length > 5) {
                 return true
@@ -42,8 +47,8 @@ class SignInViewModel(
         return false
     }
 
-    // password入力欄
-    private fun validatePassword() : Boolean {
+    // password入力欄バリデート
+    private fun validatePassword(): Boolean {
         passwordText.value?.let {
             if (it.length > 5) {
                 return true
@@ -52,7 +57,9 @@ class SignInViewModel(
         return false
     }
 
-    //ログイン
+    /**
+     * ログイン処理
+     */
     fun signIn() {
         status.value = Status.Loading
         fireBaseRepository.signIn(emailText.value!!, passwordText.value!!, {
@@ -60,7 +67,7 @@ class SignInViewModel(
             viewModelScope.launch {
                 runCatching { withContext(Dispatchers.IO) { userRepository.getUserByEmail(emailText.value!!) } }
                     .onSuccess {
-                        Log.d("TAG","respons:" + it.body())
+                        Log.d("TAG", "respons:" + it.body())
                         it.body()?.let { user ->
                             PreferenceRepositoryImp.setEmail(user.email)
                             PreferenceRepositoryImp.setName(user.name)
@@ -79,5 +86,4 @@ class SignInViewModel(
             }
         })
     }
-
 }
