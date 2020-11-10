@@ -2,23 +2,19 @@ package com.example.musicdictionaryandroid.ui.login
 
 import androidx.lifecycle.*
 import com.example.musicdictionaryandroid.model.entity.User
-import com.example.musicdictionaryandroid.model.repository.*
+import com.example.musicdictionaryandroid.model.usecase.UserUseCase
 import com.example.musicdictionaryandroid.model.util.Status
 import com.example.musicdictionaryandroid.model.util.UserInfoChangeListUtil
-import com.google.gson.Gson
-import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 
 /**
  * 新規登録画面_UIロジック
  *
- * @property fireBaseRepository
- * @property userRepository
+ * @property userUseCase
  */
 class SignUpViewModel(
-    private val fireBaseRepository: FireBaseRepository,
-    private val userRepository: UserRepository
+    private val userUseCase: UserUseCase
 ) : ViewModel() {
 
     val status = MutableLiveData<Status<String?>>()
@@ -112,31 +108,13 @@ class SignUpViewModel(
     /**
      * 新規作成
      */
-    fun signUp() {
+    fun signUp(): Job = viewModelScope.launch {
         status.value = Status.Loading
         val birthday = UserInfoChangeListUtil.getBirthday(birthdaySelectedPosition.value!!)
         val user = User(emailText.value!!, nameText.value!!, genderInt.value!!, areaSelectedPosition.value!!, birthday, 0)
-        val json: String = Gson().toJson(user)
-        fireBaseRepository.signUp(emailText.value!!, passwordText.value!!, {
-            // APIから情報取得
-            viewModelScope.launch {
-                runCatching { withContext(Dispatchers.IO) { userRepository.createUser(json) } }
-                    .onSuccess {
-                        PreferenceRepositoryImp.setEmail(user.email)
-                        PreferenceRepositoryImp.setName(user.name)
-                        PreferenceRepositoryImp.setGender(user.gender)
-                        PreferenceRepositoryImp.setBirthday(birthdaySelectedPosition.value!!)
-                        PreferenceRepositoryImp.setArea(user.area)
-                        PreferenceRepositoryImp.setFavorite(0)
-                        status.value = Status.Success(it.body()?.status)
-                    }
-                    .onFailure { status.value = Status.Failure(it) }
-            }
-        }, {
-            it?.let {
-                status.value = Status.Failure(it)
-            }
-        })
+        userUseCase.createUser(emailText.value!!, passwordText.value!!, user,
+            { status.value = Status.Success(it!!.status) },
+            { it?.let { status.value = Status.Failure(it) } })
     }
 
     // genderの変更

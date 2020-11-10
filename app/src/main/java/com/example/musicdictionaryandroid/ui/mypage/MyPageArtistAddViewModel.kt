@@ -5,26 +5,22 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.musicdictionaryandroid.model.entity.ArtistsForm
 import com.example.musicdictionaryandroid.model.entity.CallBackData
-import com.example.musicdictionaryandroid.model.repository.ApiServerRepository
-import com.example.musicdictionaryandroid.model.repository.ArtistsRepository
-import com.example.musicdictionaryandroid.model.repository.FireBaseRepository
+import com.example.musicdictionaryandroid.model.usecase.ArtistUseCase
+import com.example.musicdictionaryandroid.model.usecase.UserUseCase
+import com.example.musicdictionaryandroid.model.util.Result
 import com.example.musicdictionaryandroid.model.util.Status
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 
 /**
  * アーティスト情報登録・追加画面_UIロジック
  *
- * @property firebaseRepository
- * @property apiServerRepositoryImp
- * @property artistsRepository
+ * @property userUseCase
+ * @property artistUseCase
  */
 class MyPageArtistAddViewModel(
-    private val firebaseRepository: FireBaseRepository,
-    private val apiServerRepositoryImp: ApiServerRepository,
-    private val artistsRepository: ArtistsRepository
+    private val userUseCase: UserUseCase,
+    private val artistUseCase: ArtistUseCase
 ) : ViewModel() {
 
     private var email = ""
@@ -34,7 +30,7 @@ class MyPageArtistAddViewModel(
     val status = MutableLiveData<Status<CallBackData?>>()
 
     init {
-        email = firebaseRepository.getEmail()
+        email = userUseCase.getEmail()
     }
 
     fun init(artist: ArtistsForm) {
@@ -62,25 +58,18 @@ class MyPageArtistAddViewModel(
 
     // アーティスト登録
     private fun addArtist(artist: ArtistsForm): Job = viewModelScope.launch {
-        runCatching { withContext(Dispatchers.IO) { apiServerRepositoryImp.addArtist(artist, email) } }
-            .onSuccess {
-                viewModelScope.launch(Dispatchers.IO) {
-                    artistsRepository.addArtist(artist)
-                }
-                status.value = Status.Success(it.body()) }
-            .onFailure { status.value = Status.Failure(it) }
+        when (val result = artistUseCase.addArtist(artist, email)) {
+            is Result.Success -> { status.value = Status.Success(result.data) }
+            is Result.Error -> { status.value = Status.Failure(result.exception) }
+        }
     }
 
     // アーティスト更新
     private fun updateArtist(artist: ArtistsForm): Job = viewModelScope.launch {
-        runCatching { withContext(Dispatchers.IO) { apiServerRepositoryImp.updateArtist(artist, oldArtistName, email) } }
-            .onSuccess {
-                viewModelScope.launch(Dispatchers.IO) {
-                    artistsRepository.deleteAll()
-                    artistsRepository.updateArtist(oldArtistName, artist)
-                }
-                status.value = Status.Success(it.body()) }
-            .onFailure { status.value = Status.Failure(it) }
+        when (val result = artistUseCase.updateArtist(artist, oldArtistName, email)) {
+            is Result.Success -> { status.value = Status.Success(result.data) }
+            is Result.Error -> { status.value = Status.Failure(result.exception) }
+        }
     }
 
     // アーティスト名変更

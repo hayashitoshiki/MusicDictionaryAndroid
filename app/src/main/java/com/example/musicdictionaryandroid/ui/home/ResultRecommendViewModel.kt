@@ -4,8 +4,8 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.musicdictionaryandroid.model.entity.ArtistsForm
-import com.example.musicdictionaryandroid.model.repository.ApiServerRepository
-import com.example.musicdictionaryandroid.model.repository.FireBaseRepository
+import com.example.musicdictionaryandroid.model.usecase.ArtistUseCase
+import com.example.musicdictionaryandroid.model.usecase.UserUseCase
 import com.example.musicdictionaryandroid.model.util.Status
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -15,18 +15,18 @@ import kotlinx.coroutines.withContext
 /**
  * おすすめアーティスト検索結果画面_UIロジック
  *
- * @property firebaseRepository
- * @property apiServerRepository
+ * @property userUseCase
+ * @property artistUseCase
  */
 class ResultRecommendViewModel(
-    private val firebaseRepository: FireBaseRepository,
-    private val apiServerRepository: ApiServerRepository
+    private val userUseCase: UserUseCase,
+    private val artistUseCase: ArtistUseCase
 ) : ViewModel() {
 
     val status = MutableLiveData<Status<ArrayList<ArtistsForm>?>>()
     private var email: String = ""
 
-    init { email = firebaseRepository.getEmail() }
+    init { email = userUseCase.getEmail() }
 
     /**
      * アーティスト検索
@@ -36,7 +36,7 @@ class ResultRecommendViewModel(
     fun getRecommend(): Job = viewModelScope.launch {
         if (email.isNotEmpty()) {
             status.value = Status.Loading
-            runCatching { withContext(Dispatchers.IO) { apiServerRepository.getArtistsByRecommend(email) } }
+            runCatching { withContext(Dispatchers.IO) { artistUseCase.getArtistsByRecommend(email) } }
                 .onSuccess { status.value = Status.Success(it.body()) }
                 .onFailure { status.value = Status.Failure(it) }
         }

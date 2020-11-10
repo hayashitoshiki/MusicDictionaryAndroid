@@ -4,28 +4,28 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.musicdictionaryandroid.model.entity.ArtistsForm
-import com.example.musicdictionaryandroid.model.repository.*
+import com.example.musicdictionaryandroid.model.usecase.ArtistUseCase
+import com.example.musicdictionaryandroid.model.usecase.UserUseCase
+import com.example.musicdictionaryandroid.model.util.Result
 import com.example.musicdictionaryandroid.model.util.Status
 import kotlinx.coroutines.*
 
 /**
  * 登録済みアーティスト一覧画面_UIロジック
  *
- * @property firebaseRepository
- * @property apiServerRepository
- * @property artistsRepository
+ * @property userUseCase
+ * @property artistUseCase
  */
 class MyPageArtistViewModel(
-    private val firebaseRepository: FireBaseRepository,
-    private val apiServerRepository: ApiServerRepository,
-    private val artistsRepository: ArtistsRepository
+    private val userUseCase: UserUseCase,
+    private val artistUseCase: ArtistUseCase
 ) : ViewModel() {
 
     val status = MutableLiveData<Status<ArrayList<ArtistsForm>?>>()
     var email = ""
 
     init {
-        email = firebaseRepository.getEmail()
+        email = userUseCase.getEmail()
     }
 
     /**
@@ -35,21 +35,10 @@ class MyPageArtistViewModel(
      */
     fun getArtistsByEmail(): Job = viewModelScope.launch {
         status.value = Status.Loading
-        runCatching { withContext(Dispatchers.IO) { apiServerRepository.getArtistsByEmail(email) } }
-            .onSuccess {
-                it.body()?.let { artistsFormList ->
-                    PreferenceRepositoryImp.setFavorite(artistsFormList.size)
-                    viewModelScope.launch(Dispatchers.IO) {
-                        artistsRepository.deleteAll()
-                        artistsRepository.updateAll(artistsFormList)
-                    }
-                }
-                status.value = Status.Success(it.body()) }
-            .onFailure {
-                viewModelScope.launch(Dispatchers.IO) {
-                    val artist = artistsRepository.getArtistAll()
-                status.postValue(Status.Success(artist))
-                } }
+        when (val result = artistUseCase.getArtistsByEmail(email)) {
+            is Result.Success -> { status.value = Status.Success(result.data) }
+            is Result.Error -> { status.value = Status.Failure(result.exception) }
+        }
     }
 
     /**
@@ -61,14 +50,9 @@ class MyPageArtistViewModel(
     fun deleteArtist(artist: ArtistsForm): Job = viewModelScope.launch {
         val artistList: ArrayList<ArtistsForm> = (status.value as Status.Success).data!!
         status.value = Status.Loading
-        runCatching { withContext(Dispatchers.IO) { apiServerRepository.deleteArtist(artist.name, email) } }
-            .onSuccess {
-                artistList.remove(artist)
-                PreferenceRepositoryImp.setFavorite(artistList.size)
-                viewModelScope.launch(Dispatchers.IO) {
-                    artistsRepository.deleteArtist(artist.name)
-                }
+        when (val result = artistUseCase.deleteArtist(artist.name, email)) {
+            is Result.Success -> { artistList.remove(artist)
                 status.value = Status.Success(artistList) }
-            .onFailure { status.value = Status.Failure(it) }
+            is Result.Error -> { status.value = Status.Failure(result.exception) } }
     }
 }

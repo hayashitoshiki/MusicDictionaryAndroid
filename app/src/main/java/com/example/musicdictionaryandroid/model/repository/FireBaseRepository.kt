@@ -23,7 +23,6 @@ interface FireBaseRepository {
      * @param onError 失敗
      */
     fun signIn(email: String, password: String, onSuccess: () -> Unit, onError: (error: Exception?) -> Unit)
-    // ログアウト
     /**
      * ログアウト
      *

@@ -7,19 +7,7 @@ import com.example.musicdictionaryandroid.model.entity.ArtistsForm
  * ローカルDBへのアーティスト情報関連のRepository
  *
  */
-interface ArtistsRepository {
-
-    /**
-     * DB更新
-     *
-     * @param artists 更新するアーティストリスト
-     */
-    fun updateAll(artists: ArrayList<ArtistsForm>)
-    /**
-     * DBリセット
-     *
-     */
-    fun deleteAll()
+interface DataBaseRepository {
     /**
      * アーティスト追加
      *
@@ -33,12 +21,23 @@ interface ArtistsRepository {
      */
     fun deleteArtist(name: String)
     /**
+     * 全部アーティスト削除
+     *
+     */
+    fun deleteAll()
+    /**
      * アーティスト更新
      *
      * @param beforeName 更新するアーティスト名
      * @param artist 更新するアーティスト情報
      */
     fun updateArtist(beforeName: String, artist: ArtistsForm)
+    /**
+     * 全アーティスト更新
+     *
+     * @param artists 更新するアーティストリスト
+     */
+    fun updateAll(artists: ArrayList<ArtistsForm>)
     /**
      * アーティスト取得
      *

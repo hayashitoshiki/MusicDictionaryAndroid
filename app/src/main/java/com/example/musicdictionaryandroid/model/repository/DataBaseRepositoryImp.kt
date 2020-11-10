@@ -4,23 +4,11 @@ import com.example.musicdictionaryandroid.model.entity.Artist
 import com.example.musicdictionaryandroid.model.entity.ArtistsForm
 import com.example.musicdictionaryandroid.ui.MyApplication
 
-class ArtistsRepositoryImp : ArtistsRepository {
+class DataBaseRepositoryImp : DataBaseRepository {
 
     private val dao = MyApplication.database.artistDao()
     companion object {
         private const val TAG = "Realm"
-    }
-
-    // DB更新
-    override fun updateAll(artists: ArrayList<ArtistsForm>) {
-        for (artist in artists) {
-            dao.update(Artist(0, artist.name, artist.gender, artist.voice, artist.length, artist.lyrics))
-        }
-    }
-
-    // データリセット
-    override fun deleteAll() {
-        dao.deleteAll()
     }
 
     // アーティスト登録
@@ -33,9 +21,21 @@ class ArtistsRepositoryImp : ArtistsRepository {
         dao.update(Artist(0, artist.name, artist.gender, artist.voice, artist.length, artist.lyrics))
     }
 
+    // 全アーティスト更新
+    override fun updateAll(artists: ArrayList<ArtistsForm>) {
+        for (artist in artists) {
+            dao.update(Artist(0, artist.name, artist.gender, artist.voice, artist.length, artist.lyrics))
+        }
+    }
+
     // アーティスト削除
     override fun deleteArtist(name: String) {
         dao.delete(Artist(0, name, 0, 0, 0, 0))
+    }
+
+    // 全アーティスト削除
+    override fun deleteAll() {
+        dao.deleteAll()
     }
 
     // アーティスト全取得

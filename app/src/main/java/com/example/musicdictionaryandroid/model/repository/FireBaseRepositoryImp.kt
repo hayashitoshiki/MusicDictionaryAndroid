@@ -15,7 +15,6 @@ class FireBaseRepositoryImp : FireBaseRepository {
     // ユーザーのEmailを取得
     override fun getEmail(): String {
         return auth.currentUser!!.email!!
-        return ""
     }
 
     // 自動ログイン認証

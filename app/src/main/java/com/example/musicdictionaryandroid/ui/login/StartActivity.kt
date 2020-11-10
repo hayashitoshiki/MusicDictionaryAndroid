@@ -6,19 +6,17 @@ import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import com.example.musicdictionaryandroid.R
 import com.example.musicdictionaryandroid.model.util.Status
 import com.example.musicdictionaryandroid.ui.MainActivity
+import org.koin.android.viewmodel.ext.android.viewModel
 
 /**
  * ログイン・新規登録画面 BaseActivity
  */
 class StartActivity : AppCompatActivity() {
 
-    val viewModel: StartViewModel by lazy {
-        ViewModelProvider.NewInstanceFactory().create(StartViewModel::class.java)
-    }
+    private val viewModel: StartViewModel by viewModel()
 
     private lateinit var signInView: SignInFragment
     private lateinit var signUpView: SignUpFragment

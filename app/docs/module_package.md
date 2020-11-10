@@ -20,6 +20,9 @@ Entity管理
 通信処理管理
 
 # Package com.example.musicdictionaryandroid.model.repository
+CRUD管理
+
+# Package com.example.musicdictionaryandroid.model.usecase
 ビジネスロジック管理
 
 # Package com.example.musicdictionaryandroid.model.util

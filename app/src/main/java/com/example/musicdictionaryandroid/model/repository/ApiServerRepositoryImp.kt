@@ -2,6 +2,7 @@ package com.example.musicdictionaryandroid.model.repository
 
 import com.example.musicdictionaryandroid.model.entity.ArtistsForm
 import com.example.musicdictionaryandroid.model.entity.CallBackData
+import com.example.musicdictionaryandroid.model.entity.User
 import com.example.musicdictionaryandroid.model.net.Provider
 import java.util.*
 import retrofit2.Response
@@ -40,6 +41,23 @@ class ApiServerRepositoryImp : ApiServerRepository {
 
     // アーティスト削除
     override fun deleteArtist(name: String, email: String): Response<CallBackData> {
+        val delete = Provider.api().deleteArtist(name, email).execute()
+        delete.body()?. let {
+        }
         return Provider.api().deleteArtist(name, email).execute()
+    }
+
+    // ユーザー取得
+    override fun getUserByEmail(email: String): Response<User> {
+        return Provider.api().getUserByEmail(email).execute()
+    }
+    // ユーザー登録
+    override fun createUser(user: String): Response<CallBackData> {
+        return Provider.api().createUser(user).execute()
+    }
+
+    // ユーザー情報変更
+    override fun changeUser(user: User, email: String): Response<CallBackData> {
+        return Provider.api().changeUser(user, email).execute()
     }
 }

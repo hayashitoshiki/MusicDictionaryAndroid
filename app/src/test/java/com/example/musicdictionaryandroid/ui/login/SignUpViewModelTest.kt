@@ -3,7 +3,6 @@ package com.example.musicdictionaryandroid.ui.login
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.example.musicdictionaryandroid.model.entity.User
 import com.example.musicdictionaryandroid.model.repository.FireBaseRepository
-import com.example.musicdictionaryandroid.model.repository.UserRepository
 import com.example.musicdictionaryandroid.model.util.Status
 import io.mockk.coEvery
 import io.mockk.coVerify
