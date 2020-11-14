@@ -56,11 +56,8 @@ class SignInFragment : Fragment() {
     private fun onStateChanged(state: Status<String?>) = when (state) {
         is Status.Loading -> {}
         is Status.Success -> {
-            state.data?.let {
-                (activity as StartActivity).startApp()
-             } ?: run {
-                (activity as StartActivity).showErrorEmailPassword()
-            }
+            state.data?.let { (activity as StartActivity).startApp()
+             } ?: run { (activity as StartActivity).showErrorEmailPassword() }
         }
         is Status.Failure -> { (activity as StartActivity).showErrorEmailPassword() }
     }

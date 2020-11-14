@@ -113,8 +113,9 @@ class SignUpViewModel(
         val birthday = UserInfoChangeListUtil.getBirthday(birthdaySelectedPosition.value!!)
         val user = User(emailText.value!!, nameText.value!!, genderInt.value!!, areaSelectedPosition.value!!, birthday, 0)
         userUseCase.createUser(emailText.value!!, passwordText.value!!, user,
-            { status.value = Status.Success(it!!.status) },
-            { it?.let { status.value = Status.Failure(it) } })
+            { status.postValue(Status.Success(it!!.status)) },
+            { it?.let { status.postValue(Status.Failure(it)) } }
+        )
     }
 
     // genderの変更

@@ -6,11 +6,10 @@ import androidx.lifecycle.viewModelScope
 import com.example.musicdictionaryandroid.model.entity.ArtistsForm
 import com.example.musicdictionaryandroid.model.usecase.ArtistUseCase
 import com.example.musicdictionaryandroid.model.usecase.UserUseCase
+import com.example.musicdictionaryandroid.model.util.Result
 import com.example.musicdictionaryandroid.model.util.Status
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 
 /**
  * おすすめアーティスト検索結果画面_UIロジック
@@ -34,11 +33,10 @@ class ResultRecommendViewModel(
      * @return おすすめアーティスト一覧
      */
     fun getRecommend(): Job = viewModelScope.launch {
-        if (email.isNotEmpty()) {
-            status.value = Status.Loading
-            runCatching { withContext(Dispatchers.IO) { artistUseCase.getArtistsByRecommend(email) } }
-                .onSuccess { status.value = Status.Success(it.body()) }
-                .onFailure { status.value = Status.Failure(it) }
+        status.value = Status.Loading
+        when (val result = artistUseCase.getArtistsByRecommend(email)) {
+            is Result.Success -> { status.postValue(Status.Success(result.data)) }
+            is Result.Error -> { status.postValue(Status.Failure(result.exception)) }
         }
     }
 }

@@ -17,7 +17,7 @@ import androidx.room.PrimaryKey
  */
 @Entity(tableName = "artists")
 data class Artist(
-    @PrimaryKey open var id: Int? = 0,
+    @PrimaryKey(autoGenerate = true) val id: Int,
     var name: String? = "アーティスト名",
     var gender: Int? = 0,
     var voice: Int? = 0,

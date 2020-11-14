@@ -59,7 +59,8 @@ class SignInViewModel(
     fun signIn(): Job = viewModelScope.launch {
         status.value = Status.Loading
         userUseCase.signIn(emailText.value!!, passwordText.value!!,
-            { status.value = Status.Success("success") },
-            { status.value = Status.Failure(it!!) })
+            { status.postValue(Status.Success("success")) },
+            { status.postValue(Status.Failure(it!!)) }
+        )
     }
 }

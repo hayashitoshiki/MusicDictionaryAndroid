@@ -7,7 +7,6 @@ import com.example.musicdictionaryandroid.model.util.Result
 import java.util.ArrayList
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
-import retrofit2.Response
 
 class ArtistUseCaseImp(
     private val apiRepository: ApiServerRepository,
@@ -15,16 +14,37 @@ class ArtistUseCaseImp(
 ) : ArtistUseCase {
 
     // 検索条件に一致するアーティスト取得
-    override fun getArtistsBy(artists: ArtistsForm): Response<ArrayList<ArtistsForm>> {
-        return apiRepository.getArtistsBy(artists)
+    override suspend fun getArtistsBy(artists: ArtistsForm): Result<ArrayList<ArtistsForm>?> {
+        return withContext(Dispatchers.IO) {
+            try {
+                val result = apiRepository.getArtistsBy(artists)
+                return@withContext Result.Success(result.body())
+            } catch (e: Exception) {
+                return@withContext Result.Error(e)
+            }
+        }
     }
     // おすすめアーティスト検索
-    override fun getArtistsByRecommend(email: String): Response<ArrayList<ArtistsForm>> {
-        return apiRepository.getArtistsByRecommend(email)
+    override suspend fun getArtistsByRecommend(email: String): Result<ArrayList<ArtistsForm>?> {
+        return withContext(Dispatchers.IO) {
+            try {
+                val result = apiRepository.getArtistsByRecommend(email)
+                return@withContext Result.Success(result.body())
+            } catch (e: Exception) {
+                return@withContext Result.Error(e)
+            }
+        }
     }
     // 急上昇アーティスト取得
-    override fun getArtistsBySoaring(): Response<ArrayList<ArtistsForm>> {
-        return apiRepository.getArtistsBySoaring()
+    override suspend fun getArtistsBySoaring(): Result<ArrayList<ArtistsForm>?> {
+        return withContext(Dispatchers.IO) {
+            try {
+                val result = apiRepository.getArtistsBySoaring()
+                return@withContext Result.Success(result.body())
+            } catch (e: Exception) {
+                return@withContext Result.Error(e)
+            }
+        }
     }
     /*----------------------------------------
         設定タブ
@@ -34,6 +54,10 @@ class ArtistUseCaseImp(
           return withContext(Dispatchers.IO) {
               try {
                   val result = apiRepository.getArtistsByEmail(email)
+                  result.body()?.let{
+                      PreferenceRepositoryImp.setFavorite(it.size)
+                      dataBaseRepository.updateAll(it)
+                  }?: run { PreferenceRepositoryImp.setFavorite(0) }
                   return@withContext Result.Success(result.body())
               } catch (e: Exception) {
                   return@withContext Result.Success(dataBaseRepository.getArtistAll())

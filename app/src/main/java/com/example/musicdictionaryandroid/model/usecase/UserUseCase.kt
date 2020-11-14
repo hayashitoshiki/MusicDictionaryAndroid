@@ -18,14 +18,14 @@ interface UserUseCase {
      * @param email ユーザーのEmail
      * @return 登録したユーザー情報取得
      */
-    fun getUserByEmail(email: String): Response<User>
+    suspend fun getUserByEmail(email: String): Result<User?>
     /**
      * ユーザー登録
      *
      * @param user 登録数ユーザー情報
      * @return 登録処理結果
      */
-    suspend fun createUser(email: String, password: String, user: User, onSuccess: (result: CallBackData?) -> Unit, onError: (error: Exception?) -> Unit)
+    suspend fun createUser(email: String, password: String, user: User, onSuccess: (result: CallBackData?) -> Unit, onError: (error: Throwable?) -> Unit)
     /**
      * ユーザー情報変更
      *
@@ -50,7 +50,7 @@ interface UserUseCase {
      * @param onSuccess 成功
      * @param onError 失敗
      */
-    suspend fun signIn(email: String, password: String, onSuccess: () -> Unit, onError: (error: Exception?) -> Unit)
+    suspend fun signIn(email: String, password: String, onSuccess: () -> Unit, onError: (error: Throwable?) -> Unit)
     /**
      * ログアウト
      *
@@ -59,12 +59,12 @@ interface UserUseCase {
      */
     suspend fun signOut(onSuccess: () -> Unit, onError: () -> Unit)
     /**
-     * アカウント削除
+     * ユーザー削除
      *
      * @param onSuccess 成功
      * @param onError 失敗
      */
-    fun delete(onSuccess: () -> Unit, onError: (error: Exception?) -> Unit)
+    fun delete(onSuccess: () -> Unit, onError: (error: Throwable?) -> Unit)
     /**
      * ユーザーのEmail取得
      *

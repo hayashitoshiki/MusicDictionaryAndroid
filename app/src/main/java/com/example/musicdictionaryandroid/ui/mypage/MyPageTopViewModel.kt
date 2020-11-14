@@ -27,8 +27,8 @@ class MyPageTopViewModel(
     fun signOut(): Job = viewModelScope.launch {
         authStatus.value = Status.Loading
         userUseCase.signOut(
-            { authStatus.value = Status.Success("success") },
-            { authStatus.value = Status.Success("error")
-        })
+            { authStatus.postValue(Status.Success("success")) },
+            { authStatus.postValue(Status.Success("error")) }
+        )
     }
 }

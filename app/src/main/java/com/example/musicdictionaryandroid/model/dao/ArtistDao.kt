@@ -21,8 +21,8 @@ interface ArtistDao {
     @Query("delete from artists")
     fun deleteAll()
 
-    @Query("select * from artists")
-    fun getAll(): List<Artist>
+    @Query("SELECT * FROM artists")
+    fun getAll(): Array<Artist>
 
     @Query("select * from artists where name = :name")
     fun getArtistByName(name: String): Artist

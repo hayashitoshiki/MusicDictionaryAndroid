@@ -23,8 +23,9 @@ class DataBaseRepositoryImp : DataBaseRepository {
 
     // 全アーティスト更新
     override fun updateAll(artists: ArrayList<ArtistsForm>) {
-        for (artist in artists) {
-            dao.update(Artist(0, artist.name, artist.gender, artist.voice, artist.length, artist.lyrics))
+        dao.deleteAll()
+        artists.forEachIndexed { index, artist ->
+            dao.insert(Artist(index, artist.name, artist.gender, artist.voice, artist.length, artist.lyrics))
         }
     }
 
@@ -41,7 +42,8 @@ class DataBaseRepositoryImp : DataBaseRepository {
     // アーティスト全取得
     override fun getArtistAll(): ArrayList<ArtistsForm> {
         val artistList = arrayListOf<ArtistsForm>()
-        dao.getAll().forEach {
+        val artists = dao.getAll()
+            artists.forEach {
             val artist = ArtistsForm(
                 it.name!!,
                 it.gender!!,

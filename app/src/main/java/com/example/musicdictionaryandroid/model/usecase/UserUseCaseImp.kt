@@ -8,8 +8,9 @@ import com.example.musicdictionaryandroid.model.util.UserInfoChangeListUtil
 import com.google.gson.Gson
 import java.lang.Exception
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import retrofit2.Response
 
 class UserUseCaseImp(
     private val apiRepository: ApiServerRepository,
@@ -18,27 +19,34 @@ class UserUseCaseImp(
 ) : UserUseCase {
 
     // 登録したユーザーの情報取得
-    override fun getUserByEmail(email: String): Response<User> {
-        return apiRepository.getUserByEmail(email)
+    override suspend fun getUserByEmail(email: String): Result<User?> {
+        return withContext(Dispatchers.IO) {
+            try {
+                val result = apiRepository.getUserByEmail(email)
+                return@withContext Result.Success(result.body())
+            } catch (e: Exception) { return@withContext Result.Error(e) }
+        }
     }
 
     // ユーザー登録
-    override suspend fun createUser(email: String, password: String, user: User, onSuccess: (result: CallBackData?) -> Unit, onError: (error: Exception?) -> Unit) {
-        withContext(Dispatchers.IO) {
-            fireBaseRepository.signUp(email, password, {
-                try {
-                    val json: String = Gson().toJson(user)
-                    val result = apiRepository.createUser(json)
-                    PreferenceRepositoryImp.setEmail(user.email)
-                    PreferenceRepositoryImp.setName(user.name)
-                    PreferenceRepositoryImp.setGender(user.gender)
-                    PreferenceRepositoryImp.setBirthday(UserInfoChangeListUtil.changeBirthdayString(user.birthday))
-                    PreferenceRepositoryImp.setArea(user.area)
-                    PreferenceRepositoryImp.setFavorite(0)
-                    onSuccess(result.body())
-                } catch (e: Exception) { onError(e) }
-            }, { onError(it) })
-        }
+    override suspend fun createUser(email: String, password: String, user: User, onSuccess: (result: CallBackData?) -> Unit, onError: (error: Throwable?) -> Unit) {
+        fireBaseRepository.signUp(email, password, {
+            val json: String = Gson().toJson(user)
+            GlobalScope.launch(Dispatchers.IO) {
+                runCatching { apiRepository.createUser(json) }
+                    .onSuccess {
+                        PreferenceRepositoryImp.setEmail(user.email)
+                        PreferenceRepositoryImp.setName(user.name)
+                        PreferenceRepositoryImp.setGender(user.gender)
+                        PreferenceRepositoryImp.setBirthday(UserInfoChangeListUtil.changeBirthdayString(user.birthday))
+                        PreferenceRepositoryImp.setArea(user.area)
+                        PreferenceRepositoryImp.setFavorite(0)
+                        onSuccess(it.body())
+                    }
+                    .onFailure { onError(it) }
+            }},
+            { onError(it) }
+        )
     }
 
     // ユーザー情報変更
@@ -52,7 +60,7 @@ class UserUseCaseImp(
     }
 
     // ユーザー削除
-    override fun delete(onSuccess: () -> Unit, onError: (error: Exception?) -> Unit) {
+    override fun delete(onSuccess: () -> Unit, onError: (error: Throwable?) -> Unit) {
         fireBaseRepository.delete({ onSuccess() }, { onError(it) })
     }
 
@@ -62,23 +70,24 @@ class UserUseCaseImp(
     }
 
     // ログイン
-    override suspend fun signIn(email: String, password: String, onSuccess: () -> Unit, onError: (error: Exception?) -> Unit) {
-        withContext(Dispatchers.IO) {
+    override suspend fun signIn(email: String, password: String, onSuccess: () -> Unit, onError: (error: Throwable?) -> Unit) {
             fireBaseRepository.signIn(email, password, {
-                try {
-                val result = apiRepository.getUserByEmail(email)
-                    result.body()?.let { user ->
-                        PreferenceRepositoryImp.setEmail(user.email)
-                        PreferenceRepositoryImp.setName(user.name)
-                        PreferenceRepositoryImp.setGender(user.gender)
-                        PreferenceRepositoryImp.setBirthday(UserInfoChangeListUtil.changeBirthdayString(user.birthday))
-                        PreferenceRepositoryImp.setArea(user.area)
-                        PreferenceRepositoryImp.setFavorite(user.artist_count)
-                    }
-                    onSuccess()
-                } catch (e: Exception) { onError(e) }
-            }, { onError(it) })
-        }
+                GlobalScope.launch(Dispatchers.IO) {
+                    runCatching { apiRepository.getUserByEmail(email) }
+                        .onSuccess{
+                            it.body()?.let { user ->
+                                PreferenceRepositoryImp.setEmail(user.email)
+                                PreferenceRepositoryImp.setName(user.name)
+                                PreferenceRepositoryImp.setGender(user.gender)
+                                PreferenceRepositoryImp.setBirthday(UserInfoChangeListUtil.changeBirthdayString(user.birthday))
+                                PreferenceRepositoryImp.setArea(user.area)
+                                PreferenceRepositoryImp.setFavorite(user.artist_count)
+                            }
+                            onSuccess()
+                        }
+                        .onFailure { onError(it.cause) }
+                }
+            }, { onError(it!!.cause) })
     }
 
     // ログアウト

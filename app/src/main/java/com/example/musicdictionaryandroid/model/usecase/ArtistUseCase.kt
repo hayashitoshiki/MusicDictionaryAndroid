@@ -20,20 +20,20 @@ interface ArtistUseCase {
      * @param artists アーティスト検索条件
      * @return アーティストの検索結果一覧
      */
-    fun getArtistsBy(artists: ArtistsForm): Response<ArrayList<ArtistsForm>>
+    suspend fun getArtistsBy(artists: ArtistsForm): Result<ArrayList<ArtistsForm>?>
     /**
      * おすすめアーティスト検索
      *
      * @param email ユーザのEmail
      * @return レコメンドアーティスト一覧
      */
-    fun getArtistsByRecommend(email: String): Response<ArrayList<ArtistsForm>>
+    suspend fun getArtistsByRecommend(email: String): Result<ArrayList<ArtistsForm>?>
     /**
      * 急上昇アーティスト取得
      *
      * @return 急上昇アーティスト一覧
      */
-    fun getArtistsBySoaring(): Response<ArrayList<ArtistsForm>>
+    suspend fun getArtistsBySoaring(): Result<ArrayList<ArtistsForm>?>
     /*----------------------------------------
         設定タブ
      ----------------------------------------*/
