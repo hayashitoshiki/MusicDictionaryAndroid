@@ -1,0 +1,22 @@
+[app](../../index.md) / [com.example.musicdictionaryandroid.model.usecase](../index.md) / [ArtistUseCase](index.md) / [updateArtist](./update-artist.md)
+
+# updateArtist
+
+`abstract suspend fun updateArtist(artist: `[`ArtistsForm`](../../com.example.musicdictionaryandroid.model.entity/-artists-form/index.md)`, beforeName: `[`String`](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html)`, email: `[`String`](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html)`): `[`Result`](../../com.example.musicdictionaryandroid.model.util/-result/index.md)`<`[`CallBackData`](../../com.example.musicdictionaryandroid.model.entity/-call-back-data/index.md)`?>`
+
+アーティスト更新
+
+1. APIのアーティスト更新（更新失敗したら終了）
+2. 更新成功したらローカルDB更新
+
+### Parameters
+
+`artist` - 更新したいアーティストの新しいデータ
+
+`beforeName` - 更新したいアーティストの元の名前
+
+`email` - ユーザのemail
+
+**Return**
+更新正常完了判定結果
+

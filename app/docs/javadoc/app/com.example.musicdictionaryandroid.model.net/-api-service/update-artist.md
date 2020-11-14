@@ -1,0 +1,5 @@
+[app](../../index.md) / [com.example.musicdictionaryandroid.model.net](../index.md) / [ApiService](index.md) / [updateArtist](./update-artist.md)
+
+# updateArtist
+
+`@GET("/artist/update") abstract fun updateArtist(@QueryMap stringParams: `[`Map`](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-map/index.html)`<`[`String`](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html)`, `[`String`](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html)`>, @Query("before_name") beforeName: `[`String`](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html)`, @Query("email") email: `[`String`](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html)`): Call<`[`CallBackData`](../../com.example.musicdictionaryandroid.model.entity/-call-back-data/index.md)`>`

@@ -8,7 +8,7 @@ apply plugin: 'com.google.gms.google-services'
 apply plugin: 'org.jetbrains.dokka-android'
 
 dokka {
-    outputFormat = 'html'
+    outputFormat = 'gfm'
     includes = ['docs/module_package.md']
     outputDirectory = "$buildDir/javadoc"
 }
