@@ -15,15 +15,14 @@ import androidx.lifecycle.ViewModelProvider
 import com.example.musicdictionaryandroid.R
 import com.example.musicdictionaryandroid.databinding.FragmentMypageUserBinding
 import kotlinx.android.synthetic.main.fragment_mypage_user.view.*
+import org.koin.android.viewmodel.ext.android.viewModel
 
 /**
  * ユーザー情報画面
  */
 class MyPageUserFragment : Fragment() {
 
-    private val viewModel: MyPageUserViewModel by lazy {
-        ViewModelProvider.NewInstanceFactory().create(MyPageUserViewModel::class.java)
-    }
+    private val viewModel: MyPageUserViewModel by viewModel()
 
     override fun onCreateView(
         inflater: LayoutInflater,

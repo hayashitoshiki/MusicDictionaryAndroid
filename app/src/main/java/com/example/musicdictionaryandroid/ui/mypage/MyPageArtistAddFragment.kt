@@ -79,7 +79,6 @@ class MyPageArtistAddFragment : Fragment() {
         super.onActivityCreated(savedInstanceState)
 
         viewModel.status.observe(viewLifecycleOwner, Observer { onStateChanged(it) })
-        viewModel.searchText.observe(viewLifecycleOwner, Observer { viewModel.changeArtistName(it) })
 
         args.data?.let {
             fragment_title.text = getString(R.string.artist_change_title)

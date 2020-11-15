@@ -44,7 +44,7 @@
             android:ems="10"
             android:hint="アーティスト名を入力してください"
             android:inputType="textPersonName"
-            android:text="@={viewModel.searchText}" />
+            android:text="@={viewModel.nameText}" />
 
         <TextView
             android:id="@+id/category_title1"
@@ -365,6 +365,7 @@
             android:text="@string/mypage_artist_add_button"
             android:textColor="@color/main_text_color"
             android:textSize="@dimen/category_title"
+            android:enabled="@{viewModel.isEnableSubmitButton}"
             android:onClick="@{() -> viewModel.submit()}"
             android:textStyle="bold" />
 

@@ -7,8 +7,10 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import com.example.musicdictionaryandroid.R
 import com.example.musicdictionaryandroid.databinding.FragmentCategorySearchBinding
+import kotlinx.android.synthetic.main.fragment_home.*
 
 /**
  * カテゴリ検索画面
@@ -33,5 +35,10 @@ class CategorySearchFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
+        // 検索ボタン
+        submit.setOnClickListener {
+            val action = HomeFragmentDirections.actionNavigationHomeToNavigationResult(viewModel.artistForm)
+            findNavController().navigate(action)
+        }
     }
 }

@@ -49,10 +49,10 @@ class MyPageArtistViewModel(
      */
     fun deleteArtist(artist: ArtistsForm): Job = viewModelScope.launch {
         val artistList: ArrayList<ArtistsForm> = (status.value as Status.Success).data!!
+        artistList.remove(artist)
         status.value = Status.Loading
         when (val result = artistUseCase.deleteArtist(artist.name, email)) {
-            is Result.Success -> { artistList.remove(artist)
-                status.value = Status.Success(artistList) }
+            is Result.Success -> { status.value = Status.Success(artistList) }
             is Result.Error -> { status.value = Status.Failure(result.exception) } }
     }
 }

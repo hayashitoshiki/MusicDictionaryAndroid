@@ -13,6 +13,12 @@ import retrofit2.Response
 interface UserUseCase {
 
     /**
+     * キャッシュから登録したユーザーの情報取得
+     *
+     * @return 登録したユーザー情報取得
+     */
+    fun getUserByCache(): User
+    /**
      * 登録したユーザーの情報取得
      *
      * @param email ユーザーのEmail

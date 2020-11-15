@@ -18,6 +18,18 @@ class UserUseCaseImp(
     private val dataBaseRepository: DataBaseRepository
 ) : UserUseCase {
 
+    // ユーザー情報取得(SharedPreferences)
+    override fun getUserByCache(): User {
+       return User(
+            PreferenceRepositoryImp.getEmail()!!,
+            PreferenceRepositoryImp.getName()!!,
+            PreferenceRepositoryImp.getGender(),
+            PreferenceRepositoryImp.getArea(),
+            UserInfoChangeListUtil.getBirthday(PreferenceRepositoryImp.getBirthday()),
+            PreferenceRepositoryImp.getFavorite()
+        )
+    }
+
     // 登録したユーザーの情報取得
     override suspend fun getUserByEmail(email: String): Result<User?> {
         return withContext(Dispatchers.IO) {

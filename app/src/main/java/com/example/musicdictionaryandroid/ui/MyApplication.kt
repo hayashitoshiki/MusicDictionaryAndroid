@@ -18,6 +18,7 @@ import com.example.musicdictionaryandroid.ui.login.StartViewModel
 import com.example.musicdictionaryandroid.ui.mypage.MyPageArtistAddViewModel
 import com.example.musicdictionaryandroid.ui.mypage.MyPageArtistViewModel
 import com.example.musicdictionaryandroid.ui.mypage.MyPageTopViewModel
+import com.example.musicdictionaryandroid.ui.mypage.MyPageUserViewModel
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.viewmodel.dsl.viewModel
 import org.koin.core.context.startKoin
@@ -58,6 +59,7 @@ class MyApplication : Application() {
     private val module: Module = module {
 
         viewModel { MyPageTopViewModel(get()) }
+        viewModel { MyPageUserViewModel(get()) }
         viewModel { MyPageArtistAddViewModel(get(), get()) }
         viewModel { MyPageArtistViewModel(get(), get()) }
         viewModel { SignInViewModel(get()) }

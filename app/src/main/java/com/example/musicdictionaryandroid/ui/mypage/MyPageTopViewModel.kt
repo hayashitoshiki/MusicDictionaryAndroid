@@ -11,7 +11,6 @@ import kotlinx.coroutines.launch
 /**
  * 設定画面_UIロジック
  *
- * @property dataBaseRepository
  * @property userUseCase
  */
 class MyPageTopViewModel(

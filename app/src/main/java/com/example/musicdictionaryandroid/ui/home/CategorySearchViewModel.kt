@@ -10,31 +10,36 @@ import com.example.musicdictionaryandroid.model.entity.ArtistsForm
  */
 class CategorySearchViewModel : ViewModel() {
 
-    var artistForm = ArtistsForm()
+    val artistForm = ArtistsForm()
+    val isSubmit = MutableLiveData<Boolean>(false)
 
     // genderの変更
     fun checkedChangeGender(checkedId: Int) {
         artistForm.gender = checkedId
+        checkValidate()
     }
 
     // lengthの変更
     fun checkedChangeLength(checkedId: Int) {
         artistForm.length = checkedId
+        checkValidate()
     }
 
     // voiceの変更
     fun checkedChangeVoice(checkedId: Int) {
         artistForm.voice = checkedId
+        checkValidate()
     }
 
     // 歌詞情報の変更
     fun checkedChangeLyric(checkedId: Int) {
         artistForm.lyrics = checkedId
+        checkValidate()
     }
 
-    val isSubmit = MutableLiveData<Boolean>(false)
+    // バリデーションチェック
     private fun checkValidate() {
         isSubmit.value =
-            !(artistForm.gender != 0 || artistForm.length != 0 || artistForm.voice != 0 || artistForm.lyrics != 0)
+            artistForm.gender != 0 || artistForm.length != 0 || artistForm.voice != 0 || artistForm.lyrics != 0
     }
 }
