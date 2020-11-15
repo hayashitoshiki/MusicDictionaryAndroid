@@ -1,6 +1,7 @@
 package com.example.musicdictionaryandroid.ui.home
 
-import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.ViewModel
 import com.example.musicdictionaryandroid.model.entity.ArtistsForm
 
@@ -11,7 +12,8 @@ import com.example.musicdictionaryandroid.model.entity.ArtistsForm
 class CategorySearchViewModel : ViewModel() {
 
     val artistForm = ArtistsForm()
-    val isSubmit = MutableLiveData<Boolean>(false)
+    private val isButton = MediatorLiveData<Boolean>()
+    val isEnableSubmitButton: LiveData<Boolean> = isButton
 
     // genderの変更
     fun checkedChangeGender(checkedId: Int) {
@@ -39,7 +41,7 @@ class CategorySearchViewModel : ViewModel() {
 
     // バリデーションチェック
     private fun checkValidate() {
-        isSubmit.value =
+        isButton.value =
             artistForm.gender != 0 || artistForm.length != 0 || artistForm.voice != 0 || artistForm.lyrics != 0
     }
 }

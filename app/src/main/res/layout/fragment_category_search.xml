@@ -336,7 +336,7 @@
             android:textColor="@color/main_text_color"
             android:textSize="@dimen/category_title"
             android:textStyle="bold"
-            android:enabled="@{viewModel.isSubmit}"/>
+            android:enabled="@{viewModel.isEnableSubmitButton}"/>
 
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

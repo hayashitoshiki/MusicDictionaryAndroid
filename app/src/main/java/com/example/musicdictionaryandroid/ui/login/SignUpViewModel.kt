@@ -25,8 +25,7 @@ class SignUpViewModel(
     val areaSelectedPosition = MutableLiveData<Int>(0)
     val birthdaySelectedPosition = MutableLiveData<Int>(0)
     private val isButton = MediatorLiveData<Boolean>()
-    val isEnableSubmitButton: LiveData<Boolean>
-        get() = isButton
+    val isEnableSubmitButton: LiveData<Boolean> = isButton
 
     /**
      * バリデート処理

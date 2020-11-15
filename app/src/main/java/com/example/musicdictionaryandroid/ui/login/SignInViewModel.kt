@@ -17,8 +17,7 @@ class SignInViewModel(
     val emailText = MutableLiveData<String>("")
     val passwordText = MutableLiveData<String>("")
     private val isButton = MediatorLiveData<Boolean>()
-    val isEnableSubmitButton: LiveData<Boolean>
-        get() = isButton
+    val isEnableSubmitButton: LiveData<Boolean> = isButton
 
     /**
      * ボタンバリデート

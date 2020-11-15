@@ -1,16 +1,13 @@
 package com.example.musicdictionaryandroid.ui.login
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
+import androidx.lifecycle.Observer
 import com.example.musicdictionaryandroid.model.entity.User
-import com.example.musicdictionaryandroid.model.repository.FireBaseRepository
-import com.example.musicdictionaryandroid.model.util.Status
-import io.mockk.coEvery
-import io.mockk.coVerify
-import io.mockk.every
+import com.example.musicdictionaryandroid.model.usecase.UserUseCase
+import com.nhaarman.mockito_kotlin.mock
 import io.mockk.mockk
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.test.TestCoroutineDispatcher
 import kotlinx.coroutines.test.TestCoroutineScope
 import kotlinx.coroutines.test.resetMain
@@ -49,43 +46,80 @@ class SignUpViewModelTest {
     }
 
     /**
-     * 新規館員登録（バリデート＋正常）
-     * 条件：１つずつバリデートをかけて最後に新規登録する
-     * 期待結果：各エラー、新規登録メソッドが走る
+     * バリデーションロジック
+     *
+     * 条件：１つずつバリデートをかけて最後に正常系を実施する
+     * 期待結果：バリデーション条件を満たさない場合false、満たす場合trueが帰る
      */
     @ExperimentalCoroutinesApi
     @Test
-    fun onSignUp() = runBlocking {
+    fun onSignUp()  {
         // テストクラス作成
-        val firebaseRepository = mockk<FireBaseRepository>().also {
-            every { it.signUp("testEmail", "aaa", any(), any()) } returns Unit
-            every { it.getEmail() } returns "testEmail"
-        }
-        val userRepository = mockk<UserRepository> ().also {
-            coEvery { it.getUserByEmail("testEmail") } returns responseUser
-        }
-        val viewModel = SignUpViewModel(firebaseRepository, userRepository)
+        val userUseCase = mockk<UserUseCase> ()
+        val viewModel = SignUpViewModel(userUseCase)
+        val observer = mock<Observer<Boolean>>()
+        viewModel.isEnableSubmitButton.observeForever(observer)
 
         // 実行
-        viewModel.signUp()
-        assertEquals(viewModel.status.value, Status.Success("error1"))
-        viewModel.emailText.value = "testEmail"
-        viewModel.signUp()
-        assertEquals(viewModel.status.value, Status.Success("error2"))
-        viewModel.passwordText.value = "aaa"
-        viewModel.signUp()
-        assertEquals(viewModel.status.value, Status.Success("error3"))
-        viewModel.nameText.value = "aaa"
-        viewModel.signUp()
-        assertEquals(viewModel.status.value, Status.Success("error4"))
+        // 初期状態
+        assertEquals(viewModel.isEnableSubmitButton.value!!, false)
+        // Emailが５文字
+        viewModel.emailText.value = "12345"
+        viewModel.passwordText.value = "123456"
+        viewModel.nameText.value = "123456"
         viewModel.genderInt.value = 1
-        viewModel.signUp()
-        assertEquals(viewModel.status.value, Status.Success("error5"))
         viewModel.areaSelectedPosition.value = 1
-        viewModel.signUp()
-        assertEquals(viewModel.status.value, Status.Success("error6"))
         viewModel.birthdaySelectedPosition.value = 1
-        viewModel.signUp()
-        coVerify { firebaseRepository.signUp("testEmail", "aaa", any(), any()) }
+        assertEquals(viewModel.isEnableSubmitButton.value!!, false)
+        // パスワードが５文字
+        viewModel.emailText.value = "123456"
+        viewModel.passwordText.value = "12345"
+        viewModel.nameText.value = "123456"
+        viewModel.genderInt.value = 1
+        viewModel.areaSelectedPosition.value = 1
+        viewModel.birthdaySelectedPosition.value = 1
+        assertEquals(viewModel.isEnableSubmitButton.value!!, false)
+        // 名前が５文字
+        viewModel.emailText.value = "123456"
+        viewModel.passwordText.value = "123456"
+        viewModel.nameText.value = "12345"
+        viewModel.genderInt.value = 1
+        viewModel.areaSelectedPosition.value = 1
+        viewModel.birthdaySelectedPosition.value = 1
+        assertEquals(viewModel.isEnableSubmitButton.value!!, false)
+        // 性別が未入力
+        viewModel.emailText.value = "123456"
+        viewModel.passwordText.value = "123456"
+        viewModel.nameText.value = "123456"
+        viewModel.genderInt.value = 0
+        viewModel.areaSelectedPosition.value = 1
+        viewModel.birthdaySelectedPosition.value = 1
+        assertEquals(viewModel.isEnableSubmitButton.value!!, false)
+        // 地域が未入力
+        viewModel.birthdaySelectedPosition.value = 1
+        viewModel.emailText.value = "123456"
+        viewModel.passwordText.value = "123456"
+        viewModel.nameText.value = "123456"
+        viewModel.genderInt.value = 1
+        viewModel.areaSelectedPosition.value = 0
+        viewModel.birthdaySelectedPosition.value = 1
+        assertEquals(viewModel.isEnableSubmitButton.value!!, false)
+        // 生年月日が未入力
+        viewModel.birthdaySelectedPosition.value = 1
+        viewModel.emailText.value = "123456"
+        viewModel.passwordText.value = "123456"
+        viewModel.nameText.value = "123456"
+        viewModel.genderInt.value = 1
+        viewModel.areaSelectedPosition.value = 1
+        viewModel.birthdaySelectedPosition.value = 0
+        assertEquals(viewModel.isEnableSubmitButton.value!!, false)
+        // 全て入力済み
+        viewModel.emailText.value = "123456"
+        viewModel.passwordText.value = "123456"
+        viewModel.nameText.value = "123456"
+        viewModel.genderInt.value = 1
+        viewModel.areaSelectedPosition.value = 1
+        viewModel.birthdaySelectedPosition.value = 1
+        assertEquals(viewModel.isEnableSubmitButton.value!!, true)
     }
 }

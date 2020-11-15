@@ -1,17 +1,15 @@
 package com.example.musicdictionaryandroid.ui.login
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
+import androidx.lifecycle.Observer
 import com.example.musicdictionaryandroid.model.entity.User
-import com.example.musicdictionaryandroid.model.repository.FireBaseRepository
-import com.example.musicdictionaryandroid.model.util.Status
+import com.example.musicdictionaryandroid.model.usecase.UserUseCase
+import com.nhaarman.mockito_kotlin.mock
 import io.mockk.coEvery
-import io.mockk.coVerify
-import io.mockk.every
 import io.mockk.mockk
 import junit.framework.Assert.assertEquals
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.test.TestCoroutineDispatcher
 import kotlinx.coroutines.test.TestCoroutineScope
 import kotlinx.coroutines.test.resetMain
@@ -46,31 +44,36 @@ class SignInViewModelTest {
     }
 
     /**
-     * バリデート＋ログイン（正常系）
-     * 条件：１つずつバリデートをかけて最後にログインする
-     * 期待結果：パスワードのエラー、メールのエラー、ログインメソッドが走る
+     * バリデーションロジック
+     *
+     * 条件：Emailが６文字以上、passwordが６文字以上でなければfalseを返す
+     * 期待結果：バリデーション条件を満たさない場合false、満たす場合trueが帰る
      */
     @ExperimentalCoroutinesApi
     @Test
-    fun onSignIn() = runBlocking {
+    fun onButtonValidate() {
         // テストクラス作成
-        val firebaseRepository = mockk<FireBaseRepository>().also {
-            every { it.signIn("testEmail", "aaa", any(), any()) } returns Unit
-            every { it.getEmail() } returns "testEmail"
+        val userUseCase = mockk<UserUseCase> ().also {
+            coEvery { it.getEmail() } returns "responseUser"
         }
-        val userRepository = mockk<UserRepository> ().also {
-            coEvery { it.getUserByEmail("testEmail") } returns responseUser
-        }
-        val viewModel = SignInViewModel(firebaseRepository, userRepository)
+        val viewModel = SignInViewModel(userUseCase)
+        val observer = mock<Observer<Boolean>>()
+        viewModel.isEnableSubmitButton.observeForever(observer)
 
         // 実行
-        viewModel.signIn()
-        assertEquals(viewModel.status.value, Status.Success("error1"))
-        viewModel.emailText.value = "testEmail"
-        viewModel.signIn()
-        assertEquals(viewModel.status.value, Status.Success("error2"))
-        viewModel.passwordText.value = "aaa"
-        viewModel.signIn()
-        coVerify { firebaseRepository.signIn("testEmail", "aaa", any(), any()) }
+        // 初期状態
+        assertEquals(viewModel.isEnableSubmitButton.value!!, false)
+        // Email５文字、Password６文字
+        viewModel.emailText.value = "12345"
+        viewModel.passwordText.value = "123456"
+        assertEquals(viewModel.isEnableSubmitButton.value!!, false)
+        // Email６文字、Password５文字
+        viewModel.emailText.value = "123456"
+        viewModel.passwordText.value = "12345"
+        assertEquals(viewModel.isEnableSubmitButton.value!!, false)
+        // Email６文字、Password６文字
+        viewModel.emailText.value = "123456"
+        viewModel.passwordText.value = "123456"
+        assertEquals(viewModel.isEnableSubmitButton.value!!, true)
     }
 }
