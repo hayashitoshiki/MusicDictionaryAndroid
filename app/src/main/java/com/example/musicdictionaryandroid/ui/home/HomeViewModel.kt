@@ -1,5 +1,7 @@
 package com.example.musicdictionaryandroid.ui.home
 
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.musicdictionaryandroid.model.entity.ArtistsForm
@@ -38,7 +40,6 @@ class HomeViewModel(
         if (count == 0) {
             isSubmitButton.value = false
             isSearchBar.value = false
-            isEnableSubmitButton.value = true
         }
         if (count < 3) {
             isCategoryButton.value = false
@@ -64,7 +65,7 @@ class HomeViewModel(
      * @param count 検索バーの入力文字数
      */
     fun changeSubmitButton(count: Int) {
-        isSubmitButton.value = count != 0
+        isEnableSubmitButton.value = count != 0
         artistsFrom.name = searchText.value.toString()
     }
 }

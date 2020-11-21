@@ -625,7 +625,7 @@
                         android:layout_marginTop="16dp"
                         android:layout_marginEnd="8dp"
                         android:layout_marginBottom="16dp"
-                        android:background="@drawable/accent_button"
+                        android:background="@drawable/accent_button_selector"
                         android:stateListAnimator="@drawable/button_state_list_anim_material"
                         android:elevation="6dp"
                         android:text="@string/submit"
