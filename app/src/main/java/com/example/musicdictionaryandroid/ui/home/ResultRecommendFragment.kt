@@ -7,11 +7,12 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
+import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.example.musicdictionaryandroid.R
 import com.example.musicdictionaryandroid.databinding.FragmentResultRecommendBinding
 import com.example.musicdictionaryandroid.model.entity.ArtistsForm
 import com.example.musicdictionaryandroid.model.util.Status
-import com.example.musicdictionaryandroid.ui.adapter.CustomBaseAdapter
+import com.example.musicdictionaryandroid.ui.adapter.ResultAdapter
 import kotlinx.android.synthetic.main.fragment_result.*
 import org.koin.android.viewmodel.ext.android.viewModel
 
@@ -58,7 +59,10 @@ class ResultRecommendFragment : Fragment() {
 
     // データ反映
     private fun viewUpDate(data: ArrayList<ArtistsForm>) {
-        list_view.adapter = CustomBaseAdapter(context, android.R.layout.simple_list_item_1, data)
+        val adapter = ResultAdapter(requireContext(), data)
+        val layoutManager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
+        recyclerView.adapter = adapter
+        recyclerView.layoutManager = layoutManager
     }
 
     // 一致データなし表示

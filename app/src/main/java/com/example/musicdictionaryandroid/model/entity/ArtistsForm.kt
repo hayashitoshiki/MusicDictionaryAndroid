@@ -19,7 +19,8 @@ data class ArtistsForm(
     var lyrics: Int = 0,
     var genre1: String? = "",
     var genre2: String? = "",
-    var lyricsGenre: String? = ""
+    var lyricsGenre: String? = "",
+    var thumb: String? = ""
 ) : java.io.Serializable {
     fun getMapList(): Map<String, String> {
         val mutableMap: MutableMap<String, String> = mutableMapOf()
