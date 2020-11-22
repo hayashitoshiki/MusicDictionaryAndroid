@@ -66,15 +66,19 @@ class MyPageArtistFragment : Fragment() {
 
         // リストビューの各項目タップ
         artist_list.onItemClickListener = AdapterView.OnItemClickListener { parent, view, position, id ->
-            Log.d("Setting", "押されたボタン：" + view.id)
-            val artist = (viewModel.status.value as Status.Success).data?.get(position)!!
-            when (view.id) {
-                R.id.update_button -> {
-                    val action = MyPageArtistFragmentDirections.actionNavigationMypageArtistToMyPageArtistAddFragment(artist)
-                    findNavController().navigate(action)
-                }
-                R.id.delete_button -> {
-                    viewModel.deleteArtist(artist)
+            if (viewModel.status.value is Status.Success) {
+                val artist = (viewModel.status.value as Status.Success).data?.get(position)!!
+                when (view.id) {
+                    R.id.update_button -> {
+                        val action =
+                            MyPageArtistFragmentDirections.actionNavigationMypageArtistToMyPageArtistAddFragment(
+                                artist
+                            )
+                        findNavController().navigate(action)
+                    }
+                    R.id.delete_button -> {
+                        viewModel.deleteArtist(artist)
+                    }
                 }
             }
         }

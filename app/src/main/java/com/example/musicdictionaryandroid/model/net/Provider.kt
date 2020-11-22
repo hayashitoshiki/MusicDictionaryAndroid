@@ -19,4 +19,13 @@ object Provider {
             .build()
         return retrofit.create(ApiService::class.java)
     }
+    fun spotify(): ApiService {
+        val retrofit = Retrofit.Builder()
+            .baseUrl("https://api.spotify.com/")
+            .client(OkHttpClientBuilder.build())
+            .addConverterFactory(GsonConverterFactory.create())
+            .addConverterFactory(GsonConverterFactory.create(GsonBuilder().setLenient().create()))
+            .build()
+        return retrofit.create(ApiService::class.java)
+    }
 }
