@@ -14,6 +14,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.musicdictionaryandroid.R
 import com.example.musicdictionaryandroid.model.entity.ArtistsForm
+import com.example.musicdictionaryandroid.model.util.UserInfoChangeListUtil
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.item_result_artist.view.*
 
@@ -36,6 +37,8 @@ class ResultAdapter(private val context: Context, private val artistList: ArrayL
         val voiceRatingBar: RatingBar = v.voice_ratingBar
         val lengthRatingBar: RatingBar = v.lenght_ratingBar
         val lyricsRatingBar: RatingBar = v.lyric_ratingBar
+        val genre1TextView: TextView = v.genre1
+        val genre2TextView: TextView = v.genre2
         val imageView: ImageView = v.imageView
         val playButton: ImageButton = v.play
         val webView: WebView = v.webview
@@ -54,13 +57,23 @@ class ResultAdapter(private val context: Context, private val artistList: ArrayL
         val artist =  artistList[position]
         // アーティスト名
         holder.nameTextView.text = artist.name
+        // 性別
+        holder.genderTextView.text = UserInfoChangeListUtil.changeGender(artist.gender)
+        if (artist.gender == 1) {
+            holder.genderTextView.setTextColor(Color.BLUE)
+        } else {
+            holder.genderTextView.setTextColor(Color.RED)
+        }
         // 声の高さ
         holder.voiceRatingBar.rating = artist.voice.toFloat()
         // 曲の平均の長さ
         holder.lengthRatingBar.rating = artist.length.toFloat()
         // 歌詞の言語
         holder.lyricsRatingBar.rating = artist.lyrics.toFloat()
-
+        // ジャンル１
+        holder.genre1TextView.text = UserInfoChangeListUtil.changeGenre1(artist.genre1)
+        // ジャンル２
+        holder.genre2TextView.text = UserInfoChangeListUtil.changeGenre2(artist.genre1, artist.genre2)
         // 再生ボタン
         artist.preview?.let{ if (artist.preview != "") {
             holder.playButton.setOnClickListener {
@@ -87,28 +100,16 @@ class ResultAdapter(private val context: Context, private val artistList: ArrayL
         }}?: run {
             holder.playButton.visibility = View.GONE
         }
-
-        // 性別
-        if (artist.gender.toString() == "1") {
-            holder.genderTextView.text = "男"
-            holder.genderTextView.setTextColor(Color.BLUE)
-        } else {
-            holder.genderTextView.text = "女"
-            holder.genderTextView.setTextColor(Color.RED)
-        }
-
         // サムネイル
-        var thumb = ""
-        artist.thumb?.let{ thumb = it }
-        if (thumb == "") {
-            holder.imageView.visibility = View.GONE
-        } else {
+        if (artist.thumb != null && artist.thumb != "") {
             holder.imageView.visibility = View.VISIBLE
             Picasso.with(context)
-                .load(thumb)
+                .load(artist.thumb)
                 .fit()
                 .centerCrop()
                 .into(holder.imageView)
+        } else {
+            holder.imageView.visibility = View.GONE
         }
 
     }

@@ -14,6 +14,73 @@
         <item>女</item>
     </string-array>
 
+    <!-- 音楽ジャンル(大分類) -->
+    <string-array name="genre1_spinner_list">
+        <item>未選択</item>
+        <item>ポップス</item>
+        <item>ロック</item>
+        <item>エレクトロニカ</item>
+        <item>民謡</item>
+        <item>ヒップホップ</item>
+        <item>ラテン</item>
+    </string-array>
+
+    <!-- 音楽ジャンル(ポップス) -->
+    <string-array name="genre12_spinner_list">
+        <item>未選択</item>
+        <item>J-POP</item>
+        <item>アニソン</item>
+        <item>演歌</item>
+        <item>K-POP</item>
+        <item>POPS(洋楽)</item>
+        <item>その他</item>
+    </string-array>
+
+    <!-- 音楽ジャンル(ロック) -->
+    <string-array name="genre22_spinner_list">
+        <item>未選択</item>
+        <item>ロック</item>
+        <item>メロコア</item>
+        <item>パンク</item>
+        <item>ラウド</item>
+        <item>ハードコア</item>
+        <item>メタル</item>
+        <item>オルタナティブ</item>
+        <item>ミクスチャー</item>
+        <item>ヴィジュアル系</item>
+        <item>その他</item>
+    </string-array>
+
+    <!-- 音楽ジャンル(エレクトロニカ) -->
+    <string-array name="genre32_spinner_list">
+        <item>未選択</item>
+        <item>J-エレクトロニカ</item>
+        <item>ボーカロイド</item>
+        <item>その他</item>
+    </string-array>
+
+    <!-- 音楽ジャンル(民謡) -->
+    <string-array name="genre42_spinner_list">
+        <item>未選択</item>
+        <item>民謡</item>
+        <item>その他</item>
+    </string-array>
+
+    <!-- 音楽ジャンル(ヒップホップ) -->
+    <string-array name="genre52_spinner_list">
+        <item>未選択</item>
+        <item>ラップ</item>
+        <item>ポエトリーリーディング</item>
+        <item>その他</item>
+    </string-array>
+
+    <!-- 音楽ジャンル(ラテン) -->
+    <string-array name="genre62_spinner_list">
+        <item>未選択</item>
+        <item>ラテン</item>
+        <item>その他</item>
+    </string-array>
+
     <string-array name="registration_spinner_list">
         <item>未選択</item>
         <item>多い</item>

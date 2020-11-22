@@ -53,12 +53,16 @@ class MyPageArtistAddFragment : Fragment() {
         root.root.search_bar.startAnimation(anim1)
         root.root.category_title1.startAnimation(anim1)
         root.root.category_value1.startAnimation(anim1)
-        root.root.category_title2.startAnimation(anim2)
+        root.root.category_title2.startAnimation(anim1)
         root.root.category_value2.startAnimation(anim2)
-        root.root.category_title3.startAnimation(anim3)
-        root.root.category_value3.startAnimation(anim3)
+        root.root.category_title3.startAnimation(anim2)
+        root.root.category_value3.startAnimation(anim2)
         root.root.category_title4.startAnimation(anim3)
         root.root.category_value4.startAnimation(anim3)
+        root.root.genre1_title.startAnimation(anim3)
+        root.root.genre1_value.startAnimation(anim3)
+        root.root.genre2_title.startAnimation(anim3)
+        root.root.genre2_value.startAnimation(anim3)
         root.root.submit.startAnimation(anim3)
 
         // editTextフォーカス制御
@@ -78,16 +82,26 @@ class MyPageArtistAddFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-        viewModel.status.observe(viewLifecycleOwner, Observer { onStateChanged(it) })
-
+        viewModel.init(
+            resources.getStringArray(R.array.genre1_spinner_list),
+            resources.getStringArray(R.array.genre12_spinner_list),
+            resources.getStringArray(R.array.genre22_spinner_list),
+            resources.getStringArray(R.array.genre32_spinner_list),
+            resources.getStringArray(R.array.genre42_spinner_list),
+            resources.getStringArray(R.array.genre52_spinner_list),
+            resources.getStringArray(R.array.genre62_spinner_list)
+        )
         args.data?.let {
             fragment_title.text = getString(R.string.artist_change_title)
             submit.text = getString(R.string.mypage_artist_change_button)
-            viewModel.init(it)
+            viewModel.setArtist(it)
         } ?: run {
             fragment_title.text = getString(R.string.artist_add_title)
             submit.text = getString(R.string.mypage_artist_add_button)
         }
+        viewModel.status.observe(viewLifecycleOwner, Observer { onStateChanged(it) })
+        viewModel.genre1ValueInt.observe(viewLifecycleOwner, Observer { viewModel.changeGenre1(it) })
+        viewModel.genre2ValueInt.observe(viewLifecycleOwner, Observer { viewModel.changeGenre2(it) })
     }
 
     // ステータス監視

@@ -17,9 +17,8 @@ data class ArtistsForm(
     var voice: Int = 0,
     var length: Int = 0,
     var lyrics: Int = 0,
-    var genre1: String? = "",
-    var genre2: String? = "",
-    var lyricsGenre: String? = "",
+    var genre1: Int = 0,
+    var genre2: Int = 0,
     var thumb: String? = "",
     var preview: String? = ""
 ) : java.io.Serializable {
@@ -27,19 +26,11 @@ data class ArtistsForm(
         val mutableMap: MutableMap<String, String> = mutableMapOf()
         mutableMap["name"] = name
         mutableMap["gender"] = gender.toString()
-        genre1?.let {
-            mutableMap["genre1"] = it
-        }
-        genre2?.let {
-            mutableMap["genre2"] = it
-        }
-        lyricsGenre?.let {
-            mutableMap["lyrics_genre"] = it
-        }
         mutableMap["voice"] = voice.toString()
         mutableMap["length"] = length.toString()
         mutableMap["lyrics"] = lyrics.toString()
-
+        mutableMap["genre1"] = genre1.toString()
+        mutableMap["genre2"] = genre2.toString()
         return mutableMap
     }
 }

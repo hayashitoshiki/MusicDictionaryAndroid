@@ -65,6 +65,8 @@
     <string name="category_title_length">長さ</string>
     <string name="category_title_voice">高さ</string>
     <string name="category_title_lyric">歌詞</string>
+    <string name="category_title_genre1">ジャンル１</string>
+    <string name="category_title_genre2">ジャンル２</string>
 
     <string name="submit">検索</string>
 

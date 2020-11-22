@@ -8,6 +8,7 @@ import com.example.musicdictionaryandroid.model.usecase.ArtistUseCase
 import com.example.musicdictionaryandroid.model.usecase.ArtistUseCaseImp
 import com.example.musicdictionaryandroid.model.usecase.UserUseCase
 import com.example.musicdictionaryandroid.model.usecase.UserUseCaseImp
+import com.example.musicdictionaryandroid.model.util.UserInfoChangeListUtil
 import com.example.musicdictionaryandroid.ui.home.HomeViewModel
 import com.example.musicdictionaryandroid.ui.home.ResultRecommendViewModel
 import com.example.musicdictionaryandroid.ui.home.ResultSoaringViewModel
@@ -41,6 +42,7 @@ class MyApplication : Application() {
     override fun onCreate() {
         super.onCreate()
         PreferenceRepositoryImp.init(applicationContext)
+        UserInfoChangeListUtil.init(applicationContext)
 
         startKoin {
             androidContext(applicationContext)

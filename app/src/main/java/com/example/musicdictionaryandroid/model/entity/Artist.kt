@@ -23,6 +23,6 @@ data class Artist(
     var voice: Int? = 0,
     var length: Int? = 0,
     var lyrics: Int? = 0,
-    var genre1: String = "ジャンル１",
-    var genre2: String = "ジャンル２"
+    var genre1: Int? = 0,
+    var genre2: Int? = 0
 )

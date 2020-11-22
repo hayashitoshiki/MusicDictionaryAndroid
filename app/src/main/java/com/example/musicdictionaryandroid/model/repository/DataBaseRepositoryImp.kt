@@ -50,8 +50,8 @@ class DataBaseRepositoryImp : DataBaseRepository {
                 it.voice!!,
                 it.length!!,
                 it.lyrics!!,
-                it.genre1,
-                it.genre2,
+                it.genre1!!,
+                it.genre2!!,
                 null
             )
             artistList.add(artist)
