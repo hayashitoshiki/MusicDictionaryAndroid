@@ -32,7 +32,7 @@ interface ApiService {
 
     // @GET("updateArtist.json")
     @GET("/artist/update.json")
-    fun updateArtist(@QueryMap stringParams: Map<String, String>, @Query("before_name") beforeName: String, @Query("email") email: String): Call<ArtistsForm>
+    fun updateArtist(@QueryMap stringParams: Map<String, String>, @Query("email") email: String): Call<ArtistsForm>
 
     // @GET("deleteArtist.json")
     @GET("artist/delete.json")

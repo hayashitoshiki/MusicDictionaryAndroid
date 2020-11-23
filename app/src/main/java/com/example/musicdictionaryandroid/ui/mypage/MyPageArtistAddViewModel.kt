@@ -116,7 +116,7 @@ class MyPageArtistAddViewModel(
 
     // アーティスト更新
     private fun updateArtist(artist: ArtistsForm): Job = viewModelScope.launch {
-        when (val result = artistUseCase.updateArtist(artist, oldArtistName, email)) {
+        when (val result = artistUseCase.updateArtist(artist, email)) {
             is Result.Success -> { status.value = Status.Success(result.data) }
             is Result.Error -> { status.value = Status.Failure(result.exception) }
         }

@@ -51,7 +51,11 @@ class MyPageArtistAddFragment : Fragment() {
         }
         sharedElementEnterTransition = transition
         sharedElementReturnTransition = transition
-        root.root.search_bar.startAnimation(anim1)
+        args.data?.let {
+            root.root.artist_name_title.startAnimation(anim1)
+        } ?: run {
+            root.root.artist_name_edit.startAnimation(anim1)
+        }
         root.root.category_title1.startAnimation(anim1)
         root.root.category_value1.startAnimation(anim1)
         root.root.category_title2.startAnimation(anim1)
@@ -67,7 +71,7 @@ class MyPageArtistAddFragment : Fragment() {
         root.root.submit.startAnimation(anim3)
 
         // editTextフォーカス制御
-        root.root.search_bar.setOnFocusChangeListener { v, hasFocus ->
+        root.root.artist_name_edit.setOnFocusChangeListener { v, hasFocus ->
             if (!hasFocus) {
                 val imm = activity?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
                 imm.hideSoftInputFromWindow(v.windowToken, InputMethodManager.HIDE_NOT_ALWAYS)
@@ -95,10 +99,15 @@ class MyPageArtistAddFragment : Fragment() {
         args.data?.let {
             fragment_title.text = getString(R.string.artist_change_title)
             submit.text = getString(R.string.mypage_artist_change_button)
+            artist_name_edit.visibility = View.GONE
+            artist_name_title.visibility = View.VISIBLE
             viewModel.setArtist(it)
+
         } ?: run {
             fragment_title.text = getString(R.string.artist_add_title)
             submit.text = getString(R.string.mypage_artist_add_button)
+            artist_name_edit.visibility = View.VISIBLE
+            artist_name_title.visibility = View.GONE
         }
         viewModel.status.observe(viewLifecycleOwner, Observer { onStateChanged(it) })
         viewModel.genre1ValueInt.observe(viewLifecycleOwner, Observer { viewModel.changeGenre1(it) })

@@ -35,8 +35,8 @@ class ApiServerRepositoryImp : ApiServerRepository {
     }
 
     // アーティスト編集
-    override fun updateArtist(artist: ArtistsForm, beforeName: String, email: String): Response<ArtistsForm> {
-        return Provider.api().updateArtist(artist.getMapList(), beforeName, email).execute()
+    override fun updateArtist(artist: ArtistsForm, email: String): Response<ArtistsForm> {
+        return Provider.api().updateArtist(artist.getMapList(), email).execute()
     }
 
     // アーティスト削除

@@ -17,7 +17,7 @@ class DataBaseRepositoryImp : DataBaseRepository {
     }
 
     // アーティスト更新
-    override fun updateArtist(beforeName: String, artist: ArtistsForm) {
+    override fun updateArtist(artist: ArtistsForm) {
         dao.update(Artist(0, artist.name, artist.gender, artist.voice, artist.length, artist.lyrics))
     }
 

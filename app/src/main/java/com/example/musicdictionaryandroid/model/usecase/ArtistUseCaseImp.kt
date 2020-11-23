@@ -78,12 +78,12 @@ class ArtistUseCaseImp(
         }
     }
     // アーティスト更新
-    override suspend fun updateArtist(artist: ArtistsForm, beforeName: String, email: String): Result<ArtistsForm?> {
+    override suspend fun updateArtist(artist: ArtistsForm, email: String): Result<ArtistsForm?> {
         return withContext(Dispatchers.IO) {
             try {
-                val result = apiRepository.updateArtist(artist, beforeName, email)
+                val result = apiRepository.updateArtist(artist, email)
                 dataBaseRepository.deleteAll()
-                dataBaseRepository.updateArtist(beforeName, artist)
+                dataBaseRepository.updateArtist(artist)
                 return@withContext Result.Success(result.body())
             } catch (e: Exception) {
                 return@withContext Result.Error(e)

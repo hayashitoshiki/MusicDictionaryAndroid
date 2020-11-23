@@ -45,8 +45,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
+
                 <EditText
-                    android:id="@+id/search_bar"
+                    android:id="@+id/artist_name_edit"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
@@ -55,6 +56,19 @@
                     android:hint="アーティスト名を入力してください"
                     android:inputType="textPersonName"
                     android:text="@={viewModel.nameText}" />
+
+                <TextView
+                    android:id="@+id/artist_name_title"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:gravity="center"
+                    android:textColor="@color/main_text_color"
+                    android:textSize="@dimen/category_title"
+                    android:textStyle="bold"
+                    android:text="@={viewModel.nameText}"
+                    android:visibility="gone"/>
 
                 <TextView
                     android:id="@+id/category_title1"

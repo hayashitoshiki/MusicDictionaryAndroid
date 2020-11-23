@@ -28,10 +28,9 @@ interface DataBaseRepository {
     /**
      * アーティスト更新
      *
-     * @param beforeName 更新するアーティスト名
      * @param artist 更新するアーティスト情報
      */
-    fun updateArtist(beforeName: String, artist: ArtistsForm)
+    fun updateArtist(artist: ArtistsForm)
     /**
      * 全アーティスト更新
      *
