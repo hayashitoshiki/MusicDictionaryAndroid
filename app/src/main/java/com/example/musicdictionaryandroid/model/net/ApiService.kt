@@ -28,11 +28,11 @@ interface ApiService {
 
     // @GET("saveArtist.json")
     @GET("artist/save.json")
-    fun addArtist(@QueryMap stringParams: Map<String, String>, @Query("email") email: String): Call<CallBackData>
+    fun addArtist(@QueryMap stringParams: Map<String, String>, @Query("email") email: String): Call<ArtistsForm>
 
     // @GET("updateArtist.json")
-    @GET("/artist/update")
-    fun updateArtist(@QueryMap stringParams: Map<String, String>, @Query("before_name") beforeName: String, @Query("email") email: String): Call<CallBackData>
+    @GET("/artist/update.json")
+    fun updateArtist(@QueryMap stringParams: Map<String, String>, @Query("before_name") beforeName: String, @Query("email") email: String): Call<ArtistsForm>
 
     // @GET("deleteArtist.json")
     @GET("artist/delete.json")

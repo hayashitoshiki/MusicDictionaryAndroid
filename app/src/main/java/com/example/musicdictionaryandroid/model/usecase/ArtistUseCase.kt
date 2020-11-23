@@ -55,7 +55,7 @@ interface ArtistUseCase {
      * @param email ユーザのemail
      * @return 登録正常完了判定結果
      */
-    suspend fun addArtist(artist: ArtistsForm, email: String): Result<CallBackData?>
+    suspend fun addArtist(artist: ArtistsForm, email: String): Result<ArtistsForm?>
     /**
      * アーティスト更新
      * 1. APIのアーティスト更新（更新失敗したら終了）
@@ -66,7 +66,7 @@ interface ArtistUseCase {
      * @param email ユーザのemail
      * @return 更新正常完了判定結果
      */
-    suspend fun updateArtist(artist: ArtistsForm, beforeName: String, email: String): Result<CallBackData?>
+    suspend fun updateArtist(artist: ArtistsForm, beforeName: String, email: String): Result<ArtistsForm?>
     /**
      * アーティスト削除
      * 1. APIのアーティスト削除（削除失敗したら終了）

@@ -2,7 +2,6 @@ package com.example.musicdictionaryandroid.ui.mypage
 
 import androidx.lifecycle.*
 import com.example.musicdictionaryandroid.model.entity.ArtistsForm
-import com.example.musicdictionaryandroid.model.entity.CallBackData
 import com.example.musicdictionaryandroid.model.usecase.ArtistUseCase
 import com.example.musicdictionaryandroid.model.usecase.UserUseCase
 import com.example.musicdictionaryandroid.model.util.Result
@@ -25,7 +24,7 @@ class MyPageArtistAddViewModel(
     private var oldArtistName: String = ""
     val nameText = MutableLiveData<String>()
     var artistForm = MutableLiveData<ArtistsForm>(ArtistsForm())
-    val status = MutableLiveData<Status<CallBackData?>>()
+    val status = MutableLiveData<Status<ArtistsForm?>>()
 
     // 絞り込みリスト
     private lateinit var mainGenreList: Array<String>

@@ -66,11 +66,11 @@ class ArtistUseCaseImp(
     }
 
     // アーティスト登録
-    override suspend fun addArtist(artist: ArtistsForm, email: String): Result<CallBackData?> {
+    override suspend fun addArtist(artist: ArtistsForm, email: String): Result<ArtistsForm?> {
         return withContext(Dispatchers.IO) {
             try {
                 val result = apiRepository.addArtist(artist, email)
-                dataBaseRepository.addArtist(artist)
+                dataBaseRepository.addArtist(result.body()!!)
                 return@withContext Result.Success(result.body())
             } catch (e: Exception) {
                 return@withContext Result.Error(e)
@@ -78,7 +78,7 @@ class ArtistUseCaseImp(
         }
     }
     // アーティスト更新
-    override suspend fun updateArtist(artist: ArtistsForm, beforeName: String, email: String): Result<CallBackData?> {
+    override suspend fun updateArtist(artist: ArtistsForm, beforeName: String, email: String): Result<ArtistsForm?> {
         return withContext(Dispatchers.IO) {
             try {
                 val result = apiRepository.updateArtist(artist, beforeName, email)

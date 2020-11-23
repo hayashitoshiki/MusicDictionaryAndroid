@@ -30,12 +30,12 @@ class ApiServerRepositoryImp : ApiServerRepository {
     }
 
     // アーティスト登録
-    override fun addArtist(artist: ArtistsForm, email: String): Response<CallBackData> {
+    override fun addArtist(artist: ArtistsForm, email: String): Response<ArtistsForm> {
         return Provider.api().addArtist(artist.getMapList(), email).execute()
     }
 
     // アーティスト編集
-    override fun updateArtist(artist: ArtistsForm, beforeName: String, email: String): Response<CallBackData> {
+    override fun updateArtist(artist: ArtistsForm, beforeName: String, email: String): Response<ArtistsForm> {
         return Provider.api().updateArtist(artist.getMapList(), beforeName, email).execute()
     }
 

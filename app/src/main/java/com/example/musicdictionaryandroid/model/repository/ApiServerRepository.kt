@@ -50,7 +50,7 @@ interface ApiServerRepository {
      * @param email ユーザのemail
      * @return 登録正常完了判定結果
      */
-    fun addArtist(artist: ArtistsForm, email: String): Response<CallBackData>
+    fun addArtist(artist: ArtistsForm, email: String): Response<ArtistsForm>
     /**
      * アーティスト更新
      *
@@ -59,7 +59,7 @@ interface ApiServerRepository {
      * @param email ユーザのemail
      * @return 更新正常完了判定結果
      */
-    fun updateArtist(artist: ArtistsForm, beforeName: String, email: String): Response<CallBackData>
+    fun updateArtist(artist: ArtistsForm, beforeName: String, email: String): Response<ArtistsForm>
     /**
      * アーティスト削除
      *

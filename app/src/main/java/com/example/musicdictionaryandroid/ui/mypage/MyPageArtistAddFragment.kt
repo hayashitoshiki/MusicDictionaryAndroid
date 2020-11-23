@@ -20,6 +20,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.example.musicdictionaryandroid.R
 import com.example.musicdictionaryandroid.databinding.FragmentMypageArtistAddBinding
+import com.example.musicdictionaryandroid.model.entity.ArtistsForm
 import com.example.musicdictionaryandroid.model.entity.CallBackData
 import com.example.musicdictionaryandroid.model.util.Status
 import kotlinx.android.synthetic.main.fragment_mypage_artist_add.*
@@ -105,15 +106,13 @@ class MyPageArtistAddFragment : Fragment() {
     }
 
     // ステータス監視
-    private fun onStateChanged(state: Status<CallBackData?>) = when (state) {
+    private fun onStateChanged(state: Status<ArtistsForm?>) = when (state) {
         is Status.Loading -> { showProgressbar() }
         is Status.Success -> {
             Log.d("TAG", "Success:${state.data}")
             hideProgressbar()
             state.data?.let {
-                if (it.status == "200") back()
-                else if (it.status == "000") showErrorToastValidate()
-                else showServerError()
+                 back()
             } ?: run {
                 showServerError()
             }
