@@ -120,6 +120,9 @@ dependencies {
     // picasso
     implementation 'com.squareup.picasso:picasso:2.5.2'
 
+    // flexbox
+    implementation 'com.google.android:flexbox:2.0.1'
+
     // test
     testImplementation "com.nhaarman:mockito-kotlin:1.5.0"
     // livedata-test

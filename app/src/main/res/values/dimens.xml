@@ -6,6 +6,8 @@
     <dimen name="home_search_button_validate">16dp</dimen>
     <dimen name="home_button_validate">12dp</dimen>
 
+    <dimen name="result_header">32dp</dimen>
+    <dimen name="result_search">20dp</dimen>
     <dimen name="category_header">28dp</dimen>
     <dimen name="category_title">24sp</dimen>
     <dimen name="category_value">20sp</dimen>

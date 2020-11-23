@@ -30,7 +30,10 @@ class ResultViewModel(
     fun getArtists(artist: ArtistsForm): Job = viewModelScope.launch {
         status.value = Status.Loading
         when (val result = artistUseCase.getArtistsBy(artist)) {
-            is Result.Success -> { status.postValue(Status.Success(result.data)) }
+            is Result.Success -> {
+                val arrayList = arrayListOf(artist)
+                result.data?.let{arrayList.addAll(it)}
+                status.postValue(Status.Success(arrayList)) }
             is Result.Error -> { status.postValue(Status.Failure(result.exception)) }
         }
     }
