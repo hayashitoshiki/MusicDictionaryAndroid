@@ -80,12 +80,12 @@ class ResultAdapter(private val context: Context, private val artistList: ArrayL
                 holder.searchGenderTextView.visibility = View.GONE
             }
             if (artist.genre1 != 0) {
-                holder.searchGenre1TextView.text = UserInfoChangeListUtil.changeGender(artist.genre1)
+                holder.searchGenre1TextView.text = UserInfoChangeListUtil.changeGenre1(artist.genre1)
             } else {
                 holder.searchGenre1TextView.visibility = View.GONE
             }
             if (artist.genre2 != 0) {
-                holder.searchGenre2TextView.text = UserInfoChangeListUtil.changeGender(artist.genre2)
+                holder.searchGenre2TextView.text = UserInfoChangeListUtil.changeGenre2(artist.genre1, artist.genre2)
             } else {
                 holder.searchGenre2TextView.visibility = View.GONE
             }

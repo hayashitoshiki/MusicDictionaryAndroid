@@ -4,9 +4,9 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.RadioButton
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.example.musicdictionaryandroid.R
@@ -38,9 +38,22 @@ class CategorySearchFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
+
+        viewModel.init(
+            resources.getStringArray(R.array.genre1_spinner_list),
+            resources.getStringArray(R.array.genre12_spinner_list),
+            resources.getStringArray(R.array.genre22_spinner_list),
+            resources.getStringArray(R.array.genre32_spinner_list),
+            resources.getStringArray(R.array.genre42_spinner_list),
+            resources.getStringArray(R.array.genre52_spinner_list),
+            resources.getStringArray(R.array.genre62_spinner_list)
+        )
+        viewModel.genre1ValueInt.observe(viewLifecycleOwner, Observer { viewModel.changeGenre1(it) })
+        viewModel.genre2ValueInt.observe(viewLifecycleOwner, Observer { viewModel.changeGenre2(it) })
+
         // 検索ボタン
         submit.setOnClickListener {
-            val action = CategorySearchFragmentDirections.actionCategorySearchToNavigationResult(viewModel.artistForm.value!!)
+            val action = CategorySearchFragmentDirections.actionCategorySearchToNavigationResult(viewModel.artistForm)
             findNavController().navigate(action)
         }
     }

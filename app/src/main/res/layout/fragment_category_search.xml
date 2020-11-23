@@ -36,6 +36,15 @@
             android:textSize="@dimen/category_header"
             android:textStyle="bold" />
 
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="400dp">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+
 
         <TextView
             android:id="@+id/textView3"
@@ -74,12 +83,14 @@
                     android:id="@+id/gender1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:checked="@{viewModel.genderValueInt == 1}"
                     android:onClick="@{() -> viewModel.checkedChangeGender(1)}" />
 
                 <RadioButton
                     android:id="@+id/gender2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:checked="@{viewModel.genderValueInt == 2}"
                     android:onClick="@{() -> viewModel.checkedChangeGender(2)}" />
             </RadioGroup>
 
@@ -131,30 +142,35 @@
                     android:id="@+id/lenght1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:checked="@{viewModel.lengthValueInt == 1}"
                     android:onClick="@{() -> viewModel.checkedChangeLength(1)}" />
 
                 <RadioButton
                     android:id="@+id/lenght2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:checked="@{viewModel.lengthValueInt == 2}"
                     android:onClick="@{() -> viewModel.checkedChangeLength(2)}" />
 
                 <RadioButton
                     android:id="@+id/lenght3"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:checked="@{viewModel.lengthValueInt == 3}"
                     android:onClick="@{() -> viewModel.checkedChangeLength(3)}" />
 
                 <RadioButton
                     android:id="@+id/lenght4"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:checked="@{viewModel.lengthValueInt == 4}"
                     android:onClick="@{() -> viewModel.checkedChangeLength(4)}" />
 
                 <RadioButton
                     android:id="@+id/lenght5"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:checked="@{viewModel.lengthValueInt == 5}"
                     android:onClick="@{() -> viewModel.checkedChangeLength(5)}" />
             </RadioGroup>
 
@@ -207,30 +223,35 @@
                     android:id="@+id/voice1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:checked="@{viewModel.voiceValueInt == 1}"
                     android:onClick="@{() -> viewModel.checkedChangeVoice(1)}" />
 
                 <RadioButton
                     android:id="@+id/voice2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:checked="@{viewModel.voiceValueInt == 2}"
                     android:onClick="@{() -> viewModel.checkedChangeVoice(2)}" />
 
                 <RadioButton
                     android:id="@+id/voice3"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:checked="@{viewModel.voiceValueInt == 3}"
                     android:onClick="@{() -> viewModel.checkedChangeVoice(3)}" />
 
                 <RadioButton
                     android:id="@+id/voice4"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:checked="@{viewModel.voiceValueInt == 4}"
                     android:onClick="@{() -> viewModel.checkedChangeVoice(4)}" />
 
                 <RadioButton
                     android:id="@+id/voice5"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:checked="@{viewModel.voiceValueInt == 5}"
                     android:onClick="@{() -> viewModel.checkedChangeVoice(5)}" />
             </RadioGroup>
 
@@ -282,30 +303,35 @@
                     android:id="@+id/lyric1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:checked="@{viewModel.lyricsValueInt == 1}"
                     android:onClick="@{() -> viewModel.checkedChangeLyric(1)}" />
 
                 <RadioButton
                     android:id="@+id/lyric2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:checked="@{viewModel.lyricsValueInt == 2}"
                     android:onClick="@{() -> viewModel.checkedChangeLyric(2)}" />
 
                 <RadioButton
                     android:id="@+id/lyric3"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:checked="@{viewModel.lyricsValueInt == 3}"
                     android:onClick="@{() -> viewModel.checkedChangeLyric(3)}" />
 
                 <RadioButton
                     android:id="@+id/lyric4"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:checked="@{viewModel.lyricsValueInt == 4}"
                     android:onClick="@{() -> viewModel.checkedChangeLyric(4)}" />
 
                 <RadioButton
                     android:id="@+id/lyric5"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:checked="@{viewModel.lyricsValueInt == 5}"
                     android:onClick="@{() -> viewModel.checkedChangeLyric(5)}" />
             </RadioGroup>
 
@@ -318,6 +344,46 @@
                 android:textColor="@color/sub_text_color"
                 android:textSize="@dimen/category_value" />
         </LinearLayout>
+
+        <TextView
+            android:id="@+id/genre1_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="@string/category_title_genre1"
+            android:textAlignment="center"
+            android:textColor="@color/main_text_color"
+            android:textSize="@dimen/category_title"
+            android:textStyle="bold" />
+
+        <Spinner
+            android:id="@+id/genre1_value"
+            android:layout_width="120dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:entries="@{viewModel.genre1ValueList}"
+            android:selectedItemPosition="@={viewModel.genre1ValueInt}" />
+
+        <TextView
+            android:id="@+id/genre2_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="@string/category_title_genre2"
+            android:textAlignment="center"
+            android:textColor="@color/main_text_color"
+            android:textSize="@dimen/category_title"
+            android:textStyle="bold" />
+
+        <Spinner
+            android:id="@+id/genre2_value"
+            android:layout_width="120dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:entries="@{viewModel.genre2ValueList}"
+            android:selectedItemPosition="@={viewModel.genre2ValueInt}" />
+        </LinearLayout>
+    </ScrollView>
 
         <Button
             android:id="@+id/submit"
