@@ -14,9 +14,13 @@ import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
 import com.example.musicdictionaryandroid.R
 import com.example.musicdictionaryandroid.databinding.FragmentHomeBinding
+import kotlinx.android.synthetic.main.fragment_details_search.*
 import kotlinx.android.synthetic.main.fragment_home.*
 import kotlinx.android.synthetic.main.fragment_home.submit
 import kotlinx.android.synthetic.main.fragment_home.view.*
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import org.koin.android.viewmodel.ext.android.viewModel
 
 /**
@@ -26,6 +30,7 @@ import org.koin.android.viewmodel.ext.android.viewModel
 class HomeFragment : Fragment() {
 
     companion object {
+        private var state = 0
         fun newInstance(): HomeFragment {
             val f = HomeFragment()
             return f
@@ -43,8 +48,11 @@ class HomeFragment : Fragment() {
         root.viewModel = viewModel
         root.lifecycleOwner = viewLifecycleOwner
 
-        val anim = AnimationUtils.loadAnimation(requireContext(), R.anim.home_start_anim)
-        root.root.home_view.startAnimation(anim)
+        if (state == 0) {
+            val anim = AnimationUtils.loadAnimation(requireContext(), R.anim.home_start_anim)
+            root.root.home_view.startAnimation(anim)
+        }
+        state = 0
 
         // editTextフォーカス制御
         root.root.search_bar.setOnFocusChangeListener { v, hasFocus ->
@@ -67,28 +75,50 @@ class HomeFragment : Fragment() {
 
         // カテゴリボタン
         category_button.setOnClickListener {
+            state = 1
             val extras = FragmentNavigatorExtras(it to "end_category_view_transition")
             findNavController().navigate(R.id.action_navigation_home_to_category_search, null, null, extras)
         }
         // 詳細検索ボタン
         detail_button.setOnClickListener {
+            state = 1
             val extras = FragmentNavigatorExtras(it to "end_detail_view_transition")
             findNavController().navigate(R.id.action_navigation_home_to_navigation_details_search, null, null, extras)
         }
         // 急上昇ボタン
         soaring_button.setOnClickListener {
-            val action = HomeFragmentDirections.actionNavigationHomeToNavigationResultSoaring()
-            findNavController().navigate(action)
+            val anim1 = AnimationUtils.loadAnimation(requireContext(), R.anim.fade_out)
+            home_view.startAnimation(anim1)
+            home_view.visibility = View.GONE
+            GlobalScope.launch {
+                delay(resources.getInteger(R.integer.fade_out_time_home).toLong())
+                val action = HomeFragmentDirections.actionNavigationHomeToNavigationResultSoaring()
+                findNavController().navigate(action)
+            }
         }
         // おすすめボタン
         recommend_button.setOnClickListener {
-            val action = HomeFragmentDirections.actionNavigationHomeToNavigationResultRecommend()
-            findNavController().navigate(action)
+            val anim1 = AnimationUtils.loadAnimation(requireContext(), R.anim.fade_out)
+            home_view.startAnimation(anim1)
+            home_view.visibility = View.GONE
+            GlobalScope.launch {
+                delay(resources.getInteger(R.integer.fade_out_time_home).toLong())
+                val action =
+                    HomeFragmentDirections.actionNavigationHomeToNavigationResultRecommend()
+                findNavController().navigate(action)
+            }
         }
         // 検索ボタン
         submit.setOnClickListener {
-            val action = HomeFragmentDirections.actionNavigationHomeToNavigationResult(viewModel.artistsFrom)
-            findNavController().navigate(action)
+            val anim1 = AnimationUtils.loadAnimation(requireContext(), R.anim.fade_out)
+            home_view.startAnimation(anim1)
+            home_view.visibility = View.GONE
+            GlobalScope.launch {
+                delay(resources.getInteger(R.integer.fade_out_time_home).toLong())
+                val action =
+                    HomeFragmentDirections.actionNavigationHomeToNavigationResult(viewModel.artistsFrom)
+                findNavController().navigate(action)
+            }
         }
     }
 }

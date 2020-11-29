@@ -8,6 +8,7 @@ import android.transition.TransitionSet
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.AnimationUtils
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -18,11 +19,19 @@ import com.example.musicdictionaryandroid.databinding.FragmentDetailsSearchBindi
 import com.example.musicdictionaryandroid.ui.transition.FabTransform
 import com.example.musicdictionaryandroid.ui.transition.HOME_DETAILS_BUTTON
 import kotlinx.android.synthetic.main.fragment_details_search.*
+import kotlinx.android.synthetic.main.fragment_details_search.view.*
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 /**
  * 詳細検索画面
  */
 class DetailsSearchFragment : Fragment() {
+
+    companion object {
+        private var state = 0
+    }
 
     private val viewModel: DetailsSearchViewModel by lazy {
         ViewModelProvider.NewInstanceFactory().create(DetailsSearchViewModel::class.java)
@@ -45,6 +54,12 @@ class DetailsSearchFragment : Fragment() {
         val binding: FragmentDetailsSearchBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_details_search, container, false)
         binding.lifecycleOwner = viewLifecycleOwner
         binding.viewModel = viewModel
+
+        if (state == 1) {
+            val anim = AnimationUtils.loadAnimation(requireContext(), R.anim.slide_in_bottom)
+            binding.root.detail_search_view.startAnimation(anim)
+            state = 0
+        }
         return binding.root
     }
 
@@ -69,8 +84,16 @@ class DetailsSearchFragment : Fragment() {
 
         // 検索結果画面へ遷移
         submit.setOnClickListener {
-            val action = DetailsSearchFragmentDirections.actionNavigationDetailsSearchToNavigationResult(viewModel.artistForm)
-            findNavController().navigate(action)
+            val anim1 = AnimationUtils.loadAnimation(requireContext(), R.anim.slide_out_bottom)
+            detail_search_view.startAnimation(anim1)
+            detail_search_view.visibility = View.GONE
+            GlobalScope.launch {
+                delay(resources.getInteger(R.integer.fade_out_time).toLong())
+                val action =
+                    DetailsSearchFragmentDirections.actionNavigationDetailsSearchToNavigationResult(viewModel.artistForm)
+                findNavController().navigate(action)
+                state = 1
+            }
         }
     }
 }

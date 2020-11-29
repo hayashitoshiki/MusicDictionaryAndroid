@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.AnimationUtils
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.navArgs
@@ -61,6 +62,8 @@ class ResultFragment : Fragment(), DialogFragmentCallbackInterface {
     private fun viewUpDate(data: ArrayList<ArtistsForm>) {
         val adapter = ResultAdapter(requireContext(), data)
         val layoutManager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
+        val controller = AnimationUtils.loadLayoutAnimation(context, R.anim.layout_animation_fall_down)
+        recyclerView.layoutAnimation = controller
         recyclerView.adapter = adapter
         recyclerView.layoutManager = layoutManager
         adapter.setOnItemClickListener(View.OnClickListener { view ->
