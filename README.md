@@ -1,10 +1,11 @@
 # MusicDictionaryAndroid
  
-レコメンデータ蓄積型によるアーティスト検索アプリ
+ユーザー投稿のレコメンドデータ蓄積型によるアーティスト検索アプリ
 
 ## 主な機能
-* ログイン
-* CRUD
+* 認証機能
+* アーティスト登録・編集・削除
+* アーティスト検索
  
 ## 言語
 Kotlin
@@ -13,6 +14,7 @@ Kotlin
 MVVM
 
 ## 主な使用技術
+###  ネイティブ(ライブラリ)
 * Koin
 * Retrofit
 * OkHttp
@@ -24,12 +26,25 @@ MVVM
 * LiveData
 * DataBinding
 
+### バックエンド
+* Ruby  
+* Rails  
+* SQLite(開発環境)  
+* PostgreSQL(デプロイ時)  
+* Heroku  
+* Spotify API　　
+
+
+
 
 ## イメージ
 ホーム画面
 
 <img src="https://github.com/hayashitoshiki/MusicDictionaryAndroid/blob/master/picture/music_dictionary_android_home.png" width="400">  
 
+検索結果画面  
+
+<img src="https://github.com/hayashitoshiki/MusicDictionaryAndroid/blob/master/picture/music_dictionary_android_result.png" width="400">  
 
 ## 主なソース
 
