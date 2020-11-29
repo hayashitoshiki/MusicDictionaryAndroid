@@ -14,5 +14,5 @@ DB呼び出しクエリ管理
 | [deleteAll](delete-all.md) | `abstract fun deleteAll(): `[`Unit`](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html) |
 | [getAll](get-all.md) | `abstract fun getAll(): `[`Array`](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-array/index.html)`<`[`Artist`](../../com.example.musicdictionaryandroid.model.entity/-artist/index.md)`>` |
 | [getArtistByName](get-artist-by-name.md) | `abstract fun getArtistByName(name: `[`String`](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html)`): `[`Artist`](../../com.example.musicdictionaryandroid.model.entity/-artist/index.md) |
-| [insert](insert.md) | `abstract fun insert(artist: `[`Artist`](../../com.example.musicdictionaryandroid.model.entity/-artist/index.md)`): `[`Unit`](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html) |
+| [insert](insert.md) | `abstract suspend fun insert(artist: `[`Artist`](../../com.example.musicdictionaryandroid.model.entity/-artist/index.md)`): `[`Unit`](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html) |
 | [update](update.md) | `abstract fun update(artist: `[`Artist`](../../com.example.musicdictionaryandroid.model.entity/-artist/index.md)`): `[`Unit`](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html) |

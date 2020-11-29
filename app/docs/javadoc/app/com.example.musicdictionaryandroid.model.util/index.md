@@ -11,4 +11,4 @@
 | [Constant](-constant/index.md) | `class Constant` |
 | [Result](-result/index.md) | `sealed class Result<out R>`<br>ビジネスロジックの非同期処理ののResultクラス |
 | [Status](-status/index.md) | `sealed class Status<out T>`<br>UIのステータス管理 |
-| [UserInfoChangeListUtil](-user-info-change-list-util/index.md) | `object UserInfoChangeListUtil` |
+| [UserInfoChangeListUtil](-user-info-change-list-util/index.md) | `object UserInfoChangeListUtil`<br>各数値項目の変換 |

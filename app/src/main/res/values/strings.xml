@@ -63,6 +63,7 @@
 
     <string name="artist_add_title">アーティスト登録</string>
     <string name="artist_change_title">アーティスト編集</string>
+    <string name="artist_name_title">アーティスト名</string>
     <string name="category_search_title">カテゴリ検索</string>
     <string name="category_title_gender">性別</string>
     <string name="category_title_length">長さ</string>

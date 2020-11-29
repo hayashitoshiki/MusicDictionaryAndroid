@@ -2,4 +2,4 @@
 
 # insert
 
-`abstract fun insert(artist: `[`Artist`](../../com.example.musicdictionaryandroid.model.entity/-artist/index.md)`): `[`Unit`](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html)
+`abstract suspend fun insert(artist: `[`Artist`](../../com.example.musicdictionaryandroid.model.entity/-artist/index.md)`): `[`Unit`](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html)

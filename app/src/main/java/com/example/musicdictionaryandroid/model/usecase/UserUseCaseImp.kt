@@ -99,7 +99,7 @@ class UserUseCaseImp(
                         }
                         .onFailure { onError(it.cause) }
                 }
-            }, { onError(it!!.cause) })
+            }, { onError(it) })
     }
 
     // ログアウト

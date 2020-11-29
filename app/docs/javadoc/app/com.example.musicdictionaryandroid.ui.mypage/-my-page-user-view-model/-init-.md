@@ -2,7 +2,7 @@
 
 # &lt;init&gt;
 
-`MyPageUserViewModel()`
+`MyPageUserViewModel(userUseCase: `[`UserUseCase`](../../com.example.musicdictionaryandroid.model.usecase/-user-use-case/index.md)`)`
 
 ユーザー情報画面_UIロジック
 

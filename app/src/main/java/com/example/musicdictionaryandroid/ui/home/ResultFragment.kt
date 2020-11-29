@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.example.musicdictionaryandroid.R
 import com.example.musicdictionaryandroid.model.entity.ArtistsForm
 import com.example.musicdictionaryandroid.model.util.Status
+import com.example.musicdictionaryandroid.ui.adapter.DialogFragmentCallbackInterface
 import com.example.musicdictionaryandroid.ui.adapter.ResultAdapter
 import kotlinx.android.synthetic.main.fragment_result.*
 import org.koin.android.viewmodel.ext.android.viewModel
@@ -19,7 +20,7 @@ import org.koin.android.viewmodel.ext.android.viewModel
  * 検索結果画面
  *
  */
-class ResultFragment : Fragment() {
+class ResultFragment : Fragment(), DialogFragmentCallbackInterface {
 
     private val args: ResultFragmentArgs by navArgs()
     private val viewModel: ResultViewModel by viewModel()
@@ -62,6 +63,14 @@ class ResultFragment : Fragment() {
         val layoutManager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
         recyclerView.adapter = adapter
         recyclerView.layoutManager = layoutManager
+        adapter.setOnItemClickListener(View.OnClickListener { view ->
+            val dialogFragment = SearchDialogFragment()
+            val bundle = Bundle()
+            bundle.putSerializable("artist", args.data)
+            dialogFragment.arguments = bundle
+            dialogFragment.setCallbackListener(this)
+            dialogFragment.show(requireActivity().supportFragmentManager, null)
+        })
     }
 
     // 一致データなし表示
@@ -87,5 +96,10 @@ class ResultFragment : Fragment() {
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
         outState.putSerializable("artistSave", args.data)
+    }
+
+    // ダイアログコールバック
+    override fun callBackMethod(data: ArtistsForm) {
+        viewModel.getArtists(data)
     }
 }

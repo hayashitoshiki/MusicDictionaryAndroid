@@ -12,7 +12,7 @@ class DataBaseRepositoryImp : DataBaseRepository {
     }
 
     // アーティスト登録
-    override fun addArtist(artist: ArtistsForm) {
+    override suspend fun addArtist(artist: ArtistsForm) {
         dao.insert(Artist(0, artist.name, artist.gender, artist.voice, artist.length, artist.lyrics))
     }
 
@@ -22,10 +22,10 @@ class DataBaseRepositoryImp : DataBaseRepository {
     }
 
     // 全アーティスト更新
-    override fun updateAll(artists: ArrayList<ArtistsForm>) {
+    override suspend fun updateAll(artists: ArrayList<ArtistsForm>) {
         dao.deleteAll()
         artists.forEachIndexed { index, artist ->
-            dao.insert(Artist(index, artist.name, artist.gender, artist.voice, artist.length, artist.lyrics))
+            dao.insert(Artist(null, artist.name, artist.gender, artist.voice, artist.length, artist.lyrics))
         }
     }
 

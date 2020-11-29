@@ -10,7 +10,7 @@ import com.example.musicdictionaryandroid.model.entity.Artist
 interface ArtistDao {
 
     @Insert
-    fun insert(artist: Artist)
+    suspend fun insert(artist: Artist)
 
     @Update
     fun update(artist: Artist)

@@ -7,10 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.webkit.WebView
-import android.widget.ImageButton
-import android.widget.ImageView
-import android.widget.RatingBar
-import android.widget.TextView
+import android.widget.*
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
 import com.example.musicdictionaryandroid.R
@@ -30,6 +27,7 @@ class ResultAdapter(private val context: Context, private val artistList: ArrayL
     RecyclerView.Adapter<ResultAdapter.ViewHolder>() {
 
     var holdButton: ImageButton? = null
+    private lateinit var  listener: View.OnClickListener
 
     // 参照するviewの定義
     open class ViewHolder(v: View) : RecyclerView.ViewHolder(v) {
@@ -52,6 +50,7 @@ class ResultAdapter(private val context: Context, private val artistList: ArrayL
         val searchLyricTextView: TextView = v.title_lyric
         val searchLengthTextView: TextView = v.title_length
         val searchVoiceTextView: TextView = v.title_voice
+        val searchButton: Button = v.search_buttn
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -103,6 +102,9 @@ class ResultAdapter(private val context: Context, private val artistList: ArrayL
                 holder.searchLyricTextView.text = UserInfoChangeListUtil.changeLyrics(artist.lyrics)
             } else {
                 holder.searchLyricTextView.visibility = View.GONE
+            }
+            holder.searchButton.setOnClickListener { view ->
+                listener.onClick(view)
             }
         } else {
             // アーティスト情報設定
@@ -166,5 +168,9 @@ class ResultAdapter(private val context: Context, private val artistList: ArrayL
                 holder.imageView.visibility = View.GONE
             }
         }
+    }
+
+    fun setOnItemClickListener(listener: View.OnClickListener) {
+        this.listener = listener
     }
 }

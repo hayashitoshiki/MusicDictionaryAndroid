@@ -10,7 +10,7 @@
 
 | Name | Summary |
 |---|---|
-| [&lt;init&gt;](-init-.md) | `MyPageUserViewModel()`<br>ユーザー情報画面_UIロジック |
+| [&lt;init&gt;](-init-.md) | `MyPageUserViewModel(userUseCase: `[`UserUseCase`](../../com.example.musicdictionaryandroid.model.usecase/-user-use-case/index.md)`)`<br>ユーザー情報画面_UIロジック |
 
 ### Properties
 

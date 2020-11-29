@@ -9,6 +9,8 @@
     <color name="gray_300">#E0E0E0</color>
     <color name="gray_700">#616161</color>
 
+    <color name="transparent">#00E0E0E0</color>
+
     <color name="header_color">#FFFFFF</color>
     <color name="main_text_color">#DEFFFFFF</color>
     <color name="sub_text_color">#99FFFFFF</color>

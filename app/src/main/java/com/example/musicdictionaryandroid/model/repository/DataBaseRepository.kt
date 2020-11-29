@@ -13,7 +13,7 @@ interface DataBaseRepository {
      *
      * @param artist 追加するアーティスト
      */
-    fun addArtist(artist: ArtistsForm)
+    suspend fun addArtist(artist: ArtistsForm)
     /**
      * アーティスト削除
      *
@@ -36,7 +36,7 @@ interface DataBaseRepository {
      *
      * @param artists 更新するアーティストリスト
      */
-    fun updateAll(artists: ArrayList<ArtistsForm>)
+    suspend fun updateAll(artists: ArrayList<ArtistsForm>)
     /**
      * アーティスト取得
      *
