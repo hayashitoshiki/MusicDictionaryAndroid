@@ -26,8 +26,8 @@ import kotlinx.android.synthetic.main.item_result_artist.view.*
 class ResultAdapter(private val context: Context, private val artistList: ArrayList<ArtistsForm>) :
     RecyclerView.Adapter<ResultAdapter.ViewHolder>() {
 
-    var holdButton: ImageButton? = null
-    private lateinit var  listener: View.OnClickListener
+    private var holdButton: ImageButton? = null
+    private lateinit var listener: View.OnClickListener
 
     // 参照するviewの定義
     open class ViewHolder(v: View) : RecyclerView.ViewHolder(v) {
@@ -43,6 +43,7 @@ class ResultAdapter(private val context: Context, private val artistList: ArrayL
         val playButton: ImageButton = v.play
         val webView: WebView = v.webview
         val titleLayout: ConstraintLayout = v.title_context
+        val titleTextView: TextView = v.title
         val searchNameTextView: TextView = v.title_name
         val searchGenderTextView: TextView = v.title_gender
         val searchGenre1TextView: TextView = v.title_genre1
@@ -68,10 +69,19 @@ class ResultAdapter(private val context: Context, private val artistList: ArrayL
             // タイトル設定
             holder.mainLayout.visibility = View.GONE
             holder.titleLayout.visibility = View.VISIBLE
-            if (artist.name != "") {
-                holder.searchNameTextView.text = "アーティスト名：" + artist.name
-            } else {
-                holder.searchNameTextView.visibility = View.GONE
+            when (artist.name) {
+                "急上昇", "おすすめ" ->{
+                    holder.titleTextView.text = artist.name
+                    holder.searchNameTextView.visibility = View.GONE
+                    holder.searchButton.visibility = View.GONE
+                }
+                else -> {
+                    if (artist.name != "") {
+                        holder.searchNameTextView.text = "アーティスト名：" + artist.name
+                    } else {
+                        holder.searchNameTextView.visibility = View.GONE
+                    }
+                }
             }
             if (artist.gender != 0) {
                 holder.searchGenderTextView.text = UserInfoChangeListUtil.changeGender(artist.gender)
@@ -132,6 +142,7 @@ class ResultAdapter(private val context: Context, private val artistList: ArrayL
             holder.genre2TextView.text = UserInfoChangeListUtil.changeGenre2(artist.genre1, artist.genre2)
             // 再生ボタン
             artist.preview?.let{ if (artist.preview != "") {
+                holder.playButton.visibility = View.VISIBLE
                 holder.playButton.setOnClickListener {
                     if (holdButton != holder.playButton) {
                         holdButton?.setImageResource(R.mipmap.ic_button_music_play_32)

@@ -41,9 +41,6 @@ class ApiServerRepositoryImp : ApiServerRepository {
 
     // アーティスト削除
     override fun deleteArtist(name: String, email: String): Response<CallBackData> {
-        val delete = Provider.api().deleteArtist(name, email).execute()
-        delete.body()?. let {
-        }
         return Provider.api().deleteArtist(name, email).execute()
     }
 

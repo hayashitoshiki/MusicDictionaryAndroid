@@ -35,7 +35,11 @@ class ResultRecommendViewModel(
     fun getRecommend(): Job = viewModelScope.launch {
         status.value = Status.Loading
         when (val result = artistUseCase.getArtistsByRecommend(email)) {
-            is Result.Success -> { status.postValue(Status.Success(result.data)) }
+            is Result.Success -> {
+                val artist = ArtistsForm("おすすめ")
+                val arrayList = arrayListOf(artist)
+                result.data?.let{arrayList.addAll(it)}
+                status.postValue(Status.Success(arrayList)) }
             is Result.Error -> { status.postValue(Status.Failure(result.exception)) }
         }
     }
