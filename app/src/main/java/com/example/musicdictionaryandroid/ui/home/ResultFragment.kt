@@ -1,6 +1,7 @@
 package com.example.musicdictionaryandroid.ui.home
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -25,6 +26,11 @@ class ResultFragment : Fragment(), DialogFragmentCallbackInterface {
 
     private val args: ResultFragmentArgs by navArgs()
     private val viewModel: ResultViewModel by viewModel()
+
+    @Suppress("JAVA_CLASS_ON_COMPANION")
+    companion object {
+        val TAG = javaClass.name
+    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_result, container, false)
@@ -55,7 +61,10 @@ class ResultFragment : Fragment(), DialogFragmentCallbackInterface {
                 showNoDataView()
             }
         }
-        is Status.Failure -> { hideProgressbar() }
+        is Status.Failure -> {
+            Log.i(TAG, "Failure:${state.throwable}")
+            hideProgressbar()
+        }
     }
 
     // データ反映

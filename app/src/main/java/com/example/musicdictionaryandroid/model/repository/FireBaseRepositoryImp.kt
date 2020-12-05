@@ -6,8 +6,9 @@ import java.lang.Exception
 
 class FireBaseRepositoryImp : FireBaseRepository {
 
+    @Suppress("JAVA_CLASS_ON_COMPANION")
     companion object {
-        private const val TAG = "FireBaseRepositoryImp"
+        private  val TAG = javaClass.name
     }
 
     private val auth: FirebaseAuth = FirebaseAuth.getInstance()
@@ -20,7 +21,7 @@ class FireBaseRepositoryImp : FireBaseRepository {
     // 自動ログイン認証
     override fun firstCheck(onSuccess: () -> Unit, onError: () -> Unit) {
         if (auth.currentUser != null) {
-            onSuccess() // こんな感じで置き換える
+            onSuccess()
         } else {
             onError()
         }
@@ -30,16 +31,18 @@ class FireBaseRepositoryImp : FireBaseRepository {
     override fun signIn(email: String, password: String, onSuccess: () -> Unit, onError: (error: Exception?) -> Unit) {
         auth.signInWithEmailAndPassword(email, password)
             .addOnCompleteListener { task ->
-                if (task.isSuccessful) {
-                    Log.d(TAG, "ログイン成功：" + task.isSuccessful)
-                    onSuccess()
-                    //  callBack.success()
-                } else if (task.isCanceled) {
-                    Log.d(TAG, "ログインキャンセル：" + task.exception)
-                } else {
-                    Log.d(TAG, "ログイン失敗：" + task.exception)
-                    onError(task.exception)
-                    // callBack.failure()
+                when {
+                    task.isSuccessful -> {
+                        Log.d(TAG, "ログイン成功：" + task.isSuccessful)
+                        onSuccess()
+                    }
+                    task.isCanceled -> {
+                        Log.d(TAG, "ログインキャンセル：" + task.exception)
+                    }
+                    else -> {
+                        Log.d(TAG, "ログイン失敗：" + task.exception)
+                        onError(task.exception)
+                    }
                 }
             }
     }

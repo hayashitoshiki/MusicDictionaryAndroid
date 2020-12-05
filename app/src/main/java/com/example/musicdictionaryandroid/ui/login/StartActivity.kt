@@ -62,7 +62,6 @@ class StartActivity : AppCompatActivity() {
 
     // 画面遷移
     fun startApp() {
-        Toast.makeText(applicationContext, getString((R.string.success_login)), Toast.LENGTH_LONG).show()
         val intent = Intent(application, MainActivity::class.java)
         startActivity(intent)
         finish()
@@ -70,9 +69,5 @@ class StartActivity : AppCompatActivity() {
     // 入力エラーダイアログ
     fun showErrorEmailPassword() {
         Toast.makeText(applicationContext, getString(R.string.error_email_password), Toast.LENGTH_LONG).show()
-    }
-    // 通信エラーダイアログ
-    fun showErrorNetwork() {
-        Toast.makeText(applicationContext, getString(R.string.error_network), Toast.LENGTH_LONG).show()
     }
 }

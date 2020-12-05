@@ -7,9 +7,6 @@ import com.example.musicdictionaryandroid.ui.MyApplication
 class DataBaseRepositoryImp : DataBaseRepository {
 
     private val dao = MyApplication.database.artistDao()
-    companion object {
-        private const val TAG = "Realm"
-    }
 
     // アーティスト登録
     override suspend fun addArtist(artist: ArtistsForm) {

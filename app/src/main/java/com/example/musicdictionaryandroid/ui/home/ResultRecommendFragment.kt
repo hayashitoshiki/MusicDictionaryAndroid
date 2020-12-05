@@ -1,6 +1,7 @@
 package com.example.musicdictionaryandroid.ui.home
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -23,6 +24,11 @@ import org.koin.android.viewmodel.ext.android.viewModel
 class ResultRecommendFragment : Fragment() {
 
     private val viewModel: ResultRecommendViewModel by viewModel()
+
+    @Suppress("JAVA_CLASS_ON_COMPANION")
+    companion object {
+        val TAG = javaClass.name
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -54,7 +60,10 @@ class ResultRecommendFragment : Fragment() {
                 showNoDataView()
             }
         }
-        is Status.Failure -> { hideProgressbar() }
+        is Status.Failure -> {
+            Log.i(TAG, "Failure:${state.throwable}")
+            hideProgressbar()
+        }
     }
 
     // データ反映

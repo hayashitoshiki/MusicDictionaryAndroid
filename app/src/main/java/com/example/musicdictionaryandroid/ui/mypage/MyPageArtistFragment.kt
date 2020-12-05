@@ -32,6 +32,11 @@ class MyPageArtistFragment : Fragment() {
 
     private val viewModel: MyPageArtistViewModel by viewModel()
 
+    @Suppress("JAVA_CLASS_ON_COMPANION")
+    companion object {
+        val TAG = javaClass.name
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -96,7 +101,10 @@ class MyPageArtistFragment : Fragment() {
                 showNoDataView()
             }
         }
-        is Status.Failure -> { hideProgressbar() }
+        is Status.Failure -> {
+            Log.i(TAG, "Failure:${state.throwable}")
+            hideProgressbar()
+        }
     }
 
     // データ反映

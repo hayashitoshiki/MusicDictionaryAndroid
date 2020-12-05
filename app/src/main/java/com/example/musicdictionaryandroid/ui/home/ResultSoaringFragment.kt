@@ -1,6 +1,7 @@
 package com.example.musicdictionaryandroid.ui.home
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,6 +14,7 @@ import com.example.musicdictionaryandroid.databinding.FragmentResultSoaringBindi
 import com.example.musicdictionaryandroid.model.entity.ArtistsForm
 import com.example.musicdictionaryandroid.model.util.Status
 import com.example.musicdictionaryandroid.ui.adapter.ResultAdapter
+import com.example.musicdictionaryandroid.ui.login.SignInFragment
 import kotlinx.android.synthetic.main.fragment_result.*
 import org.koin.android.viewmodel.ext.android.viewModel
 
@@ -23,6 +25,11 @@ import org.koin.android.viewmodel.ext.android.viewModel
 class ResultSoaringFragment : Fragment() {
 
     private val viewModel: ResultSoaringViewModel by viewModel()
+
+    @Suppress("JAVA_CLASS_ON_COMPANION")
+    companion object {
+        val TAG = javaClass.name
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -54,7 +61,10 @@ class ResultSoaringFragment : Fragment() {
                 showNoDataView()
             }
         }
-        is Status.Failure -> { hideProgressbar() }
+        is Status.Failure -> {
+            Log.i(TAG, "Failure:${state.throwable}")
+            hideProgressbar()
+        }
     }
 
     // データ反映

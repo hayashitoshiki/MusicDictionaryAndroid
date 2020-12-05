@@ -2,6 +2,7 @@ package com.example.musicdictionaryandroid.ui.mypage
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -26,6 +27,10 @@ class MyPageTopFragment : Fragment() {
     private val viewModel: MyPageTopViewModel by viewModel()
 
     private var firstCreateFrg = true
+    @Suppress("JAVA_CLASS_ON_COMPANION")
+    companion object {
+        val TAG = javaClass.name
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -73,7 +78,10 @@ class MyPageTopFragment : Fragment() {
                 showErrorNetwork()
             }
         }
-        is Status.Failure -> { showErrorNetwork() }
+        is Status.Failure -> {
+            Log.i(TAG, "Failure:${state.throwable}")
+            showErrorNetwork()
+        }
     }
 
     // 終了

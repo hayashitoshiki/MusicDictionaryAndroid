@@ -35,12 +35,23 @@ class MyPageArtistAddFragment : Fragment() {
     private val args: MyPageArtistAddFragmentArgs by navArgs()
     private val viewModel: MyPageArtistAddViewModel by viewModel()
 
-    // 初期画面にHome画面をセット
+    @Suppress("JAVA_CLASS_ON_COMPANION")
+    companion object {
+        val TAG = javaClass.name
+        @JvmStatic
+        fun newInstance(): MyPageArtistAddFragment {
+            val fragment = MyPageArtistAddFragment()
+            val args = Bundle()
+            return fragment
+        }
+    }
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val root: FragmentMypageArtistAddBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_mypage_artist_add, container, false)
         root.lifecycleOwner = viewLifecycleOwner
         root.viewModel = viewModel
 
+        // アニメーション設定
         val anim1 = AnimationUtils.loadAnimation(requireContext(), R.anim.fade_in_offset_300_anim)
         val anim2 = AnimationUtils.loadAnimation(requireContext(), R.anim.fade_in_offset_400_anim)
         val anim3 = AnimationUtils.loadAnimation(requireContext(), R.anim.fade_in_offset_500_anim)
@@ -94,21 +105,10 @@ class MyPageArtistAddFragment : Fragment() {
             resources.getStringArray(R.array.genre32_spinner_list),
             resources.getStringArray(R.array.genre42_spinner_list),
             resources.getStringArray(R.array.genre52_spinner_list),
-            resources.getStringArray(R.array.genre62_spinner_list)
+            resources.getStringArray(R.array.genre62_spinner_list),
+            args.data
         )
-        args.data?.let {
-            fragment_title.text = getString(R.string.artist_change_title)
-            submit.text = getString(R.string.mypage_artist_change_button)
-            artist_name_edit.visibility = View.GONE
-            artist_name_title.visibility = View.VISIBLE
-            viewModel.setArtist(it)
 
-        } ?: run {
-            fragment_title.text = getString(R.string.artist_add_title)
-            submit.text = getString(R.string.mypage_artist_add_button)
-            artist_name_edit.visibility = View.VISIBLE
-            artist_name_title.visibility = View.GONE
-        }
         viewModel.status.observe(viewLifecycleOwner, Observer { onStateChanged(it) })
         viewModel.genre1ValueInt.observe(viewLifecycleOwner, Observer { viewModel.changeGenre1(it) })
         viewModel.genre2ValueInt.observe(viewLifecycleOwner, Observer { viewModel.changeGenre2(it) })
@@ -118,7 +118,6 @@ class MyPageArtistAddFragment : Fragment() {
     private fun onStateChanged(state: Status<ArtistsForm?>) = when (state) {
         is Status.Loading -> { showProgressbar() }
         is Status.Success -> {
-            Log.d("TAG", "Success:${state.data}")
             hideProgressbar()
             state.data?.let {
                  back()
@@ -127,24 +126,20 @@ class MyPageArtistAddFragment : Fragment() {
             }
         }
         is Status.Failure -> {
-            Log.d("TAG", "Failure:${state.throwable}")
+            Log.i(TAG, "Failure:${state.throwable}")
             hideProgressbar()
             showServerError()
         }
     }
 
-    // 登録したら登録画面から設定画面へ画面戻る(更新)
+    // 設定画面へ画面戻る
     private fun back() {
         findNavController().popBackStack()
     }
 
+    // エラートースト表示
     private fun showServerError() {
-        Toast.makeText(requireContext(), "サーバーエラーが発生しました", Toast.LENGTH_SHORT).show()
-    }
-
-    // 入力不足エラー
-    private fun showErrorToastValidate() {
-        Toast.makeText(requireContext(), "全て入力してください", Toast.LENGTH_SHORT).show()
+        Toast.makeText(requireContext(), "エラーが発生しました", Toast.LENGTH_SHORT).show()
     }
 
     // プログレスバー表示
@@ -155,15 +150,5 @@ class MyPageArtistAddFragment : Fragment() {
     // プログレスバー非表示
     private fun hideProgressbar() {
         progressBar.visibility = View.GONE
-    }
-
-    companion object {
-
-        @JvmStatic
-        fun newInstance(): MyPageArtistAddFragment {
-            val fragment = MyPageArtistAddFragment()
-            val args = Bundle()
-            return fragment
-        }
     }
 }

@@ -2,6 +2,7 @@ package com.example.musicdictionaryandroid.ui.login
 
 import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,6 +13,7 @@ import androidx.lifecycle.Observer
 import com.example.musicdictionaryandroid.R
 import com.example.musicdictionaryandroid.databinding.FragmentSignUpBinding
 import com.example.musicdictionaryandroid.model.util.Status
+import com.example.musicdictionaryandroid.ui.mypage.MyPageArtistFragment
 import kotlinx.android.synthetic.main.fragment_sign_up.view.*
 import org.koin.android.viewmodel.ext.android.viewModel
 
@@ -21,6 +23,17 @@ import org.koin.android.viewmodel.ext.android.viewModel
 class SignUpFragment : Fragment() {
 
     private val viewModel: SignUpViewModel by viewModel()
+
+    @Suppress("JAVA_CLASS_ON_COMPANION")
+    companion object {
+        val TAG = javaClass.name
+
+        @JvmStatic
+        fun newInstance(): SignUpFragment {
+            val fragment = SignUpFragment()
+            return fragment
+        }
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -73,15 +86,9 @@ class SignUpFragment : Fragment() {
                 (activity as StartActivity).showErrorEmailPassword()
             }
         }
-        is Status.Failure -> { (activity as StartActivity).showErrorEmailPassword() }
-    }
-
-    companion object {
-
-        @JvmStatic
-        fun newInstance(): SignUpFragment {
-            val fragment = SignUpFragment()
-            return fragment
+        is Status.Failure -> {
+            Log.i(TAG, "Failure:${state.throwable}")
+            (activity as StartActivity).showErrorEmailPassword()
         }
     }
 }

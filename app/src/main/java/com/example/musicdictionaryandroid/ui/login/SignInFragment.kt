@@ -2,6 +2,7 @@ package com.example.musicdictionaryandroid.ui.login
 
 import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -21,6 +22,17 @@ import org.koin.android.viewmodel.ext.android.viewModel
 class SignInFragment : Fragment() {
 
     private val viewModel: SignInViewModel by viewModel()
+
+    @Suppress("JAVA_CLASS_ON_COMPANION")
+    companion object {
+        val TAG = javaClass.name
+
+        @JvmStatic
+        fun newInstance(): SignInFragment {
+            val fragment = SignInFragment()
+            return fragment
+        }
+    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val binding: FragmentSignInBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_sign_in, container, false)
@@ -59,15 +71,9 @@ class SignInFragment : Fragment() {
             state.data?.let { (activity as StartActivity).startApp()
              } ?: run { (activity as StartActivity).showErrorEmailPassword() }
         }
-        is Status.Failure -> { (activity as StartActivity).showErrorEmailPassword() }
-    }
-
-    companion object {
-
-        @JvmStatic
-        fun newInstance(): SignInFragment {
-            val fragment = SignInFragment()
-            return fragment
+        is Status.Failure -> {
+            Log.i(TAG, "Failure:${state.throwable}")
+            (activity as StartActivity).showErrorEmailPassword()
         }
     }
 }
