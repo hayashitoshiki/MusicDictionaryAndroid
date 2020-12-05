@@ -13,8 +13,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:visibility="gone">
+        app:layout_constraintTop_toTopOf="parent">
         <TextView
             android:id="@+id/arthist"
             android:layout_width="0dp"
@@ -216,13 +215,12 @@
             tools:layout_editor_absoluteX="32dp" />
 
         <LinearLayout
+            android:id="@+id/linearLayout5"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginStart="8dp"
             android:layout_marginEnd="8dp"
-            android:layout_marginBottom="8dp"
-            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/lenght">
@@ -248,6 +246,46 @@
                 android:text=" 長い"
                 android:textColor="@android:color/white" />
         </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/details_profile"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/linearLayout5"
+            android:visibility="gone">
+
+            <com.github.mikephil.charting.charts.PieChart
+                android:id="@+id/pieChartExample"
+                android:layout_width="176dp"
+                android:layout_height="176dp"
+                android:layout_gravity="center" />
+
+            <com.github.mikephil.charting.charts.PieChart
+                android:id="@+id/gender_pie_chart"
+                android:layout_width="176dp"
+                android:layout_height="176dp"
+                android:layout_gravity="center" />
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/detail_button"
+            android:layout_width="match_parent"
+            android:layout_height="24dp"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/button_primary_dark"
+            android:gravity="center"
+            android:text="@string/result_open"
+            android:textColor="@color/sub_text_color"
+            android:textSize="@dimen/category_value"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/details_profile"
+            app:layout_constraintVertical_bias="0.0" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -257,7 +295,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        android:visibility="gone">
 
         <TextView
             android:id="@+id/title"

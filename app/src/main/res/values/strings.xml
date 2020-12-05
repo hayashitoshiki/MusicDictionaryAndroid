@@ -41,6 +41,8 @@
 
     <!-- 検索結果画面 -->
     <string name="result_search">再検索</string>
+    <string name="result_open">▼</string>
+    <string name="result_close">▲</string>
 
     <!-- 成功文言 -->
     <string name="success_login">同期しました</string>
