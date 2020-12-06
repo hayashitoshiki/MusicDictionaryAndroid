@@ -18,6 +18,9 @@ object UserInfoChangeListUtil {
     private lateinit var subGenre4List: Array<String>
     private lateinit var subGenre5List: Array<String>
     private lateinit var subGenre6List: Array<String>
+    private lateinit var generationList: Array<String>
+    private lateinit var genderList: Array<String>
+    private lateinit var areaList: Array<String>
 
     fun init(context: Context) {
         this.context = context
@@ -28,46 +31,25 @@ object UserInfoChangeListUtil {
         subGenre4List = this.context.resources.getStringArray(R.array.genre42_spinner_list)
         subGenre5List = this.context.resources.getStringArray(R.array.genre52_spinner_list)
         subGenre6List = this.context.resources.getStringArray(R.array.genre62_spinner_list)
+        generationList = this.context.resources.getStringArray(R.array.birthday_spinner_list)
+        genderList = this.context.resources.getStringArray(R.array.genre62_spinner_list)
+        areaList = this.context.resources.getStringArray(R.array.area_spinner_list)
     }
 
     fun changeGender(code: Int): String {
-        return when (code) {
-            1 -> "男性"
-            2 -> "女性"
-            else -> "未選択"
-        }
+        return genderList[code]
     }
 
     fun changeArea(code: Int): String {
-        return when (code) {
-            1 -> "東京"
-            2 -> "神奈川"
-            3 -> "千葉"
-            4 -> "静岡"
-            else -> "未選択"
-        }
+        return areaList[code]
     }
 
     fun getBirthday(code: Int): String {
-        return when (code) {
-            1 -> "1996"
-            2 -> "1997"
-            3 -> "1998"
-            4 -> "1999"
-            5 -> "2000"
-            else -> ""
-        }
+        return generationList[code]
     }
 
     fun changeBirthdayString(code: String): Int {
-        return when (code) {
-            "1996" -> 1
-            "1997" -> 2
-            "1998" -> 3
-            "1999" -> 4
-            "2000" -> 5
-            else -> 0
-        }
+        return generationList.indexOf(code)
     }
 
     fun changeGenre1(index: Int): String {
