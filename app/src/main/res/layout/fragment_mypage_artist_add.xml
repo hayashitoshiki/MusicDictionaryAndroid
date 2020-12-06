@@ -56,7 +56,7 @@
                     android:hint="アーティスト名を入力してください"
                     android:inputType="textPersonName"
                     android:text="@={viewModel.nameText}"
-                    android:visibility="@{viewModel.editMode == 2 ? View.VISIBLE : View.GONE}"/>
+                    android:visibility="@{viewModel.editMode == 1 ? View.VISIBLE : View.GONE}"/>
 
                 <TextView
                     android:id="@+id/artist_name_title"
@@ -69,7 +69,7 @@
                     android:textSize="@dimen/category_title"
                     android:textStyle="bold"
                     android:text="@={viewModel.nameText}"
-                    android:visibility="@{viewModel.editMode == 1 ? View.VISIBLE : View.GONE}"/>
+                    android:visibility="@{viewModel.editMode == 2 ? View.VISIBLE : View.GONE}"/>
 
                 <TextView
                     android:id="@+id/category_title1"

@@ -6,6 +6,7 @@ import android.os.Handler
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.AnimationUtils
 import android.webkit.WebView
 import android.widget.*
 import androidx.constraintlayout.widget.ConstraintLayout
@@ -13,12 +14,12 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.musicdictionaryandroid.R
 import com.example.musicdictionaryandroid.model.entity.ArtistsForm
 import com.example.musicdictionaryandroid.model.util.UserInfoChangeListUtil
+import com.example.musicdictionaryandroid.ui.transition.ResizeAnimation
 import com.github.mikephil.charting.charts.PieChart
 import com.github.mikephil.charting.data.PieData
 import com.github.mikephil.charting.data.PieDataSet
 import com.github.mikephil.charting.data.PieEntry
 import com.github.mikephil.charting.formatter.ValueFormatter
-import com.github.mikephil.charting.utils.ColorTemplate
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.item_result_artist.view.*
 
@@ -151,16 +152,39 @@ class ResultAdapter(private val context: Context, private val artistList: ArrayL
             // ジャンル２
             holder.genre2TextView.text = UserInfoChangeListUtil.changeGenre2(artist.genre1, artist.genre2)
             // 詳細ボタン
+            val originalHeight = convertDp2Px(352f, context).toInt()
+            val collapseAnimation = ResizeAnimation(holder.detailLayout, -originalHeight, originalHeight)
+            val expandAnimation = ResizeAnimation(holder.detailLayout, originalHeight, 0)
+            val anim1 = AnimationUtils.loadAnimation(context, R.anim.fade_in_offset_150_anim)
+            val anim2 = AnimationUtils.loadAnimation(context, R.anim.fade_in_offset_300_anim)
+            collapseAnimation.duration = 300
+            expandAnimation.duration = 300
+            holder.pieChart.visibility = View.GONE
+            holder.genderChart.visibility = View.GONE
+            holder.detailLayout.visibility = View.GONE
+            holder.detailButton.text = context.getString(R.string.result_open)
             holder.detailButton.setOnClickListener {
-                when (holder.detailLayout.visibility) {
-                    View.VISIBLE -> {
+                holder.detailLayout.clearAnimation()
+                if (holder.detailLayout.visibility == View.VISIBLE) {
+                    holder.detailLayout.startAnimation(collapseAnimation)
+                    Handler().postDelayed(Runnable {
+                        holder.pieChart.visibility = View.GONE
+                        holder.genderChart.visibility = View.GONE
                         holder.detailLayout.visibility = View.GONE
-                        holder.detailButton.text = context.getString(R.string.result_open)
-                    }
-                    View.GONE -> {
-                        holder.detailLayout.visibility = View.VISIBLE
-                        holder.detailButton.text = context.getString(R.string.result_close)
-                    }
+                    }, 300)
+                    holder.detailButton.text = context.getString(R.string.result_open)
+                } else {
+                    holder.detailLayout.visibility = View.VISIBLE
+                    holder.detailLayout.startAnimation(expandAnimation)
+                    Handler().postDelayed(Runnable {
+                        holder.pieChart.startAnimation(anim1)
+                        holder.pieChart.visibility = View.VISIBLE
+                    }, 150)
+                    Handler().postDelayed(Runnable {
+                        holder.genderChart.startAnimation(anim2)
+                        holder.genderChart.visibility = View.VISIBLE
+                    }, 300)
+                    holder.detailButton.text = context.getString(R.string.result_close)
                 }
             }
             // 再生ボタン
@@ -202,92 +226,111 @@ class ResultAdapter(private val context: Context, private val artistList: ArrayL
                 holder.imageView.visibility = View.GONE
             }
 
-
             // 年齢毎の比率表示
-            val dimensions = listOf("10代", "20代", "30代", "40代", "50代", "60代〜")//分割円の名称(String型)
-            val values = listOf(1f, 2f, 3f, 4f, 5f, 6f)//分割円の大きさ(Float型)
-            var totalValue = 0f
-
-            val entryList = mutableListOf<PieEntry>()
-//            if (artist.statistics.men != 0) {
-//                genderEntryList.add(PieEntry(artist.statistics.men, "男性"))
-//                totalGenderValues += artist.statistics.men
-//            }
-//            if (artist.statistics.men != 0) {
-//                genderEntryList.add(PieEntry(artist.statistics.men, "女性"))
-//                totalGenderValues += artist.statistics.women
-//            }
-            for (i in values.indices) {
-                entryList.add(PieEntry(values[i], dimensions[i]))
-                totalValue += values[i]
-            }
-            val pieDataSet = PieDataSet(entryList, "年齢層").also {
-                it.valueTextSize = 15f
-                it.colors = listOf(
-                    context.getColor(R.color.red),
-                    context.getColor(R.color.blue),
-                    context.getColor(R.color.yellow),
-                    context.getColor(R.color.green),
-                    context.getColor(R.color.purple),
-                    context.getColor(R.color.brown))
-                it.valueFormatter =  object: ValueFormatter() {
-                    override fun getFormattedValue(value: Float): String {
-                        return "%.0f".format(value / totalValue * 100) + "%"
+            holder.pieChart.also {
+                var totalValue = 0f
+                val entryList = mutableListOf<PieEntry>()
+                if (artist.generation1 != 0) {
+                    entryList.add(PieEntry(artist.generation1.toFloat(), "10代"))
+                    totalValue += artist.user_man.toFloat()
+                }
+                if (artist.generation2 != 0) {
+                    entryList.add(PieEntry(artist.generation2.toFloat(), "20代"))
+                    totalValue += artist.generation2.toFloat()
+                }
+                if (artist.generation3 != 0) {
+                    entryList.add(PieEntry(artist.generation3.toFloat(), "30代"))
+                    totalValue += artist.generation3.toFloat()
+                }
+                if (artist.generation4 != 0) {
+                    entryList.add(PieEntry(artist.generation4.toFloat(), "40代"))
+                    totalValue += artist.generation4.toFloat()
+                }
+                if (artist.generation5 != 0) {
+                    entryList.add(PieEntry(artist.generation5.toFloat(), "50代"))
+                    totalValue += artist.generation5.toFloat()
+                }
+                if (artist.generation6 != 0) {
+                    entryList.add(PieEntry(artist.generation6.toFloat(), "60代"))
+                    totalValue += artist.generation6.toFloat()
+                }
+                val data = PieDataSet(entryList, "年齢層").also { pieDataSet ->
+                    val colorList = mutableListOf<Int>()
+                    entryList.forEach { pieEntry ->
+                        when (pieEntry.label) {
+                            "10代" -> colorList.add(context.getColor(R.color.red))
+                            "20代" -> colorList.add(context.getColor(R.color.blue))
+                            "30代" -> colorList.add(context.getColor(R.color.yellow))
+                            "40代" -> colorList.add(context.getColor(R.color.green))
+                            "50代" -> colorList.add(context.getColor(R.color.purple))
+                            "60代" -> colorList.add(context.getColor(R.color.brown))
+                        }
+                    }
+                    pieDataSet.colors = colorList
+                    pieDataSet.valueTextSize = 15f
+                    pieDataSet.valueFormatter =  object: ValueFormatter() {
+                        override fun getFormattedValue(value: Float): String {
+                            return "%.0f".format(value / totalValue * 100) + "%"
+                        }
                     }
                 }
-            }
-            holder.pieChart.also {
+
                 it.centerText = "年齢層"
                 it.setCenterTextSize(15f)
                 it.setEntryLabelTextSize(10f)
-                it.data = PieData(pieDataSet)
+                it.data = PieData(data)
                 it.legend.isEnabled = false
                 it.description.isEnabled = false
                 it.invalidate()
             }
 
-            // 性別ごとの比率表示
-            val genderDimensions = listOf("男性", "女性")//分割円の名称(String型) artist.men artistwomen
-            val genderValues = listOf(1f, 2f)//分割円の大きさ(Float型)   取得したデータ数を入れる
-            // Entryにデータ格納
-            var totalGenderValues = 0f
-            val genderEntryList = mutableListOf<PieEntry>()
-//            if (artist.statistics.men != 0) {
-//                genderEntryList.add(PieEntry(artist.statistics.men, "男性"))
-//                totalGenderValues += artist.statistics.men
-//            }
-//            if (artist.statistics.men != 0) {
-//                genderEntryList.add(PieEntry(artist.statistics.men, "女性"))
-//                totalGenderValues += artist.statistics.women
-//            }
-            for (i in genderValues.indices) {
-                genderEntryList.add(PieEntry(genderValues[i], genderDimensions[i]))
-                totalGenderValues += values[i]
-            }
-
+            // 男女比率表示
             holder.genderChart.also {
+                var totalValue = 0f
+                val entryList = mutableListOf<PieEntry>()
+                if (artist.user_man != 0) {
+                    entryList.add(PieEntry(artist.user_man.toFloat(), "男性"))
+                    totalValue += artist.user_man.toFloat()
+                }
+                if (artist.user_woman != 0) {
+                    entryList.add(PieEntry(artist.user_woman.toFloat(), "女性"))
+                    totalValue += artist.user_woman.toFloat()
+                }
+                val data = PieDataSet(entryList, "男女比率").also { pieDataSet ->
+                    val colorList = mutableListOf<Int>()
+                    entryList.forEach { pieEntry ->
+                        when (pieEntry.label) {
+                            "男性" -> colorList.add(context.getColor(R.color.light_blue))
+                            "女性" -> colorList.add(context.getColor(R.color.pink))
+                        }
+                    }
+                    pieDataSet.colors = colorList
+                    pieDataSet.valueTextSize = 15f
+                    pieDataSet.valueFormatter =  object: ValueFormatter() {
+                        override fun getFormattedValue(value: Float): String{
+                            return "%.0f".format(value / totalValue * 100) + "%"
+                        }
+                    }
+                }
+
                 it.centerText = "男女比率"
                 it.setCenterTextSize(15f)
                 it.legend.isEnabled = false
                 it.description.isEnabled = false
-
-                val data = PieDataSet(genderEntryList, "男女比率").also { pieDataSet ->
-                    pieDataSet.colors = listOf(context.getColor(R.color.light_blue), context.getColor(R.color.pink))
-                    pieDataSet.valueTextSize = 15f
-                    pieDataSet.valueFormatter =  object: ValueFormatter() {
-                        override fun getFormattedValue(value: Float): String{
-                            return "%.0f".format(value / totalGenderValues * 100) + "%"
-                        }
-                    }
-                }
                 it.data = PieData(data)
-
                 it.invalidate()
             }
 
         }
     }
 
+    // 変換
+    private fun convertDp2Px(dp: Float, context: Context): Float {
+        val metrics = context.resources.displayMetrics
+        return dp * metrics.density
+    }
+
+    // クリックリスナー
     fun setOnItemClickListener(listener: View.OnClickListener) {
         this.listener = listener
     }
