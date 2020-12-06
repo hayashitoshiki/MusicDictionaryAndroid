@@ -14,6 +14,7 @@ import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
 import com.example.musicdictionaryandroid.R
 import com.example.musicdictionaryandroid.databinding.FragmentHomeBinding
+import com.example.musicdictionaryandroid.ui.adapter.setSafeClickListener
 import kotlinx.android.synthetic.main.fragment_details_search.*
 import kotlinx.android.synthetic.main.fragment_home.*
 import kotlinx.android.synthetic.main.fragment_home.submit
@@ -86,7 +87,7 @@ class HomeFragment : Fragment() {
             findNavController().navigate(R.id.action_navigation_home_to_navigation_details_search, null, null, extras)
         }
         // 急上昇ボタン
-        soaring_button.setOnClickListener {
+        soaring_button.setSafeClickListener {
             val anim1 = AnimationUtils.loadAnimation(requireContext(), R.anim.fade_out)
             home_view.startAnimation(anim1)
             home_view.visibility = View.GONE
@@ -97,7 +98,7 @@ class HomeFragment : Fragment() {
             }
         }
         // おすすめボタン
-        recommend_button.setOnClickListener {
+        recommend_button.setSafeClickListener {
             val anim1 = AnimationUtils.loadAnimation(requireContext(), R.anim.fade_out)
             home_view.startAnimation(anim1)
             home_view.visibility = View.GONE
@@ -109,7 +110,7 @@ class HomeFragment : Fragment() {
             }
         }
         // 検索ボタン
-        submit.setOnClickListener {
+        submit.setSafeClickListener {
             val anim1 = AnimationUtils.loadAnimation(requireContext(), R.anim.fade_out)
             home_view.startAnimation(anim1)
             home_view.visibility = View.GONE

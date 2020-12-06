@@ -431,7 +431,6 @@
             android:textColor="@color/main_text_color"
             android:textSize="@dimen/category_title"
             android:enabled="@{viewModel.isEnableSubmitButton}"
-            android:onClick="@{() -> viewModel.submit()}"
             android:textStyle="bold" />
 
     </LinearLayout>

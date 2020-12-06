@@ -14,6 +14,7 @@ import com.example.musicdictionaryandroid.R
 import com.example.musicdictionaryandroid.databinding.DialogSearchBinding
 import com.example.musicdictionaryandroid.model.entity.ArtistsForm
 import com.example.musicdictionaryandroid.ui.adapter.DialogFragmentCallbackInterface
+import com.example.musicdictionaryandroid.ui.adapter.setSafeClickListener
 import kotlinx.android.synthetic.main.dialog_search.*
 import kotlinx.android.synthetic.main.fragment_mypage_artist_add.view.*
 
@@ -70,7 +71,7 @@ class SearchDialogFragment : DialogFragment() {
         dialog!!.window!!.setBackgroundDrawableResource(R.color.transparent)
 
         // 検索ボタン
-        submit.setOnClickListener {
+        submit.setSafeClickListener {
             mListener!!.callBackMethod(viewModel.artistForm)
             dismiss()
         }

@@ -23,6 +23,7 @@ import com.example.musicdictionaryandroid.databinding.FragmentMypageArtistAddBin
 import com.example.musicdictionaryandroid.model.entity.ArtistsForm
 import com.example.musicdictionaryandroid.model.entity.CallBackData
 import com.example.musicdictionaryandroid.model.util.Status
+import com.example.musicdictionaryandroid.ui.adapter.setSafeClickListener
 import kotlinx.android.synthetic.main.fragment_mypage_artist_add.*
 import kotlinx.android.synthetic.main.fragment_mypage_artist_add.view.*
 import org.koin.android.viewmodel.ext.android.viewModel
@@ -112,6 +113,11 @@ class MyPageArtistAddFragment : Fragment() {
         viewModel.status.observe(viewLifecycleOwner, Observer { onStateChanged(it) })
         viewModel.genre1ValueInt.observe(viewLifecycleOwner, Observer { viewModel.changeGenre1(it) })
         viewModel.genre2ValueInt.observe(viewLifecycleOwner, Observer { viewModel.changeGenre2(it) })
+
+        // 送信ボタン
+        submit.setSafeClickListener {
+            viewModel.submit()
+        }
     }
 
     // ステータス監視
