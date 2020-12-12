@@ -1,9 +1,6 @@
 package com.example.musicdictionaryandroid.ui.home
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MediatorLiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
+import androidx.lifecycle.*
 import com.example.musicdictionaryandroid.model.entity.ArtistsForm
 import com.example.musicdictionaryandroid.model.repository.PreferenceRepositoryImp
 
@@ -34,7 +31,7 @@ class HomeViewModel(
     /**
      * タップ可能ボタンのバリデート
      */
-    init {
+    fun set() {
         val count = preferenceRepository.getFavorite()
 
         if (count == 0) {

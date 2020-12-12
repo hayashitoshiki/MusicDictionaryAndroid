@@ -1,17 +1,15 @@
 package com.example.musicdictionaryandroid.model.repository
 
 import android.content.Context
+import com.example.musicdictionaryandroid.ui.MyApplication
 
 /**
  * SharedPreferences管理
  */
 object PreferenceRepositoryImp {
 
-    private lateinit var context: Context
+    private var context: Context = MyApplication.shered.applicationContext
 
-    fun init(context: Context) {
-        this.context = context
-    }
     private enum class Key {
         // Eメール
         EMAIL,
@@ -83,6 +81,7 @@ object PreferenceRepositoryImp {
         remove(Key.GENDER)
         remove(Key.FAVORITE)
     }
+
 
     private fun setString(key: Key, value: String) {
         val preferences = context.getSharedPreferences("mucisDictionary", Context.MODE_PRIVATE)

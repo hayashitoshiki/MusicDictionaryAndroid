@@ -2,6 +2,7 @@ package com.example.musicdictionaryandroid.ui.home
 
 import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -15,30 +16,41 @@ import androidx.navigation.fragment.findNavController
 import com.example.musicdictionaryandroid.R
 import com.example.musicdictionaryandroid.databinding.FragmentHomeBinding
 import com.example.musicdictionaryandroid.ui.adapter.setSafeClickListener
-import kotlinx.android.synthetic.main.fragment_details_search.*
+import com.example.musicdictionaryandroid.ui.login.StartActivity
 import kotlinx.android.synthetic.main.fragment_home.*
 import kotlinx.android.synthetic.main.fragment_home.submit
 import kotlinx.android.synthetic.main.fragment_home.view.*
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.*
 import org.koin.android.viewmodel.ext.android.viewModel
+import kotlin.coroutines.CoroutineContext
 
 /**
  * HOME画面
  *
  */
-class HomeFragment : Fragment() {
+class HomeFragment : Fragment(), CoroutineScope {
 
     companion object {
         private var state = 0
+
+        @Suppress("JAVA_CLASS_ON_COMPANION")
+        val TAG = javaClass.name
+
         fun newInstance(): HomeFragment {
-            val f = HomeFragment()
-            return f
+            return HomeFragment()
         }
     }
 
+    private val job = SupervisorJob()
+    override val coroutineContext: CoroutineContext
+        get() = Dispatchers.Main + job
+
     private val viewModel: HomeViewModel by viewModel()
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        Log.d(StartActivity.TAG,"onCreate")
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -71,8 +83,9 @@ class HomeFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-
         viewModel.searchText.observe(viewLifecycleOwner, Observer { viewModel.changeSubmitButton(it.length) })
+        viewModel.set()
+        val anim1 = AnimationUtils.loadAnimation(requireContext(), R.anim.fade_out)
 
         // カテゴリボタン
         category_button.setOnClickListener {
@@ -88,10 +101,9 @@ class HomeFragment : Fragment() {
         }
         // 急上昇ボタン
         soaring_button.setSafeClickListener {
-            val anim1 = AnimationUtils.loadAnimation(requireContext(), R.anim.fade_out)
             home_view.startAnimation(anim1)
             home_view.visibility = View.GONE
-            GlobalScope.launch {
+            launch {
                 delay(resources.getInteger(R.integer.fade_out_time_home).toLong())
                 val action = HomeFragmentDirections.actionNavigationHomeToNavigationResultSoaring()
                 findNavController().navigate(action)
@@ -99,10 +111,9 @@ class HomeFragment : Fragment() {
         }
         // おすすめボタン
         recommend_button.setSafeClickListener {
-            val anim1 = AnimationUtils.loadAnimation(requireContext(), R.anim.fade_out)
             home_view.startAnimation(anim1)
             home_view.visibility = View.GONE
-            GlobalScope.launch {
+            launch {
                 delay(resources.getInteger(R.integer.fade_out_time_home).toLong())
                 val action =
                     HomeFragmentDirections.actionNavigationHomeToNavigationResultRecommend()
@@ -111,15 +122,19 @@ class HomeFragment : Fragment() {
         }
         // 検索ボタン
         submit.setSafeClickListener {
-            val anim1 = AnimationUtils.loadAnimation(requireContext(), R.anim.fade_out)
             home_view.startAnimation(anim1)
             home_view.visibility = View.GONE
-            GlobalScope.launch {
+            launch {
                 delay(resources.getInteger(R.integer.fade_out_time_home).toLong())
                 val action =
                     HomeFragmentDirections.actionNavigationHomeToNavigationResult(viewModel.artistsFrom)
                 findNavController().navigate(action)
             }
         }
+    }
+
+    override fun onDestroy() {
+        job.cancel()
+        super.onDestroy()
     }
 }

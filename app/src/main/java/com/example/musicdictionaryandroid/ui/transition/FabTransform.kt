@@ -283,7 +283,7 @@ class FabTransform : Transition {
 
     private fun captureValues(transitionValues: TransitionValues) {
         val view: View = transitionValues.view
-        if (view == null || view.width <= 0 || view.height <= 0) return
+        if (view.width <= 0 || view.height <= 0) return
         transitionValues.values[PROP_BOUNDS] = Rect(
             view.left, view.top,
             view.right, view.bottom

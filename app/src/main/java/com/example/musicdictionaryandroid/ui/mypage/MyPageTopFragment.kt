@@ -32,6 +32,11 @@ class MyPageTopFragment : Fragment() {
         val TAG = javaClass.name
     }
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        Log.d(StartActivity.TAG,"onCreate")
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -93,6 +98,6 @@ class MyPageTopFragment : Fragment() {
 
     // 通信エラーダイアログ
     private fun showErrorNetwork() {
-        Toast.makeText(requireContext(), "通信環境の良いところでお試しください", Toast.LENGTH_LONG).show()
+        //Toast.makeText(requireContext(), "通信環境の良いところでお試しください", Toast.LENGTH_LONG).show()
     }
 }

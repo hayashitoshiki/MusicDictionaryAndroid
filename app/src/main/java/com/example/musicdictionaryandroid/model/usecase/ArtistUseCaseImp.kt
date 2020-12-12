@@ -13,6 +13,8 @@ class ArtistUseCaseImp(
     private val dataBaseRepository: DataBaseRepository
 ) : ArtistUseCase {
 
+    // region ホームタブ
+
     // 検索条件に一致するアーティスト取得
     override suspend fun getArtistsBy(artists: ArtistsForm): Result<ArrayList<ArtistsForm>?> {
         return withContext(Dispatchers.IO) {
@@ -46,9 +48,10 @@ class ArtistUseCaseImp(
             }
         }
     }
-    /*----------------------------------------
-        設定タブ
-     ----------------------------------------*/
+    //endregion
+
+    // region 設定タブ
+
     // ユーザの登録したアーティスト取得
      override suspend fun getArtistsByEmail(email: String): Result<ArrayList<ArtistsForm>?> {
           return withContext(Dispatchers.IO) {
@@ -104,4 +107,6 @@ class ArtistUseCaseImp(
             }
         }
     }
+
+    //endregion
 }

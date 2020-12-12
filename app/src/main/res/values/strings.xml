@@ -30,11 +30,11 @@
     <string name="search_sort_title4">絞り込み項目４</string>
 
     <!-- 機能制限バリデート -->
-    <string name="home_button_validate1">1件以上登録する必要があります</string>
-    <string name="home_button_validate2">3件以上登録する必要があります</string>
-    <string name="home_button_validate3">5件以上登録する必要があります</string>
-    <string name="home_button_validate4">8件以上登録する必要があります</string>
-    <string name="home_button_validate5">10件以上登録する必要があります</string>
+    <string name="home_button_validate1">1件以上登録してください</string>
+    <string name="home_button_validate2">3件以上登録してください</string>
+    <string name="home_button_validate3">5件以上登録してください</string>
+    <string name="home_button_validate4">8件以上登録してください</string>
+    <string name="home_button_validate5">10件以上登録してください</string>
     <string name="sign_password_validate">６文字以上入力する必要があります</string>
     <string name="sign_email_validate">６文字以上入力する必要があります</string>
     <string name="sign_name_validate">６文字以上入力する必要があります</string>

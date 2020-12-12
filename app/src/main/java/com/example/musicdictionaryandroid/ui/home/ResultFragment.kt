@@ -75,7 +75,7 @@ class ResultFragment : Fragment(), DialogFragmentCallbackInterface {
         recyclerView.layoutAnimation = controller
         recyclerView.adapter = adapter
         recyclerView.layoutManager = layoutManager
-        adapter.setOnItemClickListener(View.OnClickListener { view ->
+        adapter.setOnItemClickListener(View.OnClickListener { _ ->
             val dialogFragment = SearchDialogFragment()
             val bundle = Bundle()
             bundle.putSerializable("artist", args.data)

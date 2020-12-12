@@ -70,7 +70,7 @@ class MyPageArtistFragment : Fragment() {
         }
 
         // リストビューの各項目タップ
-        artist_list.onItemClickListener = AdapterView.OnItemClickListener { parent, view, position, id ->
+        artist_list.onItemClickListener = AdapterView.OnItemClickListener { _, view, position, _ ->
             if (viewModel.status.value is Status.Success) {
                 val artist = (viewModel.status.value as Status.Success).data?.get(position)!!
                 when (view.id) {

@@ -56,12 +56,12 @@ class SettingBaseAdapter(context: Context?, items: ArrayList<ArtistsForm>) : Bas
 
         // アーティスト削除ボタン
         holder.deleteButton!!.setOnClickListener {
-            view -> (parent as ListView).performItemClick(view, position, R.id.delete_button.toLong())
+             (parent as ListView).performItemClick(view, position, R.id.delete_button.toLong())
         }
 
         // アーティスト編集ボタン
         holder.updateButton!!.setOnClickListener {
-            view -> (parent as ListView).performItemClick(view, position, R.id.update_button.toLong())
+            (parent as ListView).performItemClick(view, position, R.id.update_button.toLong())
         }
 
         view!!.tag = holder

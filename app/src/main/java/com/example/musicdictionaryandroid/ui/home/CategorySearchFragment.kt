@@ -20,20 +20,23 @@ import com.example.musicdictionaryandroid.ui.transition.FabTransform
 import com.example.musicdictionaryandroid.ui.transition.HOME_CATEGORY_BUTTON
 import kotlinx.android.synthetic.main.fragment_category_search.*
 import kotlinx.android.synthetic.main.fragment_category_search.view.*
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.*
+import kotlin.coroutines.CoroutineContext
 
 
 /**
  * カテゴリ検索画面
  *
  */
-class CategorySearchFragment : Fragment() {
+class CategorySearchFragment : Fragment(), CoroutineScope {
 
     companion object {
         private var state = 0
     }
+
+    private val job = SupervisorJob()
+    override val coroutineContext: CoroutineContext
+        get() = Dispatchers.Main + job
 
     private val viewModel: CategorySearchViewModel by lazy {
         ViewModelProvider.NewInstanceFactory().create(CategorySearchViewModel::class.java)
@@ -49,7 +52,7 @@ class CategorySearchFragment : Fragment() {
             addTransition(ChangeTransform())
             addTransition(ChangeClipBounds())
         }
-        val trans = FabTransform(resources.getColor(R.color.colorPrimary), R.drawable.round_primary_dark_button, HOME_CATEGORY_BUTTON)
+        val trans = FabTransform(resources.getColor(R.color.colorPrimary, null), R.drawable.round_primary_dark_button, HOME_CATEGORY_BUTTON)
         sharedElementEnterTransition = trans
         sharedElementReturnTransition = transition
 
@@ -85,12 +88,17 @@ class CategorySearchFragment : Fragment() {
             val anim1 = AnimationUtils.loadAnimation(requireContext(), R.anim.slide_out_bottom)
             category_card.startAnimation(anim1)
             category_card.visibility = View.GONE
-            GlobalScope.launch {
+            launch {
                 delay(resources.getInteger(R.integer.fade_out_time).toLong())
                 val action = CategorySearchFragmentDirections.actionCategorySearchToNavigationResult(viewModel.artistForm)
                 findNavController().navigate(action)
                 state = 1
             }
         }
+    }
+
+    override fun onDestroy() {
+        job.cancel()
+        super.onDestroy()
     }
 }

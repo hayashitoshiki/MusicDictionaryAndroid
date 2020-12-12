@@ -21,59 +21,54 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <LinearLayout
-            android:id="@+id/linearLayout6"
-            android:layout_width="wrap_content"
+
+
+        <RadioGroup
             android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:id="@+id/RadioGroupB"
             android:layout_marginTop="8dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
             android:orientation="horizontal"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.0">
-
-            <RadioGroup
-                android:layout_height="wrap_content"
+            <RadioButton
+                android:text="@string/sign_in_title"
+                android:id="@+id/RadioButtonB1"
+                android:textSize="@dimen/category_title"
+                android:onClick="signInButton"
                 android:layout_width="match_parent"
-                android:id="@+id/RadioGroupB"
-                android:layout_marginLeft="16dp"
-                android:layout_marginRight="16dp"
-                android:orientation="horizontal">
-                <RadioButton
-                    android:text="@string/sign_in_title"
-                    android:id="@+id/RadioButtonB1"
-                    android:textSize="@dimen/category_title"
-                    android:onClick="signInButton"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:background="@drawable/button_radio_left"
-                    android:stateListAnimator="@drawable/button_state_list_anim_material"
-                    android:elevation="6dp"
-                    android:textColor="@drawable/button_radio_textcolor"
-                    android:layout_weight="1"
-                    android:button="@null"
-                    android:checked="true"
-                    android:gravity="center">
-                </RadioButton>
+                android:layout_height="match_parent"
+                android:background="@drawable/button_radio_left"
+                android:stateListAnimator="@drawable/button_state_list_anim_material"
+                android:elevation="6dp"
+                android:textColor="@drawable/button_radio_textcolor"
+                android:layout_weight="1"
+                android:button="@null"
+                android:checked="true"
+                android:gravity="center">
+            </RadioButton>
 
-                <RadioButton
-                    android:text="@string/sign_up_title"
-                    android:id="@+id/RadioButtonB4"
-                    android:textSize="@dimen/category_title"
-                    android:onClick="signUpButton"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:background="@drawable/button_radio_right"
-                    android:stateListAnimator="@drawable/button_state_list_anim_material"
-                    android:elevation="6dp"
-                    android:textColor="@drawable/button_radio_textcolor"
-                    android:layout_weight="1"
-                    android:button="@null"
-                    android:gravity="center">
-                </RadioButton>
-            </RadioGroup>
-        </LinearLayout>
+            <RadioButton
+                android:text="@string/sign_up_title"
+                android:id="@+id/RadioButtonB4"
+                android:textSize="@dimen/category_title"
+                android:onClick="signUpButton"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/button_radio_right"
+                android:stateListAnimator="@drawable/button_state_list_anim_material"
+                android:elevation="6dp"
+                android:textColor="@drawable/button_radio_textcolor"
+                android:layout_weight="1"
+                android:button="@null"
+                android:gravity="center">
+            </RadioButton>
+        </RadioGroup>
 
         <FrameLayout
             android:id="@+id/fragment"
@@ -83,7 +78,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/linearLayout6"
+            app:layout_constraintTop_toBottomOf="@+id/RadioGroupB"
             app:layout_constraintVertical_bias="0.0">
 
         </FrameLayout>

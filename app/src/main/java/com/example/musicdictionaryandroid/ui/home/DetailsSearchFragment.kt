@@ -20,18 +20,21 @@ import com.example.musicdictionaryandroid.ui.transition.FabTransform
 import com.example.musicdictionaryandroid.ui.transition.HOME_DETAILS_BUTTON
 import kotlinx.android.synthetic.main.fragment_details_search.*
 import kotlinx.android.synthetic.main.fragment_details_search.view.*
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.*
+import kotlin.coroutines.CoroutineContext
 
 /**
  * 詳細検索画面
  */
-class DetailsSearchFragment : Fragment() {
+class DetailsSearchFragment : Fragment(), CoroutineScope {
 
     companion object {
         private var state = 0
     }
+
+    private val job = SupervisorJob()
+    override val coroutineContext: CoroutineContext
+        get() = Dispatchers.Main + job
 
     private val viewModel: DetailsSearchViewModel by lazy {
         ViewModelProvider.NewInstanceFactory().create(DetailsSearchViewModel::class.java)
@@ -47,7 +50,7 @@ class DetailsSearchFragment : Fragment() {
             addTransition(ChangeTransform())
             addTransition(ChangeClipBounds())
         }
-        val trans = FabTransform(resources.getColor(R.color.colorPrimary), R.drawable.round_primary_dark_button, HOME_DETAILS_BUTTON)
+        val trans = FabTransform(resources.getColor(R.color.colorPrimary, null), R.drawable.round_primary_dark_button, HOME_DETAILS_BUTTON)
         sharedElementEnterTransition = trans
         sharedElementReturnTransition = transition
 
@@ -87,7 +90,7 @@ class DetailsSearchFragment : Fragment() {
             val anim1 = AnimationUtils.loadAnimation(requireContext(), R.anim.slide_out_bottom)
             detail_search_view.startAnimation(anim1)
             detail_search_view.visibility = View.GONE
-            GlobalScope.launch {
+            launch {
                 delay(resources.getInteger(R.integer.fade_out_time).toLong())
                 val action =
                     DetailsSearchFragmentDirections.actionNavigationDetailsSearchToNavigationResult(viewModel.artistForm)
@@ -95,5 +98,10 @@ class DetailsSearchFragment : Fragment() {
                 state = 1
             }
         }
+    }
+
+    override fun onDestroy() {
+        job.cancel()
+        super.onDestroy()
     }
 }

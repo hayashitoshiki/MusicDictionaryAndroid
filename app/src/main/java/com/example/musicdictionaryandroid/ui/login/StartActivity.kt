@@ -2,6 +2,7 @@ package com.example.musicdictionaryandroid.ui.login
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -9,32 +10,50 @@ import androidx.lifecycle.Observer
 import com.example.musicdictionaryandroid.R
 import com.example.musicdictionaryandroid.model.util.Status
 import com.example.musicdictionaryandroid.ui.MainActivity
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.SupervisorJob
 import org.koin.android.viewmodel.ext.android.viewModel
+import kotlin.coroutines.CoroutineContext
 
 /**
  * ログイン・新規登録画面 BaseActivity
  */
-class StartActivity : AppCompatActivity() {
+class StartActivity : AppCompatActivity(), CoroutineScope {
 
     private val viewModel: StartViewModel by viewModel()
 
     private lateinit var signInView: SignInFragment
     private lateinit var signUpView: SignUpFragment
 
+    private val job = SupervisorJob()
+    override val coroutineContext: CoroutineContext
+        get() = Dispatchers.Main + job
+
+    companion object {
+        @Suppress("JAVA_CLASS_ON_COMPANION")
+        val TAG = javaClass.name
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_start)
+        Log.d(TAG,"onCreate")
+
+        viewModel.status.observe(this, Observer { onStateChanged(it) })
+        viewModel.firstCheck()
 
         signInView = SignInFragment.newInstance()
         signUpView = SignUpFragment.newInstance()
-
-        viewModel.firstCheck()
-
         supportFragmentManager
                 .beginTransaction()
                 .add(R.id.fragment, signInView)
                 .commit()
-        viewModel.status.observe(this, Observer { onStateChanged(it) })
+    }
+
+    override fun onDestroy() {
+        job.cancel()
+        super.onDestroy()
     }
 
     // ステータス監視

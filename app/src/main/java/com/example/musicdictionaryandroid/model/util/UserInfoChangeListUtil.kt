@@ -2,61 +2,68 @@ package com.example.musicdictionaryandroid.model.util
 
 import android.content.Context
 import com.example.musicdictionaryandroid.R
+import com.example.musicdictionaryandroid.ui.MyApplication
 
 /**
  * 各数値項目の変換
  */
 object UserInfoChangeListUtil {
 
-    private lateinit var context: Context
+    private var context: Context = MyApplication.shered.applicationContext
 
     // 絞り込みリスト
-    private lateinit var mainGenreList: Array<String>
-    private lateinit var subGenre1List: Array<String>
-    private lateinit var subGenre2List: Array<String>
-    private lateinit var subGenre3List: Array<String>
-    private lateinit var subGenre4List: Array<String>
-    private lateinit var subGenre5List: Array<String>
-    private lateinit var subGenre6List: Array<String>
-    private lateinit var generationList: Array<String>
-    private lateinit var genderList: Array<String>
-    private lateinit var areaList: Array<String>
+    private var mainGenreList: Array<String>
+    private var subGenre1List: Array<String>
+    private var subGenre2List: Array<String>
+    private var subGenre3List: Array<String>
+    private var subGenre4List: Array<String>
+    private var subGenre5List: Array<String>
+    private var subGenre6List: Array<String>
+    private var generationList: Array<String>
+    private var genderList: Array<String>
+    private var areaList: Array<String>
 
-    fun init(context: Context) {
-        this.context = context
-        mainGenreList = this.context.resources.getStringArray(R.array.genre1_spinner_list)
-        subGenre1List = this.context.resources.getStringArray(R.array.genre12_spinner_list)
-        subGenre2List = this.context.resources.getStringArray(R.array.genre22_spinner_list)
-        subGenre3List = this.context.resources.getStringArray(R.array.genre32_spinner_list)
-        subGenre4List = this.context.resources.getStringArray(R.array.genre42_spinner_list)
-        subGenre5List = this.context.resources.getStringArray(R.array.genre52_spinner_list)
-        subGenre6List = this.context.resources.getStringArray(R.array.genre62_spinner_list)
-        generationList = this.context.resources.getStringArray(R.array.birthday_spinner_list)
-        genderList = this.context.resources.getStringArray(R.array.genre62_spinner_list)
-        areaList = this.context.resources.getStringArray(R.array.area_spinner_list)
+    init {
+        mainGenreList = context.resources.getStringArray(R.array.genre1_spinner_list)
+        subGenre1List = context.resources.getStringArray(R.array.genre12_spinner_list)
+        subGenre2List = context.resources.getStringArray(R.array.genre22_spinner_list)
+        subGenre3List = context.resources.getStringArray(R.array.genre32_spinner_list)
+        subGenre4List = context.resources.getStringArray(R.array.genre42_spinner_list)
+        subGenre5List = context.resources.getStringArray(R.array.genre52_spinner_list)
+        subGenre6List = context.resources.getStringArray(R.array.genre62_spinner_list)
+        generationList = context.resources.getStringArray(R.array.birthday_spinner_list)
+        genderList = context.resources.getStringArray(R.array.gender_spinner_list)
+        areaList = context.resources.getStringArray(R.array.area_spinner_list)
     }
 
+
     fun changeGender(code: Int): String {
+
         return genderList[code]
     }
 
     fun changeArea(code: Int): String {
+
         return areaList[code]
     }
 
     fun getBirthday(code: Int): String {
+
         return generationList[code]
     }
 
     fun changeBirthdayString(code: String): Int {
+
         return generationList.indexOf(code)
     }
 
     fun changeGenre1(index: Int): String {
+
         return mainGenreList[index]
     }
 
     fun changeGenre2(genre1Index: Int, genre2Index: Int): String {
+
         return when (genre1Index) {
             1 -> subGenre1List[genre2Index]
             2 -> subGenre2List[genre2Index]

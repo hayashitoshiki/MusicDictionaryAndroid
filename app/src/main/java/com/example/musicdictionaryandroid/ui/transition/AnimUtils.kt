@@ -90,11 +90,9 @@ class AnimUtils {
         }
 
         override fun removeListener(listener: AnimatorListener) {
-            val wrapper: AnimatorListener = mListeners.get(listener)!!
-            if (wrapper != null) {
-                mListeners.remove(listener)
-                mAnimator.removeListener(wrapper)
-            }
+            val wrapper: AnimatorListener = mListeners[listener]!!
+            mListeners.remove(listener)
+            mAnimator.removeListener(wrapper)
         }
 
         override fun setDuration(durationMS: Long): Animator {

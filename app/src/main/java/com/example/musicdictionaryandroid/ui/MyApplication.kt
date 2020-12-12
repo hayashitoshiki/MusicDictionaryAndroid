@@ -1,6 +1,8 @@
 package com.example.musicdictionaryandroid.ui
 
 import android.app.Application
+import android.content.Context
+import android.util.Log
 import androidx.room.Room
 import com.example.musicdictionaryandroid.model.dao.AppDatabase
 import com.example.musicdictionaryandroid.model.repository.*
@@ -29,20 +31,20 @@ import org.koin.dsl.module
 class MyApplication : Application() {
 
     companion object {
-        private lateinit var sInstance: MyApplication
-
-        @JvmStatic
-        @Synchronized
-        fun getInstance(): MyApplication {
-            return sInstance
-        }
         lateinit var database: AppDatabase
+        lateinit var shered: MyApplication
+
+        @Suppress("JAVA_CLASS_ON_COMPANION")
+        val TAG = javaClass.name
+    }
+
+    init{
+        shered = this
     }
 
     override fun onCreate() {
         super.onCreate()
-        PreferenceRepositoryImp.init(applicationContext)
-        UserInfoChangeListUtil.init(applicationContext)
+        Log.d(TAG,"onCreate")
 
         startKoin {
             androidContext(applicationContext)
@@ -71,6 +73,7 @@ class MyApplication : Application() {
         viewModel { ResultSoaringViewModel(get()) }
         viewModel { HomeViewModel(get()) }
         viewModel { StartViewModel(get()) }
+        viewModel { SplashViewModel(get()) }
 
         factory <ArtistUseCase> { ArtistUseCaseImp(get(), get()) }
         factory <UserUseCase> { UserUseCaseImp(get(), get(), get()) }

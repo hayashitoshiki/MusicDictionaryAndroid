@@ -115,10 +115,12 @@ class MyPageArtistAddViewModel(
      */
     fun submit() {
         artistForm.value?.let {
+            @Suppress("IMPLICIT_CAST_TO_ANY")
             when (editMode.value) {
                 ADD_MODE -> addArtist(it)
                 CHANGE_MODE -> updateArtist(it)
-                else -> { Log.e(TAG,"指定モードが正しくありません。mode = " + editMode.value)}
+                else -> { Log.e(TAG,"指定モードが正しくありません。mode = " + editMode.value)
+                }
             }
         }
     }

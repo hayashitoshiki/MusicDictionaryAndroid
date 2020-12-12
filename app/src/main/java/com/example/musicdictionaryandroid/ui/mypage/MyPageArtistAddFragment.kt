@@ -21,7 +21,6 @@ import androidx.navigation.fragment.navArgs
 import com.example.musicdictionaryandroid.R
 import com.example.musicdictionaryandroid.databinding.FragmentMypageArtistAddBinding
 import com.example.musicdictionaryandroid.model.entity.ArtistsForm
-import com.example.musicdictionaryandroid.model.entity.CallBackData
 import com.example.musicdictionaryandroid.model.util.Status
 import com.example.musicdictionaryandroid.ui.adapter.setSafeClickListener
 import kotlinx.android.synthetic.main.fragment_mypage_artist_add.*
@@ -41,9 +40,7 @@ class MyPageArtistAddFragment : Fragment() {
         val TAG = javaClass.name
         @JvmStatic
         fun newInstance(): MyPageArtistAddFragment {
-            val fragment = MyPageArtistAddFragment()
-            val args = Bundle()
-            return fragment
+            return MyPageArtistAddFragment()
         }
     }
 

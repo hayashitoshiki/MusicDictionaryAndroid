@@ -132,7 +132,7 @@ class GravityArcMotion : ArcMotion {
 
             // Distance squared between end point and mid point is (1/2 hypotenuse)^2
             val midDist2 = h2 * 0.25f
-            var minimumArcDist2 = 0f
+            val minimumArcDist2: Float
             if (Math.abs(deltaX) < Math.abs(deltaY)) {
                 // Similar triangles bfa and bde mean that (ab/fb = eb/bd)
                 // Therefore, eb = ab * bd / fb
