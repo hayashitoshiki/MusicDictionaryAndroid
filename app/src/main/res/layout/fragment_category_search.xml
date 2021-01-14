@@ -30,9 +30,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:text="@string/category_search_title"
+            android:text="@string/title_home_category"
             android:textAlignment="center"
-            android:textColor="@color/header_color"
+            android:textColor="@color/text_color_light_primary"
             android:textSize="@dimen/category_header"
             android:textStyle="bold" />
 
@@ -51,7 +51,7 @@
             android:layout_marginTop="16dp"
             android:text="@string/category_title_gender"
             android:textAlignment="center"
-            android:textColor="@color/main_text_color"
+            android:textColor="@color/text_color_light_primary"
             android:textSize="@dimen/category_title"
             android:textStyle="bold" />
 
@@ -67,8 +67,8 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginEnd="4dp"
-                android:text="@string/gender_men"
-                android:textColor="@color/sub_text_color"
+                android:text="@string/category_gender_men"
+                android:textColor="@color/text_color_light_secondary"
                 android:textSize="@dimen/category_value" />
 
             <RadioGroup
@@ -97,8 +97,8 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginStart="4dp"
-                android:text="@string/gender_women"
-                android:textColor="@color/sub_text_color"
+                android:text="@string/category_gender_women"
+                android:textColor="@color/text_color_light_secondary"
                 android:textSize="@dimen/category_value" />
         </LinearLayout>
 
@@ -109,7 +109,7 @@
             android:layout_marginTop="8dp"
             android:text="@string/category_title_length"
             android:textAlignment="center"
-            android:textColor="@color/main_text_color"
+            android:textColor="@color/text_color_light_primary"
             android:textSize="@dimen/category_title"
             android:textStyle="bold" />
 
@@ -125,8 +125,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="4dp"
                 android:gravity="center"
-                android:text="@string/length_short"
-                android:textColor="@color/sub_text_color"
+                android:text="@string/category_length_short"
+                android:textColor="@color/text_color_light_secondary"
                 android:textSize="@dimen/category_value" />
 
             <RadioGroup
@@ -177,8 +177,8 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginStart="4dp"
-                android:text="@string/length_long"
-                android:textColor="@color/sub_text_color"
+                android:text="@string/category_length_long"
+                android:textColor="@color/text_color_light_secondary"
                 android:textSize="@dimen/category_value" />
         </LinearLayout>
 
@@ -189,7 +189,7 @@
             android:layout_marginTop="8dp"
             android:text="@string/category_title_voice"
             android:textAlignment="center"
-            android:textColor="@color/main_text_color"
+            android:textColor="@color/text_color_light_primary"
             android:textSize="@dimen/category_title"
             android:textStyle="bold" />
 
@@ -205,8 +205,8 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginEnd="4dp"
-                android:text="@string/voice_low"
-                android:textColor="@color/sub_text_color"
+                android:text="@string/category_voice_low"
+                android:textColor="@color/text_color_light_secondary"
                 android:textSize="@dimen/category_value" />
 
             <RadioGroup
@@ -258,8 +258,8 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginStart="4dp"
-                android:text="@string/voice_hiegth"
-                android:textColor="@color/sub_text_color"
+                android:text="@string/category_voice_height"
+                android:textColor="@color/text_color_light_secondary"
                 android:textSize="@dimen/category_value" />
         </LinearLayout>
 
@@ -270,7 +270,7 @@
             android:layout_marginTop="8dp"
             android:text="@string/category_title_lyric"
             android:textAlignment="center"
-            android:textColor="@color/main_text_color"
+            android:textColor="@color/text_color_light_primary"
             android:textSize="@dimen/category_title"
             android:textStyle="bold" />
 
@@ -286,8 +286,8 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginEnd="4dp"
-                android:text="@string/lyric_english"
-                android:textColor="@color/sub_text_color"
+                android:text="@string/category_lyric_english"
+                android:textColor="@color/text_color_light_secondary"
                 android:textSize="@dimen/category_value" />
 
             <RadioGroup
@@ -338,8 +338,8 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginStart="4dp"
-                android:text="@string/lyric_japanese"
-                android:textColor="@color/sub_text_color"
+                android:text="@string/category_lyric_japanese"
+                android:textColor="@color/text_color_light_secondary"
                 android:textSize="@dimen/category_value" />
         </LinearLayout>
 
@@ -350,7 +350,7 @@
             android:layout_marginTop="8dp"
             android:text="@string/category_title_genre1"
             android:textAlignment="center"
-            android:textColor="@color/main_text_color"
+            android:textColor="@color/text_color_light_primary"
             android:textSize="@dimen/category_title"
             android:textStyle="bold" />
 
@@ -369,7 +369,7 @@
             android:layout_marginTop="8dp"
             android:text="@string/category_title_genre2"
             android:textAlignment="center"
-            android:textColor="@color/main_text_color"
+            android:textColor="@color/text_color_light_primary"
             android:textSize="@dimen/category_title"
             android:textStyle="bold" />
 
@@ -395,8 +395,8 @@
             android:background="@drawable/accent_button_selector"
             android:stateListAnimator="@drawable/button_state_list_anim_material"
             android:elevation="6dp"
-            android:text="@string/submit"
-            android:textColor="@color/main_text_color"
+            android:text="@string/submit_search"
+            android:textColor="@color/text_color_light_primary"
             android:textSize="@dimen/category_title"
             android:textStyle="bold"
             android:enabled="@{viewModel.isEnableSubmitButton}"/>

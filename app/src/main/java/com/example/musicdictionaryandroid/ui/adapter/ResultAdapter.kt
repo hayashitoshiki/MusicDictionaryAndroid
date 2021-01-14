@@ -164,7 +164,7 @@ class ResultAdapter(private val context: Context, private val artistList: ArrayL
             holder.pieChart.visibility = View.GONE
             holder.genderChart.visibility = View.GONE
             holder.detailLayout.visibility = View.GONE
-            holder.detailButton.text = context.getString(R.string.result_open)
+            holder.detailButton.text = context.getString(R.string.page_open)
             holder.detailButton.setOnClickListener {
                 holder.detailLayout.clearAnimation()
                 if (holder.detailLayout.visibility == View.VISIBLE) {
@@ -174,7 +174,7 @@ class ResultAdapter(private val context: Context, private val artistList: ArrayL
                         holder.genderChart.visibility = View.GONE
                         holder.detailLayout.visibility = View.GONE
                     }, 300)
-                    holder.detailButton.text = context.getString(R.string.result_open)
+                    holder.detailButton.text = context.getString(R.string.page_open)
                 } else {
                     // 年齢毎の比率表示
                     holder.pieChart.also {
@@ -208,12 +208,12 @@ class ResultAdapter(private val context: Context, private val artistList: ArrayL
                             val colorList = mutableListOf<Int>()
                             entryList.forEach { pieEntry ->
                                 when (pieEntry.label) {
-                                    "10代" -> colorList.add(context.getColor(R.color.red))
-                                    "20代" -> colorList.add(context.getColor(R.color.blue))
-                                    "30代" -> colorList.add(context.getColor(R.color.yellow))
-                                    "40代" -> colorList.add(context.getColor(R.color.green))
-                                    "50代" -> colorList.add(context.getColor(R.color.purple))
-                                    "60代" -> colorList.add(context.getColor(R.color.brown))
+                                    "10代" -> colorList.add(context.getColor(R.color.red_500))
+                                    "20代" -> colorList.add(context.getColor(R.color.blue_500))
+                                    "30代" -> colorList.add(context.getColor(R.color.yellow_500))
+                                    "40代" -> colorList.add(context.getColor(R.color.green_500))
+                                    "50代" -> colorList.add(context.getColor(R.color.purple_500))
+                                    "60代" -> colorList.add(context.getColor(R.color.brown_500))
                                 }
                             }
                             pieDataSet.colors = colorList
@@ -250,8 +250,8 @@ class ResultAdapter(private val context: Context, private val artistList: ArrayL
                             val colorList = mutableListOf<Int>()
                             entryList.forEach { pieEntry ->
                                 when (pieEntry.label) {
-                                    "男性" -> colorList.add(context.getColor(R.color.light_blue))
-                                    "女性" -> colorList.add(context.getColor(R.color.pink))
+                                    "男性" -> colorList.add(context.getColor(R.color.light_blue_500))
+                                    "女性" -> colorList.add(context.getColor(R.color.pink_500))
                                 }
                             }
                             pieDataSet.colors = colorList
@@ -280,7 +280,7 @@ class ResultAdapter(private val context: Context, private val artistList: ArrayL
                         holder.genderChart.startAnimation(anim2)
                         holder.genderChart.visibility = View.VISIBLE
                     }, 300)
-                    holder.detailButton.text = context.getString(R.string.result_close)
+                    holder.detailButton.text = context.getString(R.string.page_close)
                 }
             }
             // 再生ボタン

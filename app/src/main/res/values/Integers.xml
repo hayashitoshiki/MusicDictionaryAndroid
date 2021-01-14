@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!-- animation time -->
     <integer name="bottom_nav_duration">500</integer>
     <integer name="fade_out_time">300</integer>
     <integer name="fade_out_time_home">200</integer>

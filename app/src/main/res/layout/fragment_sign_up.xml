@@ -29,13 +29,13 @@
                 android:gravity="center"
                 android:text="@string/sign_up_email_label"
                 android:textAppearance="?android:attr/textAppearanceMedium"
-                android:textColor="@color/main_text_color" />
+                android:textColor="@color/text_color_light_primary" />
 
             <EditText
                 android:id="@+id/email_edit_text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/sign_email_validate"
+                android:hint="@string/validate_sign_email"
                 android:inputType="text"
                 android:text="@={viewModel.emailText}" />
 
@@ -46,13 +46,13 @@
                 android:gravity="center"
                 android:text="@string/sign_up_password_label"
                 android:textAppearance="?android:attr/textAppearanceMedium"
-                android:textColor="@color/main_text_color" />
+                android:textColor="@color/text_color_light_primary" />
 
             <EditText
                 android:id="@+id/password_edit_text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/sign_password_validate"
+                android:hint="@string/validate_sign_password"
                 android:inputType="textPassword"
                 android:text="@={viewModel.passwordText}" />
 
@@ -63,13 +63,13 @@
                 android:gravity="center"
                 android:text="@string/sign_up_name_label"
                 android:textAppearance="?android:attr/textAppearanceMedium"
-                android:textColor="@color/main_text_color" />
+                android:textColor="@color/text_color_light_primary" />
 
             <EditText
                 android:id="@+id/name_edit_text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/sign_name_validate"
+                android:hint="@string/validate_sign_name"
                 android:inputType="text"
                 android:text="@={viewModel.nameText}" />
 
@@ -80,7 +80,7 @@
                 android:gravity="center"
                 android:text="@string/sign_up_gender_label"
                 android:textAppearance="?android:attr/textAppearanceMedium"
-                android:textColor="@color/main_text_color" />
+                android:textColor="@color/text_color_light_primary" />
 
             <LinearLayout
                 android:orientation="horizontal"
@@ -98,8 +98,8 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/gender_men"
-                        android:textColor="@color/sub_text_color"
+                        android:text="@string/category_gender_men"
+                        android:textColor="@color/text_color_light_secondary"
                         android:textSize="24dp" />
 
                     <RadioButton
@@ -110,8 +110,8 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/gender_women"
-                        android:textColor="@color/sub_text_color"
+                        android:text="@string/category_gender_women"
+                        android:textColor="@color/text_color_light_secondary"
                         android:textSize="24dp" />
                     <RadioButton
                         android:id="@+id/gender2"
@@ -129,7 +129,7 @@
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:text="@string/sign_up_area_label"
-                android:textColor="@color/main_text_color"
+                android:textColor="@color/text_color_light_primary"
                 android:textAppearance="?android:attr/textAppearanceMedium" />
 
             <Spinner
@@ -147,7 +147,7 @@
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:text="@string/sign_up_birthday_label"
-                android:textColor="@color/main_text_color"
+                android:textColor="@color/text_color_light_primary"
                 android:textAppearance="?android:attr/textAppearanceMedium" />
 
             <Spinner
@@ -170,7 +170,7 @@
                 android:background="@drawable/accent_button_selector"
                 android:enabled="@{viewModel.isEnableSubmitButton}"
                 android:onClick="@{() -> viewModel.signUp()}"
-                android:text="@string/sign_up_title"
+                android:text="@string/title_sign_up"
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:textColor="@android:color/white"
                 android:textStyle="bold" />

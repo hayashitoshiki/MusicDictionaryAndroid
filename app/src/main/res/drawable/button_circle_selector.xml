@@ -7,5 +7,5 @@
         android:bottomLeftRadius="100dp"
         android:topLeftRadius="100dp"
         />
-    <solid android:color="@color/colorAccent" />
+    <solid android:color="@color/bg_color_accent" />
 </shape>

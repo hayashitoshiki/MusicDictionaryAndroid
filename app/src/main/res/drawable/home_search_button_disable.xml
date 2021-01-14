@@ -7,7 +7,7 @@
                 android:bottomRightRadius="200dp"
                 />
             <solid
-                android:color="@color/colorPrimaryDarkDisable"
+                android:color="@color/bg_color_primary_disable"
                 />
         </shape>
     </item>

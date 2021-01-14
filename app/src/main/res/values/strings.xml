@@ -1,14 +1,24 @@
 <resources>
     <string name="app_name">MusicDictionaryAndroid</string>
-    <string name="title_home">ホーム</string>
-    <string name="title_mypage">マイページ</string>
-
-
     <string name="app_title">Music Dictionary</string>
 
-    <!-- ログイン系画面-->
-    <string name="sign_in_title">ログイン</string>
-    <string name="sign_up_title">新規作成</string>
+    <!-- タイトル -->
+    <string name="title_navigation_home">ホーム</string>
+    <string name="title_navigation_mypage">マイページ</string>
+    <string name="title_sign_in">ログイン</string>
+    <string name="title_sign_up">新規作成</string>
+    <string name="title_home_category">カテゴリ検索</string>
+    <string name="title_home_detail">詳細検索</string>
+    <string name="title_home_soaring">急上昇</string>
+    <string name="title_home_recommend">おすすめ</string>
+    <string name="title_mypage_home">設定</string>
+    <string name="title_mypage_user">アカウント情報</string>
+    <string name="title_mypage_artist_list">アーティスト一覧</string>
+    <string name="title_mypage_artist_add">アーティスト登録</string>
+    <string name="title_mypage_artist_change">アーティスト編集</string>
+
+    <!-- 認証系 -->
+    <string name="sign_logout">ログアウト</string>
     <string name="sign_up_name_label">名前：</string>
     <string name="sign_up_email_label">Email：</string>
     <string name="sign_up_password_label">パスワード：</string>
@@ -17,73 +27,55 @@
     <string name="sign_up_birthday_label">生年月日：</string>
     <string name="favorite_label">登録アーティスト数</string>
 
-    <!-- ホーム画面 -->
-    <string name="home_category_button">カテゴリ検索</string>
-    <string name="home_detail_button_name">詳細検索</string>
-    <string name="home_Soaring_button">急上昇</string>
-    <string name="home_recommend_button">おすすめ</string>
+    <!-- アコーディオン -->
+    <string name="page_open">▼</string>
+    <string name="page_close">▲</string>
 
-    <!-- 詳細検索画面 -->
-    <string name="search_sort_title1">絞り込み項目１</string>
-    <string name="search_sort_title2">絞り込み項目２</string>
-    <string name="search_sort_title3">絞り込み項目３</string>
-    <string name="search_sort_title4">絞り込み項目４</string>
+    <!-- 送信 -->
+    <string name="submit_add">追加</string>
+    <string name="submit_change">変更</string>
+    <string name="submit_edit"><u>編集</u></string>
+    <string name="submit_delete"><u>削除</u></string>
+    <string name="submit_search">検索</string>
+    <string name="result_re_search">再検索</string>
 
-    <!-- 機能制限バリデート -->
-    <string name="home_button_validate1">1件以上登録してください</string>
-    <string name="home_button_validate2">3件以上登録してください</string>
-    <string name="home_button_validate3">5件以上登録してください</string>
-    <string name="home_button_validate4">8件以上登録してください</string>
-    <string name="home_button_validate5">10件以上登録してください</string>
-    <string name="sign_password_validate">６文字以上入力する必要があります</string>
-    <string name="sign_email_validate">６文字以上入力する必要があります</string>
-    <string name="sign_name_validate">６文字以上入力する必要があります</string>
-
-    <!-- 検索結果画面 -->
-    <string name="result_search">再検索</string>
-    <string name="result_open">▼</string>
-    <string name="result_close">▲</string>
-
-    <!-- 成功文言 -->
-    <string name="success_login">同期しました</string>
-    <!-- エラー文言 -->
-    <string name="error_email_password">EmailかPasswordが違います</string>
-    <string name="error_network">通信環境の良いところでお試しください</string>
-
-    <!-- 設定系画面-->
-    <string name="mypage_title">設定</string>
-    <string name="mypage_user_title">アカウント情報</string>
-    <string name="mypage_userinfo">アカウント情報</string>
-    <string name="mypage_logout">ログアウト</string>
-    <string name="mypage_artist_list_button">アーティスト一覧</string>
-    <string name="mypage_artist_list_title">アーティスト一覧</string>
-    <string name="mypage_artist_add_button">追加</string>
-    <string name="mypage_artist_change_button">変更</string>
-
-    <string name="change"><u>編集</u></string>
-    <string name="delete"><u>削除</u></string>
-
-    <string name="artist_add_title">アーティスト登録</string>
-    <string name="artist_change_title">アーティスト編集</string>
-    <string name="artist_name_title">アーティスト名</string>
-    <string name="category_search_title">カテゴリ検索</string>
+    <!-- カテゴリ -->
+    <string name="category_title_artist_name">アーティスト名</string>
     <string name="category_title_gender">性別</string>
     <string name="category_title_length">長さ</string>
     <string name="category_title_voice">高さ</string>
     <string name="category_title_lyric">歌詞</string>
     <string name="category_title_genre1">ジャンル１</string>
     <string name="category_title_genre2">ジャンル２</string>
+    <string name="category_gender_men">男</string>
+    <string name="category_gender_women">女</string>
+    <string name="category_length_short">短い</string>
+    <string name="category_length_long">長い</string>
+    <string name="category_voice_low">低い</string>
+    <string name="category_voice_height">高い</string>
+    <string name="category_lyric_english">英語</string>
+    <string name="category_lyric_japanese">日本語</string>
+    <string name="category_search_sort1">絞り込み項目１</string>
+    <string name="category_search_sort2">絞り込み項目２</string>
+    <string name="category_search_sort3">絞り込み項目３</string>
+    <string name="category_search_sort4">絞り込み項目４</string>
 
-    <string name="submit">検索</string>
+    <!-- バリデート -->
+    <string name="validate_home_button1">1件以上登録してください</string>
+    <string name="validate_home_button2">3件以上登録してください</string>
+    <string name="validate_home_button3">5件以上登録してください</string>
+    <string name="validate_home_button4">8件以上登録してください</string>
+    <string name="validate_home_button5">10件以上登録してください</string>
+    <string name="validate_sign_password">６文字以上入力する必要があります</string>
+    <string name="validate_sign_email">６文字以上入力する必要があります</string>
+    <string name="validate_sign_name">６文字以上入力する必要があります</string>
 
-    <string name="gender_men">男</string>
-    <string name="gender_women">女</string>
-    <string name="length_short">短い</string>
-    <string name="length_long">長い</string>
-    <string name="voice_low">低い</string>
-    <string name="voice_hiegth">高い</string>
-    <string name="lyric_english">英語</string>
-    <string name="lyric_japanese">日本語</string>
+    <!-- 成功文言 -->
+    <string name="success_login">同期しました</string>
 
-    <string name="nothing_match_artist_text">該当するアーティストはまだ登録されていません</string>
+    <!-- エラー文言 -->
+    <string name="error_email_password">EmailかPasswordが違います</string>
+    <string name="error_network">通信環境の良いところでお試しください</string>
+    <string name="error_no_match_artist">該当するアーティストはまだ登録されていません</string>
+
 </resources>

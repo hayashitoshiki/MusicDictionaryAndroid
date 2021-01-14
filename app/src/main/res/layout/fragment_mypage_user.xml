@@ -26,8 +26,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
-            android:text="@string/mypage_user_title"
-            android:textColor="@color/header_color"
+            android:text="@string/title_mypage_user"
+            android:textColor="@color/text_color_light_primary"
             android:textSize="@dimen/category_header"
             android:layout_marginTop="16dp"
             android:textStyle="bold"
@@ -65,7 +65,7 @@
                     android:gravity="center"
                     android:text="@string/sign_up_email_label"
                     android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:textColor="@color/sub_text_color"
+                    android:textColor="@color/text_color_light_secondary"
                     android:textSize="@dimen/mypage_user_category_title"
                     android:textStyle="bold" />
 
@@ -74,7 +74,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@={viewModel.emailText}"
-                    android:textColor="@color/main_text_color"
+                    android:textColor="@color/text_color_light_primary"
                     android:textSize="@dimen/mypage_user_category_value"
                     android:textStyle="bold" />
 
@@ -86,7 +86,7 @@
                     android:gravity="center"
                     android:text="@string/sign_up_name_label"
                     android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:textColor="@color/sub_text_color"
+                    android:textColor="@color/text_color_light_secondary"
                     android:textSize="@dimen/mypage_user_category_title"
                     android:textStyle="bold" />
 
@@ -95,7 +95,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@={viewModel.nameText}"
-                    android:textColor="@color/main_text_color"
+                    android:textColor="@color/text_color_light_primary"
                     android:textSize="@dimen/mypage_user_category_value"
                     android:textStyle="bold" />
 
@@ -107,7 +107,7 @@
                     android:gravity="center"
                     android:text="@string/sign_up_gender_label"
                     android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:textColor="@color/sub_text_color"
+                    android:textColor="@color/text_color_light_secondary"
                     android:textSize="@dimen/mypage_user_category_title"
                     android:textStyle="bold" />
 
@@ -116,7 +116,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@={viewModel.genderText}"
-                    android:textColor="@color/main_text_color"
+                    android:textColor="@color/text_color_light_primary"
                     android:textSize="@dimen/mypage_user_category_value"
                     android:textStyle="bold" />
 
@@ -128,7 +128,7 @@
                     android:gravity="center"
                     android:text="@string/sign_up_area_label"
                     android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:textColor="@color/sub_text_color"
+                    android:textColor="@color/text_color_light_secondary"
                     android:textSize="@dimen/mypage_user_category_title"
                     android:textStyle="bold" />
 
@@ -137,7 +137,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@={viewModel.areaText}"
-                    android:textColor="@color/main_text_color"
+                    android:textColor="@color/text_color_light_primary"
                     android:textSize="@dimen/mypage_user_category_value"
                     android:textStyle="bold" />
 
@@ -149,7 +149,7 @@
                     android:gravity="center"
                     android:text="@string/sign_up_birthday_label"
                     android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:textColor="@color/sub_text_color"
+                    android:textColor="@color/text_color_light_secondary"
                     android:textSize="@dimen/mypage_user_category_title"
                     android:textStyle="bold" />
 
@@ -158,7 +158,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@={viewModel.birthdayText}"
-                    android:textColor="@color/main_text_color"
+                    android:textColor="@color/text_color_light_primary"
                     android:textSize="@dimen/mypage_user_category_value"
                     android:textStyle="bold" />
 
@@ -170,7 +170,7 @@
                     android:gravity="center"
                     android:text="@string/favorite_label"
                     android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:textColor="@color/sub_text_color"
+                    android:textColor="@color/text_color_light_secondary"
                     android:textSize="@dimen/mypage_user_category_title"
                     android:textStyle="bold" />
 
@@ -179,7 +179,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@={viewModel.favoriteText}"
-                    android:textColor="@color/main_text_color"
+                    android:textColor="@color/text_color_light_primary"
                     android:textSize="@dimen/mypage_user_category_value"
                     android:textStyle="bold" />
             </LinearLayout>

@@ -46,13 +46,13 @@ class CategorySearchFragment : Fragment(), CoroutineScope {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         val transition = TransitionSet().apply {
             addTransition(ChangeBounds())
             addTransition(ChangeTransform())
             addTransition(ChangeClipBounds())
         }
-        val trans = FabTransform(resources.getColor(R.color.colorPrimary, null), R.drawable.round_primary_dark_button, HOME_CATEGORY_BUTTON)
+        val trans = FabTransform(resources.getColor(R.color.bg_color_primary, null), R.drawable.round_primary_dark_button, HOME_CATEGORY_BUTTON)
         sharedElementEnterTransition = trans
         sharedElementReturnTransition = transition
 

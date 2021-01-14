@@ -8,7 +8,7 @@
     <fragment
         android:id="@+id/navigation_home"
         android:name="com.example.musicdictionaryandroid.ui.home.HomeFragment"
-        android:label="@string/title_home"
+        android:label="@string/title_navigation_home"
         tools:layout="@layout/fragment_home" >
         <action
             android:id="@+id/action_navigation_home_to_navigation_result"
@@ -72,7 +72,7 @@
     <fragment
         android:id="@+id/navigation_mypage"
         android:name="com.example.musicdictionaryandroid.ui.mypage.MyPageTopFragment"
-        android:label="@string/title_mypage"
+        android:label="@string/title_navigation_mypage"
         tools:layout="@layout/fragment_mypage_top" >
         <action
             android:id="@+id/action_navigation_mypage_to_my_page_artist"

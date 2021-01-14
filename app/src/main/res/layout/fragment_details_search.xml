@@ -43,9 +43,9 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
-                        android:text="@string/home_detail_button_name"
+                        android:text="@string/title_home_detail"
                         android:textAlignment="center"
-                        android:textColor="@color/header_color"
+                        android:textColor="@color/text_color_light_primary"
                         android:textSize="@dimen/category_header"
                         android:textStyle="bold" />
 
@@ -57,7 +57,7 @@
                         android:layout_marginTop="16dp"
                         android:text="@string/category_title_gender"
                         android:textAlignment="center"
-                        android:textColor="@color/main_text_color"
+                        android:textColor="@color/text_color_light_primary"
                         android:textSize="@dimen/category_title"
                         android:textStyle="bold" />
 
@@ -73,8 +73,8 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
                             android:layout_marginEnd="4dp"
-                            android:text="@string/gender_men"
-                            android:textColor="@color/sub_text_color"
+                            android:text="@string/category_gender_men"
+                            android:textColor="@color/text_color_light_secondary"
                             android:textSize="@dimen/category_value" />
 
                         <RadioGroup
@@ -102,8 +102,8 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
                             android:layout_marginStart="4dp"
-                            android:text="@string/gender_women"
-                            android:textColor="@color/sub_text_color"
+                            android:text="@string/category_gender_women"
+                            android:textColor="@color/text_color_light_secondary"
                             android:textSize="@dimen/category_value" />
                     </LinearLayout>
 
@@ -114,7 +114,7 @@
                         android:layout_marginTop="8dp"
                         android:text="@string/category_title_length"
                         android:textAlignment="center"
-                        android:textColor="@color/main_text_color"
+                        android:textColor="@color/text_color_light_primary"
                         android:textSize="@dimen/category_title"
                         android:textStyle="bold" />
 
@@ -130,8 +130,8 @@
                             android:layout_height="wrap_content"
                             android:layout_marginEnd="4dp"
                             android:gravity="center"
-                            android:text="@string/length_short"
-                            android:textColor="@color/sub_text_color"
+                            android:text="@string/category_length_short"
+                            android:textColor="@color/text_color_light_secondary"
                             android:textSize="@dimen/category_value" />
 
                         <RadioGroup
@@ -177,8 +177,8 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
                             android:layout_marginStart="4dp"
-                            android:text="@string/length_long"
-                            android:textColor="@color/sub_text_color"
+                            android:text="@string/category_length_long"
+                            android:textColor="@color/text_color_light_secondary"
                             android:textSize="@dimen/category_value" />
                     </LinearLayout>
 
@@ -189,7 +189,7 @@
                         android:layout_marginTop="8dp"
                         android:text="@string/category_title_voice"
                         android:textAlignment="center"
-                        android:textColor="@color/main_text_color"
+                        android:textColor="@color/text_color_light_primary"
                         android:textSize="@dimen/category_title"
                         android:textStyle="bold" />
 
@@ -205,8 +205,8 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
                             android:layout_marginEnd="4dp"
-                            android:text="@string/voice_low"
-                            android:textColor="@color/sub_text_color"
+                            android:text="@string/category_voice_low"
+                            android:textColor="@color/text_color_light_secondary"
                             android:textSize="@dimen/category_value" />
 
                         <RadioGroup
@@ -253,8 +253,8 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
                             android:layout_marginStart="4dp"
-                            android:text="@string/voice_hiegth"
-                            android:textColor="@color/sub_text_color"
+                            android:text="@string/category_voice_height"
+                            android:textColor="@color/text_color_light_secondary"
                             android:textSize="@dimen/category_value" />
                     </LinearLayout>
 
@@ -265,7 +265,7 @@
                         android:layout_marginTop="8dp"
                         android:text="@string/category_title_lyric"
                         android:textAlignment="center"
-                        android:textColor="@color/main_text_color"
+                        android:textColor="@color/text_color_light_primary"
                         android:textSize="@dimen/category_title"
                         android:textStyle="bold" />
 
@@ -281,8 +281,8 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
                             android:layout_marginEnd="4dp"
-                            android:text="@string/lyric_english"
-                            android:textColor="@color/sub_text_color"
+                            android:text="@string/category_lyric_english"
+                            android:textColor="@color/text_color_light_secondary"
                             android:textSize="@dimen/category_value" />
 
                         <RadioGroup
@@ -328,15 +328,15 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
                             android:layout_marginStart="4dp"
-                            android:text="@string/lyric_japanese"
-                            android:textColor="@color/sub_text_color"
+                            android:text="@string/category_lyric_japanese"
+                            android:textColor="@color/text_color_light_secondary"
                             android:textSize="@dimen/category_value" />
                     </LinearLayout>
 
                     <TextView
                         android:textSize="@dimen/category_title"
-                        android:text="@string/search_sort_title1"
-                        android:textColor="@color/main_text_color"
+                        android:text="@string/category_search_sort1"
+                        android:textColor="@color/text_color_light_primary"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"/>
@@ -359,7 +359,7 @@
 
                         <TextView
                             android:id="@+id/sort_genre1_key_label"
-                            android:textColor="@color/sub_text_color"
+                            android:textColor="@color/text_color_light_secondary"
                             android:textSize="@dimen/category_value"
                             android:layout_width="120dp"
                             android:layout_height="wrap_content"
@@ -387,7 +387,7 @@
                                 android:text="＋"
                                 android:onClick="@{() -> viewModel.addSortList(1)}"
                                 android:visibility="@{viewModel.isGenreAddButton1 ? View.VISIBLE : View.GONE}"
-                                android:textColor="@color/main_text_color"
+                                android:textColor="@color/text_color_light_primary"
                                 android:textSize="@dimen/category_title"
                                 android:background="@drawable/round_primary_dark_button"
                                 android:layout_width="32dp"
@@ -406,8 +406,8 @@
 
                         <TextView
                             android:textSize="@dimen/category_title"
-                            android:text="@string/search_sort_title2"
-                            android:textColor="@color/main_text_color"
+                            android:text="@string/category_search_sort2"
+                            android:textColor="@color/text_color_light_primary"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="8dp"/>
@@ -429,7 +429,7 @@
 
                             <TextView
                                 android:id="@+id/sort_genre2_key_label"
-                                android:textColor="@color/sub_text_color"
+                                android:textColor="@color/text_color_light_secondary"
                                 android:textSize="@dimen/category_value"
                                 android:layout_width="120dp"
                                 android:layout_height="wrap_content"
@@ -456,7 +456,7 @@
                                     android:text="＋"
                                     android:onClick="@{() -> viewModel.addSortList(2)}"
                                     android:visibility="@{viewModel.isGenreAddButton2 ? View.VISIBLE : View.GONE}"
-                                    android:textColor="@color/main_text_color"
+                                    android:textColor="@color/text_color_light_primary"
                                     android:textSize="@dimen/category_title"
                                     android:background="@drawable/round_primary_dark_button"
                                     android:layout_width="32dp"
@@ -469,7 +469,7 @@
                                     android:id="@+id/delete_genre2_button"
                                     android:text="ー"
                                     android:onClick="@{() -> viewModel.deleteSortButton(2)}"
-                                    android:textColor="@color/main_text_color"
+                                    android:textColor="@color/text_color_light_primary"
                                     android:textSize="@dimen/category_title"
                                     android:background="@drawable/round_primary_dark_button"
                                     android:layout_width="32dp"
@@ -490,8 +490,8 @@
 
                         <TextView
                             android:textSize="@dimen/category_title"
-                            android:text="@string/search_sort_title3"
-                            android:textColor="@color/main_text_color"
+                            android:text="@string/category_search_sort3"
+                            android:textColor="@color/text_color_light_primary"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="8dp"/>
@@ -513,7 +513,7 @@
 
                             <TextView
                                 android:id="@+id/sort_genre3_key_label"
-                                android:textColor="@color/sub_text_color"
+                                android:textColor="@color/text_color_light_secondary"
                                 android:textSize="@dimen/category_value"
                                 android:layout_width="120dp"
                                 android:layout_height="wrap_content"
@@ -540,7 +540,7 @@
                                     android:text="＋"
                                     android:onClick="@{() -> viewModel.addSortList(3)}"
                                     android:visibility="@{viewModel.isGenreAddButton3 ? View.VISIBLE : View.GONE}"
-                                    android:textColor="@color/main_text_color"
+                                    android:textColor="@color/text_color_light_primary"
                                     android:textSize="@dimen/category_title"
                                     android:background="@drawable/round_primary_dark_button"
                                     android:layout_width="32dp"
@@ -553,7 +553,7 @@
                                     android:id="@+id/delete_genre3_button"
                                     android:text="ー"
                                     android:onClick="@{() -> viewModel.deleteSortButton(3)}"
-                                    android:textColor="@color/main_text_color"
+                                    android:textColor="@color/text_color_light_primary"
                                     android:textSize="@dimen/category_title"
                                     android:background="@drawable/round_primary_dark_button"
                                     android:layout_width="32dp"
@@ -574,8 +574,8 @@
 
                         <TextView
                             android:textSize="@dimen/category_title"
-                            android:text="@string/search_sort_title4"
-                            android:textColor="@color/main_text_color"
+                            android:text="@string/category_search_sort4"
+                            android:textColor="@color/text_color_light_primary"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="8dp"/>
@@ -606,7 +606,7 @@
                                 android:id="@+id/delete_genre4_button"
                                 android:text="ー"
                                 android:onClick="@{() -> viewModel.deleteSortButton(4)}"
-                                android:textColor="@color/main_text_color"
+                                android:textColor="@color/text_color_light_primary"
                                 android:textSize="@dimen/category_title"
                                 android:background="@drawable/round_primary_dark_button"
                                 android:layout_width="32dp"
@@ -629,8 +629,8 @@
                         android:background="@drawable/accent_button_selector"
                         android:stateListAnimator="@drawable/button_state_list_anim_material"
                         android:elevation="6dp"
-                        android:text="@string/submit"
-                        android:textColor="@color/main_text_color"
+                        android:text="@string/submit_search"
+                        android:textColor="@color/text_color_light_primary"
                         android:textSize="@dimen/category_title"
                         android:textStyle="bold" />
                 </LinearLayout>
