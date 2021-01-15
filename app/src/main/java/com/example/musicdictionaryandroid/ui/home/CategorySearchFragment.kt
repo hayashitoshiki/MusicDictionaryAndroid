@@ -18,11 +18,10 @@ import com.example.musicdictionaryandroid.R
 import com.example.musicdictionaryandroid.databinding.FragmentCategorySearchBinding
 import com.example.musicdictionaryandroid.ui.transition.FabTransform
 import com.example.musicdictionaryandroid.ui.transition.HOME_CATEGORY_BUTTON
+import kotlin.coroutines.CoroutineContext
 import kotlinx.android.synthetic.main.fragment_category_search.*
 import kotlinx.android.synthetic.main.fragment_category_search.view.*
 import kotlinx.coroutines.*
-import kotlin.coroutines.CoroutineContext
-
 
 /**
  * カテゴリ検索画面

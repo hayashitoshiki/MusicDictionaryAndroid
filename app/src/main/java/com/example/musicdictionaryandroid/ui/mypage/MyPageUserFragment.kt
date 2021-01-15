@@ -11,10 +11,8 @@ import android.view.ViewGroup
 import android.view.animation.AnimationUtils
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
 import com.example.musicdictionaryandroid.R
 import com.example.musicdictionaryandroid.databinding.FragmentMypageUserBinding
-import kotlinx.android.synthetic.main.fragment_mypage_user.view.*
 import org.koin.android.viewmodel.ext.android.viewModel
 
 /**
@@ -28,7 +26,7 @@ class MyPageUserFragment : Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         val root: FragmentMypageUserBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_mypage_user, container, false)
         root.viewModel = viewModel
 
@@ -42,24 +40,19 @@ class MyPageUserFragment : Fragment() {
         }
         sharedElementEnterTransition = transition
         sharedElementReturnTransition = transition
-        root.root.email_label.startAnimation(anim1)
-        root.root.name_label.startAnimation(anim1)
-        root.root.name_text.startAnimation(anim1)
-        root.root.email_text.startAnimation(anim1)
-        root.root.gender_label.startAnimation(anim2)
-        root.root.gender_text.startAnimation(anim2)
-        root.root.area_label.startAnimation(anim2)
-        root.root.area_text.startAnimation(anim2)
-        root.root.birthday_label.startAnimation(anim3)
-        root.root.birthday_text.startAnimation(anim3)
-        root.root.favorite_label.startAnimation(anim3)
-        root.root.favorite_text.startAnimation(anim3)
+        root.emailLabel.startAnimation(anim1)
+        root.nameLabel.startAnimation(anim1)
+        root.nameText.startAnimation(anim1)
+        root.emailText.startAnimation(anim1)
+        root.genderLabel.startAnimation(anim2)
+        root.genderText.startAnimation(anim2)
+        root.areaLabel.startAnimation(anim2)
+        root.areaText.startAnimation(anim2)
+        root.birthdayLabel.startAnimation(anim3)
+        root.birthdayText.startAnimation(anim3)
+        root.favoriteLabel.startAnimation(anim3)
+        root.favoriteText.startAnimation(anim3)
 
         return root.root
-    }
-
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        viewModel.init()
     }
 }

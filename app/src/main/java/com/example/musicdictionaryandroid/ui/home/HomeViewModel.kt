@@ -17,17 +17,17 @@ class HomeViewModel(
     val searchText = MutableLiveData<String>("")
 
     private val isSearchBar = MutableLiveData<Boolean>(true)
-    val mIsSearchBar : LiveData<Boolean> = isSearchBar
+    val mIsSearchBar: LiveData<Boolean> = isSearchBar
     private val isCategoryButton = MutableLiveData<Boolean>(true)
-    val mIsCategoryButton : LiveData<Boolean> = isCategoryButton
+    val mIsCategoryButton: LiveData<Boolean> = isCategoryButton
     private val isDetailsButton = MutableLiveData<Boolean>(true)
-    val mIsDetailsButton : LiveData<Boolean> = isDetailsButton
+    val mIsDetailsButton: LiveData<Boolean> = isDetailsButton
     private val isSoaringButton = MutableLiveData<Boolean>(true)
-    val mIsSoaringButton : LiveData<Boolean> = isSoaringButton
+    val mIsSoaringButton: LiveData<Boolean> = isSoaringButton
     private val isRecommendButton = MutableLiveData<Boolean>(true)
-    val mIsRecommendButton : LiveData<Boolean> = isRecommendButton
+    val mIsRecommendButton: LiveData<Boolean> = isRecommendButton
     private val isEnableSubmitButton = MutableLiveData<Boolean>(false)
-    val mIsEnableSubmitButton : LiveData<Boolean> = isEnableSubmitButton
+    val mIsEnableSubmitButton: LiveData<Boolean> = isEnableSubmitButton
 
     /**
      * タップ可能ボタンのバリデート

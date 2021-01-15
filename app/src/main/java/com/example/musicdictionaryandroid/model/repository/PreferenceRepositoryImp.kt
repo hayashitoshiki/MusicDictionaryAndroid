@@ -82,7 +82,6 @@ object PreferenceRepositoryImp {
         remove(Key.FAVORITE)
     }
 
-
     private fun setString(key: Key, value: String) {
         val preferences = context.getSharedPreferences("mucisDictionary", Context.MODE_PRIVATE)
         val editor = preferences.edit()

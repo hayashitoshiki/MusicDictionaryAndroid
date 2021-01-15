@@ -32,7 +32,7 @@ class ResultViewModel(
         when (val result = artistUseCase.getArtistsBy(artist)) {
             is Result.Success -> {
                 val arrayList = arrayListOf(artist)
-                result.data?.let{arrayList.addAll(it)}
+                result.data?.let { arrayList.addAll(it) }
                 status.postValue(Status.Success(arrayList)) }
             is Result.Error -> { status.postValue(Status.Failure(result.exception)) }
         }

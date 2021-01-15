@@ -13,7 +13,6 @@ import androidx.lifecycle.Observer
 import com.example.musicdictionaryandroid.R
 import com.example.musicdictionaryandroid.databinding.FragmentSignUpBinding
 import com.example.musicdictionaryandroid.model.util.Status
-import com.example.musicdictionaryandroid.ui.mypage.MyPageArtistFragment
 import kotlinx.android.synthetic.main.fragment_sign_up.view.*
 import org.koin.android.viewmodel.ext.android.viewModel
 

@@ -53,7 +53,7 @@ class SignUpViewModelTest {
      */
     @ExperimentalCoroutinesApi
     @Test
-    fun onSignUp()  {
+    fun onSignUp() {
         // テストクラス作成
         val userUseCase = mockk<UserUseCase> ()
         val viewModel = SignUpViewModel(userUseCase)

@@ -33,8 +33,8 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
-    dataBinding {
-        enabled = true
+    buildFeatures {
+        dataBinding true
     }
 
     flavorDimensions "default"
@@ -129,7 +129,7 @@ dependencies {
     testImplementation "androidx.arch.core:core-testing:2.1.0"
     // coroutine-test
     testImplementation 'org.jetbrains.kotlinx:kotlinx-coroutines-test:1.3.0-M1'
-    testImplementation "io.mockk:mockk:1.9.3"
+    testImplementation 'io.mockk:mockk:1.10.3-jdk8'
 
     // Room
     def room_version = "2.2.2"

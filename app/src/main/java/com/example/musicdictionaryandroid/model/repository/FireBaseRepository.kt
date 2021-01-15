@@ -26,10 +26,9 @@ interface FireBaseRepository {
     /**
      * ログアウト
      *
-     * @param onSuccess 成功
-     * @param onError 失敗
+
      */
-    fun signOut(onSuccess: () -> Unit, onError: () -> Unit)
+    fun signOut()
     /**
      * アカウント作成
      *

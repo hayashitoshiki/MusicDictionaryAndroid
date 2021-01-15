@@ -3,8 +3,6 @@ package com.example.musicdictionaryandroid.model.usecase
 import com.example.musicdictionaryandroid.model.entity.CallBackData
 import com.example.musicdictionaryandroid.model.entity.User
 import com.example.musicdictionaryandroid.model.util.Result
-import java.lang.Exception
-import retrofit2.Response
 
 /**
  * ユーザーに関するビジネスロジック
@@ -60,10 +58,8 @@ interface UserUseCase {
     /**
      * ログアウト
      *
-     * @param onSuccess 成功
-     * @param onError 失敗
      */
-    suspend fun signOut(onSuccess: () -> Unit, onError: () -> Unit)
+    suspend fun signOut()
     /**
      * ユーザー削除
      *

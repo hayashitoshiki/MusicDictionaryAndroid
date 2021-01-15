@@ -18,10 +18,10 @@ import com.example.musicdictionaryandroid.R
 import com.example.musicdictionaryandroid.databinding.FragmentDetailsSearchBinding
 import com.example.musicdictionaryandroid.ui.transition.FabTransform
 import com.example.musicdictionaryandroid.ui.transition.HOME_DETAILS_BUTTON
+import kotlin.coroutines.CoroutineContext
 import kotlinx.android.synthetic.main.fragment_details_search.*
 import kotlinx.android.synthetic.main.fragment_details_search.view.*
 import kotlinx.coroutines.*
-import kotlin.coroutines.CoroutineContext
 
 /**
  * 詳細検索画面

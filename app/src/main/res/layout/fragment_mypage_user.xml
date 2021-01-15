@@ -73,7 +73,7 @@
                     android:id="@+id/email_text"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@={viewModel.emailText}"
+                    android:text="@{viewModel.emailText}"
                     android:textColor="@color/text_color_light_primary"
                     android:textSize="@dimen/mypage_user_category_value"
                     android:textStyle="bold" />
@@ -94,7 +94,7 @@
                     android:id="@+id/name_text"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@={viewModel.nameText}"
+                    android:text="@{viewModel.nameText}"
                     android:textColor="@color/text_color_light_primary"
                     android:textSize="@dimen/mypage_user_category_value"
                     android:textStyle="bold" />
@@ -115,7 +115,7 @@
                     android:id="@+id/gender_text"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@={viewModel.genderText}"
+                    android:text="@{viewModel.genderText}"
                     android:textColor="@color/text_color_light_primary"
                     android:textSize="@dimen/mypage_user_category_value"
                     android:textStyle="bold" />
@@ -136,7 +136,7 @@
                     android:id="@+id/area_text"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@={viewModel.areaText}"
+                    android:text="@{viewModel.areaText}"
                     android:textColor="@color/text_color_light_primary"
                     android:textSize="@dimen/mypage_user_category_value"
                     android:textStyle="bold" />
@@ -157,7 +157,7 @@
                     android:id="@+id/birthday_text"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@={viewModel.birthdayText}"
+                    android:text="@{viewModel.birthdayText}"
                     android:textColor="@color/text_color_light_primary"
                     android:textSize="@dimen/mypage_user_category_value"
                     android:textStyle="bold" />
@@ -178,7 +178,7 @@
                     android:id="@+id/favorite_text"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@={viewModel.favoriteText}"
+                    android:text="@{viewModel.favoriteText}"
                     android:textColor="@color/text_color_light_primary"
                     android:textSize="@dimen/mypage_user_category_value"
                     android:textStyle="bold" />

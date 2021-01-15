@@ -99,7 +99,7 @@
         tools:layout="@layout/fragment_mypage_artist_add">
         <argument
             android:name="data"
-            app:argType="com.example.musicdictionaryandroid.model.entity.ArtistsForm"
+            app:argType="com.example.musicdictionaryandroid.model.entity.Artist"
             app:nullable="true" />
     </fragment>
 

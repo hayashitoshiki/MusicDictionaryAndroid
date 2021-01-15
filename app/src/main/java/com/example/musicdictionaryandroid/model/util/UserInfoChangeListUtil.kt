@@ -36,7 +36,6 @@ object UserInfoChangeListUtil {
         areaList = context.resources.getStringArray(R.array.area_spinner_list)
     }
 
-
     fun changeGender(code: Int): String {
 
         return genderList[code]

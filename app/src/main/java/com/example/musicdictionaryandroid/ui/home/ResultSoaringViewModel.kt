@@ -32,8 +32,8 @@ class ResultSoaringViewModel(
             is Result.Success -> {
                 val artist = ArtistsForm("急上昇")
                 val arrayList = arrayListOf(artist)
-                result.data?.let{arrayList.addAll(it)}
-                status.postValue(Status.Success(arrayList))  }
+                result.data?.let { arrayList.addAll(it) }
+                status.postValue(Status.Success(arrayList)) }
             is Result.Error -> { status.postValue(Status.Failure(result.exception)) }
         }
     }

@@ -2,6 +2,7 @@ package com.example.musicdictionaryandroid.ui.mypage
 
 import android.util.Log
 import androidx.lifecycle.*
+import com.example.musicdictionaryandroid.model.entity.Artist
 import com.example.musicdictionaryandroid.model.entity.ArtistsForm
 import com.example.musicdictionaryandroid.model.usecase.ArtistUseCase
 import com.example.musicdictionaryandroid.model.usecase.UserUseCase
@@ -21,41 +22,46 @@ class MyPageArtistAddViewModel(
     private val artistUseCase: ArtistUseCase
 ) : ViewModel() {
 
-    private var email = ""
-    var artistForm = MutableLiveData<ArtistsForm>(ArtistsForm())
+    private var email = userUseCase.getEmail()
     val status = MutableLiveData<Status<ArtistsForm?>>()
 
     // 絞り込みリスト
-    private lateinit var mainGenreList: Array<String>
-    private lateinit var subGenre0List: Array<String>
-    private lateinit var subGenre1List: Array<String>
-    private lateinit var subGenre2List: Array<String>
-    private lateinit var subGenre3List: Array<String>
-    private lateinit var subGenre4List: Array<String>
-    private lateinit var subGenre5List: Array<String>
-    private lateinit var subGenre6List: Array<String>
+    private lateinit var mainGenreList: List<String>
+    private lateinit var subGenre0List: List<String>
+    private lateinit var subGenre1List: List<String>
+    private lateinit var subGenre2List: List<String>
+    private lateinit var subGenre3List: List<String>
+    private lateinit var subGenre4List: List<String>
+    private lateinit var subGenre5List: List<String>
+    private lateinit var subGenre6List: List<String>
 
-    val editMode = MutableLiveData<Int>(1)
-    val titleText = MutableLiveData<String>()
+    private val _artistForm = MutableLiveData<Artist>()
+    val artistForm: LiveData<Artist> = _artistForm
+    private val _editMode = MutableLiveData<Int>()
+    val editMode: LiveData<Int> = _editMode
+    private val _titleText = MutableLiveData<String>()
+    val titleText: LiveData<String> = _titleText
     val nameText = MutableLiveData<String>()
-    val genre1ValueList = MutableLiveData<Array<String>>()
-    val genre2ValueList = MutableLiveData<Array<String>>()
+    private val _genre1ValueList = MutableLiveData<List<String>>()
+    val genre1ValueList: LiveData<List<String>> = _genre1ValueList
+    private val _genre2ValueList = MutableLiveData<List<String>>()
+    val genre2ValueList: LiveData<List<String>> = _genre2ValueList
     val genre1ValueInt = MutableLiveData<Int>(0)
     val genre2ValueInt = MutableLiveData<Int>(0)
-    val submitText = MutableLiveData<String>()
-    private val isButton = MediatorLiveData<Boolean>()
-    val isEnableSubmitButton: LiveData<Boolean> = isButton
+    private val _submitText = MutableLiveData<String>()
+    val submitText: LiveData<String> = _submitText
+    private val _isEnableSubmitButton = MediatorLiveData<Boolean>()
+    val isEnableSubmitButton: LiveData<Boolean> = _isEnableSubmitButton
 
-    @Suppress("JAVA_CLASS_ON_COMPANION")
     companion object {
         const val ADD_MODE = 1
         const val CHANGE_MODE = 2
-        val TAG = javaClass.name
+        const val TAG = "MyPageArtistAddViewModel"
     }
 
     init {
-        email = userUseCase.getEmail()
-        isButton.addSource(nameText) { changeArtistName(it!!) }
+        _isEnableSubmitButton.addSource(nameText) { changeArtistName(it!!) }
+        _isEnableSubmitButton.addSource(artistForm) { validate() }
     }
 
     fun init(
@@ -66,46 +72,46 @@ class MyPageArtistAddViewModel(
         genre4List: Array<String>,
         genre5List: Array<String>,
         genre6List: Array<String>,
-        artist: ArtistsForm?
+        artist: Artist?
     ) {
-        this.mainGenreList = genreList
-        this.subGenre0List = arrayOf("未選択")
-        this.subGenre1List = genre1List
-        this.subGenre2List = genre2List
-        this.subGenre3List = genre3List
-        this.subGenre4List = genre4List
-        this.subGenre5List = genre5List
-        this.subGenre6List = genre6List
-        genre1ValueList.value = mainGenreList
+        this.mainGenreList = genreList.toList()
+        this.subGenre0List = listOf("未選択")
+        this.subGenre1List = genre1List.toList()
+        this.subGenre2List = genre2List.toList()
+        this.subGenre3List = genre3List.toList()
+        this.subGenre4List = genre4List.toList()
+        this.subGenre5List = genre5List.toList()
+        this.subGenre6List = genre6List.toList()
+        _genre1ValueList.value = mainGenreList.toList()
 
         artist?.let {
-            editMode.value = CHANGE_MODE
-            titleText.value = "アーティスト編集"
-            submitText.value = "変更"
-            nameText.value = artist.name
-            artistForm.value = artist
             when (artist.genre1) {
-                0 -> genre2ValueList.value = subGenre0List
-                1 -> genre2ValueList.value = subGenre1List
-                2 -> genre2ValueList.value = subGenre2List
-                3 -> genre2ValueList.value = subGenre3List
-                4 -> genre2ValueList.value = subGenre4List
-                5 -> genre2ValueList.value = subGenre5List
-                6 -> genre2ValueList.value = subGenre6List
+                0 -> _genre2ValueList.value = subGenre0List.toList()
+                1 -> _genre2ValueList.value = subGenre1List.toList()
+                2 -> _genre2ValueList.value = subGenre2List.toList()
+                3 -> _genre2ValueList.value = subGenre3List.toList()
+                4 -> _genre2ValueList.value = subGenre4List.toList()
+                5 -> _genre2ValueList.value = subGenre5List.toList()
+                6 -> _genre2ValueList.value = subGenre6List.toList()
             }
+            _editMode.value = CHANGE_MODE
+            _titleText.value = "アーティスト編集"
+            _submitText.value = "変更"
+            _artistForm.value = artist
+            nameText.value = artist.name
             genre1ValueInt.value = artist.genre1
             genre2ValueInt.value = artist.genre2
-
         } ?: run {
-            editMode.value = ADD_MODE
-            titleText.value = "アーティスト登録"
-            submitText.value = "追加"
+            _editMode.value = ADD_MODE
+            _titleText.value = "アーティスト登録"
+            _submitText.value = "追加"
+            _artistForm.value = Artist(null, "", 0, 0, 0, 0, 0, 0)
         }
     }
 
     // 入力バリデート
     private fun validate() {
-        isButton.value = artistForm.value!!.name != "" && artistForm.value!!.gender != 0 &&
+        _isEnableSubmitButton.value = artistForm.value!!.name != "" && artistForm.value!!.gender != 0 &&
                 artistForm.value!!.length != 0 && artistForm.value!!.voice != 0 &&
                 artistForm.value!!.lyrics != 0 && artistForm.value!!.genre1 != 0 && artistForm.value!!.genre2 != 0
     }
@@ -116,17 +122,17 @@ class MyPageArtistAddViewModel(
     fun submit() {
         artistForm.value?.let {
             @Suppress("IMPLICIT_CAST_TO_ANY")
-            when (editMode.value) {
+            when (_editMode.value) {
                 ADD_MODE -> addArtist(it)
                 CHANGE_MODE -> updateArtist(it)
-                else -> { Log.e(TAG,"指定モードが正しくありません。mode = " + editMode.value)
+                else -> { Log.e(TAG, "指定モードが正しくありません。mode = " + editMode.value)
                 }
             }
         }
     }
 
     // アーティスト登録
-    private fun addArtist(artist: ArtistsForm): Job = viewModelScope.launch {
+    private fun addArtist(artist: Artist): Job = viewModelScope.launch {
         when (val result = artistUseCase.addArtist(artist, email)) {
             is Result.Success -> { status.value = Status.Success(result.data) }
             is Result.Error -> { status.value = Status.Failure(result.exception) }
@@ -134,7 +140,7 @@ class MyPageArtistAddViewModel(
     }
 
     // アーティスト更新
-    private fun updateArtist(artist: ArtistsForm): Job = viewModelScope.launch {
+    private fun updateArtist(artist: Artist): Job = viewModelScope.launch {
         when (val result = artistUseCase.updateArtist(artist, email)) {
             is Result.Success -> { status.value = Status.Success(result.data) }
             is Result.Error -> { status.value = Status.Failure(result.exception) }
@@ -143,32 +149,38 @@ class MyPageArtistAddViewModel(
 
     // アーティスト名変更
     fun changeArtistName(name: String) {
-        artistForm.value!!.name = name
-        validate()
+        _artistForm.value!!.name = name
+        _artistForm.value = _artistForm.value
     }
 
     // genderの変更
     fun checkedChangeGender(checkedId: Int) {
-        artistForm.value!!.gender = checkedId
-        validate()
+        _artistForm.value!!.gender = checkedId
+        _artistForm.value = _artistForm.value
     }
 
     // lengthの変更
     fun checkedChangeLength(checkedId: Int) {
-        artistForm.value!!.length = checkedId
-        validate()
+        _artistForm.value!!.length = checkedId
+        _artistForm.value = _artistForm.value
     }
 
     // voiceの変更
     fun checkedChangeVoice(checkedId: Int) {
-        artistForm.value!!.voice = checkedId
-        validate()
+        _artistForm.value!!.voice = checkedId
+        _artistForm.value = _artistForm.value
     }
 
     // 歌詞情報の変更
     fun checkedChangeLyric(checkedId: Int) {
-        artistForm.value!!.lyrics = checkedId
-        validate()
+        _artistForm.value!!.lyrics = checkedId
+        _artistForm.value = _artistForm.value
+    }
+
+    // 歌詞情報の変更
+    fun changeGenre2(index: Int) {
+        _artistForm.value!!.genre2 = index
+        _artistForm.value = _artistForm.value
     }
 
     /**
@@ -177,22 +189,16 @@ class MyPageArtistAddViewModel(
      * @param index 大分類ジャンルの中のインデックス値
      */
     fun changeGenre1(index: Int) {
-        artistForm.value!!.genre1 = index
-        genre2ValueInt.postValue(0)
+        _artistForm.value!!.genre1 = index
+        _artistForm.value = _artistForm.value
         when (index) {
-            0 -> genre2ValueList.postValue(subGenre0List)
-            1 -> genre2ValueList.postValue(subGenre1List)
-            2 -> genre2ValueList.postValue(subGenre2List)
-            3 -> genre2ValueList.postValue(subGenre3List)
-            4 -> genre2ValueList.postValue(subGenre4List)
-            5 -> genre2ValueList.postValue(subGenre5List)
-            6 -> genre2ValueList.postValue(subGenre6List)
+            0 -> _genre2ValueList.postValue(subGenre0List.toList())
+            1 -> _genre2ValueList.postValue(subGenre1List.toList())
+            2 -> _genre2ValueList.postValue(subGenre2List.toList())
+            3 -> _genre2ValueList.postValue(subGenre3List.toList())
+            4 -> _genre2ValueList.postValue(subGenre4List.toList())
+            5 -> _genre2ValueList.postValue(subGenre5List.toList())
+            6 -> _genre2ValueList.postValue(subGenre6List.toList())
         }
-    }
-
-    // 歌詞情報の変更
-    fun changeGenre2(index: Int) {
-        artistForm.value!!.genre2 = index
-        validate()
     }
 }

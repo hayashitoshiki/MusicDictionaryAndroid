@@ -1,5 +1,6 @@
 package com.example.musicdictionaryandroid.model.dao
 
+import androidx.lifecycle.LiveData
 import androidx.room.*
 import com.example.musicdictionaryandroid.model.entity.Artist
 
@@ -15,14 +16,17 @@ interface ArtistDao {
     @Update
     fun update(artist: Artist)
 
-    @Delete
-    fun delete(artist: Artist)
+    @Query("delete from artists WHERE name = :name")
+    suspend fun deleteByName(name: String)
 
     @Query("delete from artists")
     fun deleteAll()
 
     @Query("SELECT * FROM artists")
-    fun getAll(): Array<Artist>
+    suspend fun getAll(): Array<Artist>
+
+    @Query("SELECT * FROM artists")
+    fun getArtistList(): LiveData<List<Artist>>
 
     @Query("select * from artists where name = :name")
     fun getArtistByName(name: String): Artist

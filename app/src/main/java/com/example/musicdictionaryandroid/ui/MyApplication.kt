@@ -1,7 +1,6 @@
 package com.example.musicdictionaryandroid.ui
 
 import android.app.Application
-import android.content.Context
 import android.util.Log
 import androidx.room.Room
 import com.example.musicdictionaryandroid.model.dao.AppDatabase
@@ -10,7 +9,6 @@ import com.example.musicdictionaryandroid.model.usecase.ArtistUseCase
 import com.example.musicdictionaryandroid.model.usecase.ArtistUseCaseImp
 import com.example.musicdictionaryandroid.model.usecase.UserUseCase
 import com.example.musicdictionaryandroid.model.usecase.UserUseCaseImp
-import com.example.musicdictionaryandroid.model.util.UserInfoChangeListUtil
 import com.example.musicdictionaryandroid.ui.home.HomeViewModel
 import com.example.musicdictionaryandroid.ui.home.ResultRecommendViewModel
 import com.example.musicdictionaryandroid.ui.home.ResultSoaringViewModel
@@ -38,13 +36,13 @@ class MyApplication : Application() {
         val TAG = javaClass.name
     }
 
-    init{
+    init {
         shered = this
     }
 
     override fun onCreate() {
         super.onCreate()
-        Log.d(TAG,"onCreate")
+        Log.d(TAG, "onCreate")
 
         startKoin {
             androidContext(applicationContext)

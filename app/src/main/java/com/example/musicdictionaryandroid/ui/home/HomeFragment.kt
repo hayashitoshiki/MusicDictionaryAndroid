@@ -17,12 +17,12 @@ import com.example.musicdictionaryandroid.R
 import com.example.musicdictionaryandroid.databinding.FragmentHomeBinding
 import com.example.musicdictionaryandroid.ui.adapter.setSafeClickListener
 import com.example.musicdictionaryandroid.ui.login.StartActivity
+import kotlin.coroutines.CoroutineContext
 import kotlinx.android.synthetic.main.fragment_home.*
 import kotlinx.android.synthetic.main.fragment_home.submit
 import kotlinx.android.synthetic.main.fragment_home.view.*
 import kotlinx.coroutines.*
 import org.koin.android.viewmodel.ext.android.viewModel
-import kotlin.coroutines.CoroutineContext
 
 /**
  * HOME画面
@@ -49,7 +49,7 @@ class HomeFragment : Fragment(), CoroutineScope {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        Log.d(StartActivity.TAG,"onCreate")
+        Log.d(StartActivity.TAG, "onCreate")
     }
 
     override fun onCreateView(

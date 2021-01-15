@@ -25,4 +25,4 @@ data class Artist(
     var lyrics: Int? = 0,
     var genre1: Int? = 0,
     var genre2: Int? = 0
-)
+) : java.io.Serializable

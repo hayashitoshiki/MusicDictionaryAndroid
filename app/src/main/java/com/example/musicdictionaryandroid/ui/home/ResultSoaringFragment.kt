@@ -14,7 +14,6 @@ import com.example.musicdictionaryandroid.databinding.FragmentResultSoaringBindi
 import com.example.musicdictionaryandroid.model.entity.ArtistsForm
 import com.example.musicdictionaryandroid.model.util.Status
 import com.example.musicdictionaryandroid.ui.adapter.ResultAdapter
-import com.example.musicdictionaryandroid.ui.login.SignInFragment
 import kotlinx.android.synthetic.main.fragment_result.*
 import org.koin.android.viewmodel.ext.android.viewModel
 

@@ -1,5 +1,6 @@
 package com.example.musicdictionaryandroid.model.repository
 
+import androidx.lifecycle.LiveData
 import com.example.musicdictionaryandroid.model.entity.Artist
 import com.example.musicdictionaryandroid.model.entity.ArtistsForm
 
@@ -19,7 +20,7 @@ interface DataBaseRepository {
      *
      * @param name 削除しするアーティスト名
      */
-    fun deleteArtist(name: String)
+    suspend fun deleteArtist(name: String)
     /**
      * 全部アーティスト削除
      *
@@ -49,5 +50,8 @@ interface DataBaseRepository {
      *
      * @return ローカルDBに登録されている全てのアーティスト取得
      */
-    fun getArtistAll(): ArrayList<ArtistsForm>
+    suspend fun getArtistAll(): ArrayList<ArtistsForm>
+
+    // アーティストリスト取得
+    fun getArtistList(): LiveData<List<Artist>>
 }

@@ -56,7 +56,7 @@ class UserUseCaseImp(
                         onSuccess(it.body())
                     }
                     .onFailure { onError(it) }
-            }},
+            } },
             { onError(it) }
         )
     }
@@ -86,7 +86,7 @@ class UserUseCaseImp(
             fireBaseRepository.signIn(email, password, {
                 GlobalScope.launch(Dispatchers.IO) {
                     runCatching { apiRepository.getUserByEmail(email) }
-                        .onSuccess{
+                        .onSuccess {
                             it.body()?.let { user ->
                                 PreferenceRepositoryImp.setEmail(user.email)
                                 PreferenceRepositoryImp.setName(user.name)
@@ -103,13 +103,11 @@ class UserUseCaseImp(
     }
 
     // ログアウト
-    override suspend fun signOut(onSuccess: () -> Unit, onError: () -> Unit) {
+    override suspend fun signOut() {
         withContext(Dispatchers.IO) {
-            fireBaseRepository.signOut({
-                PreferenceRepositoryImp.removeAll()
-                dataBaseRepository.deleteAll()
-                onSuccess()
-            }, { onError() })
+            fireBaseRepository.signOut()
+            PreferenceRepositoryImp.removeAll()
+            dataBaseRepository.deleteAll()
         }
     }
 

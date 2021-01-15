@@ -10,7 +10,7 @@ import com.example.musicdictionaryandroid.model.entity.ArtistsForm
  * 検索条件ダイアログUIロジック
  *
  */
-class SearchViewModel  : ViewModel() {
+class SearchViewModel : ViewModel() {
     var artistForm = ArtistsForm()
 
     // 絞り込みリスト

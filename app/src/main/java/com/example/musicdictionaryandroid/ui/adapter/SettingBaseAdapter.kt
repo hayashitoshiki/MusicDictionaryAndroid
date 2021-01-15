@@ -6,22 +6,15 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import com.example.musicdictionaryandroid.R
-import com.example.musicdictionaryandroid.model.entity.ArtistsForm
-import java.util.ArrayList
+import com.example.musicdictionaryandroid.model.entity.Artist
 
 /**
  * アーティスト一覧画面(アーティストリスト)用Adapter
  *
- * @constructor
- * TODO
- *
- * @param context
- * @param items
  */
-class SettingBaseAdapter(context: Context?, items: ArrayList<ArtistsForm>) : BaseAdapter() {
+class SettingBaseAdapter(context: Context?, private var items: List<Artist>) : BaseAdapter() {
 
-    private val inflater: LayoutInflater
-    private val items: ArrayList<ArtistsForm>
+    private val inflater: LayoutInflater = context?.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
     private lateinit var holder: ViewHolder
 
     internal class ViewHolder {
@@ -30,17 +23,12 @@ class SettingBaseAdapter(context: Context?, items: ArrayList<ArtistsForm>) : Bas
         var deleteButton: Button? = null
     }
 
-    init {
-        this.inflater = context?.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
-        this.items = items
-    }
-
     // Viewの生成
     override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
         var view = convertView
 
         if (view == null) {
-            view = inflater.inflate(R.layout.list_view_setting, null)
+            view = inflater.inflate(R.layout.list_view_setting, parent, false)
             holder = ViewHolder()
         } else {
             holder = view.tag as ViewHolder
@@ -53,24 +41,21 @@ class SettingBaseAdapter(context: Context?, items: ArrayList<ArtistsForm>) : Bas
 
         // 値代入
         holder.textView?.text = items[position].name
-
         // アーティスト削除ボタン
         holder.deleteButton!!.setOnClickListener {
-             (parent as ListView).performItemClick(view, position, R.id.delete_button.toLong())
+             (parent as ListView).performItemClick(it, position, R.id.delete_button.toLong())
         }
-
         // アーティスト編集ボタン
         holder.updateButton!!.setOnClickListener {
-            (parent as ListView).performItemClick(view, position, R.id.update_button.toLong())
+            (parent as ListView).performItemClick(it, position, R.id.update_button.toLong())
         }
 
         view!!.tag = holder
         return view
     }
 
-    // アーティスト名取得
-    fun getArtistName(position: Int): String {
-        return items[position].name
+    fun setData(items: List<Artist>) {
+        this.items = items
     }
 
     // ListViewの数

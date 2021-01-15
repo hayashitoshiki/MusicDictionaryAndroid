@@ -7,7 +7,7 @@ import com.example.musicdictionaryandroid.model.usecase.UserUseCase
 import com.example.musicdictionaryandroid.model.util.Status
 import kotlinx.coroutines.launch
 
-class SplashViewModel (private val userUseCase: UserUseCase) : ViewModel() {
+class SplashViewModel(private val userUseCase: UserUseCase) : ViewModel() {
 
     val status = MutableLiveData<Status<*>>()
 

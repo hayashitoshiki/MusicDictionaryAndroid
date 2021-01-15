@@ -10,11 +10,11 @@ import androidx.lifecycle.Observer
 import com.example.musicdictionaryandroid.R
 import com.example.musicdictionaryandroid.model.util.Status
 import com.example.musicdictionaryandroid.ui.MainActivity
+import kotlin.coroutines.CoroutineContext
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
 import org.koin.android.viewmodel.ext.android.viewModel
-import kotlin.coroutines.CoroutineContext
 
 /**
  * ログイン・新規登録画面 BaseActivity
@@ -38,7 +38,7 @@ class StartActivity : AppCompatActivity(), CoroutineScope {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_start)
-        Log.d(TAG,"onCreate")
+        Log.d(TAG, "onCreate")
 
         viewModel.status.observe(this, Observer { onStateChanged(it) })
         viewModel.firstCheck()

@@ -1,5 +1,6 @@
 package com.example.musicdictionaryandroid.model.repository
 
+import androidx.lifecycle.LiveData
 import com.example.musicdictionaryandroid.model.entity.Artist
 import com.example.musicdictionaryandroid.model.entity.ArtistsForm
 import com.example.musicdictionaryandroid.ui.MyApplication
@@ -27,8 +28,8 @@ class DataBaseRepositoryImp : DataBaseRepository {
     }
 
     // アーティスト削除
-    override fun deleteArtist(name: String) {
-        dao.delete(Artist(0, name, 0, 0, 0, 0))
+    override suspend fun deleteArtist(name: String) {
+        dao.deleteByName(name)
     }
 
     // 全アーティスト削除
@@ -37,7 +38,7 @@ class DataBaseRepositoryImp : DataBaseRepository {
     }
 
     // アーティスト全取得
-    override fun getArtistAll(): ArrayList<ArtistsForm> {
+    override suspend fun getArtistAll(): ArrayList<ArtistsForm> {
         val artistList = arrayListOf<ArtistsForm>()
         val artists = dao.getAll()
             artists.forEach {
@@ -59,5 +60,10 @@ class DataBaseRepositoryImp : DataBaseRepository {
     // アーティスト名一致取得
     override fun findByName(name: String): Artist {
         return dao.getArtistByName(name)
+    }
+
+    // アーティストリスト取得
+    override fun getArtistList(): LiveData<List<Artist>> {
+        return dao.getArtistList()
     }
 }

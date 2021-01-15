@@ -38,7 +38,7 @@ class ResultRecommendViewModel(
             is Result.Success -> {
                 val artist = ArtistsForm("おすすめ")
                 val arrayList = arrayListOf(artist)
-                result.data?.let{arrayList.addAll(it)}
+                result.data?.let { arrayList.addAll(it) }
                 status.postValue(Status.Success(arrayList)) }
             is Result.Error -> { status.postValue(Status.Failure(result.exception)) }
         }

@@ -23,7 +23,6 @@ import com.github.mikephil.charting.formatter.ValueFormatter
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.item_result_artist.view.*
 
-
 /**
  * アーティスト検索結果画面のリサイクルビュー
  *
@@ -78,7 +77,7 @@ class ResultAdapter(private val context: Context, private val artistList: ArrayL
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val artist =  artistList[position]
+        val artist = artistList[position]
         if (position == 0) {
             // タイトル設定
             holder.mainLayout.visibility = View.GONE
@@ -218,7 +217,7 @@ class ResultAdapter(private val context: Context, private val artistList: ArrayL
                             }
                             pieDataSet.colors = colorList
                             pieDataSet.valueTextSize = 15f
-                            pieDataSet.valueFormatter =  object: ValueFormatter() {
+                            pieDataSet.valueFormatter = object : ValueFormatter() {
                                 override fun getFormattedValue(value: Float): String {
                                     return "%.0f".format(value / totalValue * 100) + "%"
                                 }
@@ -256,8 +255,8 @@ class ResultAdapter(private val context: Context, private val artistList: ArrayL
                             }
                             pieDataSet.colors = colorList
                             pieDataSet.valueTextSize = 15f
-                            pieDataSet.valueFormatter =  object: ValueFormatter() {
-                                override fun getFormattedValue(value: Float): String{
+                            pieDataSet.valueFormatter = object : ValueFormatter() {
+                                override fun getFormattedValue(value: Float): String {
                                     return "%.0f".format(value / totalValue * 100) + "%"
                                 }
                             }
@@ -323,7 +322,6 @@ class ResultAdapter(private val context: Context, private val artistList: ArrayL
             } else {
                 holder.imageView.visibility = View.GONE
             }
-
         }
     }
 

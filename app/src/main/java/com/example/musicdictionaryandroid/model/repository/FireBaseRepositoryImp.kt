@@ -8,7 +8,7 @@ class FireBaseRepositoryImp : FireBaseRepository {
 
     @Suppress("JAVA_CLASS_ON_COMPANION")
     companion object {
-        private  val TAG = javaClass.name
+        private val TAG = javaClass.name
     }
 
     private val auth: FirebaseAuth = FirebaseAuth.getInstance()
@@ -48,15 +48,8 @@ class FireBaseRepositoryImp : FireBaseRepository {
     }
 
     // ログアウト
-    override fun signOut(onSuccess: () -> Unit, onError: () -> Unit) {
+    override fun signOut() {
         auth.signOut()
-        if (auth.currentUser == null) {
-            Log.d(TAG, "ログアウト作成成功：")
-            onSuccess()
-        } else {
-            Log.d(TAG, "ログアウト失敗")
-            onError()
-        }
     }
 
     // アカウント作成

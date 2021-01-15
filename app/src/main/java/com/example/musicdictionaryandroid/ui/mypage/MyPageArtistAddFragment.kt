@@ -1,5 +1,6 @@
 package com.example.musicdictionaryandroid.ui.mypage
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.os.Bundle
 import android.transition.ChangeBounds
@@ -23,8 +24,6 @@ import com.example.musicdictionaryandroid.databinding.FragmentMypageArtistAddBin
 import com.example.musicdictionaryandroid.model.entity.ArtistsForm
 import com.example.musicdictionaryandroid.model.util.Status
 import com.example.musicdictionaryandroid.ui.adapter.setSafeClickListener
-import kotlinx.android.synthetic.main.fragment_mypage_artist_add.*
-import kotlinx.android.synthetic.main.fragment_mypage_artist_add.view.*
 import org.koin.android.viewmodel.ext.android.viewModel
 
 /**
@@ -32,22 +31,19 @@ import org.koin.android.viewmodel.ext.android.viewModel
  */
 class MyPageArtistAddFragment : Fragment() {
 
+    companion object {
+        const val TAG = "MyPageArtistAddFragment"
+    }
+
+    private lateinit var binding: FragmentMypageArtistAddBinding
     private val args: MyPageArtistAddFragmentArgs by navArgs()
     private val viewModel: MyPageArtistAddViewModel by viewModel()
 
-    @Suppress("JAVA_CLASS_ON_COMPANION")
-    companion object {
-        val TAG = javaClass.name
-        @JvmStatic
-        fun newInstance(): MyPageArtistAddFragment {
-            return MyPageArtistAddFragment()
-        }
-    }
-
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        val root: FragmentMypageArtistAddBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_mypage_artist_add, container, false)
-        root.lifecycleOwner = viewLifecycleOwner
-        root.viewModel = viewModel
+    @SuppressLint("ClickableViewAccessibility")
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_mypage_artist_add, container, false)
+        binding.lifecycleOwner = viewLifecycleOwner
+        binding.viewModel = viewModel
 
         // アニメーション設定
         val anim1 = AnimationUtils.loadAnimation(requireContext(), R.anim.fade_in_offset_300_anim)
@@ -61,40 +57,40 @@ class MyPageArtistAddFragment : Fragment() {
         sharedElementEnterTransition = transition
         sharedElementReturnTransition = transition
         args.data?.let {
-            root.root.artist_name_title.startAnimation(anim1)
+            binding.artistNameTitle.startAnimation(anim1)
         } ?: run {
-            root.root.artist_name_edit.startAnimation(anim1)
+            binding.artistNameEdit.startAnimation(anim1)
         }
-        root.root.category_title1.startAnimation(anim1)
-        root.root.category_value1.startAnimation(anim1)
-        root.root.category_title2.startAnimation(anim1)
-        root.root.category_value2.startAnimation(anim2)
-        root.root.category_title3.startAnimation(anim2)
-        root.root.category_value3.startAnimation(anim2)
-        root.root.category_title4.startAnimation(anim3)
-        root.root.category_value4.startAnimation(anim3)
-        root.root.genre1_title.startAnimation(anim3)
-        root.root.genre1_value.startAnimation(anim3)
-        root.root.genre2_title.startAnimation(anim3)
-        root.root.genre2_value.startAnimation(anim3)
-        root.root.submit.startAnimation(anim3)
+        binding.categoryTitle1.startAnimation(anim1)
+        binding.categoryValue1.startAnimation(anim1)
+        binding.categoryTitle2.startAnimation(anim1)
+        binding.categoryValue2.startAnimation(anim2)
+        binding.categoryTitle3.startAnimation(anim2)
+        binding.categoryValue3.startAnimation(anim2)
+        binding.categoryTitle4.startAnimation(anim3)
+        binding.categoryValue4.startAnimation(anim3)
+        binding.genre1Title.startAnimation(anim3)
+        binding.genre1Value.startAnimation(anim3)
+        binding.genre2Title.startAnimation(anim3)
+        binding.genre2Value.startAnimation(anim3)
+        binding.submit.startAnimation(anim3)
 
         // editTextフォーカス制御
-        root.root.artist_name_edit.setOnFocusChangeListener { v, hasFocus ->
+        binding.artistNameEdit.setOnFocusChangeListener { v, hasFocus ->
             if (!hasFocus) {
                 val imm = activity?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
                 imm.hideSoftInputFromWindow(v.windowToken, InputMethodManager.HIDE_NOT_ALWAYS)
             }
         }
-        root.root.setOnTouchListener { v, event ->
-            root.root.requestFocus()
+        binding.root.setOnTouchListener { v, event ->
+            binding.root.requestFocus()
             v?.onTouchEvent(event) ?: true
         }
-        return root.root
+        return binding.root
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
         viewModel.init(
             resources.getStringArray(R.array.genre1_spinner_list),
@@ -112,7 +108,7 @@ class MyPageArtistAddFragment : Fragment() {
         viewModel.genre2ValueInt.observe(viewLifecycleOwner, Observer { viewModel.changeGenre2(it) })
 
         // 送信ボタン
-        submit.setSafeClickListener {
+        binding.submit.setSafeClickListener {
             viewModel.submit()
         }
     }
@@ -147,11 +143,11 @@ class MyPageArtistAddFragment : Fragment() {
 
     // プログレスバー表示
     private fun showProgressbar() {
-        progressBar.visibility = View.VISIBLE
+        binding.progressBar.visibility = View.VISIBLE
     }
 
     // プログレスバー非表示
     private fun hideProgressbar() {
-        progressBar.visibility = View.GONE
+        binding.progressBar.visibility = View.GONE
     }
 }

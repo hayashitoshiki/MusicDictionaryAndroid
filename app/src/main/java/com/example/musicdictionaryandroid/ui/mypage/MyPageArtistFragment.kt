@@ -11,38 +11,47 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.animation.AnimationUtils
 import android.widget.AdapterView
+import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
 import com.example.musicdictionaryandroid.R
+import com.example.musicdictionaryandroid.databinding.FragmentMypageArtistListBinding
+import com.example.musicdictionaryandroid.model.entity.Artist
 import com.example.musicdictionaryandroid.model.entity.ArtistsForm
 import com.example.musicdictionaryandroid.model.util.Status
 import com.example.musicdictionaryandroid.ui.adapter.SettingBaseAdapter
-import kotlinx.android.synthetic.main.fragment_mypage_artist_list.*
-import kotlinx.android.synthetic.main.fragment_mypage_artist_list.view.*
-import kotlinx.android.synthetic.main.fragment_result.no_data_text
-import kotlinx.android.synthetic.main.fragment_result.progressBar
+import kotlin.coroutines.CoroutineContext
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.launch
 import org.koin.android.viewmodel.ext.android.viewModel
 
 /**
  * 登録済みアーティスト一覧画面
  */
-class MyPageArtistFragment : Fragment() {
+class MyPageArtistFragment : Fragment(), CoroutineScope {
+
+    companion object {
+        const val TAG = "MyPageArtistFragment"
+    }
 
     private val viewModel: MyPageArtistViewModel by viewModel()
-
-    @Suppress("JAVA_CLASS_ON_COMPANION")
-    companion object {
-        val TAG = javaClass.name
-    }
+    private lateinit var binding: FragmentMypageArtistListBinding
+    private val job = SupervisorJob()
+    override val coroutineContext: CoroutineContext
+        get() = Dispatchers.Main + job
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        val root = inflater.inflate(R.layout.fragment_mypage_artist_list, container, false)
+    ): View {
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_mypage_artist_list, container, false)
+        binding.lifecycleOwner = viewLifecycleOwner
+        binding.viewModel = viewModel
 
         val anim = AnimationUtils.loadAnimation(requireContext(), R.anim.fade_in_offset_300_anim)
         val transition = TransitionSet().apply {
@@ -52,83 +61,88 @@ class MyPageArtistFragment : Fragment() {
         }
         sharedElementEnterTransition = transition
         sharedElementReturnTransition = transition
-        root.artist_add_button.startAnimation(anim)
-        root.artist_list.startAnimation(anim)
-
-        return root
+        binding.artistAddButton.startAnimation(anim)
+        binding.artistList.startAnimation(anim)
+        return binding.root
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         viewModel.status.observe(viewLifecycleOwner, Observer { onStateChanged(it) })
+        viewModel.artistList.observe(viewLifecycleOwner, Observer { viewUpDate(it) })
         viewModel.getArtistsByEmail()
 
-        artist_add_button.setOnClickListener {
+        // アーティスト追加ボタン
+        binding.artistAddButton.setOnClickListener {
             val action = MyPageArtistFragmentDirections.actionNavigationMypageArtistToMyPageArtistAddFragment(null)
             val extras = FragmentNavigatorExtras(it to "end_artist_add_view_transition")
             findNavController().navigate(action, extras)
         }
-
         // リストビューの各項目タップ
-        artist_list.onItemClickListener = AdapterView.OnItemClickListener { _, view, position, _ ->
-            if (viewModel.status.value is Status.Success) {
-                val artist = (viewModel.status.value as Status.Success).data?.get(position)!!
-                when (view.id) {
-                    R.id.update_button -> {
-                        val action =
-                            MyPageArtistFragmentDirections.actionNavigationMypageArtistToMyPageArtistAddFragment(
-                                artist
-                            )
-                        findNavController().navigate(action)
-                    }
-                    R.id.delete_button -> {
-                        viewModel.deleteArtist(artist)
-                    }
+        binding.artistList.adapter = SettingBaseAdapter(context, listOf())
+        binding.artistList.onItemClickListener = AdapterView.OnItemClickListener { _, v, position, _ ->
+            val artist = viewModel.artistList.value!![position]
+            when (v.id) {
+                R.id.update_button -> {
+                    val action =
+                        MyPageArtistFragmentDirections.actionNavigationMypageArtistToMyPageArtistAddFragment(
+                            artist
+                        )
+                    findNavController().navigate(action)
                 }
+                R.id.delete_button -> { viewModel.deleteArtist(artist) }
             }
         }
     }
 
+    override fun onDestroy() {
+        job.cancel()
+        super.onDestroy()
+    }
+
     // ステータス監視
-    private fun onStateChanged(state: Status<ArrayList<ArtistsForm>?>) = when (state) {
-        is Status.Loading -> { showProgressbar() }
-        is Status.Success -> {
-            hideProgressbar()
+    private fun onStateChanged(state: Status<List<ArtistsForm>?>) = when (state) {
+        is Status.Loading -> {
             hideNoDataView()
-            if (!state.data.isNullOrEmpty()) {
-                viewUpDate(state.data)
-            } else {
-                showNoDataView()
-            }
+            showProgressbar()
         }
+        is Status.Success -> { hideProgressbar() }
         is Status.Failure -> {
-            Log.i(TAG, "Failure:${state.throwable}")
+            Log.e(TAG, "Failure:${state.throwable}")
             hideProgressbar()
         }
     }
 
     // データ反映
-    private fun viewUpDate(data: ArrayList<ArtistsForm>) {
-        artist_list.adapter = SettingBaseAdapter(context, data)
+    private fun viewUpDate(data: List<Artist>) {
+        launch {
+            if (!data.isNullOrEmpty()) {
+                val adapter = binding.artistList.adapter as SettingBaseAdapter
+                adapter.setData(data)
+                adapter.notifyDataSetChanged()
+            } else {
+                showNoDataView()
+            }
+        }
     }
 
     // 一致データなし表示
     private fun showNoDataView() {
-        no_data_text.visibility = View.VISIBLE
+        binding.noDataText.visibility = View.VISIBLE
     }
 
     // 一致データなし非表示
     private fun hideNoDataView() {
-        no_data_text.visibility = View.INVISIBLE
+        binding.noDataText.visibility = View.INVISIBLE
     }
 
     // プログレスバー表示
     private fun showProgressbar() {
-        progressBar.visibility = View.VISIBLE
+        binding.progressBar.visibility = View.VISIBLE
     }
 
     // プログレスバー非表示
     private fun hideProgressbar() {
-        progressBar.visibility = View.GONE
+        binding.progressBar.visibility = View.GONE
     }
 }
