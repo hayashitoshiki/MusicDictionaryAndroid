@@ -11,7 +11,7 @@ import com.example.musicdictionaryandroid.model.util.Status
  */
 class StartViewModel(private val userUseCase: UserUseCase) : ViewModel() {
 
-    val status = MutableLiveData<Status<*>>()
+    val status = MutableLiveData<Status<Boolean>>()
 
     /**
      * ログインチェック
@@ -19,11 +19,10 @@ class StartViewModel(private val userUseCase: UserUseCase) : ViewModel() {
      */
     fun firstCheck() {
         status.value = Status.Loading
-        userUseCase.firstCheck({
-            status.value = Status.Success("")
-        }, {
-            // status.value = Status.Failure("")
-           // view.showErrorNetwork()
-        })
+        if (userUseCase.firstCheck()) {
+            status.postValue(Status.Success(true))
+        } else {
+            status.postValue(Status.Success(false))
+        }
     }
 }

@@ -1,5 +1,6 @@
 package com.example.musicdictionaryandroid.model.usecase
 
+import android.util.Log
 import com.example.musicdictionaryandroid.model.entity.CallBackData
 import com.example.musicdictionaryandroid.model.entity.User
 import com.example.musicdictionaryandroid.model.repository.*
@@ -7,10 +8,7 @@ import com.example.musicdictionaryandroid.model.util.Result
 import com.example.musicdictionaryandroid.model.util.UserInfoChangeListUtil
 import com.google.gson.Gson
 import java.lang.Exception
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
+import kotlinx.coroutines.*
 
 class UserUseCaseImp(
     private val apiRepository: ApiServerRepository,
@@ -41,7 +39,7 @@ class UserUseCaseImp(
     }
 
     // ユーザー登録
-    override suspend fun createUser(email: String, password: String, user: User, onSuccess: (result: CallBackData?) -> Unit, onError: (error: Throwable?) -> Unit) {
+    override suspend fun createUser(email: String, password: String, user: User, onSuccess: (result: CallBackData?) -> Unit, onError: (error: Throwable) -> Unit) {
         fireBaseRepository.signUp(email, password, {
             val json: String = Gson().toJson(user)
             GlobalScope.launch(Dispatchers.IO) {
@@ -57,7 +55,7 @@ class UserUseCaseImp(
                     }
                     .onFailure { onError(it) }
             } },
-            { onError(it) }
+            { onError(throw Exception("firebase アカウント作成失敗")) }
         )
     }
 
@@ -77,29 +75,34 @@ class UserUseCaseImp(
     }
 
     // ログイン状態チェック
-    override fun firstCheck(onSuccess: () -> Unit, onError: () -> Unit) {
-        fireBaseRepository.firstCheck({ onSuccess() }, { onError() })
+    override fun firstCheck(): Boolean {
+        return fireBaseRepository.firstCheck()
     }
 
     // ログイン
     override suspend fun signIn(email: String, password: String, onSuccess: () -> Unit, onError: (error: Throwable?) -> Unit) {
-            fireBaseRepository.signIn(email, password, {
-                GlobalScope.launch(Dispatchers.IO) {
-                    runCatching { apiRepository.getUserByEmail(email) }
-                        .onSuccess {
-                            it.body()?.let { user ->
-                                PreferenceRepositoryImp.setEmail(user.email)
-                                PreferenceRepositoryImp.setName(user.name)
-                                PreferenceRepositoryImp.setGender(user.gender)
-                                PreferenceRepositoryImp.setBirthday(UserInfoChangeListUtil.changeBirthdayString(user.birthday))
-                                PreferenceRepositoryImp.setArea(user.area)
-                                PreferenceRepositoryImp.setFavorite(user.artist_count)
-                            }
-                            onSuccess()
+        fireBaseRepository.signIn(email, password, {
+            runBlocking {
+                runCatching { apiRepository.getUserByEmail(email) }
+                    .onSuccess {
+                        Log.d("TAG", "API　ログイン成功")
+                        it.body()?.let { user ->
+                            PreferenceRepositoryImp.setEmail(user.email)
+                            PreferenceRepositoryImp.setName(user.name)
+                            PreferenceRepositoryImp.setGender(user.gender)
+                            PreferenceRepositoryImp.setBirthday(UserInfoChangeListUtil.changeBirthdayString(user.birthday))
+                            PreferenceRepositoryImp.setArea(user.area)
+                            PreferenceRepositoryImp.setFavorite(user.artist_count)
                         }
-                        .onFailure { onError(it.cause) }
-                }
-            }, { onError(it) })
+                        onSuccess()
+                    }
+                    .onFailure {
+                        Log.d("TAG", "API　ログイン失敗")
+                        fireBaseRepository.signOut()
+                        onError(it)
+                    }
+            }
+        }, { onError(throw Exception("firebase ログイン失敗")) })
     }
 
     // ログアウト

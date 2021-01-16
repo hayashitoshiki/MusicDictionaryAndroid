@@ -18,11 +18,11 @@ class SplashViewModel(private val userUseCase: UserUseCase) : ViewModel() {
     fun firstCheck() {
         viewModelScope.launch {
             status.value = Status.Loading
-            userUseCase.firstCheck({
+            if (userUseCase.firstCheck()) {
                 status.value = Status.Success("login")
-            }, {
+            } else {
                 status.value = Status.Success("logout")
-            })
+            }
         }
     }
 }

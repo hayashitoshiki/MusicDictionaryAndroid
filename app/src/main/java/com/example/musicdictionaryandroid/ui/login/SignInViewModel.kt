@@ -13,43 +13,33 @@ class SignInViewModel(
     private val userUseCase: UserUseCase
 ) : ViewModel() {
 
-    val status = MutableLiveData<Status<String?>>()
+    val status = MutableLiveData<Status<Boolean>>()
     val emailText = MutableLiveData<String>("")
     val passwordText = MutableLiveData<String>("")
-    private val isButton = MediatorLiveData<Boolean>()
-    val isEnableSubmitButton: LiveData<Boolean> = isButton
+    private val _isEnableSubmitButton = MediatorLiveData<Boolean>()
+    val isEnableSubmitButton: LiveData<Boolean> = _isEnableSubmitButton
 
     /**
      * ボタンバリデート
      */
     init {
-        isButton.addSource(emailText) { validateSubmit() }
-        isButton.addSource(passwordText) { validateSubmit() }
+        _isEnableSubmitButton.addSource(emailText) { validateSubmit() }
+        _isEnableSubmitButton.addSource(passwordText) { validateSubmit() }
     }
 
     // バリデート判定
     private fun validateSubmit() {
-        isButton.value = validateEmail() && validatePassword()
+        _isEnableSubmitButton.value = validateEmail() && validatePassword()
     }
 
     // email入力欄バリデート
     private fun validateEmail(): Boolean {
-        emailText.value?.let {
-            if (it.length > 5) {
-                return true
-            }
-        }
-        return false
+        return emailText.value != null && emailText.value!!.length > 5
     }
 
     // password入力欄バリデート
     private fun validatePassword(): Boolean {
-        passwordText.value?.let {
-            if (it.length > 5) {
-                return true
-            }
-        }
-        return false
+        return passwordText.value != null && passwordText.value!!.length > 5
     }
 
     /**
@@ -58,8 +48,9 @@ class SignInViewModel(
     fun signIn(): Job = viewModelScope.launch {
         status.value = Status.Loading
         userUseCase.signIn(emailText.value!!, passwordText.value!!,
-            { status.postValue(Status.Success("success")) },
-            { status.postValue(Status.Failure(it!!)) }
+            { status.postValue(Status.Success(true)) },
+            { if (it != null) status.postValue(Status.Failure(it))
+            else status.postValue(Status.Success(false)) }
         )
     }
 }

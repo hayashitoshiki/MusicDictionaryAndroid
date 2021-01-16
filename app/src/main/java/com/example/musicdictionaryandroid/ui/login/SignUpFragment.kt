@@ -13,7 +13,6 @@ import androidx.lifecycle.Observer
 import com.example.musicdictionaryandroid.R
 import com.example.musicdictionaryandroid.databinding.FragmentSignUpBinding
 import com.example.musicdictionaryandroid.model.util.Status
-import kotlinx.android.synthetic.main.fragment_sign_up.view.*
 import org.koin.android.viewmodel.ext.android.viewModel
 
 /**
@@ -21,42 +20,39 @@ import org.koin.android.viewmodel.ext.android.viewModel
  */
 class SignUpFragment : Fragment() {
 
-    private val viewModel: SignUpViewModel by viewModel()
-
-    @Suppress("JAVA_CLASS_ON_COMPANION")
     companion object {
-        val TAG = javaClass.name
+        const val TAG = "SignUpFragment"
 
-        @JvmStatic
         fun newInstance(): SignUpFragment {
-            val fragment = SignUpFragment()
-            return fragment
+            return SignUpFragment()
         }
     }
+
+    private val viewModel: SignUpViewModel by viewModel()
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         val binding: FragmentSignUpBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_sign_up, container, false)
-        binding.viewModel = viewModel
         binding.lifecycleOwner = viewLifecycleOwner
+        binding.viewModel = viewModel
 
         // editTextフォーカス制御
-        binding.root.email_edit_text.setOnFocusChangeListener { v, hasFocus ->
+        binding.emailEditText.setOnFocusChangeListener { v, hasFocus ->
             if (!hasFocus) {
                 val imm = activity?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
                 imm.hideSoftInputFromWindow(v.windowToken, InputMethodManager.HIDE_NOT_ALWAYS)
             }
         }
-        binding.root.password_edit_text.setOnFocusChangeListener { v, hasFocus ->
+        binding.passwordEditText.setOnFocusChangeListener { v, hasFocus ->
             if (!hasFocus) {
                 val imm = activity?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
                 imm.hideSoftInputFromWindow(v.windowToken, InputMethodManager.HIDE_NOT_ALWAYS)
             }
         }
-        binding.root.name_edit_text.setOnFocusChangeListener { v, hasFocus ->
+        binding.nameEditText.setOnFocusChangeListener { v, hasFocus ->
             if (!hasFocus) {
                 val imm = activity?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
                 imm.hideSoftInputFromWindow(v.windowToken, InputMethodManager.HIDE_NOT_ALWAYS)
@@ -69,22 +65,15 @@ class SignUpFragment : Fragment() {
         return binding.root
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         viewModel.status.observe(viewLifecycleOwner, Observer { onStateChanged(it) })
     }
 
     // ステータス監視
     private fun onStateChanged(state: Status<String?>) = when (state) {
         is Status.Loading -> {}
-        is Status.Success -> {
-            state.data?.let {
-                (activity as StartActivity).startApp()
-             } ?: run {
-                (activity as StartActivity).showErrorEmailPassword()
-            }
-        }
+        is Status.Success -> { (activity as StartActivity).startApp() }
         is Status.Failure -> {
             Log.i(TAG, "Failure:${state.throwable}")
             (activity as StartActivity).showErrorEmailPassword()

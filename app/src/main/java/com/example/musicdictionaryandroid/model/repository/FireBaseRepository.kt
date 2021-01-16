@@ -10,10 +10,8 @@ interface FireBaseRepository {
     /**
      * ログイン状態チェック
      *
-     * @param onSuccess　成功
-     * @param onError　失敗
      */
-    fun firstCheck(onSuccess: () -> Unit, onError: () -> Unit)
+    fun firstCheck(): Boolean
     /**
      * ログイン
      *
@@ -22,11 +20,10 @@ interface FireBaseRepository {
      * @param onSuccess 成功
      * @param onError 失敗
      */
-    fun signIn(email: String, password: String, onSuccess: () -> Unit, onError: (error: Exception?) -> Unit)
+    suspend fun signIn(email: String, password: String, onSuccess: () -> Unit, onError: (error: Exception?) -> Unit)
     /**
      * ログアウト
      *
-
      */
     fun signOut()
     /**

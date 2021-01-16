@@ -10,30 +10,21 @@ import androidx.lifecycle.Observer
 import com.example.musicdictionaryandroid.R
 import com.example.musicdictionaryandroid.model.util.Status
 import com.example.musicdictionaryandroid.ui.MainActivity
-import kotlin.coroutines.CoroutineContext
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.SupervisorJob
 import org.koin.android.viewmodel.ext.android.viewModel
 
 /**
  * ログイン・新規登録画面 BaseActivity
  */
-class StartActivity : AppCompatActivity(), CoroutineScope {
+class StartActivity : AppCompatActivity() {
+
+    companion object {
+        const val TAG = "StartActivity"
+    }
 
     private val viewModel: StartViewModel by viewModel()
 
     private lateinit var signInView: SignInFragment
     private lateinit var signUpView: SignUpFragment
-
-    private val job = SupervisorJob()
-    override val coroutineContext: CoroutineContext
-        get() = Dispatchers.Main + job
-
-    companion object {
-        @Suppress("JAVA_CLASS_ON_COMPANION")
-        val TAG = javaClass.name
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -51,16 +42,17 @@ class StartActivity : AppCompatActivity(), CoroutineScope {
                 .commit()
     }
 
-    override fun onDestroy() {
-        job.cancel()
-        super.onDestroy()
-    }
-
     // ステータス監視
-    private fun onStateChanged(state: Status<*>) = when (state) {
-        is Status.Loading -> { }
-        is Status.Success -> { startApp() }
-        is Status.Failure -> { }
+    private fun onStateChanged(state: Status<Boolean>) {
+        when (state) {
+            is Status.Loading -> { }
+            is Status.Success -> {
+                if (state.data) {
+                    startApp()
+                }
+            }
+            is Status.Failure -> { }
+        }
     }
 
     // ログイン切り替えボタン
@@ -85,6 +77,7 @@ class StartActivity : AppCompatActivity(), CoroutineScope {
         startActivity(intent)
         finish()
     }
+
     // 入力エラーダイアログ
     fun showErrorEmailPassword() {
         Toast.makeText(applicationContext, getString(R.string.error_email_password), Toast.LENGTH_LONG).show()

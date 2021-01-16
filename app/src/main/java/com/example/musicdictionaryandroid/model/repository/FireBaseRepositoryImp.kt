@@ -19,16 +19,12 @@ class FireBaseRepositoryImp : FireBaseRepository {
     }
 
     // 自動ログイン認証
-    override fun firstCheck(onSuccess: () -> Unit, onError: () -> Unit) {
-        if (auth.currentUser != null) {
-            onSuccess()
-        } else {
-            onError()
-        }
+    override fun firstCheck(): Boolean {
+        return auth.currentUser != null
     }
 
     // ログイン機能
-    override fun signIn(email: String, password: String, onSuccess: () -> Unit, onError: (error: Exception?) -> Unit) {
+    override suspend fun signIn(email: String, password: String, onSuccess: () -> Unit, onError: (error: Exception?) -> Unit) {
         auth.signInWithEmailAndPassword(email, password)
             .addOnCompleteListener { task ->
                 when {

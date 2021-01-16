@@ -24,84 +24,54 @@ class SignUpViewModel(
     val genderInt = MutableLiveData<Int>(0)
     val areaSelectedPosition = MutableLiveData<Int>(0)
     val birthdaySelectedPosition = MutableLiveData<Int>(0)
-    private val isButton = MediatorLiveData<Boolean>()
-    val isEnableSubmitButton: LiveData<Boolean> = isButton
+    private val _isEnableSubmitButton = MediatorLiveData<Boolean>()
+    val isEnableSubmitButton: LiveData<Boolean> = _isEnableSubmitButton
 
     /**
      * バリデート処理
      */
     init {
-        isButton.addSource(emailText) { validateSubmit() }
-        isButton.addSource(passwordText) { validateSubmit() }
-        isButton.addSource(nameText) { validateSubmit() }
-        isButton.addSource(genderInt) { validateSubmit() }
-        isButton.addSource(areaSelectedPosition) { validateSubmit() }
-        isButton.addSource(birthdaySelectedPosition) { validateSubmit() }
+        _isEnableSubmitButton.addSource(emailText) { validateSubmit() }
+        _isEnableSubmitButton.addSource(passwordText) { validateSubmit() }
+        _isEnableSubmitButton.addSource(nameText) { validateSubmit() }
+        _isEnableSubmitButton.addSource(genderInt) { validateSubmit() }
+        _isEnableSubmitButton.addSource(areaSelectedPosition) { validateSubmit() }
+        _isEnableSubmitButton.addSource(birthdaySelectedPosition) { validateSubmit() }
     }
 
     // ボタンのバリデート
     private fun validateSubmit() {
-        isButton.value = validateEmail() && validatePassword() && validateName() && validateGender() && validateArea() && validateBirthday()
+        _isEnableSubmitButton.value = validateEmail() && validatePassword() && validateName() && validateGender() && validateArea() && validateBirthday()
     }
 
     // email入力欄
     private fun validateEmail(): Boolean {
-        emailText.value?.let {
-            if (it.length > 5) {
-                return true
-            }
-        }
-        return false
+        return emailText.value != null && emailText.value!!.length > 5
     }
 
     // password入力欄
     private fun validatePassword(): Boolean {
-        passwordText.value?.let {
-            if (it.length > 5) {
-                return true
-            }
-        }
-        return false
+        return passwordText.value != null && passwordText.value!!.length > 5
     }
 
     // 名前入力欄
     private fun validateName(): Boolean {
-        nameText.value?.let {
-            if (it.length > 5) {
-                return true
-            }
-        }
-        return false
+        return nameText.value != null && nameText.value!!.length > 5
     }
 
     // 性別入力欄
     private fun validateGender(): Boolean {
-        genderInt.value?.let {
-            if (it != 0) {
-                return true
-            }
-        }
-        return false
+        return genderInt.value != null && genderInt.value!! != 0
     }
 
     // 地域入力欄
     private fun validateArea(): Boolean {
-        areaSelectedPosition.value?.let {
-            if (it != 0) {
-                return true
-            }
-        }
-        return false
+        return areaSelectedPosition.value != null && areaSelectedPosition.value!! != 0
     }
 
     // 年齢入力欄
     private fun validateBirthday(): Boolean {
-        birthdaySelectedPosition.value?.let {
-            if (it != 0) {
-                return true
-            }
-        }
-        return false
+        return birthdaySelectedPosition.value != null && birthdaySelectedPosition.value!! != 0
     }
 
     /**
@@ -113,7 +83,7 @@ class SignUpViewModel(
         val user = User(emailText.value!!, nameText.value!!, genderInt.value!!, areaSelectedPosition.value!!, birthday, 0)
         userUseCase.createUser(emailText.value!!, passwordText.value!!, user,
             { status.postValue(Status.Success(it!!.status)) },
-            { it?.let { status.postValue(Status.Failure(it)) } }
+            { status.postValue(Status.Failure(it)) }
         )
     }
 

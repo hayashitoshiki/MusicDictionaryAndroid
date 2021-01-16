@@ -5,6 +5,8 @@ import com.example.musicdictionaryandroid.model.entity.CallBackData
 import com.example.musicdictionaryandroid.model.entity.User
 import com.example.musicdictionaryandroid.model.net.Provider
 import java.util.*
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import retrofit2.Response
 
 class ApiServerRepositoryImp : ApiServerRepository {
@@ -45,8 +47,10 @@ class ApiServerRepositoryImp : ApiServerRepository {
     }
 
     // ユーザー取得
-    override fun getUserByEmail(email: String): Response<User> {
-        return Provider.api().getUserByEmail(email).execute()
+    override suspend fun getUserByEmail(email: String): Response<User> {
+        return withContext(Dispatchers.IO) {
+            return@withContext Provider.api().getUserByEmail(email).execute()
+        }
     }
     // ユーザー登録
     override fun createUser(user: String): Response<CallBackData> {

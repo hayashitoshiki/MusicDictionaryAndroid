@@ -77,7 +77,7 @@ interface ApiServerRepository {
      * @param email ユーザーのEmail
      * @return 登録したユーザー情報取得
      */
-    fun getUserByEmail(email: String): Response<User>
+    suspend fun getUserByEmail(email: String): Response<User>
     /**
      * ユーザー登録
      *
