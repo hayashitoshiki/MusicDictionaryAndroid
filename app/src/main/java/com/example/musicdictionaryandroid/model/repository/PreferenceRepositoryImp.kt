@@ -6,7 +6,7 @@ import com.example.musicdictionaryandroid.ui.MyApplication
 /**
  * SharedPreferences管理
  */
-object PreferenceRepositoryImp {
+object PreferenceRepositoryImp : PreferenceRepository {
 
     private var context: Context = MyApplication.shered.applicationContext
 
@@ -25,55 +25,55 @@ object PreferenceRepositoryImp {
         FAVORITE
     }
 
-    fun setEmail(value: String) {
+    override fun setEmail(value: String) {
         setString(Key.EMAIL, value)
     }
 
-    fun getEmail(): String? {
+    override fun getEmail(): String? {
         return getString(Key.EMAIL)
     }
 
-    fun setName(value: String) {
+    override fun setName(value: String) {
         setString(Key.NAME, value)
     }
 
-    fun getName(): String? {
+    override fun getName(): String? {
         return getString(Key.NAME)
     }
 
-    fun setGender(value: Int) {
+    override fun setGender(value: Int) {
         setInt(Key.GENDER, value)
     }
 
-    fun getGender(): Int {
+    override fun getGender(): Int {
         return getInt(Key.GENDER)
     }
 
-    fun setArea(value: Int) {
+    override fun setArea(value: Int) {
         setInt(Key.AREA, value)
     }
 
-    fun getArea(): Int {
+    override fun getArea(): Int {
         return getInt(Key.AREA)
     }
 
-    fun setBirthday(value: Int) {
+    override fun setBirthday(value: Int) {
         setInt(Key.BIRTHDAY, value)
     }
 
-    fun getBirthday(): Int {
+    override fun getBirthday(): Int {
         return getInt(Key.BIRTHDAY)
     }
 
-    fun setFavorite(value: Int) {
+    override fun setFavorite(value: Int) {
         setInt(Key.FAVORITE, value)
     }
 
-    fun getFavorite(): Int {
+    override fun getFavorite(): Int {
         return getInt(Key.FAVORITE)
     }
 
-    fun removeAll() {
+    override fun removeAll() {
         remove(Key.EMAIL)
         remove(Key.NAME)
         remove(Key.BIRTHDAY)

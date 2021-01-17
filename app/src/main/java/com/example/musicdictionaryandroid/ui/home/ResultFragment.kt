@@ -6,16 +6,17 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.animation.AnimationUtils
+import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.example.musicdictionaryandroid.R
+import com.example.musicdictionaryandroid.databinding.FragmentResultBinding
 import com.example.musicdictionaryandroid.model.entity.ArtistsForm
 import com.example.musicdictionaryandroid.model.util.Status
 import com.example.musicdictionaryandroid.ui.adapter.DialogFragmentCallbackInterface
 import com.example.musicdictionaryandroid.ui.adapter.ResultAdapter
-import kotlinx.android.synthetic.main.fragment_result.*
 import org.koin.android.viewmodel.ext.android.viewModel
 
 /**
@@ -24,20 +25,23 @@ import org.koin.android.viewmodel.ext.android.viewModel
  */
 class ResultFragment : Fragment(), DialogFragmentCallbackInterface {
 
+    companion object {
+        private const val TAG = "ResultFragment"
+    }
+
     private val args: ResultFragmentArgs by navArgs()
     private val viewModel: ResultViewModel by viewModel()
-
-    @Suppress("JAVA_CLASS_ON_COMPANION")
-    companion object {
-        val TAG = javaClass.name
-    }
+    private lateinit var binding: FragmentResultBinding
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.fragment_result, container, false)
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_result, container, false)
+        binding.lifecycleOwner = viewLifecycleOwner
+        binding.viewModel = viewModel
+        return binding.root
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         viewModel.status.observe(viewLifecycleOwner, Observer { onStateChanged(it) })
 
         if (savedInstanceState != null) {
@@ -72,9 +76,9 @@ class ResultFragment : Fragment(), DialogFragmentCallbackInterface {
         val adapter = ResultAdapter(requireContext(), data)
         val layoutManager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
         val controller = AnimationUtils.loadLayoutAnimation(context, R.anim.layout_animation_fall_down)
-        recyclerView.layoutAnimation = controller
-        recyclerView.adapter = adapter
-        recyclerView.layoutManager = layoutManager
+        binding.recyclerView.layoutAnimation = controller
+        binding.recyclerView.adapter = adapter
+        binding.recyclerView.layoutManager = layoutManager
         adapter.setOnItemClickListener(View.OnClickListener { _ ->
             val dialogFragment = SearchDialogFragment()
             val bundle = Bundle()
@@ -87,22 +91,22 @@ class ResultFragment : Fragment(), DialogFragmentCallbackInterface {
 
     // 一致データなし表示
     private fun showNoDataView() {
-        no_data_text.visibility = View.VISIBLE
+        binding.noDataText.visibility = View.VISIBLE
     }
 
     // 一致データなし非表示
     private fun hideNoDataView() {
-        no_data_text.visibility = View.INVISIBLE
+        binding.noDataText.visibility = View.INVISIBLE
     }
 
     // プログレスバー表示
     private fun showProgressbar() {
-        progressBar.visibility = View.VISIBLE
+        binding.progressBar.visibility = View.VISIBLE
     }
 
     // プログレスバー非表示
     private fun hideProgressbar() {
-        progressBar.visibility = View.GONE
+        binding.progressBar.visibility = View.GONE
     }
 
     override fun onSaveInstanceState(outState: Bundle) {

@@ -19,8 +19,6 @@ import com.example.musicdictionaryandroid.databinding.FragmentCategorySearchBind
 import com.example.musicdictionaryandroid.ui.transition.FabTransform
 import com.example.musicdictionaryandroid.ui.transition.HOME_CATEGORY_BUTTON
 import kotlin.coroutines.CoroutineContext
-import kotlinx.android.synthetic.main.fragment_category_search.*
-import kotlinx.android.synthetic.main.fragment_category_search.view.*
 import kotlinx.coroutines.*
 
 /**
@@ -33,10 +31,9 @@ class CategorySearchFragment : Fragment(), CoroutineScope {
         private var state = 0
     }
 
+    private lateinit var binding: FragmentCategorySearchBinding
     private val job = SupervisorJob()
-    override val coroutineContext: CoroutineContext
-        get() = Dispatchers.Main + job
-
+    override val coroutineContext: CoroutineContext = Dispatchers.Main + job
     private val viewModel: CategorySearchViewModel by lazy {
         ViewModelProvider.NewInstanceFactory().create(CategorySearchViewModel::class.java)
     }
@@ -46,6 +43,10 @@ class CategorySearchFragment : Fragment(), CoroutineScope {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_category_search, container, false)
+        binding.lifecycleOwner = viewLifecycleOwner
+        binding.viewModel = viewModel
+
         val transition = TransitionSet().apply {
             addTransition(ChangeBounds())
             addTransition(ChangeTransform())
@@ -55,20 +56,16 @@ class CategorySearchFragment : Fragment(), CoroutineScope {
         sharedElementEnterTransition = trans
         sharedElementReturnTransition = transition
 
-        val binding: FragmentCategorySearchBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_category_search, container, false)
-        binding.viewModel = viewModel
-        binding.lifecycleOwner = viewLifecycleOwner
-
         if (state == 1) {
             val anim = AnimationUtils.loadAnimation(requireContext(), R.anim.slide_in_bottom)
-            binding.root.category_card.startAnimation(anim)
+            binding.categoryCard.startAnimation(anim)
             state = 0
         }
         return binding.root
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
         viewModel.init(
             resources.getStringArray(R.array.genre1_spinner_list),
@@ -83,10 +80,10 @@ class CategorySearchFragment : Fragment(), CoroutineScope {
         viewModel.genre2ValueInt.observe(viewLifecycleOwner, Observer { viewModel.changeGenre2(it) })
 
         // 検索ボタン
-        submit.setOnClickListener {
+        binding.submit.setOnClickListener {
             val anim1 = AnimationUtils.loadAnimation(requireContext(), R.anim.slide_out_bottom)
-            category_card.startAnimation(anim1)
-            category_card.visibility = View.GONE
+            binding.categoryCard.startAnimation(anim1)
+            binding.categoryCard.visibility = View.GONE
             launch {
                 delay(resources.getInteger(R.integer.fade_out_time).toLong())
                 val action = CategorySearchFragmentDirections.actionCategorySearchToNavigationResult(viewModel.artistForm)

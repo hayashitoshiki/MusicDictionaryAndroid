@@ -23,9 +23,7 @@ class ResultRecommendViewModel(
 ) : ViewModel() {
 
     val status = MutableLiveData<Status<ArrayList<ArtistsForm>?>>()
-    private var email: String = ""
-
-    init { email = userUseCase.getEmail() }
+    private val email: String = userUseCase.getEmail()
 
     /**
      * アーティスト検索

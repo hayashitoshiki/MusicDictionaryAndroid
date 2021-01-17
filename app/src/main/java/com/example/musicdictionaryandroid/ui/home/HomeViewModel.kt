@@ -2,7 +2,7 @@ package com.example.musicdictionaryandroid.ui.home
 
 import androidx.lifecycle.*
 import com.example.musicdictionaryandroid.model.entity.ArtistsForm
-import com.example.musicdictionaryandroid.model.repository.PreferenceRepositoryImp
+import com.example.musicdictionaryandroid.model.repository.PreferenceRepository
 
 /**
  * HOME画面_UIロジック
@@ -10,45 +10,45 @@ import com.example.musicdictionaryandroid.model.repository.PreferenceRepositoryI
  * @property preferenceRepository
  */
 class HomeViewModel(
-    private val preferenceRepository: PreferenceRepositoryImp
+    private val preferenceRepository: PreferenceRepository
 ) : ViewModel() {
 
     val artistsFrom = ArtistsForm()
-    val searchText = MutableLiveData<String>("")
+    val searchText = MutableLiveData("")
 
-    private val isSearchBar = MutableLiveData<Boolean>(true)
-    val mIsSearchBar: LiveData<Boolean> = isSearchBar
-    private val isCategoryButton = MutableLiveData<Boolean>(true)
-    val mIsCategoryButton: LiveData<Boolean> = isCategoryButton
-    private val isDetailsButton = MutableLiveData<Boolean>(true)
-    val mIsDetailsButton: LiveData<Boolean> = isDetailsButton
-    private val isSoaringButton = MutableLiveData<Boolean>(true)
-    val mIsSoaringButton: LiveData<Boolean> = isSoaringButton
-    private val isRecommendButton = MutableLiveData<Boolean>(true)
-    val mIsRecommendButton: LiveData<Boolean> = isRecommendButton
-    private val isEnableSubmitButton = MutableLiveData<Boolean>(false)
-    val mIsEnableSubmitButton: LiveData<Boolean> = isEnableSubmitButton
+    private val _isEnableSearchBar = MutableLiveData(true)
+    val isEnableSearchBar: LiveData<Boolean> = _isEnableSearchBar
+    private val _isEnableCategoryButton = MutableLiveData(true)
+    val isEnableCategoryButton: LiveData<Boolean> = _isEnableCategoryButton
+    private val _isEnableDetailsButton = MutableLiveData(true)
+    val isEnableDetailsButton: LiveData<Boolean> = _isEnableDetailsButton
+    private val _isEnableSoaringButton = MutableLiveData(true)
+    val isEnableSoaringButton: LiveData<Boolean> = _isEnableSoaringButton
+    private val _isEnableRecommendButton = MutableLiveData(true)
+    val isEnableRecommendButton: LiveData<Boolean> = _isEnableRecommendButton
+    private val _isEnableSubmitButton = MutableLiveData(false)
+    val isEnableSubmitButton: LiveData<Boolean> = _isEnableSubmitButton
 
     /**
      * タップ可能ボタンのバリデート
      */
-    fun set() {
+    init {
         val count = preferenceRepository.getFavorite()
 
         if (count == 0) {
-            isSearchBar.value = false
+            _isEnableSearchBar.value = false
         }
         if (count < 3) {
-            isCategoryButton.value = false
+            _isEnableCategoryButton.value = false
         }
         if (count < 5) {
-            isDetailsButton.value = false
+            _isEnableDetailsButton.value = false
         }
         if (count < 7) {
-            isSoaringButton.value = false
+            _isEnableSoaringButton.value = false
         }
         if (count < 10) {
-            isRecommendButton.value = false
+            _isEnableRecommendButton.value = false
         }
     }
 
@@ -58,7 +58,7 @@ class HomeViewModel(
      * @param count 検索バーの入力文字数
      */
     fun changeSubmitButton(count: Int) {
-        isEnableSubmitButton.value = count != 0
+        _isEnableSubmitButton.value = count != 0
         artistsFrom.name = searchText.value.toString()
     }
 }

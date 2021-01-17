@@ -12,6 +12,7 @@ import android.widget.*
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
 import com.example.musicdictionaryandroid.R
+import com.example.musicdictionaryandroid.databinding.ItemResultArtistBinding
 import com.example.musicdictionaryandroid.model.entity.ArtistsForm
 import com.example.musicdictionaryandroid.model.util.UserInfoChangeListUtil
 import com.example.musicdictionaryandroid.ui.transition.ResizeAnimation
@@ -21,7 +22,6 @@ import com.github.mikephil.charting.data.PieDataSet
 import com.github.mikephil.charting.data.PieEntry
 import com.github.mikephil.charting.formatter.ValueFormatter
 import com.squareup.picasso.Picasso
-import kotlinx.android.synthetic.main.item_result_artist.view.*
 
 /**
  * アーティスト検索結果画面のリサイクルビュー
@@ -39,36 +39,36 @@ class ResultAdapter(private val context: Context, private val artistList: ArrayL
     private val anim2 = AnimationUtils.loadAnimation(context, R.anim.fade_in_offset_300_anim)
 
     // 参照するviewの定義
-    open class ViewHolder(v: View) : RecyclerView.ViewHolder(v) {
-        val mainLayout: ConstraintLayout = v.main_content
+    open class ViewHolder(v: ItemResultArtistBinding) : RecyclerView.ViewHolder(v.root) {
+        val mainLayout: ConstraintLayout = v.mainContent
         val nameTextView: TextView = v.arthist
         val genderTextView: TextView = v.gender
-        val voiceRatingBar: RatingBar = v.voice_ratingBar
-        val lengthRatingBar: RatingBar = v.lenght_ratingBar
-        val lyricsRatingBar: RatingBar = v.lyric_ratingBar
+        val voiceRatingBar: RatingBar = v.voiceRatingBar
+        val lengthRatingBar: RatingBar = v.lenghtRatingBar
+        val lyricsRatingBar: RatingBar = v.lyricRatingBar
         val genre1TextView: TextView = v.genre1
         val genre2TextView: TextView = v.genre2
         val imageView: ImageView = v.imageView
         val playButton: ImageButton = v.play
         val webView: WebView = v.webview
-        val titleLayout: ConstraintLayout = v.title_context
+        val titleLayout: ConstraintLayout = v.titleContext
         val titleTextView: TextView = v.title
-        val searchNameTextView: TextView = v.title_name
-        val searchGenderTextView: TextView = v.title_gender
-        val searchGenre1TextView: TextView = v.title_genre1
-        val searchGenre2TextView: TextView = v.title_genre2
-        val searchLyricTextView: TextView = v.title_lyric
-        val searchLengthTextView: TextView = v.title_length
-        val searchVoiceTextView: TextView = v.title_voice
-        val searchButton: Button = v.search_buttn
-        val detailButton: Button = v.detail_button
-        val detailLayout: LinearLayout = v.details_profile
+        val searchNameTextView: TextView = v.titleName
+        val searchGenderTextView: TextView = v.titleGender
+        val searchGenre1TextView: TextView = v.titleGenre1
+        val searchGenre2TextView: TextView = v.titleGenre2
+        val searchLyricTextView: TextView = v.titleLyric
+        val searchLengthTextView: TextView = v.titleLength
+        val searchVoiceTextView: TextView = v.titleVoice
+        val searchButton: Button = v.searchButtn
+        val detailButton: Button = v.detailButton
+        val detailLayout: LinearLayout = v.detailsProfile
         val pieChart: PieChart = v.pieChartExample
-        val genderChart: PieChart = v.gender_pie_chart
+        val genderChart: PieChart = v.genderPieChart
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val inflater = LayoutInflater.from(parent.context).inflate(R.layout.item_result_artist, parent, false)
+        val inflater = ItemResultArtistBinding.inflate(LayoutInflater.from(context), parent, false)
         return ViewHolder(inflater)
     }
 

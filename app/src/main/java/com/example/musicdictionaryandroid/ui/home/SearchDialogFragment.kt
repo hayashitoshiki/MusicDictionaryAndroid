@@ -15,8 +15,6 @@ import com.example.musicdictionaryandroid.databinding.DialogSearchBinding
 import com.example.musicdictionaryandroid.model.entity.ArtistsForm
 import com.example.musicdictionaryandroid.ui.adapter.DialogFragmentCallbackInterface
 import com.example.musicdictionaryandroid.ui.adapter.setSafeClickListener
-import kotlinx.android.synthetic.main.dialog_search.*
-import kotlinx.android.synthetic.main.fragment_mypage_artist_add.view.*
 
 /**
  * 検索条件ダイアログ
@@ -26,26 +24,15 @@ class SearchDialogFragment : DialogFragment() {
 
     private var mListener: DialogFragmentCallbackInterface? = null
 
+    private lateinit var binding: DialogSearchBinding
     private val viewModel: SearchViewModel by lazy {
         ViewModelProvider.NewInstanceFactory().create(SearchViewModel::class.java)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        val binding = DataBindingUtil.inflate<DialogSearchBinding>(inflater, R.layout.dialog_search, container, false)
-        binding.viewModel = viewModel
+        binding = DataBindingUtil.inflate(inflater, R.layout.dialog_search, container, false)
         binding.lifecycleOwner = viewLifecycleOwner
-
-        // editTextフォーカス制御
-        binding.root.artist_name_edit.setOnFocusChangeListener { v, hasFocus ->
-            if (!hasFocus) {
-                val imm = activity?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-                imm.hideSoftInputFromWindow(v.windowToken, InputMethodManager.HIDE_NOT_ALWAYS)
-            }
-        }
-        binding.root.setOnTouchListener { v, event ->
-            binding.root.requestFocus()
-            v?.onTouchEvent(event) ?: true
-        }
+        binding.viewModel = viewModel
         return binding.root
     }
 
@@ -70,8 +57,19 @@ class SearchDialogFragment : DialogFragment() {
         viewModel.genre2ValueInt.observe(viewLifecycleOwner, Observer { viewModel.changeGenre2(it) })
         dialog!!.window!!.setBackgroundDrawableResource(R.color.transparent)
 
+        // editTextフォーカス制御
+        binding.artistNameEdit.setOnFocusChangeListener { v, hasFocus ->
+            if (!hasFocus) {
+                val imm = activity?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+                imm.hideSoftInputFromWindow(v.windowToken, InputMethodManager.HIDE_NOT_ALWAYS)
+            }
+        }
+        binding.root.setOnTouchListener { v, event ->
+            binding.root.requestFocus()
+            v?.onTouchEvent(event) ?: true
+        }
         // 検索ボタン
-        submit.setSafeClickListener {
+        binding.submit.setSafeClickListener {
             mListener!!.callBackMethod(viewModel.artistForm)
             dismiss()
         }

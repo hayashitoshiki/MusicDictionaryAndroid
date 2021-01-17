@@ -62,7 +62,7 @@
                     app:layout_constraintEnd_toStartOf="@+id/submit"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    android:clickable="@{viewModel.mIsSearchBar}"/>
+                    android:clickable="@{viewModel.isEnableSearchBar}"/>
 
                 <ImageButton
                     android:id="@+id/submit"
@@ -75,8 +75,8 @@
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    android:clickable="@{viewModel.mIsSearchBar}"
-                    android:enabled="@{viewModel.mIsEnableSubmitButton}"/>
+                    android:clickable="@{viewModel.isEnableSearchBar}"
+                    android:enabled="@{viewModel.isEnableSubmitButton}"/>
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -97,7 +97,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/category1"
                 app:layout_constraintVertical_bias="0.0"
-                android:visibility="@{viewModel.mIsSearchBar ?  View.INVISIBLE : View.VISIBLE}"/>
+                android:visibility="@{viewModel.isEnableSearchBar ?  View.INVISIBLE : View.VISIBLE}"/>
 
             <Button
                 android:id="@+id/category_button"
@@ -112,8 +112,8 @@
                 android:textColor="@android:color/white"
                 android:textSize="24sp"
                 android:textStyle="bold"
-                android:enabled="@{viewModel.mIsCategoryButton}"
-                android:clickable="@{viewModel.mIsCategoryButton}"
+                android:enabled="@{viewModel.isEnableCategoryButton}"
+                android:clickable="@{viewModel.isEnableCategoryButton}"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toStartOf="@id/detail_button"
                 app:layout_constraintTop_toBottomOf="@+id/submit_button_enable"
@@ -131,8 +131,8 @@
                 android:textColor="@android:color/white"
                 android:textSize="24sp"
                 android:textStyle="bold"
-                android:enabled="@{viewModel.mIsDetailsButton}"
-                android:clickable="@{viewModel.mIsDetailsButton}"
+                android:enabled="@{viewModel.isEnableDetailsButton}"
+                android:clickable="@{viewModel.isEnableDetailsButton}"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@id/category_button"
                 app:layout_constraintTop_toTopOf="@+id/category_button"/>
@@ -146,7 +146,7 @@
                 android:textStyle="bold"
                 android:scrollbarSize="@dimen/home_search_button_validate"
                 android:elevation="6dp"
-                android:visibility="@{!viewModel.mIsCategoryButton ? View.VISIBLE : View.GONE}"
+                android:visibility="@{!viewModel.isEnableCategoryButton ? View.VISIBLE : View.GONE}"
                 app:layout_constraintStart_toStartOf="@+id/category_button"
                 app:layout_constraintEnd_toEndOf="@id/category_button"
                 app:layout_constraintBottom_toBottomOf="@id/category_button"
@@ -161,7 +161,7 @@
                 android:textSize="@dimen/home_button_validate"
                 android:textStyle="bold"
                 android:elevation="6dp"
-                android:visibility="@{!viewModel.mIsDetailsButton ? View.VISIBLE : View.GONE}"
+                android:visibility="@{!viewModel.isEnableDetailsButton ? View.VISIBLE : View.GONE}"
                 app:layout_constraintStart_toStartOf="@+id/detail_button"
                 app:layout_constraintEnd_toEndOf="@id/detail_button"
                 app:layout_constraintBottom_toBottomOf="@id/detail_button"
@@ -180,8 +180,8 @@
                 android:textColor="@android:color/white"
                 android:textSize="24sp"
                 android:textStyle="bold"
-                android:enabled="@{viewModel.mIsSoaringButton}"
-                android:clickable="@{viewModel.mIsSoaringButton}"
+                android:enabled="@{viewModel.isEnableSoaringButton}"
+                android:clickable="@{viewModel.isEnableSoaringButton}"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toStartOf="@id/recommend_button"
                 app:layout_constraintTop_toBottomOf="@+id/category_button"
@@ -199,8 +199,8 @@
                 android:textColor="@android:color/white"
                 android:textSize="24sp"
                 android:textStyle="bold"
-                android:enabled="@{viewModel.mIsRecommendButton}"
-                android:clickable="@{viewModel.mIsRecommendButton}"
+                android:enabled="@{viewModel.isEnableRecommendButton}"
+                android:clickable="@{viewModel.isEnableRecommendButton}"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@id/soaring_button"
                 app:layout_constraintTop_toTopOf="@+id/soaring_button"/>
@@ -213,7 +213,7 @@
                 android:textSize="@dimen/home_button_validate"
                 android:textStyle="bold"
                 android:elevation="6dp"
-                android:visibility="@{!viewModel.mIsSoaringButton ? View.VISIBLE : View.GONE}"
+                android:visibility="@{!viewModel.isEnableSoaringButton ? View.VISIBLE : View.GONE}"
                 app:layout_constraintStart_toStartOf="@+id/soaring_button"
                 app:layout_constraintEnd_toEndOf="@id/soaring_button"
                 app:layout_constraintBottom_toBottomOf="@id/soaring_button"
@@ -228,7 +228,7 @@
                 android:textSize="@dimen/home_button_validate"
                 android:textStyle="bold"
                 android:elevation="6dp"
-                android:visibility="@{!viewModel.mIsRecommendButton ? View.VISIBLE : View.GONE}"
+                android:visibility="@{!viewModel.isEnableRecommendButton ? View.VISIBLE : View.GONE}"
                 app:layout_constraintStart_toStartOf="@+id/recommend_button"
                 app:layout_constraintEnd_toEndOf="@id/recommend_button"
                 app:layout_constraintBottom_toBottomOf="@id/recommend_button"

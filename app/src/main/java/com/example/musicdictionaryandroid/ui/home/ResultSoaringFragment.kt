@@ -14,7 +14,6 @@ import com.example.musicdictionaryandroid.databinding.FragmentResultSoaringBindi
 import com.example.musicdictionaryandroid.model.entity.ArtistsForm
 import com.example.musicdictionaryandroid.model.util.Status
 import com.example.musicdictionaryandroid.ui.adapter.ResultAdapter
-import kotlinx.android.synthetic.main.fragment_result.*
 import org.koin.android.viewmodel.ext.android.viewModel
 
 /**
@@ -23,26 +22,25 @@ import org.koin.android.viewmodel.ext.android.viewModel
  */
 class ResultSoaringFragment : Fragment() {
 
-    private val viewModel: ResultSoaringViewModel by viewModel()
-
-    @Suppress("JAVA_CLASS_ON_COMPANION")
     companion object {
-        val TAG = javaClass.name
+        private const val TAG = "ResultSoaringFragment"
     }
+
+    private val viewModel: ResultSoaringViewModel by viewModel()
+    private lateinit var binding: FragmentResultSoaringBinding
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-
-        val binding: FragmentResultSoaringBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_result_soaring, container, false)
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_result_soaring, container, false)
         binding.viewModel = viewModel
         return binding.root
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         viewModel.status.observe(viewLifecycleOwner, Observer { onStateChanged(it) })
         viewModel.getSoaring()
     }
@@ -70,27 +68,27 @@ class ResultSoaringFragment : Fragment() {
     private fun viewUpDate(data: ArrayList<ArtistsForm>) {
         val adapter = ResultAdapter(requireContext(), data)
         val layoutManager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
-        recyclerView.adapter = adapter
-        recyclerView.layoutManager = layoutManager
+        binding.recyclerView.adapter = adapter
+        binding.recyclerView.layoutManager = layoutManager
     }
 
     // 一致データなし表示
     private fun showNoDataView() {
-        no_data_text.visibility = View.VISIBLE
+        binding.noDataText.visibility = View.VISIBLE
     }
 
     // 一致データなし非表示
     private fun hideNoDataView() {
-        no_data_text.visibility = View.INVISIBLE
+        binding.noDataText.visibility = View.INVISIBLE
     }
 
     // プログレスバー表示
     private fun showProgressbar() {
-        progressBar.visibility = View.VISIBLE
+        binding.progressBar.visibility = View.VISIBLE
     }
 
     // プログレスバー非表示
     private fun hideProgressbar() {
-        progressBar.visibility = View.GONE
+        binding.progressBar.visibility = View.GONE
     }
 }

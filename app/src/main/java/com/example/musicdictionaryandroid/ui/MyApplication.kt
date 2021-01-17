@@ -9,10 +9,7 @@ import com.example.musicdictionaryandroid.model.usecase.ArtistUseCase
 import com.example.musicdictionaryandroid.model.usecase.ArtistUseCaseImp
 import com.example.musicdictionaryandroid.model.usecase.UserUseCase
 import com.example.musicdictionaryandroid.model.usecase.UserUseCaseImp
-import com.example.musicdictionaryandroid.ui.home.HomeViewModel
-import com.example.musicdictionaryandroid.ui.home.ResultRecommendViewModel
-import com.example.musicdictionaryandroid.ui.home.ResultSoaringViewModel
-import com.example.musicdictionaryandroid.ui.home.ResultViewModel
+import com.example.musicdictionaryandroid.ui.home.*
 import com.example.musicdictionaryandroid.ui.login.SignInViewModel
 import com.example.musicdictionaryandroid.ui.login.SignUpViewModel
 import com.example.musicdictionaryandroid.ui.login.StartViewModel
@@ -79,6 +76,6 @@ class MyApplication : Application() {
         factory <FireBaseRepository> { FireBaseRepositoryImp() }
         factory <ApiServerRepository> { ApiServerRepositoryImp() }
         factory <DataBaseRepository> { DataBaseRepositoryImp() }
-        factory <PreferenceRepositoryImp> { PreferenceRepositoryImp }
+        factory <PreferenceRepository> { PreferenceRepositoryImp }
     }
 }

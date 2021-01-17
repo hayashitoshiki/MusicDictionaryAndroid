@@ -19,8 +19,6 @@ import com.example.musicdictionaryandroid.databinding.FragmentDetailsSearchBindi
 import com.example.musicdictionaryandroid.ui.transition.FabTransform
 import com.example.musicdictionaryandroid.ui.transition.HOME_DETAILS_BUTTON
 import kotlin.coroutines.CoroutineContext
-import kotlinx.android.synthetic.main.fragment_details_search.*
-import kotlinx.android.synthetic.main.fragment_details_search.view.*
 import kotlinx.coroutines.*
 
 /**
@@ -32,10 +30,9 @@ class DetailsSearchFragment : Fragment(), CoroutineScope {
         private var state = 0
     }
 
+    private lateinit var binding: FragmentDetailsSearchBinding
     private val job = SupervisorJob()
-    override val coroutineContext: CoroutineContext
-        get() = Dispatchers.Main + job
-
+    override val coroutineContext: CoroutineContext = Dispatchers.Main + job
     private val viewModel: DetailsSearchViewModel by lazy {
         ViewModelProvider.NewInstanceFactory().create(DetailsSearchViewModel::class.java)
     }
@@ -50,24 +47,23 @@ class DetailsSearchFragment : Fragment(), CoroutineScope {
             addTransition(ChangeTransform())
             addTransition(ChangeClipBounds())
         }
-        val trans = FabTransform(resources.getColor(R.color.bg_color_primary, null), R.drawable.round_primary_dark_button, HOME_DETAILS_BUTTON)
-        sharedElementEnterTransition = trans
-        sharedElementReturnTransition = transition
-
-        val binding: FragmentDetailsSearchBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_details_search, container, false)
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_details_search, container, false)
         binding.lifecycleOwner = viewLifecycleOwner
         binding.viewModel = viewModel
 
+        val trans = FabTransform(resources.getColor(R.color.bg_color_primary, null), R.drawable.round_primary_dark_button, HOME_DETAILS_BUTTON)
+        sharedElementEnterTransition = trans
+        sharedElementReturnTransition = transition
         if (state == 1) {
             val anim = AnimationUtils.loadAnimation(requireContext(), R.anim.slide_in_bottom)
-            binding.root.detail_search_view.startAnimation(anim)
+            binding.detailSearchView.startAnimation(anim)
             state = 0
         }
         return binding.root
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
         viewModel.init(
             resources.getStringArray(R.array.category_spinner_list),
@@ -86,10 +82,10 @@ class DetailsSearchFragment : Fragment(), CoroutineScope {
         viewModel.genre3ValueInt.observe(viewLifecycleOwner, Observer { viewModel.changeGenreValue(3, it) })
 
         // 検索結果画面へ遷移
-        submit.setOnClickListener {
+        binding.submit.setOnClickListener {
             val anim1 = AnimationUtils.loadAnimation(requireContext(), R.anim.slide_out_bottom)
-            detail_search_view.startAnimation(anim1)
-            detail_search_view.visibility = View.GONE
+            binding.detailSearchView.startAnimation(anim1)
+            binding.detailSearchView.visibility = View.GONE
             launch {
                 delay(resources.getInteger(R.integer.fade_out_time).toLong())
                 val action =
