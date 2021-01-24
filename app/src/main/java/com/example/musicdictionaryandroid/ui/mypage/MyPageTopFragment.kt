@@ -72,6 +72,7 @@ class MyPageTopFragment : Fragment() {
         is Status.Loading -> { }
         is Status.Success -> { activityFinish() }
         is Status.Failure -> { Log.i(TAG, "Failure:${state.throwable}") }
+        is Status.Non -> { }
     }
 
     // 終了

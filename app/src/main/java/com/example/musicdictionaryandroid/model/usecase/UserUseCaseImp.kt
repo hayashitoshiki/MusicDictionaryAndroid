@@ -82,7 +82,8 @@ class UserUseCaseImp(
     // ログイン
     override suspend fun signIn(email: String, password: String, onSuccess: () -> Unit, onError: (error: Throwable?) -> Unit) {
         fireBaseRepository.signIn(email, password, {
-            runBlocking {
+            Log.d("TAG", "signIn　signIn")
+            GlobalScope.launch {
                 runCatching { apiRepository.getUserByEmail(email) }
                     .onSuccess {
                         Log.d("TAG", "API　ログイン成功")
@@ -102,7 +103,7 @@ class UserUseCaseImp(
                         onError(it)
                     }
             }
-        }, { onError(throw Exception("firebase ログイン失敗")) })
+        }, { onError(it) })
     }
 
     // ログアウト

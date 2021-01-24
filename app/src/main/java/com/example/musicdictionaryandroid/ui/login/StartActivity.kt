@@ -6,11 +6,15 @@ import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import com.example.musicdictionaryandroid.R
+import com.example.musicdictionaryandroid.databinding.ActivityMainBinding
+import com.example.musicdictionaryandroid.databinding.ActivityStartBinding
 import com.example.musicdictionaryandroid.model.util.Status
 import com.example.musicdictionaryandroid.ui.MainActivity
 import org.koin.android.viewmodel.ext.android.viewModel
+
 
 /**
  * ログイン・新規登録画面 BaseActivity
@@ -28,7 +32,9 @@ class StartActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_start)
+        val binding: ActivityStartBinding = DataBindingUtil.setContentView(this, R.layout.activity_start)
+        binding.viewModel = viewModel
+        binding.lifecycleOwner = this
         Log.d(TAG, "onCreate")
 
         viewModel.status.observe(this, Observer { onStateChanged(it) })
@@ -76,6 +82,16 @@ class StartActivity : AppCompatActivity() {
         val intent = Intent(application, MainActivity::class.java)
         startActivity(intent)
         finish()
+    }
+
+    // ロード中制御
+    fun loading() {
+        viewModel.unEnableRadioButton()
+    }
+
+    // ロード終了後制御
+    fun endLoading() {
+        viewModel.enableRadioButton()
     }
 
     // 入力エラーダイアログ

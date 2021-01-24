@@ -1,87 +1,96 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@drawable/home_background"
-    android:focusableInTouchMode="true">
-
-
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <!-- Binding Objects -->
+    <data>
+        <variable
+            name="viewModel"
+            type="com.example.musicdictionaryandroid.ui.login.StartViewModel" />
+    </data>
     <androidx.constraintlayout.widget.ConstraintLayout
+
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="64dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="128dp"
-        android:background="@drawable/home_button"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        android:background="@drawable/home_background"
+        android:focusableInTouchMode="true">
 
-
-
-        <RadioGroup
-            android:layout_height="wrap_content"
-            android:layout_width="wrap_content"
-            android:id="@+id/RadioGroupB"
-            android:layout_marginTop="8dp"
-            android:layout_marginLeft="16dp"
-            android:layout_marginRight="16dp"
-            android:orientation="horizontal"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="64dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="32dp"
+            android:background="@drawable/home_button"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.0">
-            <RadioButton
-                android:text="@string/title_sign_in"
-                android:id="@+id/RadioButtonB1"
-                android:textSize="@dimen/category_title"
-                android:onClick="signInButton"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@drawable/button_radio_left"
-                android:stateListAnimator="@drawable/button_state_list_anim_material"
-                android:elevation="6dp"
-                android:textColor="@drawable/button_radio_textcolor"
-                android:layout_weight="1"
-                android:button="@null"
-                android:checked="true"
-                android:gravity="center">
-            </RadioButton>
+            app:layout_constraintTop_toTopOf="parent">
 
-            <RadioButton
-                android:text="@string/title_sign_up"
-                android:id="@+id/RadioButtonB4"
-                android:textSize="@dimen/category_title"
-                android:onClick="signUpButton"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@drawable/button_radio_right"
-                android:stateListAnimator="@drawable/button_state_list_anim_material"
-                android:elevation="6dp"
-                android:textColor="@drawable/button_radio_textcolor"
-                android:layout_weight="1"
-                android:button="@null"
-                android:gravity="center">
-            </RadioButton>
-        </RadioGroup>
+            <RadioGroup
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:id="@+id/RadioGroupB"
+                android:layout_marginTop="8dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:orientation="horizontal"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.0">
+                <RadioButton
+                    android:text="@string/title_sign_in"
+                    android:id="@+id/RadioButtonB1"
+                    android:textSize="@dimen/category_title"
+                    android:onClick="signInButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/button_radio_left"
+                    android:stateListAnimator="@drawable/button_state_list_anim_material"
+                    android:elevation="6dp"
+                    android:textColor="@drawable/button_radio_textcolor"
+                    android:layout_weight="1"
+                    android:button="@null"
+                    android:checked="true"
+                    android:gravity="center"
+                    android:enabled="@{viewModel.isEnableRadioButton}">
+                </RadioButton>
 
-        <FrameLayout
-            android:id="@+id/fragment"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_marginTop="8dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/RadioGroupB"
-            app:layout_constraintVertical_bias="0.0">
+                <RadioButton
+                    android:text="@string/title_sign_up"
+                    android:id="@+id/RadioButtonB4"
+                    android:textSize="@dimen/category_title"
+                    android:onClick="signUpButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/button_radio_right"
+                    android:stateListAnimator="@drawable/button_state_list_anim_material"
+                    android:elevation="6dp"
+                    android:textColor="@drawable/button_radio_textcolor"
+                    android:layout_weight="1"
+                    android:button="@null"
+                    android:gravity="center"
+                    android:enabled="@{viewModel.isEnableRadioButton}">
+                </RadioButton>
+            </RadioGroup>
 
-        </FrameLayout>
+            <FrameLayout
+                android:id="@+id/fragment"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/RadioGroupB"
+                app:layout_constraintVertical_bias="0.0">
+
+            </FrameLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
     </androidx.constraintlayout.widget.ConstraintLayout>
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

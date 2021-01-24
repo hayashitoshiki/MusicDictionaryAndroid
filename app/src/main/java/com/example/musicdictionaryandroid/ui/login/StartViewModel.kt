@@ -1,5 +1,6 @@
 package com.example.musicdictionaryandroid.ui.login
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.musicdictionaryandroid.model.usecase.UserUseCase
@@ -11,18 +12,32 @@ import com.example.musicdictionaryandroid.model.util.Status
  */
 class StartViewModel(private val userUseCase: UserUseCase) : ViewModel() {
 
-    val status = MutableLiveData<Status<Boolean>>()
+    private val _status = MutableLiveData<Status<Boolean>>()
+    val status: LiveData<Status<Boolean>> = _status
+
+    private val _isEnableRadioButton = MutableLiveData<Boolean>(true)
+    val isEnableRadioButton: LiveData<Boolean> = _isEnableRadioButton
 
     /**
      * ログインチェック
      *
      */
     fun firstCheck() {
-        status.value = Status.Loading
+        _status.value = Status.Loading
         if (userUseCase.firstCheck()) {
-            status.postValue(Status.Success(true))
+           _status.postValue(Status.Success(true))
         } else {
-            status.postValue(Status.Success(false))
+            _status.postValue(Status.Success(false))
         }
+    }
+
+    // ラジオボタン活性
+    fun enableRadioButton() {
+        _isEnableRadioButton.value = true
+    }
+
+    // ラジオボタン非活性
+    fun unEnableRadioButton() {
+        _isEnableRadioButton.value = false
     }
 }

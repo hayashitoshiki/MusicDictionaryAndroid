@@ -21,7 +21,7 @@ import org.koin.android.viewmodel.ext.android.viewModel
 class SignInFragment : Fragment() {
 
     companion object {
-        const val TAG = "SignInFragment"
+        private const val TAG = "SignInFragment"
 
         @JvmStatic
         fun newInstance(): SignInFragment {
@@ -30,21 +30,32 @@ class SignInFragment : Fragment() {
     }
 
     private val viewModel: SignInViewModel by viewModel()
+    private lateinit var binding: FragmentSignInBinding
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        val binding: FragmentSignInBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_sign_in, container, false)
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_sign_in, container, false)
         binding.lifecycleOwner = viewLifecycleOwner
         binding.viewModel = viewModel
+        return binding.root
+    }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        viewModel.status.observe(viewLifecycleOwner, Observer { onStateChanged(it) })
+
+        // ログインボタン
+        binding.signInButton.setOnClickListener { viewModel.signIn() }
         // editTextフォーカス制御
         binding.emailEditText.setOnFocusChangeListener { v, hasFocus ->
             if (!hasFocus) {
+                viewModel.focusChangeEmail()
                 val imm = activity?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
                 imm.hideSoftInputFromWindow(v.windowToken, InputMethodManager.HIDE_NOT_ALWAYS)
             }
         }
         binding.passwordEditText.setOnFocusChangeListener { v, hasFocus ->
             if (!hasFocus) {
+                viewModel.focusChangePassword()
                 val imm = activity?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
                 imm.hideSoftInputFromWindow(v.windowToken, InputMethodManager.HIDE_NOT_ALWAYS)
             }
@@ -53,22 +64,29 @@ class SignInFragment : Fragment() {
             binding.root.requestFocus()
             v?.onTouchEvent(event) ?: true
         }
-        return binding.root
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        viewModel.status.observe(viewLifecycleOwner, Observer { onStateChanged(it) })
     }
 
     // ステータス監視
+    @Suppress("IMPLICIT_CAST_TO_ANY")
     private fun onStateChanged(state: Status<Boolean>) = when (state) {
-        is Status.Loading -> {}
+        is Status.Loading -> {
+            (activity as StartActivity).loading()
+            viewModel.showProgressBer()
+        }
         is Status.Success -> {
+            viewModel.hideProgressBer()
+            (activity as StartActivity).endLoading()
             if (state.data) (activity as StartActivity).startApp()
-            else (activity as StartActivity).showErrorEmailPassword() }
+            else (activity as StartActivity).showErrorEmailPassword()
+            viewModel.status.postValue(Status.Non)
+        }
         is Status.Failure -> {
-             Log.i(TAG, "Failure:${state.throwable}")
-            (activity as StartActivity).showErrorEmailPassword() }
+            Log.i(TAG, "Failure:${state.throwable}")
+            viewModel.hideProgressBer()
+            (activity as StartActivity).endLoading()
+            (activity as StartActivity).showErrorEmailPassword()
+            viewModel.status.postValue(Status.Non)
+        }
+        is Status.Non -> { }
     }
 }

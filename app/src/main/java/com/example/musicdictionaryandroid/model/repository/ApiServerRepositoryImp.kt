@@ -53,8 +53,10 @@ class ApiServerRepositoryImp : ApiServerRepository {
         }
     }
     // ユーザー登録
-    override fun createUser(user: String): Response<CallBackData> {
-        return Provider.api().createUser(user).execute()
+    override suspend fun createUser(user: String): Response<CallBackData> {
+        return withContext(Dispatchers.IO) {
+            return@withContext Provider.api().createUser(user).execute()
+        }
     }
 
     // ユーザー情報変更

@@ -22,9 +22,10 @@
     <string name="sign_up_name_label">名前：</string>
     <string name="sign_up_email_label">Email：</string>
     <string name="sign_up_password_label">パスワード：</string>
+    <string name="sign_up_password2_label">パスワード(確認)：</string>
     <string name="sign_up_gender_label">性別：</string>
-    <string name="sign_up_area_label">地域：</string>
-    <string name="sign_up_birthday_label">生年月日：</string>
+    <string name="sign_up_area_label">地域</string>
+    <string name="sign_up_birthday_label">生年月日</string>
     <string name="favorite_label">登録アーティスト数</string>
 
     <!-- アコーディオン -->
@@ -66,9 +67,10 @@
     <string name="validate_home_button3">5件以上登録してください</string>
     <string name="validate_home_button4">8件以上登録してください</string>
     <string name="validate_home_button5">10件以上登録してください</string>
-    <string name="validate_sign_password">６文字以上入力する必要があります</string>
-    <string name="validate_sign_email">６文字以上入力する必要があります</string>
-    <string name="validate_sign_name">６文字以上入力する必要があります</string>
+    <string name="validate_sign_password1">パスワード（最低６文字）</string>
+    <string name="validate_sign_password2">パスワード再入力（最低６文字）</string>
+    <string name="validate_sign_email">メールアドレス（最低６文字）</string>
+    <string name="validate_sign_name">名前（最低６文字）</string>
 
     <!-- 成功文言 -->
     <string name="success_login">同期しました</string>

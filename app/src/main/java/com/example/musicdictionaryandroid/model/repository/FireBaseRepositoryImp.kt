@@ -25,6 +25,7 @@ class FireBaseRepositoryImp : FireBaseRepository {
 
     // ログイン機能
     override suspend fun signIn(email: String, password: String, onSuccess: () -> Unit, onError: (error: Exception?) -> Unit) {
+        Log.d("TAG", "repository")
         auth.signInWithEmailAndPassword(email, password)
             .addOnCompleteListener { task ->
                 when {

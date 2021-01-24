@@ -1,12 +1,17 @@
 package com.example.musicdictionaryandroid.ui.login
 
-import androidx.lifecycle.*
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MediatorLiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
 import com.example.musicdictionaryandroid.model.entity.User
 import com.example.musicdictionaryandroid.model.usecase.UserUseCase
 import com.example.musicdictionaryandroid.model.util.Status
 import com.example.musicdictionaryandroid.model.util.UserInfoChangeListUtil
+import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
+import java.util.regex.Pattern
 
 /**
  * 新規登録画面_UIロジック
@@ -18,40 +23,66 @@ class SignUpViewModel(
 ) : ViewModel() {
 
     val status = MutableLiveData<Status<String?>>()
+
     val emailText = MutableLiveData<String>()
-    val passwordText = MutableLiveData<String>()
+    val password1Text = MutableLiveData<String>()
+    val password2Text = MutableLiveData<String>()
     val nameText = MutableLiveData<String>()
-    val genderInt = MutableLiveData<Int>(0)
-    val areaSelectedPosition = MutableLiveData<Int>(0)
-    val birthdaySelectedPosition = MutableLiveData<Int>(0)
+    private val _emailErrorText =  MutableLiveData<String>()
+    val emailErrorText:  LiveData<String> = _emailErrorText
+    private val _passwordError1Text =  MutableLiveData<String>()
+    val passwordError1Text:  LiveData<String> = _passwordError1Text
+    private val _passwordError2Text =  MutableLiveData<String>()
+    val passwordError2Text:  LiveData<String> = _passwordError2Text
+    private val _nameErrorText =  MutableLiveData<String>()
+    val nameErrorText:  LiveData<String> = _nameErrorText
+    val genderInt = MutableLiveData(0)
+    val areaSelectedPosition = MutableLiveData(0)
+    val birthdaySelectedPosition = MutableLiveData(0)
     private val _isEnableSubmitButton = MediatorLiveData<Boolean>()
     val isEnableSubmitButton: LiveData<Boolean> = _isEnableSubmitButton
+    private val _isProgressBer = MutableLiveData(false)
+    val isProgressBer: LiveData<Boolean> = _isProgressBer
 
     /**
      * バリデート処理
      */
     init {
         _isEnableSubmitButton.addSource(emailText) { validateSubmit() }
-        _isEnableSubmitButton.addSource(passwordText) { validateSubmit() }
+        _isEnableSubmitButton.addSource(password1Text) { validateSubmit() }
+        _isEnableSubmitButton.addSource(password2Text) { validateSubmit() }
         _isEnableSubmitButton.addSource(nameText) { validateSubmit() }
         _isEnableSubmitButton.addSource(genderInt) { validateSubmit() }
         _isEnableSubmitButton.addSource(areaSelectedPosition) { validateSubmit() }
         _isEnableSubmitButton.addSource(birthdaySelectedPosition) { validateSubmit() }
+        _isEnableSubmitButton.addSource(isProgressBer) { validateSubmit() }
     }
 
     // ボタンのバリデート
     private fun validateSubmit() {
-        _isEnableSubmitButton.value = validateEmail() && validatePassword() && validateName() && validateGender() && validateArea() && validateBirthday()
+        _isEnableSubmitButton.value = validateEmail() && validatePassword() && validateName() && validateGender() && validateArea() && validateBirthday() && validateProgressBar()
     }
 
     // email入力欄
     private fun validateEmail(): Boolean {
-        return emailText.value != null && emailText.value!!.length > 5
+        emailText.value?.let { email ->
+            return if (email.isNotEmpty() && email.length <= 5) {
+                false
+            } else {
+                val expression = "^[\\w\\.-]+@([\\w\\-]+\\.)+[A-Z]{2,4}$"
+                val pattern = Pattern.compile(expression, Pattern.CASE_INSENSITIVE)
+                val matcher = pattern.matcher(email)
+                !(email.isNotEmpty() && !matcher.matches())
+                }
+            } ?: run {
+            return false
+        }
     }
 
     // password入力欄
     private fun validatePassword(): Boolean {
-        return passwordText.value != null && passwordText.value!!.length > 5
+        return password1Text.value != null && password1Text.value!!.length > 5 &&
+                password2Text.value != null && password1Text.value!! == password2Text.value!!
     }
 
     // 名前入力欄
@@ -74,14 +105,70 @@ class SignUpViewModel(
         return birthdaySelectedPosition.value != null && birthdaySelectedPosition.value!! != 0
     }
 
+    // progressBarバリデート
+    private fun validateProgressBar(): Boolean {
+        return _isProgressBer.value != null && !_isProgressBer.value!!
+    }
+
+    // メールアドレスエラー文言表示
+    fun focusChangeEmail() {
+        emailText.value?.let { email ->
+            if (email.isNotEmpty() && email.length <= 5) {
+                _emailErrorText.value = "メールアドレスは最低でも６文字必要です"
+            } else {
+                val expression = "^[\\w\\.-]+@([\\w\\-]+\\.)+[A-Z]{2,4}$"
+                val pattern = Pattern.compile(expression, Pattern.CASE_INSENSITIVE)
+                val matcher = pattern.matcher(email)
+                if (!matcher.matches()) {
+                    _emailErrorText.value = "メールアドレスを入力しでください"
+                } else {
+                    _emailErrorText.value = null
+                }
+            }
+        }
+    }
+
+    // パスワードエラー文言表示
+    fun focusChangePassword1() {
+        if (password1Text.value != null && password1Text.value!!.isNotEmpty() && password1Text.value!!.length <= 5) {
+            _passwordError1Text.value = "パスワードは最低でも６文字必要です"
+        } else if (password1Text.value != null && password2Text.value != null && password1Text.value!! != password2Text.value!!) {
+            _passwordError1Text.value = null
+            _passwordError2Text.value = "パスワードが一致しません"
+        } else {
+            _passwordError1Text.value = null
+            _passwordError2Text.value = null
+        }
+    }
+
+    // 確認用パスワードエラー文言表示
+    fun focusChangePassword2() {
+        if (password2Text.value != null && password2Text.value!!.isNotEmpty() && password2Text.value!!.length <= 5) {
+            _passwordError2Text.value = "パスワードは最低でも６文字必要です"
+        } else if (password1Text.value != null && password2Text.value != null && password1Text.value!! != password2Text.value!!) {
+            _passwordError2Text.value = "パスワードが一致しません"
+        } else {
+            _passwordError2Text.value = null
+        }
+    }
+
+    // 名前エラー文言表示
+    fun focusChangeName() {
+        if (nameText.value != null && nameText.value!!.isNotEmpty() && nameText.value!!.length <= 5) {
+            _nameErrorText.value = "名前は最低でも６文字必要です"
+        } else {
+            _nameErrorText.value = null
+        }
+    }
+
     /**
      * 新規作成
      */
-    fun signUp(): Job = viewModelScope.launch {
-        status.value = Status.Loading
+    fun signUp(): Job = GlobalScope.launch {
+        status.postValue(Status.Loading)
         val birthday = UserInfoChangeListUtil.getBirthday(birthdaySelectedPosition.value!!)
         val user = User(emailText.value!!, nameText.value!!, genderInt.value!!, areaSelectedPosition.value!!, birthday, 0)
-        userUseCase.createUser(emailText.value!!, passwordText.value!!, user,
+        userUseCase.createUser(emailText.value!!, password1Text.value!!, user,
             { status.postValue(Status.Success(it!!.status)) },
             { status.postValue(Status.Failure(it)) }
         )
@@ -90,5 +177,15 @@ class SignUpViewModel(
     // genderの変更
     fun checkedChangeGender(checkedId: Int) {
         genderInt.value = checkedId
+    }
+
+    // プログレスバー表示
+    fun showProgressBer() {
+        _isProgressBer.value = true
+    }
+
+    // プログレスバー非表示
+    fun hideProgressBer() {
+        _isProgressBer.value = false
     }
 }

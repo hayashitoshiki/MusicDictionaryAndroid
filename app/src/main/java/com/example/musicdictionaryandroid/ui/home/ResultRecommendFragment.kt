@@ -62,6 +62,7 @@ class ResultRecommendFragment : Fragment() {
             Log.i(TAG, "Failure:${state.throwable}")
             hideProgressbar()
         }
+        is Status.Non -> { }
     }
 
     // データ反映

@@ -84,7 +84,7 @@ interface ApiServerRepository {
      * @param user 登録数ユーザー情報
      * @return 登録処理結果
      */
-    fun createUser(user: String): Response<CallBackData>
+    suspend fun createUser(user: String): Response<CallBackData>
     /**
      * ユーザー情報変更
      *

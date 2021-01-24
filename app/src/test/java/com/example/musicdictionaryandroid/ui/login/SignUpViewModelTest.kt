@@ -2,14 +2,12 @@ package com.example.musicdictionaryandroid.ui.login
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.Observer
-import com.example.musicdictionaryandroid.model.entity.User
 import com.example.musicdictionaryandroid.model.usecase.UserUseCase
 import com.nhaarman.mockito_kotlin.mock
 import io.mockk.mockk
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.TestCoroutineDispatcher
-import kotlinx.coroutines.test.TestCoroutineScope
 import kotlinx.coroutines.test.resetMain
 import kotlinx.coroutines.test.setMain
 import org.junit.After
@@ -18,7 +16,6 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.rules.TestRule
-import retrofit2.Response
 
 /**
  * 新規登録画面
@@ -26,23 +23,141 @@ import retrofit2.Response
 
 class SignUpViewModelTest {
 
+    @ExperimentalCoroutinesApi
     private val testDispatcher = TestCoroutineDispatcher()
-    private val testScope = TestCoroutineScope(testDispatcher)
-    private val responseUser: Response<User> = Response.success<User>(User("testEmail", "testName", 1, 1, "1999", 1))
+    private lateinit var viewModel: SignUpViewModel
 
     // LiveData用
     @get:Rule
     val rule: TestRule = InstantTaskExecutorRule()
 
-    // coroutines用
+    @ExperimentalCoroutinesApi
     @Before
     fun before() {
         Dispatchers.setMain(testDispatcher)
+        // テストクラス作成
+        val userUseCase = mockk<UserUseCase> ()
+        val observer = mock<Observer<Boolean>>()
+        val observerString = mock<Observer<String>>()
+        viewModel = SignUpViewModel(userUseCase)
+        viewModel.isEnableSubmitButton.observeForever(observer)
+        viewModel.emailText.observeForever(observerString)
+        viewModel.emailErrorText.observeForever(observerString)
     }
+
+    @ExperimentalCoroutinesApi
     @After
     fun after() {
         Dispatchers.resetMain()
-        testScope.cleanupTestCoroutines()
+    }
+
+    /**
+     * メールアドレス入力欄のエラー文言制御
+     * emailErrorText： エラー文言の有無
+     */
+    @ExperimentalCoroutinesApi
+    @Test
+    fun focusChangeEmail() {
+        // 初期状態
+        viewModel.focusChangeEmail()
+        assertEquals(viewModel.emailErrorText.value, null)
+        // ５文字
+        viewModel.emailText.value = "12345"
+        viewModel.focusChangeEmail()
+        assertNotEquals(viewModel.emailErrorText.value!!, null)
+        // ６文字 && メールアドレス形式ではない
+        viewModel.emailText.value = "123456"
+        viewModel.focusChangeEmail()
+        assertNotEquals(viewModel.emailErrorText.value!!, null)
+        // ６文字以上 && メールアドレス形式
+        viewModel.emailText.value = "abc@aaa.ne.jp"
+        viewModel.focusChangeEmail()
+        assertEquals(viewModel.emailErrorText.value, null)
+    }
+
+    /**
+     * パスワード入力欄のエラー文言制御
+     * passwordError1Text： １つ目のエラー文言の有無
+     * passwordError2Text： ２つ目のエラー文言の有無
+     */
+    @ExperimentalCoroutinesApi
+    @Test
+    fun focusChangePassword() {
+        // 初期状態
+        viewModel.focusChangePassword1()
+        assertEquals(viewModel.passwordError1Text.value, null)
+        assertEquals(viewModel.passwordError2Text.value, null)
+        // １つ目のみ入力(５文字)
+        viewModel.password1Text.value = "12345"
+        viewModel.focusChangePassword1()
+        assertNotEquals(viewModel.passwordError1Text.value, null)
+        assertEquals(viewModel.passwordError2Text.value, null)
+        // １つ目のみ入力(６文字)
+        viewModel.password1Text.value = "123456"
+        viewModel.focusChangePassword1()
+        assertEquals(viewModel.passwordError1Text.value, null)
+        assertEquals(viewModel.passwordError2Text.value, null)
+        // 両方入力(６文字 && 不一致)
+        viewModel.password1Text.value = "123456"
+        viewModel.password2Text.value = "654321"
+        viewModel.focusChangePassword1()
+        assertEquals(viewModel.passwordError1Text.value, null)
+        assertNotEquals(viewModel.passwordError2Text.value, null)
+        // 両方入力(６文字 && 一致)
+        viewModel.password1Text.value = "123456"
+        viewModel.password2Text.value = "123456"
+        viewModel.focusChangePassword1()
+        assertEquals(viewModel.passwordError1Text.value, null)
+        assertEquals(viewModel.passwordError2Text.value, null)
+
+        // 初期状態
+        viewModel.password1Text.value = null
+        viewModel.password2Text.value = null
+        viewModel.focusChangePassword2()
+        assertEquals(viewModel.passwordError1Text.value, null)
+        assertEquals(viewModel.passwordError2Text.value, null)
+        // ２つ目のみ入力(５文字)
+        viewModel.password2Text.value = "12345"
+        viewModel.focusChangePassword2()
+        assertEquals(viewModel.passwordError1Text.value, null)
+        assertNotEquals(viewModel.passwordError2Text.value, null)
+        // ２つ目のみ入力(６文字)
+        viewModel.password2Text.value = "123456"
+        viewModel.focusChangePassword2()
+        assertEquals(viewModel.passwordError1Text.value, null)
+        assertEquals(viewModel.passwordError2Text.value, null)
+        // 両方入力(６文字 && 一致)
+        viewModel.password1Text.value = "123456"
+        viewModel.password2Text.value = "654321"
+        viewModel.focusChangePassword2()
+        assertEquals(viewModel.passwordError1Text.value, null)
+        assertNotEquals(viewModel.passwordError2Text.value, null)
+        // 両方入力(６文字 && 一致)
+        viewModel.password1Text.value = "123456"
+        viewModel.password2Text.value = "123456"
+        viewModel.focusChangePassword2()
+        assertEquals(viewModel.passwordError1Text.value, null)
+        assertEquals(viewModel.passwordError2Text.value, null)
+    }
+
+    /**
+     * 名前入力欄のエラー文言制御
+     * nameErrorText： エラー文言の有無
+     */
+    @ExperimentalCoroutinesApi
+    @Test
+    fun focusChangeName() {
+        // 初期状態
+        viewModel.focusChangeName()
+        assertEquals(viewModel.nameErrorText.value, null)
+        // ５文字
+        viewModel.nameText.value = "12345"
+        viewModel.focusChangeName()
+        assertNotEquals(viewModel.nameErrorText.value!!, null)
+        // ６文字
+        viewModel.nameText.value = "123456"
+        viewModel.focusChangeName()
+        assertEquals(viewModel.nameErrorText.value, null)
     }
 
     /**
@@ -54,18 +169,11 @@ class SignUpViewModelTest {
     @ExperimentalCoroutinesApi
     @Test
     fun onSignUp() {
-        // テストクラス作成
-        val userUseCase = mockk<UserUseCase> ()
-        val viewModel = SignUpViewModel(userUseCase)
-        val observer = mock<Observer<Boolean>>()
-        viewModel.isEnableSubmitButton.observeForever(observer)
-
-        // 実行
         // 初期状態
         assertEquals(viewModel.isEnableSubmitButton.value!!, false)
         // Emailが５文字
         viewModel.emailText.value = "12345"
-        viewModel.passwordText.value = "123456"
+        viewModel.password1Text.value = "123456"
         viewModel.nameText.value = "123456"
         viewModel.genderInt.value = 1
         viewModel.areaSelectedPosition.value = 1
@@ -73,7 +181,7 @@ class SignUpViewModelTest {
         assertEquals(viewModel.isEnableSubmitButton.value!!, false)
         // パスワードが５文字
         viewModel.emailText.value = "123456"
-        viewModel.passwordText.value = "12345"
+        viewModel.password1Text.value = "12345"
         viewModel.nameText.value = "123456"
         viewModel.genderInt.value = 1
         viewModel.areaSelectedPosition.value = 1
@@ -81,7 +189,7 @@ class SignUpViewModelTest {
         assertEquals(viewModel.isEnableSubmitButton.value!!, false)
         // 名前が５文字
         viewModel.emailText.value = "123456"
-        viewModel.passwordText.value = "123456"
+        viewModel.password1Text.value = "123456"
         viewModel.nameText.value = "12345"
         viewModel.genderInt.value = 1
         viewModel.areaSelectedPosition.value = 1
@@ -89,7 +197,7 @@ class SignUpViewModelTest {
         assertEquals(viewModel.isEnableSubmitButton.value!!, false)
         // 性別が未入力
         viewModel.emailText.value = "123456"
-        viewModel.passwordText.value = "123456"
+        viewModel.password1Text.value = "123456"
         viewModel.nameText.value = "123456"
         viewModel.genderInt.value = 0
         viewModel.areaSelectedPosition.value = 1
@@ -98,7 +206,7 @@ class SignUpViewModelTest {
         // 地域が未入力
         viewModel.birthdaySelectedPosition.value = 1
         viewModel.emailText.value = "123456"
-        viewModel.passwordText.value = "123456"
+        viewModel.password1Text.value = "123456"
         viewModel.nameText.value = "123456"
         viewModel.genderInt.value = 1
         viewModel.areaSelectedPosition.value = 0
@@ -107,15 +215,25 @@ class SignUpViewModelTest {
         // 生年月日が未入力
         viewModel.birthdaySelectedPosition.value = 1
         viewModel.emailText.value = "123456"
-        viewModel.passwordText.value = "123456"
+        viewModel.password1Text.value = "123456"
         viewModel.nameText.value = "123456"
         viewModel.genderInt.value = 1
         viewModel.areaSelectedPosition.value = 1
         viewModel.birthdaySelectedPosition.value = 0
         assertEquals(viewModel.isEnableSubmitButton.value!!, false)
-        // 全て入力済み
+        // 全て入力済み(メールアドレス不正)
         viewModel.emailText.value = "123456"
-        viewModel.passwordText.value = "123456"
+        viewModel.password1Text.value = "123456"
+        viewModel.password2Text.value = "123456"
+        viewModel.nameText.value = "123456"
+        viewModel.genderInt.value = 1
+        viewModel.areaSelectedPosition.value = 1
+        viewModel.birthdaySelectedPosition.value = 1
+        assertEquals(viewModel.isEnableSubmitButton.value!!, false)
+        // 全て入力済み
+        viewModel.emailText.value = "aaa@ezweb.ne.jp"
+        viewModel.password1Text.value = "123456"
+        viewModel.password2Text.value = "123456"
         viewModel.nameText.value = "123456"
         viewModel.genderInt.value = 1
         viewModel.areaSelectedPosition.value = 1

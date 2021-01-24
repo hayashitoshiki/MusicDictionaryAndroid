@@ -129,6 +129,7 @@ class MyPageArtistAddFragment : Fragment() {
             hideProgressbar()
             showServerError()
         }
+        is Status.Non -> { }
     }
 
     // 設定画面へ画面戻る

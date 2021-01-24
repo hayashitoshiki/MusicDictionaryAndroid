@@ -1,6 +1,6 @@
 <resources>
     <!-- Base application theme -->
-    <style name="Theme.AppCompat.Light.NoActionBar.FullScreen" parent="@style/Theme.AppCompat.Light">
+    <style name="Theme.AppCompat.Light.NoActionBar.FullScreen" parent="Theme.MaterialComponents.Light.DarkActionBar">
         <item name="colorPrimary">@color/bg_color_primary</item>
         <item name="colorPrimaryDark">@color/bg_color_primary_dark</item>
         <item name="colorAccent">@color/bg_color_accent</item>
@@ -8,9 +8,11 @@
         <item name="windowActionBar">false</item>
         <item name="android:windowFullscreen">true</item>
         <item name="android:windowContentOverlay">@null</item>
-         <item name="android:windowDrawsSystemBarBackgrounds">true</item>
-         <item name="android:navigationBarColor">@android:color/transparent</item>
-         <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowDrawsSystemBarBackgrounds">true</item>
+        <item name="android:navigationBarColor">@android:color/transparent</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="materialButtonStyle">@style/Custom.Button</item>
+        <item name="chipStyle">@style/Custom.Chip</item>
     </style>
 
     <!-- Splash -->
@@ -21,6 +23,35 @@
         <item name="android:windowContentOverlay">@null</item>
         <item name="android:windowDrawsSystemBarBackgrounds">true</item>
         <item name="android:windowBackground">@drawable/background_splash</item>
+    </style>
+
+    <!-- TextInputLayout -->
+    <style name="Custom.TextInput" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense">
+        <item name="hintTextColor">@color/bg_color_accent</item>
+        <item name="boxStrokeColor">@color/bg_color_accent</item>
+    </style>
+
+    <!-- Spinner -->
+    <style name="Custom.Spinner" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu">
+        <item name="hintTextColor">@color/bg_color_accent</item>
+        <item name="boxStrokeColor">@color/bg_color_accent</item>
+    </style>
+
+    <!-- Chip -->
+    <style name="Custom.Chip" parent="@style/Widget.MaterialComponents.Chip.Filter">
+        <item name="android:textColor">@color/text_color_light_selector_radio</item>
+        <item name="chipBackgroundColor">@color/bg_color_primary_selector_radio</item>
+    </style>
+
+    <!-- Button -->
+    <style name="Custom.Button" parent="Widget.MaterialComponents.Button">
+        <item name="shapeAppearanceOverlay">@style/rounded.Button</item>
+        <item name="android:textColor">@color/text_color_light_selector_radio</item>
+        <item name="android:backgroundTint">@color/bg_color_primary_dark_selector</item>
+    </style>
+    <style name="rounded.Button" parent="">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">30dp</item>
     </style>
 
 </resources>
