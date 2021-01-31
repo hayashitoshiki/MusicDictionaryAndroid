@@ -1,9 +1,10 @@
 package com.example.musicdictionaryandroid.model.net
 
 import com.example.musicdictionaryandroid.model.util.Constant
-import com.google.gson.GsonBuilder
+import com.squareup.moshi.KotlinJsonAdapterFactory
+import com.squareup.moshi.Moshi
 import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
+import retrofit2.converter.moshi.MoshiConverterFactory
 
 /**
  * API接続先設定
@@ -11,11 +12,14 @@ import retrofit2.converter.gson.GsonConverterFactory
 object Provider {
 
     fun api(): ApiService {
+        val moshi = Moshi.Builder()
+            .add(KotlinJsonAdapterFactory())
+            .build()
+
         val retrofit = Retrofit.Builder()
             .baseUrl(Constant.webServer)
             .client(OkHttpClientBuilder.build())
-            .addConverterFactory(GsonConverterFactory.create())
-            .addConverterFactory(GsonConverterFactory.create(GsonBuilder().setLenient().create()))
+            .addConverterFactory(MoshiConverterFactory.create(moshi))
             .build()
         return retrofit.create(ApiService::class.java)
     }

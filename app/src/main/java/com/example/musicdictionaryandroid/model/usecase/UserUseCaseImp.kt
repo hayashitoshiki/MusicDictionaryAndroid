@@ -6,7 +6,7 @@ import com.example.musicdictionaryandroid.model.entity.User
 import com.example.musicdictionaryandroid.model.repository.*
 import com.example.musicdictionaryandroid.model.util.Result
 import com.example.musicdictionaryandroid.model.util.UserInfoChangeListUtil
-import com.google.gson.Gson
+import com.squareup.moshi.Moshi
 import java.lang.Exception
 import kotlinx.coroutines.*
 
@@ -41,7 +41,7 @@ class UserUseCaseImp(
     // ユーザー登録
     override suspend fun createUser(email: String, password: String, user: User, onSuccess: (result: CallBackData?) -> Unit, onError: (error: Throwable) -> Unit) {
         fireBaseRepository.signUp(email, password, {
-            val json: String = Gson().toJson(user)
+            val json: String = Moshi.Builder().build().adapter(User::class.java).toJson(user)
             GlobalScope.launch(Dispatchers.IO) {
                 runCatching { apiRepository.createUser(json) }
                     .onSuccess {
