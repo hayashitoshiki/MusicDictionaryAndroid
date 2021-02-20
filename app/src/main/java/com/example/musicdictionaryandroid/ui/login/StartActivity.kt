@@ -9,12 +9,10 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import com.example.musicdictionaryandroid.R
-import com.example.musicdictionaryandroid.databinding.ActivityMainBinding
 import com.example.musicdictionaryandroid.databinding.ActivityStartBinding
 import com.example.musicdictionaryandroid.model.util.Status
 import com.example.musicdictionaryandroid.ui.MainActivity
 import org.koin.android.viewmodel.ext.android.viewModel
-
 
 /**
  * ログイン・新規登録画面 BaseActivity

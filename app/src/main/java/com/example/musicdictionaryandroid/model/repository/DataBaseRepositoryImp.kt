@@ -20,7 +20,7 @@ class DataBaseRepositoryImp : DataBaseRepository {
     }
 
     // 全アーティスト更新
-    override suspend fun updateAll(artists: ArrayList<ArtistsForm>) {
+    override suspend fun updateAll(artists: List<ArtistsForm>) {
         dao.deleteAll()
         artists.forEach { artist ->
             dao.insert(Artist(null, artist.name, artist.gender, artist.voice, artist.length, artist.lyrics))

@@ -29,7 +29,7 @@ import com.squareup.picasso.Picasso
  * @property context コンテキスト
  * @property artistList 取得したアーティスト情報
  */
-class ResultAdapter(private val context: Context, private val artistList: ArrayList<ArtistsForm>) :
+class ResultAdapter(private val context: Context, private val artistList: List<ArtistsForm>) :
     RecyclerView.Adapter<ResultAdapter.ViewHolder>() {
 
     private var holdButton: ImageButton? = null

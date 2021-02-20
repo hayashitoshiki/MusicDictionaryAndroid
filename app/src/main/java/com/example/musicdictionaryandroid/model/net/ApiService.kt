@@ -13,16 +13,16 @@ import retrofit2.http.*
 interface ApiService {
 
     @GET("artist/find.json")
-    fun search(@QueryMap stringParams: Map<String, String>): Call<ArrayList<ArtistsForm>>
+    fun search(@QueryMap stringParams: Map<String, String>): Call<List<ArtistsForm>>
 
     @GET("artist/find/recommend.json")
-    fun getRecommend(@Query("email") email: String): Call<ArrayList<ArtistsForm>>
+    fun getRecommend(@Query("email") email: String): Call<List<ArtistsForm>>
 
     @GET("artist/find/soaring.json")
-    fun getSoaring(): Call<ArrayList<ArtistsForm>>
+    fun getSoaring(): Call<List<ArtistsForm>>
 
     @GET("artist/find/email.json")
-    fun findByEmail(@Query("email") email: String): Call<ArrayList<ArtistsForm>>
+    fun findByEmail(@Query("email") email: String): Call<List<ArtistsForm>>
 
     @GET("artist/save.json")
     fun addArtist(@QueryMap stringParams: Map<String, String>, @Query("email") email: String): Call<ArtistsForm>

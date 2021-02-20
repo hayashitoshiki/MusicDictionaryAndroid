@@ -53,7 +53,7 @@ class ResultFragment : Fragment(), DialogFragmentCallbackInterface {
     }
 
     // ステータス監視
-    private fun onStateChanged(state: Status<ArrayList<ArtistsForm>?>) = when (state) {
+    private fun onStateChanged(state: Status<List<ArtistsForm>?>) = when (state) {
         is Status.Loading -> { showProgressbar() }
         is Status.Success -> {
             hideProgressbar()
@@ -73,7 +73,7 @@ class ResultFragment : Fragment(), DialogFragmentCallbackInterface {
     }
 
     // データ反映
-    private fun viewUpDate(data: ArrayList<ArtistsForm>) {
+    private fun viewUpDate(data: List<ArtistsForm>) {
         val adapter = ResultAdapter(requireContext(), data)
         val layoutManager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
         val controller = AnimationUtils.loadLayoutAnimation(context, R.anim.layout_animation_fall_down)

@@ -12,22 +12,22 @@ import retrofit2.Response
 class ApiServerRepositoryImp : ApiServerRepository {
 
     // 指定した検索条件で検索した時のアーティストリストを返す  あくまで検索結果の"アーティストリストを返す"
-     override fun getArtistsBy(artists: ArtistsForm): Response<ArrayList<ArtistsForm>> {
+     override fun getArtistsBy(artists: ArtistsForm): Response<List<ArtistsForm>> {
         return Provider.api().search(artists.getMapList()).execute()
     }
 
     // おすすめアーティストリストを返す
-    override fun getArtistsByRecommend(email: String): Response<ArrayList<ArtistsForm>> {
+    override fun getArtistsByRecommend(email: String): Response<List<ArtistsForm>> {
         return Provider.api().getRecommend(email).execute()
     }
 
     // 急上昇アーティストリストを返す
-    override fun getArtistsBySoaring(): Response<ArrayList<ArtistsForm>> {
+    override fun getArtistsBySoaring(): Response<List<ArtistsForm>> {
         return Provider.api().getSoaring().execute()
     }
 
     // ユーザー登録したアーティスト取得
-    override fun getArtistsByEmail(email: String): Response<ArrayList<ArtistsForm>> {
+    override fun getArtistsByEmail(email: String): Response<List<ArtistsForm>> {
         return Provider.api().findByEmail(email).execute()
     }
 

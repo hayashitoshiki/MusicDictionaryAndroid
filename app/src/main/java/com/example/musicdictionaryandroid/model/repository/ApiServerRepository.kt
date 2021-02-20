@@ -19,20 +19,20 @@ interface ApiServerRepository {
      * @param artists アーティスト検索条件
      * @return アーティストの検索結果一覧
      */
-    fun getArtistsBy(artists: ArtistsForm): Response<ArrayList<ArtistsForm>>
+    fun getArtistsBy(artists: ArtistsForm): Response<List<ArtistsForm>>
     /**
      * おすすめアーティスト検索
      *
      * @param email ユーザのEmail
      * @return レコメンドアーティスト一覧
      */
-    fun getArtistsByRecommend(email: String): Response<ArrayList<ArtistsForm>>
+    fun getArtistsByRecommend(email: String): Response<List<ArtistsForm>>
     /**
      * 急上昇アーティスト取得
      *
      * @return 急上昇アーティスト一覧
      */
-    fun getArtistsBySoaring(): Response<ArrayList<ArtistsForm>>
+    fun getArtistsBySoaring(): Response<List<ArtistsForm>>
     /*----------------------------------------
         設定タブ
      ----------------------------------------*/
@@ -42,7 +42,7 @@ interface ApiServerRepository {
      * @param email ユーザーのemail
      * @return 登録済みアーティスト一覧
      */
-    fun getArtistsByEmail(email: String): Response<ArrayList<ArtistsForm>>
+    fun getArtistsByEmail(email: String): Response<List<ArtistsForm>>
     /**
      * アーティスト登録
      *

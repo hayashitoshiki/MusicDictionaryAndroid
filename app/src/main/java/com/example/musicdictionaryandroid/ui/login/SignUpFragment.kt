@@ -16,7 +16,6 @@ import com.example.musicdictionaryandroid.databinding.FragmentSignUpBinding
 import com.example.musicdictionaryandroid.model.util.Status
 import org.koin.android.viewmodel.ext.android.viewModel
 
-
 /**
  * 新規登録画面
  */

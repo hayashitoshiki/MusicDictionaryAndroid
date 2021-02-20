@@ -5,7 +5,6 @@ import com.example.musicdictionaryandroid.model.entity.Artist
 import com.example.musicdictionaryandroid.model.entity.ArtistsForm
 import com.example.musicdictionaryandroid.model.repository.*
 import com.example.musicdictionaryandroid.model.util.Result
-import java.util.ArrayList
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
@@ -17,7 +16,7 @@ class ArtistUseCaseImp(
     // region ホームタブ
 
     // 検索条件に一致するアーティスト取得
-    override suspend fun getArtistsBy(artists: ArtistsForm): Result<ArrayList<ArtistsForm>?> {
+    override suspend fun getArtistsBy(artists: ArtistsForm): Result<List<ArtistsForm>?> {
         return withContext(Dispatchers.IO) {
             try {
                 val result = apiRepository.getArtistsBy(artists)
@@ -28,7 +27,7 @@ class ArtistUseCaseImp(
         }
     }
     // おすすめアーティスト検索
-    override suspend fun getArtistsByRecommend(email: String): Result<ArrayList<ArtistsForm>?> {
+    override suspend fun getArtistsByRecommend(email: String): Result<List<ArtistsForm>?> {
         return withContext(Dispatchers.IO) {
             try {
                 val result = apiRepository.getArtistsByRecommend(email)
@@ -39,7 +38,7 @@ class ArtistUseCaseImp(
         }
     }
     // 急上昇アーティスト取得
-    override suspend fun getArtistsBySoaring(): Result<ArrayList<ArtistsForm>?> {
+    override suspend fun getArtistsBySoaring(): Result<List<ArtistsForm>?> {
         return withContext(Dispatchers.IO) {
             try {
                 val result = apiRepository.getArtistsBySoaring()
@@ -54,7 +53,7 @@ class ArtistUseCaseImp(
     // region 設定タブ
 
     // ユーザの登録したアーティスト取得
-     override suspend fun getArtistsByEmail(email: String): Result<ArrayList<ArtistsForm>?> {
+     override suspend fun getArtistsByEmail(email: String): Result<List<ArtistsForm>?> {
           return withContext(Dispatchers.IO) {
               try {
                   val result = apiRepository.getArtistsByEmail(email)

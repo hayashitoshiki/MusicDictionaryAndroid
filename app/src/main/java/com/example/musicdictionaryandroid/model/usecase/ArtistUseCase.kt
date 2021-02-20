@@ -4,7 +4,6 @@ import androidx.lifecycle.LiveData
 import com.example.musicdictionaryandroid.model.entity.Artist
 import com.example.musicdictionaryandroid.model.entity.ArtistsForm
 import com.example.musicdictionaryandroid.model.util.Result
-import java.util.ArrayList
 
 /**
  * アーティストに関するビジネスロジック
@@ -20,20 +19,20 @@ interface ArtistUseCase {
      * @param artists アーティスト検索条件
      * @return アーティストの検索結果一覧
      */
-    suspend fun getArtistsBy(artists: ArtistsForm): Result<ArrayList<ArtistsForm>?>
+    suspend fun getArtistsBy(artists: ArtistsForm): Result<List<ArtistsForm>?>
     /**
      * おすすめアーティスト検索
      *
      * @param email ユーザのEmail
      * @return レコメンドアーティスト一覧
      */
-    suspend fun getArtistsByRecommend(email: String): Result<ArrayList<ArtistsForm>?>
+    suspend fun getArtistsByRecommend(email: String): Result<List<ArtistsForm>?>
     /**
      * 急上昇アーティスト取得
      *
      * @return 急上昇アーティスト一覧
      */
-    suspend fun getArtistsBySoaring(): Result<ArrayList<ArtistsForm>?>
+    suspend fun getArtistsBySoaring(): Result<List<ArtistsForm>?>
     /*----------------------------------------
         設定タブ
      ----------------------------------------*/
@@ -45,7 +44,7 @@ interface ArtistUseCase {
      * @param email ユーザーのemail
      * @return 登録済みアーティスト一覧
      */
-    suspend fun getArtistsByEmail(email: String): Result<ArrayList<ArtistsForm>?>
+    suspend fun getArtistsByEmail(email: String): Result<List<ArtistsForm>?>
     /**
      * アーティスト登録
      * 1. APIへ登録する（登録失敗したら終了）

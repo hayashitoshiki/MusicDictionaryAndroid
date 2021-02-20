@@ -8,10 +8,10 @@ import com.example.musicdictionaryandroid.model.entity.User
 import com.example.musicdictionaryandroid.model.usecase.UserUseCase
 import com.example.musicdictionaryandroid.model.util.Status
 import com.example.musicdictionaryandroid.model.util.UserInfoChangeListUtil
+import java.util.regex.Pattern
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
-import java.util.regex.Pattern
 
 /**
  * 新規登録画面_UIロジック
@@ -28,14 +28,14 @@ class SignUpViewModel(
     val password1Text = MutableLiveData<String>()
     val password2Text = MutableLiveData<String>()
     val nameText = MutableLiveData<String>()
-    private val _emailErrorText =  MutableLiveData<String>()
-    val emailErrorText:  LiveData<String> = _emailErrorText
-    private val _passwordError1Text =  MutableLiveData<String>()
-    val passwordError1Text:  LiveData<String> = _passwordError1Text
-    private val _passwordError2Text =  MutableLiveData<String>()
-    val passwordError2Text:  LiveData<String> = _passwordError2Text
-    private val _nameErrorText =  MutableLiveData<String>()
-    val nameErrorText:  LiveData<String> = _nameErrorText
+    private val _emailErrorText = MutableLiveData<String>()
+    val emailErrorText: LiveData<String> = _emailErrorText
+    private val _passwordError1Text = MutableLiveData<String>()
+    val passwordError1Text: LiveData<String> = _passwordError1Text
+    private val _passwordError2Text = MutableLiveData<String>()
+    val passwordError2Text: LiveData<String> = _passwordError2Text
+    private val _nameErrorText = MutableLiveData<String>()
+    val nameErrorText: LiveData<String> = _nameErrorText
     val genderInt = MutableLiveData(0)
     val areaSelectedPosition = MutableLiveData(0)
     val birthdaySelectedPosition = MutableLiveData(0)

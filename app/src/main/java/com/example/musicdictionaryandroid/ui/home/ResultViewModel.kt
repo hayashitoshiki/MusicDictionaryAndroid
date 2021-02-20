@@ -19,7 +19,7 @@ class ResultViewModel(
     private val artistUseCase: ArtistUseCase
 ) : ViewModel() {
 
-    val status = MutableLiveData<Status<ArrayList<ArtistsForm>?>>()
+    val status = MutableLiveData<Status<List<ArtistsForm>?>>()
 
     /**
      * アーティスト検索

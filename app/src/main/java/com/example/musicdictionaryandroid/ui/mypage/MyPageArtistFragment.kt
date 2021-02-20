@@ -41,8 +41,7 @@ class MyPageArtistFragment : Fragment(), CoroutineScope {
     private val viewModel: MyPageArtistViewModel by viewModel()
     private lateinit var binding: FragmentMypageArtistListBinding
     private val job = SupervisorJob()
-    override val coroutineContext: CoroutineContext
-        get() = Dispatchers.Main + job
+    override val coroutineContext: CoroutineContext = Dispatchers.Main + job
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -70,7 +69,6 @@ class MyPageArtistFragment : Fragment(), CoroutineScope {
         super.onViewCreated(view, savedInstanceState)
         viewModel.status.observe(viewLifecycleOwner, Observer { onStateChanged(it) })
         viewModel.artistList.observe(viewLifecycleOwner, Observer { viewUpDate(it) })
-        viewModel.getArtistsByEmail()
 
         // アーティスト追加ボタン
         binding.artistAddButton.setOnClickListener {
@@ -117,11 +115,10 @@ class MyPageArtistFragment : Fragment(), CoroutineScope {
     // データ反映
     private fun viewUpDate(data: List<Artist>) {
         launch {
-            if (!data.isNullOrEmpty()) {
-                val adapter = binding.artistList.adapter as SettingBaseAdapter
-                adapter.setData(data)
-                adapter.notifyDataSetChanged()
-            } else {
+            val adapter = binding.artistList.adapter as SettingBaseAdapter
+            adapter.setData(data)
+            adapter.notifyDataSetChanged()
+            if (data.isNullOrEmpty()) {
                 showNoDataView()
             }
         }

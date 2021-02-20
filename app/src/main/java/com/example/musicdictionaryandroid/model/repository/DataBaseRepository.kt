@@ -37,7 +37,7 @@ interface DataBaseRepository {
      *
      * @param artists 更新するアーティストリスト
      */
-    suspend fun updateAll(artists: ArrayList<ArtistsForm>)
+    suspend fun updateAll(artists: List<ArtistsForm>)
     /**
      * アーティスト取得
      *
