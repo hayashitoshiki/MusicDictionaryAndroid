@@ -29,7 +29,13 @@ interface UserUseCase {
      * @param user 登録数ユーザー情報
      * @return 登録処理結果
      */
-    suspend fun createUser(email: String, password: String, user: User, onSuccess: (result: CallBackData?) -> Unit, onError: (error: Throwable) -> Unit)
+    suspend fun createUser(
+        email: String,
+        password: String,
+        user: User,
+        onSuccess: (result: CallBackData?) -> Unit,
+        onError: (error: Throwable) -> Unit
+    )
     /**
      * ユーザー情報変更
      *
@@ -54,7 +60,12 @@ interface UserUseCase {
      * @param onSuccess 成功
      * @param onError 失敗
      */
-    suspend fun signIn(email: String, password: String, onSuccess: () -> Unit, onError: (error: Throwable?) -> Unit)
+    suspend fun signIn(
+        email: String,
+        password: String,
+        onSuccess: () -> Unit,
+        onError: (error: Throwable?) -> Unit
+    )
     /**
      * ログアウト
      *

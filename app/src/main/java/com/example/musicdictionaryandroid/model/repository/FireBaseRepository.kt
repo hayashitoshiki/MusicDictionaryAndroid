@@ -20,7 +20,12 @@ interface FireBaseRepository {
      * @param onSuccess 成功
      * @param onError 失敗
      */
-    suspend fun signIn(email: String, password: String, onSuccess: () -> Unit, onError: (error: Exception?) -> Unit)
+    suspend fun signIn(
+        email: String,
+        password: String,
+        onSuccess: () -> Unit,
+        onError: (error: Exception?) -> Unit
+    )
     /**
      * ログアウト
      *
@@ -34,7 +39,12 @@ interface FireBaseRepository {
      * @param onSuccess 成功
      * @param onError 失敗
      */
-    fun signUp(email: String, password: String, onSuccess: () -> Unit, onError: (error: Exception?) -> Unit)
+    fun signUp(
+        email: String,
+        password: String,
+        onSuccess: () -> Unit,
+        onError: (error: Exception?) -> Unit
+    )
     /**
      * アカウント削除
      *

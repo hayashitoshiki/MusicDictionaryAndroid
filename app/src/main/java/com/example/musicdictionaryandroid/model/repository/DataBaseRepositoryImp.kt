@@ -41,7 +41,7 @@ class DataBaseRepositoryImp : DataBaseRepository {
     override suspend fun getArtistAll(): ArrayList<ArtistsForm> {
         val artistList = arrayListOf<ArtistsForm>()
         val artists = dao.getAll()
-            artists.forEach {
+        artists.forEach {
             val artist = ArtistsForm(
                 it.name!!,
                 it.gender!!,

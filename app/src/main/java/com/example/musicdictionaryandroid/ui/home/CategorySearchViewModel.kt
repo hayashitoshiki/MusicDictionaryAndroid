@@ -63,10 +63,10 @@ class CategorySearchViewModel : ViewModel() {
     // バリデーションチェック
     private fun checkValidate() {
         _isEnableSubmitButton.value = genderValueInt.value!! != 0 ||
-                lengthValueInt.value!! != 0 ||
-                voiceValueInt.value!! != 0 ||
-                lyricsValueInt.value!! != 0 ||
-                genre1ValueInt.value!! != 0
+            lengthValueInt.value!! != 0 ||
+            voiceValueInt.value!! != 0 ||
+            lyricsValueInt.value!! != 0 ||
+            genre1ValueInt.value!! != 0
     }
 
     // genderの変更

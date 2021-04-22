@@ -29,7 +29,11 @@ class SearchDialogFragment : DialogFragment() {
         ViewModelProvider.NewInstanceFactory().create(SearchViewModel::class.java)
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         binding = DataBindingUtil.inflate(inflater, R.layout.dialog_search, container, false)
         binding.lifecycleOwner = viewLifecycleOwner
         binding.viewModel = viewModel

@@ -40,7 +40,11 @@ class MyPageArtistAddFragment : Fragment() {
     private val viewModel: MyPageArtistAddViewModel by viewModel()
 
     @SuppressLint("ClickableViewAccessibility")
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_mypage_artist_add, container, false)
         binding.lifecycleOwner = viewLifecycleOwner
         binding.viewModel = viewModel
@@ -119,7 +123,7 @@ class MyPageArtistAddFragment : Fragment() {
         is Status.Success -> {
             hideProgressbar()
             state.data?.let {
-                 back()
+                back()
             } ?: run {
                 showServerError()
             }

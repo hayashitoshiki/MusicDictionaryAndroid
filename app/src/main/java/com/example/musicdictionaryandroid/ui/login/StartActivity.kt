@@ -41,9 +41,9 @@ class StartActivity : AppCompatActivity() {
         signInView = SignInFragment.newInstance()
         signUpView = SignUpFragment.newInstance()
         supportFragmentManager
-                .beginTransaction()
-                .add(R.id.fragment, signInView)
-                .commit()
+            .beginTransaction()
+            .add(R.id.fragment, signInView)
+            .commit()
     }
 
     // ステータス監視
@@ -62,17 +62,17 @@ class StartActivity : AppCompatActivity() {
     // ログイン切り替えボタン
     fun signInButton(view: View) {
         supportFragmentManager
-                .beginTransaction()
-                .replace(R.id.fragment, signInView)
-                .commit()
+            .beginTransaction()
+            .replace(R.id.fragment, signInView)
+            .commit()
     }
 
     // 新規作成切り替えボタン
     fun signUpButton(view: View) {
         supportFragmentManager
-                .beginTransaction()
-                .replace(R.id.fragment, signUpView)
-                .commit()
+            .beginTransaction()
+            .replace(R.id.fragment, signUpView)
+            .commit()
     }
 
     // 画面遷移

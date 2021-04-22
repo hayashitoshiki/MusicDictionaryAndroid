@@ -53,18 +53,18 @@ class ArtistUseCaseImp(
     // region 設定タブ
 
     // ユーザの登録したアーティスト取得
-     override suspend fun getArtistsByEmail(email: String): Result<List<ArtistsForm>?> {
-          return withContext(Dispatchers.IO) {
-              try {
-                  val result = apiRepository.getArtistsByEmail(email)
-                  result.body()?.let {
-                      PreferenceRepositoryImp.setFavorite(it.size)
-                      dataBaseRepository.updateAll(it)
-                  } ?: run { PreferenceRepositoryImp.setFavorite(0) }
-                  return@withContext Result.Success(result.body())
-              } catch (e: Exception) {
-                  return@withContext Result.Success(dataBaseRepository.getArtistAll())
-           }
+    override suspend fun getArtistsByEmail(email: String): Result<List<ArtistsForm>?> {
+        return withContext(Dispatchers.IO) {
+            try {
+                val result = apiRepository.getArtistsByEmail(email)
+                result.body()?.let {
+                    PreferenceRepositoryImp.setFavorite(it.size)
+                    dataBaseRepository.updateAll(it)
+                } ?: run { PreferenceRepositoryImp.setFavorite(0) }
+                return@withContext Result.Success(result.body())
+            } catch (e: Exception) {
+                return@withContext Result.Success(dataBaseRepository.getArtistAll())
+            }
         }
     }
 

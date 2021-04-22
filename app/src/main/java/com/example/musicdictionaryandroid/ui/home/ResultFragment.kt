@@ -33,7 +33,7 @@ class ResultFragment : Fragment(), DialogFragmentCallbackInterface {
     private val viewModel: ResultViewModel by viewModel()
     private lateinit var binding: FragmentResultBinding
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_result, container, false)
         binding.lifecycleOwner = viewLifecycleOwner
         binding.viewModel = viewModel
@@ -80,14 +80,16 @@ class ResultFragment : Fragment(), DialogFragmentCallbackInterface {
         binding.recyclerView.layoutAnimation = controller
         binding.recyclerView.adapter = adapter
         binding.recyclerView.layoutManager = layoutManager
-        adapter.setOnItemClickListener(View.OnClickListener { _ ->
-            val dialogFragment = SearchDialogFragment()
-            val bundle = Bundle()
-            bundle.putSerializable("artist", args.data)
-            dialogFragment.arguments = bundle
-            dialogFragment.setCallbackListener(this)
-            dialogFragment.show(requireActivity().supportFragmentManager, null)
-        })
+        adapter.setOnItemClickListener(
+            View.OnClickListener { _ ->
+                val dialogFragment = SearchDialogFragment()
+                val bundle = Bundle()
+                bundle.putSerializable("artist", args.data)
+                dialogFragment.arguments = bundle
+                dialogFragment.setCallbackListener(this)
+                dialogFragment.show(requireActivity().supportFragmentManager, null)
+            }
+        )
     }
 
     // 一致データなし表示

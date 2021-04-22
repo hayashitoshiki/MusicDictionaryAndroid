@@ -43,7 +43,7 @@ class SettingBaseAdapter(context: Context?, private var items: List<Artist>) : B
         holder.textView?.text = items[position].name
         // アーティスト削除ボタン
         holder.deleteButton!!.setOnClickListener {
-             (parent as ListView).performItemClick(it, position, R.id.delete_button.toLong())
+            (parent as ListView).performItemClick(it, position, R.id.delete_button.toLong())
         }
         // アーティスト編集ボタン
         holder.updateButton!!.setOnClickListener {

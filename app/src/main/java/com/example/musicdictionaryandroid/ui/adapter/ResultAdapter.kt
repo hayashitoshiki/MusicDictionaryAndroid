@@ -168,11 +168,14 @@ class ResultAdapter(private val context: Context, private val artistList: List<A
                 holder.detailLayout.clearAnimation()
                 if (holder.detailLayout.visibility == View.VISIBLE) {
                     holder.detailLayout.startAnimation(collapseAnimation)
-                    Handler().postDelayed(Runnable {
-                        holder.pieChart.visibility = View.GONE
-                        holder.genderChart.visibility = View.GONE
-                        holder.detailLayout.visibility = View.GONE
-                    }, 300)
+                    Handler().postDelayed(
+                        Runnable {
+                            holder.pieChart.visibility = View.GONE
+                            holder.genderChart.visibility = View.GONE
+                            holder.detailLayout.visibility = View.GONE
+                        },
+                        300
+                    )
                     holder.detailButton.text = context.getString(R.string.page_open)
                 } else {
                     // 年齢毎の比率表示
@@ -271,14 +274,20 @@ class ResultAdapter(private val context: Context, private val artistList: List<A
                     }
                     holder.detailLayout.visibility = View.VISIBLE
                     holder.detailLayout.startAnimation(expandAnimation)
-                    Handler().postDelayed(Runnable {
-                        holder.pieChart.startAnimation(anim1)
-                        holder.pieChart.visibility = View.VISIBLE
-                    }, 150)
-                    Handler().postDelayed(Runnable {
-                        holder.genderChart.startAnimation(anim2)
-                        holder.genderChart.visibility = View.VISIBLE
-                    }, 300)
+                    Handler().postDelayed(
+                        Runnable {
+                            holder.pieChart.startAnimation(anim1)
+                            holder.pieChart.visibility = View.VISIBLE
+                        },
+                        150
+                    )
+                    Handler().postDelayed(
+                        Runnable {
+                            holder.genderChart.startAnimation(anim2)
+                            holder.genderChart.visibility = View.VISIBLE
+                        },
+                        300
+                    )
                     holder.detailButton.text = context.getString(R.string.page_close)
                 }
             }
@@ -294,11 +303,14 @@ class ResultAdapter(private val context: Context, private val artistList: List<A
                             holder.webView.settings.domStorageEnabled = true
                             holder.webView.loadUrl(artist.preview)
                             holdButton = holder.playButton
-                            Handler().postDelayed(Runnable {
-                                if (holdButton == holder.playButton) {
-                                    holdButton?.setImageResource(R.mipmap.ic_button_music_play_32)
-                                }
-                            }, 30500)
+                            Handler().postDelayed(
+                                Runnable {
+                                    if (holdButton == holder.playButton) {
+                                        holdButton?.setImageResource(R.mipmap.ic_button_music_play_32)
+                                    }
+                                },
+                                30500
+                            )
                         } else {
                             holder.webView.loadUrl("about:blank")
                             holdButton?.setImageResource(R.mipmap.ic_button_music_play_32)

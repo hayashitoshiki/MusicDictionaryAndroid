@@ -18,7 +18,7 @@ class UserUseCaseImp(
 
     // ユーザー情報取得(SharedPreferences)
     override fun getUserByCache(): User {
-       return User(
+        return User(
             PreferenceRepositoryImp.getEmail()!!,
             PreferenceRepositoryImp.getName()!!,
             PreferenceRepositoryImp.getGender(),
@@ -39,22 +39,31 @@ class UserUseCaseImp(
     }
 
     // ユーザー登録
-    override suspend fun createUser(email: String, password: String, user: User, onSuccess: (result: CallBackData?) -> Unit, onError: (error: Throwable) -> Unit) {
-        fireBaseRepository.signUp(email, password, {
-            val json: String = Moshi.Builder().build().adapter(User::class.java).toJson(user)
-            GlobalScope.launch(Dispatchers.IO) {
-                runCatching { apiRepository.createUser(json) }
-                    .onSuccess {
-                        PreferenceRepositoryImp.setEmail(user.email)
-                        PreferenceRepositoryImp.setName(user.name)
-                        PreferenceRepositoryImp.setGender(user.gender)
-                        PreferenceRepositoryImp.setBirthday(UserInfoChangeListUtil.changeBirthdayString(user.birthday))
-                        PreferenceRepositoryImp.setArea(user.area)
-                        PreferenceRepositoryImp.setFavorite(0)
-                        onSuccess(it.body())
-                    }
-                    .onFailure { onError(it) }
-            } },
+    override suspend fun createUser(
+        email: String,
+        password: String,
+        user: User,
+        onSuccess: (result: CallBackData?) -> Unit,
+        onError: (error: Throwable) -> Unit
+    ) {
+        fireBaseRepository.signUp(
+            email, password,
+            {
+                val json: String = Moshi.Builder().build().adapter(User::class.java).toJson(user)
+                GlobalScope.launch(Dispatchers.IO) {
+                    runCatching { apiRepository.createUser(json) }
+                        .onSuccess {
+                            PreferenceRepositoryImp.setEmail(user.email)
+                            PreferenceRepositoryImp.setName(user.name)
+                            PreferenceRepositoryImp.setGender(user.gender)
+                            PreferenceRepositoryImp.setBirthday(UserInfoChangeListUtil.changeBirthdayString(user.birthday))
+                            PreferenceRepositoryImp.setArea(user.area)
+                            PreferenceRepositoryImp.setFavorite(0)
+                            onSuccess(it.body())
+                        }
+                        .onFailure { onError(it) }
+                }
+            },
             { onError(throw Exception("firebase アカウント作成失敗")) }
         )
     }
@@ -62,10 +71,10 @@ class UserUseCaseImp(
     // ユーザー情報変更
     override suspend fun changeUser(user: User, email: String): Result<CallBackData?> {
         return withContext(Dispatchers.IO) {
-                try {
-                    val result = apiRepository.changeUser(user, email)
-                    return@withContext Result.Success(result.body())
-                } catch (e: Exception) { return@withContext Result.Error(e) }
+            try {
+                val result = apiRepository.changeUser(user, email)
+                return@withContext Result.Success(result.body())
+            } catch (e: Exception) { return@withContext Result.Error(e) }
         }
     }
 
@@ -80,30 +89,39 @@ class UserUseCaseImp(
     }
 
     // ログイン
-    override suspend fun signIn(email: String, password: String, onSuccess: () -> Unit, onError: (error: Throwable?) -> Unit) {
-        fireBaseRepository.signIn(email, password, {
-            Log.d("TAG", "signIn　signIn")
-            GlobalScope.launch {
-                runCatching { apiRepository.getUserByEmail(email) }
-                    .onSuccess {
-                        Log.d("TAG", "API　ログイン成功")
-                        it.body()?.let { user ->
-                            PreferenceRepositoryImp.setEmail(user.email)
-                            PreferenceRepositoryImp.setName(user.name)
-                            PreferenceRepositoryImp.setGender(user.gender)
-                            PreferenceRepositoryImp.setBirthday(UserInfoChangeListUtil.changeBirthdayString(user.birthday))
-                            PreferenceRepositoryImp.setArea(user.area)
-                            PreferenceRepositoryImp.setFavorite(user.artist_count)
+    override suspend fun signIn(
+        email: String,
+        password: String,
+        onSuccess: () -> Unit,
+        onError: (error: Throwable?) -> Unit
+    ) {
+        fireBaseRepository.signIn(
+            email, password,
+            {
+                Log.d("TAG", "signIn　signIn")
+                GlobalScope.launch {
+                    runCatching { apiRepository.getUserByEmail(email) }
+                        .onSuccess {
+                            Log.d("TAG", "API　ログイン成功")
+                            it.body()?.let { user ->
+                                PreferenceRepositoryImp.setEmail(user.email)
+                                PreferenceRepositoryImp.setName(user.name)
+                                PreferenceRepositoryImp.setGender(user.gender)
+                                PreferenceRepositoryImp.setBirthday(UserInfoChangeListUtil.changeBirthdayString(user.birthday))
+                                PreferenceRepositoryImp.setArea(user.area)
+                                PreferenceRepositoryImp.setFavorite(user.artist_count)
+                            }
+                            onSuccess()
                         }
-                        onSuccess()
-                    }
-                    .onFailure {
-                        Log.d("TAG", "API　ログイン失敗")
-                        fireBaseRepository.signOut()
-                        onError(it)
-                    }
-            }
-        }, { onError(it) })
+                        .onFailure {
+                            Log.d("TAG", "API　ログイン失敗")
+                            fireBaseRepository.signOut()
+                            onError(it)
+                        }
+                }
+            },
+            { onError(it) }
+        )
     }
 
     // ログアウト

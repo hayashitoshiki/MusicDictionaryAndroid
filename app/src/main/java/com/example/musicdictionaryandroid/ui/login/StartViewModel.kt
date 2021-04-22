@@ -25,7 +25,7 @@ class StartViewModel(private val userUseCase: UserUseCase) : ViewModel() {
     fun firstCheck() {
         _status.value = Status.Loading
         if (userUseCase.firstCheck()) {
-           _status.postValue(Status.Success(true))
+            _status.postValue(Status.Success(true))
         } else {
             _status.postValue(Status.Success(false))
         }

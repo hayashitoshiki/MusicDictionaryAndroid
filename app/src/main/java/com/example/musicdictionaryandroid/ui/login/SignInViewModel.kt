@@ -100,7 +100,8 @@ class SignInViewModel(
      */
     fun signIn(): Job = GlobalScope.launch {
         status.postValue(Status.Loading)
-        userUseCase.signIn(emailText.value!!, passwordText.value!!,
+        userUseCase.signIn(
+            emailText.value!!, passwordText.value!!,
             { status.postValue(Status.Success(true)) },
             {
                 if (it != null) status.postValue(Status.Failure(it))

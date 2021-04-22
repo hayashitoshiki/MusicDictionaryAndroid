@@ -28,10 +28,12 @@ class SplashActivity : AppCompatActivity() {
     // ステータス監視
     private fun onStateChanged(state: Status<*>) {
         when (state) {
-            is Status.Success -> { when (state.data) {
-                "login" -> home()
-                "logout" -> login()
-            } }
+            is Status.Success -> {
+                when (state.data) {
+                    "login" -> home()
+                    "logout" -> login()
+                }
+            }
             is Status.Failure -> { Log.i(TAG, "Failure:${state.throwable}") }
         }
     }

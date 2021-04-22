@@ -46,6 +46,7 @@ class MyPageArtistViewModel(
         status.value = Status.Loading
         when (val result = artistUseCase.deleteArtist(artist.name!!, email)) {
             is Result.Success -> { status.postValue(Status.Success(result.data)) }
-            is Result.Error -> { status.value = Status.Failure(result.exception) } }
+            is Result.Error -> { status.value = Status.Failure(result.exception) }
+        }
     }
 }

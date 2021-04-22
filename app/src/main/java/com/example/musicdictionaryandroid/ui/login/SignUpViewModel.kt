@@ -73,8 +73,8 @@ class SignUpViewModel(
                 val pattern = Pattern.compile(expression, Pattern.CASE_INSENSITIVE)
                 val matcher = pattern.matcher(email)
                 !(email.isNotEmpty() && !matcher.matches())
-                }
-            } ?: run {
+            }
+        } ?: run {
             return false
         }
     }
@@ -82,7 +82,7 @@ class SignUpViewModel(
     // password入力欄
     private fun validatePassword(): Boolean {
         return password1Text.value != null && password1Text.value!!.length > 5 &&
-                password2Text.value != null && password1Text.value!! == password2Text.value!!
+            password2Text.value != null && password1Text.value!! == password2Text.value!!
     }
 
     // 名前入力欄
@@ -168,7 +168,8 @@ class SignUpViewModel(
         status.postValue(Status.Loading)
         val birthday = UserInfoChangeListUtil.getBirthday(birthdaySelectedPosition.value!!)
         val user = User(emailText.value!!, nameText.value!!, genderInt.value!!, areaSelectedPosition.value!!, birthday, 0)
-        userUseCase.createUser(emailText.value!!, password1Text.value!!, user,
+        userUseCase.createUser(
+            emailText.value!!, password1Text.value!!, user,
             { status.postValue(Status.Success(it!!.status)) },
             { status.postValue(Status.Failure(it)) }
         )

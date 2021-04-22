@@ -12,7 +12,7 @@ import retrofit2.Response
 class ApiServerRepositoryImp : ApiServerRepository {
 
     // 指定した検索条件で検索した時のアーティストリストを返す  あくまで検索結果の"アーティストリストを返す"
-     override fun getArtistsBy(artists: ArtistsForm): Response<List<ArtistsForm>> {
+    override fun getArtistsBy(artists: ArtistsForm): Response<List<ArtistsForm>> {
         return Provider.api().search(artists.getMapList()).execute()
     }
 

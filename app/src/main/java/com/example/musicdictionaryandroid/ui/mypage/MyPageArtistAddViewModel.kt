@@ -112,8 +112,8 @@ class MyPageArtistAddViewModel(
     // 入力バリデート
     private fun validate() {
         _isEnableSubmitButton.value = artistForm.value!!.name != "" && artistForm.value!!.gender != 0 &&
-                artistForm.value!!.length != 0 && artistForm.value!!.voice != 0 &&
-                artistForm.value!!.lyrics != 0 && artistForm.value!!.genre1 != 0 && artistForm.value!!.genre2 != 0
+            artistForm.value!!.length != 0 && artistForm.value!!.voice != 0 &&
+            artistForm.value!!.lyrics != 0 && artistForm.value!!.genre1 != 0 && artistForm.value!!.genre2 != 0
     }
 
     /**
@@ -125,8 +125,10 @@ class MyPageArtistAddViewModel(
             when (_editMode.value) {
                 ADD_MODE -> addArtist(it)
                 CHANGE_MODE -> updateArtist(it)
-                else -> { Log.e(TAG, "指定モードが正しくありません。mode = " + editMode.value)
-                }
+                else ->
+                    {
+                        Log.e(TAG, "指定モードが正しくありません。mode = " + editMode.value)
+                    }
             }
         }
     }

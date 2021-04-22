@@ -82,8 +82,10 @@ class FabTransform : Transition {
         try {
             a = context.obtainStyledAttributes(attrs, R.styleable.FabTransform)
             require(
-                !(!a.hasValue(R.styleable.FabTransform_fabColor) ||
-                        !a.hasValue(R.styleable.FabTransform_fabIcon))
+                !(
+                    !a.hasValue(R.styleable.FabTransform_fabColor) ||
+                        !a.hasValue(R.styleable.FabTransform_fabIcon)
+                    )
             ) { "Must provide both color & icon." }
             color = a.getColor(R.styleable.FabTransform_fabColor, Color.TRANSPARENT)
             icon = a.getResourceId(R.styleable.FabTransform_fabIcon, 0)
@@ -216,7 +218,8 @@ class FabTransform : Transition {
                 translationY.toFloat(),
                 0F,
                 0F
-            ) else pathMotion.getPath(0F, 0F, (-translationX).toFloat(),
+            ) else pathMotion.getPath(
+                0F, 0F, (-translationX).toFloat(),
                 (-translationY).toFloat()
             )
         )
@@ -293,7 +296,7 @@ class FabTransform : Transition {
     companion object {
         private const val EXTRA_FAB_COLOR = "EXTRA_FAB_COLOR"
         private const val EXTRA_FAB_ICON_RES_ID = "EXTRA_FAB_ICON_RES_ID"
-       // 矩形時間 Defaoult 240L
+        // 矩形時間 Defaoult 240L
         private const val DEFAULT_DURATION = 500L
         private const val PROP_BOUNDS = "plaid:fabTransform:bounds"
         val transitionProperties = arrayOf(
