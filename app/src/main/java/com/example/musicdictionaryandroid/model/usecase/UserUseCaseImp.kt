@@ -30,12 +30,7 @@ class UserUseCaseImp(
 
     // 登録したユーザーの情報取得
     override suspend fun getUserByEmail(email: String): Result<User?> {
-        return withContext(Dispatchers.IO) {
-            try {
-                val result = apiRepository.getUserByEmail(email)
-                return@withContext Result.Success(result.body())
-            } catch (e: Exception) { return@withContext Result.Error(e) }
-        }
+        return apiRepository.getUserByEmail(email)
     }
 
     // ユーザー登録
@@ -51,17 +46,18 @@ class UserUseCaseImp(
             {
                 val json: String = Moshi.Builder().build().adapter(User::class.java).toJson(user)
                 GlobalScope.launch(Dispatchers.IO) {
-                    runCatching { apiRepository.createUser(json) }
-                        .onSuccess {
+                    when (val result = apiRepository.createUser(json)) {
+                        is Result.Success -> {
                             PreferenceRepositoryImp.setEmail(user.email)
                             PreferenceRepositoryImp.setName(user.name)
                             PreferenceRepositoryImp.setGender(user.gender)
                             PreferenceRepositoryImp.setBirthday(UserInfoChangeListUtil.changeBirthdayString(user.birthday))
                             PreferenceRepositoryImp.setArea(user.area)
                             PreferenceRepositoryImp.setFavorite(0)
-                            onSuccess(it.body())
+                            onSuccess(result.data)
                         }
-                        .onFailure { onError(it) }
+                        is Result.Error -> onError(result.exception)
+                    }
                 }
             },
             { onError(throw Exception("firebase アカウント作成失敗")) }
@@ -70,12 +66,7 @@ class UserUseCaseImp(
 
     // ユーザー情報変更
     override suspend fun changeUser(user: User, email: String): Result<CallBackData?> {
-        return withContext(Dispatchers.IO) {
-            try {
-                val result = apiRepository.changeUser(user, email)
-                return@withContext Result.Success(result.body())
-            } catch (e: Exception) { return@withContext Result.Error(e) }
-        }
+        return apiRepository.changeUser(user, email)
     }
 
     // ユーザー削除
@@ -95,32 +86,30 @@ class UserUseCaseImp(
         onSuccess: () -> Unit,
         onError: (error: Throwable?) -> Unit
     ) {
-        fireBaseRepository.signIn(
-            email, password,
-            {
-                Log.d("TAG", "signIn　signIn")
-                GlobalScope.launch {
-                    runCatching { apiRepository.getUserByEmail(email) }
-                        .onSuccess {
-                            Log.d("TAG", "API　ログイン成功")
-                            it.body()?.let { user ->
-                                PreferenceRepositoryImp.setEmail(user.email)
-                                PreferenceRepositoryImp.setName(user.name)
-                                PreferenceRepositoryImp.setGender(user.gender)
-                                PreferenceRepositoryImp.setBirthday(UserInfoChangeListUtil.changeBirthdayString(user.birthday))
-                                PreferenceRepositoryImp.setArea(user.area)
-                                PreferenceRepositoryImp.setFavorite(user.artist_count)
-                            }
-                            onSuccess()
+        fireBaseRepository.signIn(email, password, {
+            Log.d("TAG", "signIn　signIn")
+            GlobalScope.launch {
+                when (val result = apiRepository.getUserByEmail(email)){
+                    is Result.Success -> {
+                        Log.d("TAG", "API　ログイン成功")
+                        result.data.let { user ->
+                            PreferenceRepositoryImp.setEmail(user.email)
+                            PreferenceRepositoryImp.setName(user.name)
+                            PreferenceRepositoryImp.setGender(user.gender)
+                            PreferenceRepositoryImp.setBirthday(UserInfoChangeListUtil.changeBirthdayString(user.birthday))
+                            PreferenceRepositoryImp.setArea(user.area)
+                            PreferenceRepositoryImp.setFavorite(user.artist_count)
                         }
-                        .onFailure {
-                            Log.d("TAG", "API　ログイン失敗")
-                            fireBaseRepository.signOut()
-                            onError(it)
-                        }
+                        onSuccess()
+                    }
+                    is Result.Error -> {
+                        Log.d("TAG", "API　ログイン失敗")
+                        fireBaseRepository.signOut()
+                        onError(result.exception)
+                    }
                 }
-            },
-            { onError(it) }
+            }
+        }, { onError(it) }
         )
     }
 
