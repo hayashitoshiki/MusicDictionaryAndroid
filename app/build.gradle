@@ -32,8 +32,8 @@ android {
         abortOnError false
         xmlReport true
 
-        // AndroidManifestファイル対象外設定
-        lintConfig file('AndroidManifest.xml')
+        // Lint対象外ファイル設定
+        lintConfig file('lint.xml')
 
     }
 
