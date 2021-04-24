@@ -17,6 +17,7 @@ import com.example.musicdictionaryandroid.ui.mypage.MyPageArtistAddViewModel
 import com.example.musicdictionaryandroid.ui.mypage.MyPageArtistViewModel
 import com.example.musicdictionaryandroid.ui.mypage.MyPageTopViewModel
 import com.example.musicdictionaryandroid.ui.mypage.MyPageUserViewModel
+import kotlinx.coroutines.MainScope
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.viewmodel.dsl.viewModel
 import org.koin.core.context.startKoin
@@ -32,6 +33,9 @@ class MyApplication : Application() {
         @Suppress("JAVA_CLASS_ON_COMPANION")
         val TAG = javaClass.name
     }
+
+    // Grovalp Scope
+    private val applicationScope = MainScope()
 
     init {
         shered = this
@@ -70,8 +74,8 @@ class MyApplication : Application() {
         viewModel { StartViewModel(get()) }
         viewModel { SplashViewModel(get()) }
 
-        factory <ArtistUseCase> { ArtistUseCaseImp(get(), get()) }
-        factory <UserUseCase> { UserUseCaseImp(get(), get(), get()) }
+        factory <ArtistUseCase> { ArtistUseCaseImp(get(), get(), applicationScope) }
+        factory <UserUseCase> { UserUseCaseImp(get(), get(), get(), applicationScope) }
 
         factory <FireBaseRepository> { FireBaseRepositoryImp() }
         factory <ApiServerRepository> { ApiServerRepositoryImp() }

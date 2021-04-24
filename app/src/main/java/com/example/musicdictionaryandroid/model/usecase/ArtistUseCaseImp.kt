@@ -5,10 +5,15 @@ import com.example.musicdictionaryandroid.model.entity.Artist
 import com.example.musicdictionaryandroid.model.entity.ArtistsForm
 import com.example.musicdictionaryandroid.model.repository.*
 import com.example.musicdictionaryandroid.model.util.Result
+import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
 
 class ArtistUseCaseImp(
     private val apiRepository: ApiServerRepository,
-    private val dataBaseRepository: DataBaseRepository
+    private val dataBaseRepository: DataBaseRepository,
+    private val externalScope: CoroutineScope,
+    private val defaultDispatcher: CoroutineDispatcher = Dispatchers.Default
 ) : ArtistUseCase {
 
     // region ホームタブ

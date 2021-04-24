@@ -13,7 +13,9 @@ import kotlinx.coroutines.*
 class UserUseCaseImp(
     private val apiRepository: ApiServerRepository,
     private val fireBaseRepository: FireBaseRepository,
-    private val dataBaseRepository: DataBaseRepository
+    private val dataBaseRepository: DataBaseRepository,
+    private val externalScope: CoroutineScope,
+    private val defaultDispatcher: CoroutineDispatcher = Dispatchers.Default
 ) : UserUseCase {
 
     // ユーザー情報取得(SharedPreferences)
@@ -41,11 +43,9 @@ class UserUseCaseImp(
         onSuccess: (result: CallBackData?) -> Unit,
         onError: (error: Throwable) -> Unit
     ) {
-        fireBaseRepository.signUp(
-            email, password,
-            {
+        fireBaseRepository.signUp(email, password, {
                 val json: String = Moshi.Builder().build().adapter(User::class.java).toJson(user)
-                GlobalScope.launch(Dispatchers.IO) {
+                externalScope.launch(defaultDispatcher) {
                     when (val result = apiRepository.createUser(json)) {
                         is Result.Success -> {
                             PreferenceRepositoryImp.setEmail(user.email)
@@ -88,7 +88,7 @@ class UserUseCaseImp(
     ) {
         fireBaseRepository.signIn(email, password, {
             Log.d("TAG", "signIn　signIn")
-            GlobalScope.launch {
+            externalScope.launch(defaultDispatcher) {
                 when (val result = apiRepository.getUserByEmail(email)){
                     is Result.Success -> {
                         Log.d("TAG", "API　ログイン成功")
@@ -115,11 +115,9 @@ class UserUseCaseImp(
 
     // ログアウト
     override suspend fun signOut() {
-        withContext(Dispatchers.IO) {
-            fireBaseRepository.signOut()
-            PreferenceRepositoryImp.removeAll()
-            dataBaseRepository.deleteAll()
-        }
+        fireBaseRepository.signOut()
+        PreferenceRepositoryImp.removeAll()
+        dataBaseRepository.deleteAll()
     }
 
     // ユーザーのEmail取得
