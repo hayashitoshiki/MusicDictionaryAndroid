@@ -25,13 +25,13 @@ interface DataBaseRepository {
      * 全部アーティスト削除
      *
      */
-    fun deleteAll()
+    suspend fun deleteAll()
     /**
      * アーティスト更新
      *
      * @param artist 更新するアーティスト情報
      */
-    fun updateArtist(artist: ArtistsForm)
+    suspend fun updateArtist(artist: ArtistsForm)
     /**
      * 全アーティスト更新
      *
@@ -44,7 +44,7 @@ interface DataBaseRepository {
      * @param name 取得したアーティスト名
      * @return 該当するアーティスト
      */
-    fun findByName(name: String): Artist
+    suspend fun findByName(name: String): Artist
     /**
      * 全アーティスト取得
      *

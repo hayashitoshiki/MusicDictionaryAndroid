@@ -109,7 +109,7 @@ class MyPageArtistFragment : Fragment(), CoroutineScope {
             Log.e(TAG, "Failure:${state.throwable}")
             hideProgressbar()
         }
-        is Status.Non -> { }
+        is Status.Non -> { hideNoDataView() }
     }
 
     // データ反映

@@ -17,6 +17,7 @@ import com.example.musicdictionaryandroid.ui.mypage.MyPageArtistAddViewModel
 import com.example.musicdictionaryandroid.ui.mypage.MyPageArtistViewModel
 import com.example.musicdictionaryandroid.ui.mypage.MyPageTopViewModel
 import com.example.musicdictionaryandroid.ui.mypage.MyPageUserViewModel
+import kotlinx.coroutines.MainScope
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.viewmodel.dsl.viewModel
 import org.koin.core.context.startKoin
@@ -32,6 +33,9 @@ class MyApplication : Application() {
         @Suppress("JAVA_CLASS_ON_COMPANION")
         val TAG = javaClass.name
     }
+
+    // Global Scope
+    private val applicationScope = MainScope()
 
     init {
         shered = this
@@ -56,6 +60,7 @@ class MyApplication : Application() {
 
     // Koinモジュール
     private val module: Module = module {
+        viewModel { MainActivityViewModel(get(), get()) }
 
         viewModel { MyPageTopViewModel(get()) }
         viewModel { MyPageUserViewModel(get()) }
@@ -70,12 +75,12 @@ class MyApplication : Application() {
         viewModel { StartViewModel(get()) }
         viewModel { SplashViewModel(get()) }
 
-        factory <ArtistUseCase> { ArtistUseCaseImp(get(), get()) }
-        factory <UserUseCase> { UserUseCaseImp(get(), get(), get()) }
+        factory <ArtistUseCase> { ArtistUseCaseImp(get(), get(), get(), applicationScope) }
+        factory <UserUseCase> { UserUseCaseImp(get(), get(), get(), get(), applicationScope) }
 
         factory <FireBaseRepository> { FireBaseRepositoryImp() }
         factory <ApiServerRepository> { ApiServerRepositoryImp() }
         factory <DataBaseRepository> { DataBaseRepositoryImp() }
-        factory <PreferenceRepository> { PreferenceRepositoryImp }
+        single <PreferenceRepository> { PreferenceRepositoryImp() }
     }
 }

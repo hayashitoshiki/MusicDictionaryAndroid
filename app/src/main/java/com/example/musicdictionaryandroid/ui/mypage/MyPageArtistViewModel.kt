@@ -22,22 +22,8 @@ class MyPageArtistViewModel(
 ) : ViewModel() {
 
     val artistList: LiveData<List<Artist>> = artistUseCase.getArtistList()
-    val status = MutableLiveData<Status<List<ArtistsForm>?>>()
-    var email = userUseCase.getEmail()
-
-    init {
-        getArtistsByEmail()
-    }
-
-    /**
-     * 登録済みアーティスト取得
-     */
-    private fun getArtistsByEmail(): Job = viewModelScope.launch {
-        when (val result = artistUseCase.getArtistsByEmail(email)) {
-            is Result.Success -> { status.value = Status.Success(result.data) }
-            is Result.Error -> { status.value = Status.Failure(result.exception) }
-        }
-    }
+    val status = MutableLiveData<Status<List<ArtistsForm>?>>(Status.Non)
+    private val email = userUseCase.getEmail()
 
     /**
      * アーティスト削除

@@ -20,7 +20,7 @@ interface FireBaseRepository {
      * @param onSuccess 成功
      * @param onError 失敗
      */
-    suspend fun signIn(
+    fun signIn(
         email: String,
         password: String,
         onSuccess: () -> Unit,
