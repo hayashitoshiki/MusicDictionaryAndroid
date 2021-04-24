@@ -31,6 +31,10 @@ android {
         // but continue the build even when errors are found:
         abortOnError false
         xmlReport true
+
+        // AndroidManifestファイル対象外設定
+        lintConfig file('AndroidManifest.xml')
+
     }
 
     buildTypes {
