@@ -14,6 +14,7 @@ class UserUseCaseImp(
     private val apiRepository: ApiServerRepository,
     private val fireBaseRepository: FireBaseRepository,
     private val dataBaseRepository: DataBaseRepository,
+    private val preferenceRepository: PreferenceRepository,
     private val externalScope: CoroutineScope,
     private val defaultDispatcher: CoroutineDispatcher = Dispatchers.Default
 ) : UserUseCase {
@@ -21,12 +22,12 @@ class UserUseCaseImp(
     // ユーザー情報取得(SharedPreferences)
     override fun getUserByCache(): User {
         return User(
-            PreferenceRepositoryImp.getEmail()!!,
-            PreferenceRepositoryImp.getName()!!,
-            PreferenceRepositoryImp.getGender(),
-            PreferenceRepositoryImp.getArea(),
-            UserInfoChangeListUtil.getBirthday(PreferenceRepositoryImp.getBirthday()),
-            PreferenceRepositoryImp.getFavorite()
+            preferenceRepository.getEmail()!!,
+            preferenceRepository.getName()!!,
+            preferenceRepository.getGender(),
+            preferenceRepository.getArea(),
+            UserInfoChangeListUtil.getBirthday(preferenceRepository.getBirthday()),
+            preferenceRepository.getFavorite()
         )
     }
 
@@ -48,12 +49,12 @@ class UserUseCaseImp(
                 externalScope.launch(defaultDispatcher) {
                     when (val result = apiRepository.createUser(json)) {
                         is Result.Success -> {
-                            PreferenceRepositoryImp.setEmail(user.email)
-                            PreferenceRepositoryImp.setName(user.name)
-                            PreferenceRepositoryImp.setGender(user.gender)
-                            PreferenceRepositoryImp.setBirthday(UserInfoChangeListUtil.changeBirthdayString(user.birthday))
-                            PreferenceRepositoryImp.setArea(user.area)
-                            PreferenceRepositoryImp.setFavorite(0)
+                            preferenceRepository.setEmail(user.email)
+                            preferenceRepository.setName(user.name)
+                            preferenceRepository.setGender(user.gender)
+                            preferenceRepository.setBirthday(UserInfoChangeListUtil.changeBirthdayString(user.birthday))
+                            preferenceRepository.setArea(user.area)
+                            preferenceRepository.setFavorite(0)
                             onSuccess(result.data)
                         }
                         is Result.Error -> onError(result.exception)
@@ -93,12 +94,12 @@ class UserUseCaseImp(
                     is Result.Success -> {
                         Log.d("TAG", "API　ログイン成功")
                         result.data.let { user ->
-                            PreferenceRepositoryImp.setEmail(user.email)
-                            PreferenceRepositoryImp.setName(user.name)
-                            PreferenceRepositoryImp.setGender(user.gender)
-                            PreferenceRepositoryImp.setBirthday(UserInfoChangeListUtil.changeBirthdayString(user.birthday))
-                            PreferenceRepositoryImp.setArea(user.area)
-                            PreferenceRepositoryImp.setFavorite(user.artist_count)
+                            preferenceRepository.setEmail(user.email)
+                            preferenceRepository.setName(user.name)
+                            preferenceRepository.setGender(user.gender)
+                            preferenceRepository.setBirthday(UserInfoChangeListUtil.changeBirthdayString(user.birthday))
+                            preferenceRepository.setArea(user.area)
+                            preferenceRepository.setFavorite(user.artist_count)
                         }
                         onSuccess()
                     }
@@ -116,7 +117,7 @@ class UserUseCaseImp(
     // ログアウト
     override suspend fun signOut() {
         fireBaseRepository.signOut()
-        PreferenceRepositoryImp.removeAll()
+        preferenceRepository.removeAll()
         dataBaseRepository.deleteAll()
     }
 

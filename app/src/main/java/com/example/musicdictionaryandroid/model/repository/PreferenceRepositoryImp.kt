@@ -6,7 +6,7 @@ import com.example.musicdictionaryandroid.ui.MyApplication
 /**
  * SharedPreferences管理
  */
-object PreferenceRepositoryImp : PreferenceRepository {
+class PreferenceRepositoryImp : PreferenceRepository {
 
     private var context: Context = MyApplication.shered.applicationContext
 

@@ -74,12 +74,12 @@ class MyApplication : Application() {
         viewModel { StartViewModel(get()) }
         viewModel { SplashViewModel(get()) }
 
-        factory <ArtistUseCase> { ArtistUseCaseImp(get(), get(), applicationScope) }
-        factory <UserUseCase> { UserUseCaseImp(get(), get(), get(), applicationScope) }
+        factory <ArtistUseCase> { ArtistUseCaseImp(get(), get(), get(), applicationScope) }
+        factory <UserUseCase> { UserUseCaseImp(get(), get(), get(), get(), applicationScope) }
 
         factory <FireBaseRepository> { FireBaseRepositoryImp() }
         factory <ApiServerRepository> { ApiServerRepositoryImp() }
         factory <DataBaseRepository> { DataBaseRepositoryImp() }
-        factory <PreferenceRepository> { PreferenceRepositoryImp }
+        single <PreferenceRepository> { PreferenceRepositoryImp() }
     }
 }

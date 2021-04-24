@@ -8,10 +8,12 @@ import com.example.musicdictionaryandroid.model.util.Result
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 class ArtistUseCaseImp(
     private val apiRepository: ApiServerRepository,
     private val dataBaseRepository: DataBaseRepository,
+    private val preferenceRepository: PreferenceRepository,
     private val externalScope: CoroutineScope,
     private val defaultDispatcher: CoroutineDispatcher = Dispatchers.Default
 ) : ArtistUseCase {
@@ -41,13 +43,12 @@ class ArtistUseCaseImp(
     override suspend fun getArtistsByEmail(email: String): Result<List<ArtistsForm>?> {
         return when (val result = apiRepository.getArtistsByEmail(email)) {
             is Result.Success -> {
-                PreferenceRepositoryImp.setFavorite(result.data.size)
+                preferenceRepository.setFavorite(result.data.size)
                 dataBaseRepository.updateAll(result.data)
                 result
             }
             is Result.Error -> Result.Success(dataBaseRepository.getArtistAll())
         }
-
     }
 
     // アーティスト登録
@@ -63,7 +64,11 @@ class ArtistUseCaseImp(
         )
         return when (val result = apiRepository.addArtist(artistsFrom, email)) {
             is Result.Success -> {
-                dataBaseRepository.addArtist(result.data)
+                externalScope.launch {
+                    val size = preferenceRepository.getFavorite()
+                    preferenceRepository.setFavorite(size + 1)
+                    dataBaseRepository.addArtist(result.data)
+                }.join()
                 result
             }
             is Result.Error -> {
@@ -85,8 +90,10 @@ class ArtistUseCaseImp(
         )
         return when (val result = apiRepository.updateArtist(artistsFrom, email)) {
             is Result.Success -> {
-                dataBaseRepository.deleteAll()
-                dataBaseRepository.updateArtist(result.data)
+                externalScope.launch {
+                    dataBaseRepository.deleteAll()
+                    dataBaseRepository.updateArtist(result.data)
+                }.join()
                 result
             }
             is Result.Error -> result
@@ -95,15 +102,17 @@ class ArtistUseCaseImp(
 
     // アーティスト削除
     override suspend fun deleteArtist(name: String, email: String): Result<List<ArtistsForm>> {
-        return try {
-            apiRepository.deleteArtist(name, email)
-            dataBaseRepository.deleteArtist(name)
-            val size = PreferenceRepositoryImp.getFavorite()
-            PreferenceRepositoryImp.setFavorite(size - 1)
-            val artist = dataBaseRepository.getArtistAll()
-            Result.Success(artist)
-        } catch (e: Exception) {
-            Result.Error(e)
+        return when (val result = apiRepository.deleteArtist(name, email)) {
+            is Result.Success -> {
+                externalScope.launch {
+                    dataBaseRepository.deleteArtist(name)
+                    val size = preferenceRepository.getFavorite()
+                    preferenceRepository.setFavorite(size - 1)
+                }.join()
+                val artist = dataBaseRepository.getArtistAll()
+                Result.Success(artist)
+            }
+            is Result.Error -> result
         }
     }
 
