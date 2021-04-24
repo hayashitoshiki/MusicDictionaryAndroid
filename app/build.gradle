@@ -32,9 +32,6 @@ android {
         abortOnError false
         xmlReport true
 
-        // Lint対象外ファイル設定
-        lintConfig file('lint.xml')
-
     }
 
     buildTypes {
