@@ -34,7 +34,7 @@ class MyApplication : Application() {
         val TAG = javaClass.name
     }
 
-    // Grovalp Scope
+    // Global Scope
     private val applicationScope = MainScope()
 
     init {
@@ -60,6 +60,7 @@ class MyApplication : Application() {
 
     // Koinモジュール
     private val module: Module = module {
+        viewModel { MainActivityViewModel(get(), get()) }
 
         viewModel { MyPageTopViewModel(get()) }
         viewModel { MyPageUserViewModel(get()) }

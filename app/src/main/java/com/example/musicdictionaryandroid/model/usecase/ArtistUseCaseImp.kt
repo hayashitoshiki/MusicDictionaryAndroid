@@ -1,5 +1,6 @@
 package com.example.musicdictionaryandroid.model.usecase
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import com.example.musicdictionaryandroid.model.entity.Artist
 import com.example.musicdictionaryandroid.model.entity.ArtistsForm
@@ -47,7 +48,9 @@ class ArtistUseCaseImp(
                 dataBaseRepository.updateAll(result.data)
                 result
             }
-            is Result.Error -> Result.Success(dataBaseRepository.getArtistAll())
+            is Result.Error -> {
+                Result.Success(dataBaseRepository.getArtistAll())
+            }
         }
     }
 
