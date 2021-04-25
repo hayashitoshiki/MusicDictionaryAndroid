@@ -10,6 +10,8 @@ import com.example.musicdictionaryandroid.data.repository.DataBaseRepository
 import com.example.musicdictionaryandroid.data.repository.FireBaseRepository
 import com.example.musicdictionaryandroid.data.repository.PreferenceRepository
 import com.example.musicdictionaryandroid.data.util.Result
+import com.example.musicdictionaryandroid.domain.model.entity.Artist
+import com.example.musicdictionaryandroid.domain.model.value.*
 import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.every
@@ -39,19 +41,10 @@ class UserUseCaseImpTest {
     private lateinit var fireBaseRepository: FireBaseRepository
 
     private val user = User("test@com.jp", "testA", 1, 1, "2000/2/2", 1)
-    private val artist = ArtistEntity(null, "artistA", 0, 0, 0, 0, 0, 0)
-    private val artistForm = ArtistsDto(
-        artist.name!!,
-        artist.gender!!,
-        artist.voice!!,
-        artist.length!!,
-        artist.lyrics!!,
-        artist.genre1!!,
-        artist.genre2!!
-    )
-    private val artistList = listOf(artistForm)
-    private val artistArray = arrayListOf(artistForm, artistForm)
-    private val artistListLiveData =  MutableLiveData<List<ArtistEntity>>(listOf(artist))
+    private val artist = Artist("test", Gender.MAN, Voice(0), Length(0), Lyrics(0), Genre1(0), Genre2(0))
+
+    private val artistList = listOf(artist)
+    private val artistListLiveData =  MutableLiveData(listOf(artist))
     private val failureResult = Result.Error(IllegalArgumentException(""))
     private val successEmail = "success"
     private val failureEmail = "Failure"
@@ -60,17 +53,8 @@ class UserUseCaseImpTest {
     @Before
     fun setUp() {
         apiRepository = mockk<ApiServerRepository>().also {
-            coEvery { it.getArtistsBy(any()) } returns Result.Success(artistList)
-            coEvery { it.getArtistsByRecommend(any()) } returns Result.Success(artistList)
-            coEvery { it.getArtistsBySoaring() } returns Result.Success(artistList)
             coEvery { it.getArtistsByEmail(successEmail) } returns Result.Success(artistList)
             coEvery { it.getArtistsByEmail(failureEmail) } returns failureResult
-            coEvery { it.addArtist(any(), successEmail) } returns Result.Success(artistForm)
-            coEvery { it.addArtist(any(), failureEmail) } returns failureResult
-            coEvery { it.updateArtist(any(), successEmail) } returns Result.Success(artistForm)
-            coEvery { it.updateArtist(any(), failureEmail) } returns failureResult
-            coEvery { it.deleteArtist(any(), successEmail) } returns Result.Success(CallBackData())
-            coEvery { it.deleteArtist(any(), failureEmail) } returns failureResult
             coEvery { it.getUserByEmail(any()) } returns Result.Success(user)
             coEvery { it.createUser(any()) } returns Result.Success(CallBackData())
             coEvery { it.changeUser(any(), any()) } returns Result.Success(CallBackData())
@@ -82,7 +66,7 @@ class UserUseCaseImpTest {
             coEvery { it.updateArtist(any()) } returns Unit
             coEvery { it.updateAll(any()) } returns Unit
             coEvery { it.findByName(any()) } returns artist
-            coEvery { it.getArtistAll() } returns artistArray
+            coEvery { it.getArtistAll() } returns artistList
             coEvery { it.getArtistList() } returns artistListLiveData
         }
         fireBaseRepository = mockk<FireBaseRepository>().also {

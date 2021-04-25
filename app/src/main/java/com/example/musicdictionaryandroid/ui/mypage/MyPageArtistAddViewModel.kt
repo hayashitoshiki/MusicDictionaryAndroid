@@ -41,7 +41,7 @@ class MyPageArtistAddViewModel(
 //    val artist: LiveData<Artist> = _artist
     private val _editMode = MutableLiveData<Int>()
     val editMode: LiveData<Int> = _editMode
-    private val _titleText = MutableLiveData<String>()
+    private val _titleText = MutableLiveData("")
     val titleText: LiveData<String> = _titleText
     val nameText = MutableLiveData<String>()
 
@@ -50,12 +50,12 @@ class MyPageArtistAddViewModel(
     val length = MutableLiveData(0)
     val lyrics = MutableLiveData(0)
 
-    private val _genre1ValueList = MutableLiveData<List<String>>()
+    private val _genre1ValueList = MutableLiveData<List<String>>(listOf())
     val genre1ValueList: LiveData<List<String>> = _genre1ValueList
-    private val _genre2ValueList = MutableLiveData<List<String>>()
+    private val _genre2ValueList = MutableLiveData<List<String>>(listOf())
     val genre2ValueList: LiveData<List<String>> = _genre2ValueList
-    val genre1 = MutableLiveData<Int>(0)
-    val genre2 = MutableLiveData<Int>(0)
+    val genre1 = MutableLiveData(0)
+    val genre2 = MutableLiveData(0)
     private val _submitText = MutableLiveData<String>()
     val submitText: LiveData<String> = _submitText
     private val _isEnableSubmitButton = MediatorLiveData<Boolean>()
@@ -68,8 +68,13 @@ class MyPageArtistAddViewModel(
     }
 
     init {
-        _isEnableSubmitButton.addSource(nameText) { changeArtistName(it!!) }
-//        _isEnableSubmitButton.addSource(artist) { validate() }
+        _isEnableSubmitButton.addSource(nameText) { validate() }
+        _isEnableSubmitButton.addSource(gender) { validate() }
+        _isEnableSubmitButton.addSource(voice) { validate() }
+        _isEnableSubmitButton.addSource(length) { validate() }
+        _isEnableSubmitButton.addSource(lyrics) { validate() }
+        _isEnableSubmitButton.addSource(genre1) { validate() }
+        _isEnableSubmitButton.addSource(genre2) { validate() }
     }
 
     fun init(

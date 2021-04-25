@@ -1,14 +1,15 @@
 package com.example.musicdictionaryandroid.domain.usecase
 
 import androidx.lifecycle.MutableLiveData
-import com.example.musicdictionaryandroid.data.database.entity.ArtistEntity
-import com.example.musicdictionaryandroid.data.net.dto.ArtistsDto
 import com.example.musicdictionaryandroid.data.database.entity.CallBackData
 import com.example.musicdictionaryandroid.data.database.entity.User
 import com.example.musicdictionaryandroid.data.repository.ApiServerRepository
 import com.example.musicdictionaryandroid.data.repository.DataBaseRepository
 import com.example.musicdictionaryandroid.data.repository.PreferenceRepository
 import com.example.musicdictionaryandroid.data.util.Result
+import com.example.musicdictionaryandroid.domain.model.entity.Artist
+import com.example.musicdictionaryandroid.domain.model.entity.ArtistContents
+import com.example.musicdictionaryandroid.domain.model.value.*
 import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.every
@@ -40,11 +41,12 @@ class ArtistEntityUseCaseImpTest {
 
 
     private val user = User("test@com.jp","testA", 1 ,1, "2000/2/2", 1)
-    private val artist = ArtistEntity(null, "artistA", 0, 0, 0, 0, 0, 0)
-    private val artistForm = ArtistsDto(artist.name!!, artist.gender!!, artist.voice!!, artist.length!!, artist.lyrics!!, artist.genre1!!, artist.genre2!!)
-    private val artistList = listOf(artistForm)
-    private val artistArray = arrayListOf(artistForm, artistForm)
-    private val artistListLiveData =  MutableLiveData<List<ArtistEntity>>(listOf(artist))
+    private val artist = Artist("test", Gender.MAN, Voice(0), Length(0), Lyrics(0), Genre1(0), Genre2(0))
+
+    private val artistContents = ArtistContents(artist, null,null, 0, 0, 0, 0, 0, 0,0,0)
+    private val artistContentsList = listOf(artistContents)
+    private val artistList = listOf(artist, artist)
+    private val artistListLiveData =  MutableLiveData(listOf(artist))
     private val failureResult = Result.Error(IllegalArgumentException(""))
     private val successEmail = "success"
     private val failureEmail = "Failure"
@@ -54,14 +56,14 @@ class ArtistEntityUseCaseImpTest {
     fun setUp() {
         Dispatchers.setMain(testDispatcher)
         apiRepository = mockk<ApiServerRepository>().also {
-            coEvery { it.getArtistsBy(any()) } returns Result.Success(artistList)
-            coEvery { it.getArtistsByRecommend(any()) } returns Result.Success(artistList)
-            coEvery { it.getArtistsBySoaring() } returns Result.Success(artistList)
+            coEvery { it.getArtistsBy(any()) } returns Result.Success(artistContentsList)
+            coEvery { it.getArtistsByRecommend(any()) } returns Result.Success(artistContentsList)
+            coEvery { it.getArtistsBySoaring() } returns Result.Success(artistContentsList)
             coEvery { it.getArtistsByEmail(successEmail) } returns Result.Success(artistList)
             coEvery { it.getArtistsByEmail(failureEmail) } returns failureResult
-            coEvery { it.addArtist(any(), successEmail) } returns Result.Success(artistForm)
+            coEvery { it.addArtist(any(), successEmail) } returns Result.Success(artist)
             coEvery { it.addArtist(any(), failureEmail) } returns failureResult
-            coEvery { it.updateArtist(any(), successEmail) } returns Result.Success(artistForm)
+            coEvery { it.updateArtist(any(), successEmail) } returns Result.Success(artist)
             coEvery { it.updateArtist(any(), failureEmail) } returns failureResult
             coEvery { it.deleteArtist(any(), successEmail) } returns Result.Success(CallBackData())
             coEvery { it.deleteArtist(any(), failureEmail) } returns failureResult
@@ -76,7 +78,7 @@ class ArtistEntityUseCaseImpTest {
             coEvery { it.updateArtist(any()) } returns Unit
             coEvery { it.updateAll(any()) } returns Unit
             coEvery { it.findByName(any()) } returns artist
-            coEvery { it.getArtistAll() } returns artistArray
+            coEvery { it.getArtistAll() } returns artistList
             coEvery { it.getArtistList() } returns artistListLiveData
         }
         preferenceRepository = mockk<PreferenceRepository>().also {
@@ -104,9 +106,9 @@ class ArtistEntityUseCaseImpTest {
     @Test
     fun getArtistsBy() {
         runBlocking {
-            val result = useCase.getArtistsBy(artistForm)
-            assertEquals(Result.Success(artistList), result)
-            coVerify(exactly = 1) { (apiRepository).getArtistsBy(artistForm) }
+            val result = useCase.getArtistsBy(artist)
+            assertEquals(Result.Success(artistContentsList), result)
+            coVerify(exactly = 1) { (apiRepository).getArtistsBy(artist) }
         }
     }
 
@@ -124,7 +126,7 @@ class ArtistEntityUseCaseImpTest {
     fun getArtistsByRecommend() {
         runBlocking {
             val result = useCase.getArtistsByRecommend("test@com.jp")
-            assertEquals(Result.Success(artistList), result)
+            assertEquals(Result.Success(artistContentsList), result)
             coVerify(exactly = 1) { (apiRepository).getArtistsByRecommend("test@com.jp") }
         }
     }
@@ -144,7 +146,7 @@ class ArtistEntityUseCaseImpTest {
     fun getArtistsBySoaring() {
         runBlocking {
             val result = useCase.getArtistsBySoaring()
-            assertEquals(Result.Success(artistList), result)
+            assertEquals(Result.Success(artistContentsList), result)
             coVerify(exactly = 1) { (apiRepository).getArtistsBySoaring() }
         }
     }
@@ -207,8 +209,8 @@ class ArtistEntityUseCaseImpTest {
     fun addArtistSuccess() {
         runBlocking {
             useCase.addArtist(artist, successEmail)
-            coVerify(exactly = 1) { (apiRepository).addArtist(artistForm, successEmail) }
-            coVerify(exactly = 1) { (dataBaseRepository).addArtist(artistForm) }
+            coVerify(exactly = 1) { (apiRepository).addArtist(artist, successEmail) }
+            coVerify(exactly = 1) { (dataBaseRepository).addArtist(artist) }
         }
     }
 
@@ -224,8 +226,8 @@ class ArtistEntityUseCaseImpTest {
         runBlocking {
             val result = useCase.addArtist(artist, failureEmail)
             assertEquals(failureResult, result)
-            coVerify(exactly = 1) { (apiRepository).addArtist(artistForm, failureEmail) }
-            coVerify(exactly = 0) { (dataBaseRepository).addArtist(artistForm) }
+            coVerify(exactly = 1) { (apiRepository).addArtist(artist, failureEmail) }
+            coVerify(exactly = 0) { (dataBaseRepository).addArtist(artist) }
         }
     }
 
@@ -244,8 +246,8 @@ class ArtistEntityUseCaseImpTest {
     fun updateArtistSuccess() {
         runBlocking {
             useCase.updateArtist(artist, successEmail)
-            coVerify(exactly = 1) { (apiRepository).updateArtist(artistForm, successEmail) }
-            coVerify(exactly = 1) { (dataBaseRepository).updateArtist(artistForm) }
+            coVerify(exactly = 1) { (apiRepository).updateArtist(artist, successEmail) }
+            coVerify(exactly = 1) { (dataBaseRepository).updateArtist(artist) }
         }
     }
 
@@ -260,8 +262,8 @@ class ArtistEntityUseCaseImpTest {
     fun updateArtistFailure() {
         runBlocking {
             useCase.updateArtist(artist, failureEmail)
-            coVerify(exactly = 1) { (apiRepository).updateArtist(artistForm, failureEmail) }
-            coVerify(exactly = 0) { (dataBaseRepository).updateArtist(artistForm) }
+            coVerify(exactly = 1) { (apiRepository).updateArtist(artist, failureEmail) }
+            coVerify(exactly = 0) { (dataBaseRepository).updateArtist(artist) }
         }
     }
 
@@ -277,9 +279,9 @@ class ArtistEntityUseCaseImpTest {
     @Test
     fun deleteArtistSuccess() {
         runBlocking {
-            useCase.deleteArtist(artist.name!!, successEmail)
-            coVerify(exactly = 1) { (apiRepository).deleteArtist(artist.name!!, successEmail) }
-            coVerify(exactly = 1) { (dataBaseRepository).deleteArtist(artist.name!!) }
+            useCase.deleteArtist(artist.name, successEmail)
+            coVerify(exactly = 1) { (apiRepository).deleteArtist(artist.name, successEmail) }
+            coVerify(exactly = 1) { (dataBaseRepository).deleteArtist(artist.name) }
         }
     }
 
@@ -293,9 +295,9 @@ class ArtistEntityUseCaseImpTest {
     @Test
     fun deleteArtistFailure() {
         runBlocking {
-            useCase.deleteArtist(artist.name!!, failureEmail)
-            coVerify(exactly = 1) { (apiRepository).deleteArtist(artist.name!!, failureEmail) }
-            coVerify(exactly = 0) { (dataBaseRepository).deleteArtist(artist.name!!) }
+            useCase.deleteArtist(artist.name, failureEmail)
+            coVerify(exactly = 1) { (apiRepository).deleteArtist(artist.name, failureEmail) }
+            coVerify(exactly = 0) { (dataBaseRepository).deleteArtist(artist.name) }
         }
     }
 

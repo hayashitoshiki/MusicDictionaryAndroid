@@ -7,6 +7,8 @@ import com.example.musicdictionaryandroid.data.net.dto.ArtistsDto
 import com.example.musicdictionaryandroid.domain.usecase.ArtistUseCase
 import com.example.musicdictionaryandroid.domain.usecase.UserUseCase
 import com.example.musicdictionaryandroid.data.util.Result
+import com.example.musicdictionaryandroid.domain.model.entity.Artist
+import com.example.musicdictionaryandroid.domain.model.value.*
 import com.nhaarman.mockito_kotlin.mock
 import io.mockk.coEvery
 import io.mockk.coVerify
@@ -25,8 +27,8 @@ import org.junit.rules.TestRule
 
 class MyPageArtistEntityAddViewModelTest {
 
+    @ExperimentalCoroutinesApi
     private val testDispatcher = TestCoroutineDispatcher()
-    private val testScope = TestCoroutineScope(testDispatcher)
 
     // LiveData用
     @get:Rule
@@ -43,34 +45,32 @@ class MyPageArtistEntityAddViewModelTest {
     private val array4 = arrayOf("")
     private val array5 = arrayOf("")
     private val array6 = arrayOf("")
-    private val artistsForm = ArtistsDto()
-    private val artist = ArtistEntity(1, "test", 1, 1, 1, 1, 1, 1)
+    private val artist = Artist("test", Gender.MAN, Voice(0), Length(0), Lyrics(0), Genre1(0), Genre2(0))
 
     // coroutines用
+    @ExperimentalCoroutinesApi
     @Before
     fun before() {
         Dispatchers.setMain(testDispatcher)
 
         // テストクラス作成
         artistUseCase = mockk<ArtistUseCase>().also {
-            coEvery { it.addArtist(any(), any()) } returns Result.Success(artistsForm)
-            coEvery { it.updateArtist(any(), any()) } returns Result.Success(artistsForm)
+            coEvery { it.addArtist(any(), any()) } returns Result.Success(artist)
+            coEvery { it.updateArtist(any(), any()) } returns Result.Success(artist)
         }
         userUseCase = mockk<UserUseCase> ().also {
             every { it.getEmail() } returns "test1"
         }
         viewModel = MyPageArtistAddViewModel(userUseCase, artistUseCase)
         val observer = mock<Observer<Boolean>>()
-        val observerArtist = mock<Observer<ArtistEntity>>()
-        viewModel.artistEntityForm.observeForever(observerArtist)
         viewModel.isEnableSubmitButton.observeForever(observer)
         viewModel.init(array0, array1, array2, array3, array4, array5, array6, artist)
     }
 
+    @ExperimentalCoroutinesApi
     @After
     fun after() {
         Dispatchers.resetMain()
-        testScope.cleanupTestCoroutines()
     }
 
     /**
@@ -83,66 +83,66 @@ class MyPageArtistEntityAddViewModelTest {
     @Test
     fun onSubmitError() {
         // アーティスト名未入力
-        viewModel.changeArtistName("")
-        viewModel.checkedChangeGender(1)
-        viewModel.checkedChangeLength(1)
-        viewModel.checkedChangeVoice(1)
-        viewModel.checkedChangeLyric(1)
-        assertEquals(viewModel.isEnableSubmitButton.value!!, false)
+        viewModel.nameText.value = ""
+        viewModel.gender.value = 1
+        viewModel.length.value = 1
+        viewModel.voice.value = 1
+        viewModel.lyrics.value = 1
+        assertEquals(false, viewModel.isEnableSubmitButton.value!!)
         // 性別未選択
-        viewModel.changeArtistName("test")
-        viewModel.checkedChangeGender(0)
-        viewModel.checkedChangeLength(1)
-        viewModel.checkedChangeVoice(1)
-        viewModel.checkedChangeLyric(1)
-        assertEquals(viewModel.isEnableSubmitButton.value!!, false)
+        viewModel.nameText.value = "test"
+        viewModel.gender.value = 0
+        viewModel.length.value = 1
+        viewModel.voice.value = 1
+        viewModel.lyrics.value = 1
+        assertEquals(false, viewModel.isEnableSubmitButton.value!!)
         // 長さ未選択
-        viewModel.changeArtistName("test")
-        viewModel.checkedChangeGender(1)
-        viewModel.checkedChangeLength(0)
-        viewModel.checkedChangeVoice(1)
-        viewModel.checkedChangeLyric(1)
+        viewModel.nameText.value = "test"
+        viewModel.gender.value = 1
+        viewModel.length.value = 0
+        viewModel.voice.value = 1
+        viewModel.lyrics.value = 1
         assertEquals(viewModel.isEnableSubmitButton.value!!, false)
         // 声の高さ未選択
-        viewModel.changeArtistName("test")
-        viewModel.checkedChangeGender(1)
-        viewModel.checkedChangeLength(1)
-        viewModel.checkedChangeVoice(0)
-        viewModel.checkedChangeLyric(1)
+        viewModel.nameText.value = "test"
+        viewModel.gender.value = 1
+        viewModel.length.value = 1
+        viewModel.voice.value = 0
+        viewModel.lyrics.value = 1
         assertEquals(viewModel.isEnableSubmitButton.value!!, false)
         // 歌詞の言語未選択
-        viewModel.changeArtistName("test")
-        viewModel.checkedChangeGender(1)
-        viewModel.checkedChangeLength(1)
-        viewModel.checkedChangeVoice(1)
-        viewModel.checkedChangeLyric(0)
+        viewModel.nameText.value = "test"
+        viewModel.gender.value = 1
+        viewModel.length.value = 1
+        viewModel.voice.value = 1
+        viewModel.lyrics.value = 0
         assertEquals(viewModel.isEnableSubmitButton.value!!, false)
         // ジャンル１未選択
-        viewModel.changeArtistName("test")
-        viewModel.checkedChangeGender(1)
-        viewModel.checkedChangeLength(1)
-        viewModel.checkedChangeVoice(1)
-        viewModel.checkedChangeLyric(1)
-        viewModel.changeGenre1(0)
-        viewModel.changeGenre2(1)
+        viewModel.nameText.value = "test"
+        viewModel.gender.value = 1
+        viewModel.length.value = 1
+        viewModel.voice.value = 1
+        viewModel.lyrics.value = 1
+        viewModel.genre1.value = 0
+        viewModel.genre2.value = 1
         assertEquals(viewModel.isEnableSubmitButton.value!!, false)
         // ジャンル２未選択
-        viewModel.changeArtistName("test")
-        viewModel.checkedChangeGender(1)
-        viewModel.checkedChangeLength(1)
-        viewModel.checkedChangeVoice(1)
-        viewModel.checkedChangeLyric(1)
-        viewModel.changeGenre1(1)
-        viewModel.changeGenre2(0)
+        viewModel.nameText.value = "test"
+        viewModel.gender.value = 1
+        viewModel.length.value = 1
+        viewModel.voice.value = 1
+        viewModel.lyrics.value = 1
+        viewModel.genre1.value = 1
+        viewModel.genre2.value = 0
         assertEquals(viewModel.isEnableSubmitButton.value!!, false)
         // 正常系
-        viewModel.changeArtistName("test")
-        viewModel.checkedChangeGender(1)
-        viewModel.checkedChangeLength(1)
-        viewModel.checkedChangeVoice(1)
-        viewModel.checkedChangeLyric(1)
-        viewModel.changeGenre1(1)
-        viewModel.changeGenre2(1)
+        viewModel.nameText.value = "test"
+        viewModel.gender.value = 1
+        viewModel.length.value = 1
+        viewModel.voice.value = 1
+        viewModel.lyrics.value = 1
+        viewModel.genre1.value = 1
+        viewModel.genre2.value = 1
         assertEquals(viewModel.isEnableSubmitButton.value!!, true)
     }
 

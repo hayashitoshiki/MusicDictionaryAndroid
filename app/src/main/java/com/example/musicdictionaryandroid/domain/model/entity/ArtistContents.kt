@@ -3,7 +3,7 @@ package com.example.musicdictionaryandroid.domain.model.entity
 /**
  * 検索結果表示用アーティスト情報
  */
-class ArtistContents(
+data class ArtistContents(
     val artist: Artist,
     val thumb: String? = "",
     val preview: String? = "",
