@@ -2,7 +2,7 @@ package com.example.musicdictionaryandroid.ui.login
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.Observer
-import com.example.musicdictionaryandroid.model.usecase.UserUseCase
+import com.example.musicdictionaryandroid.domain.usecase.UserUseCase
 import com.nhaarman.mockito_kotlin.mock
 import io.mockk.coEvery
 import io.mockk.mockk

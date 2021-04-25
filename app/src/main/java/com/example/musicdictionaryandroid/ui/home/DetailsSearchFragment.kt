@@ -88,8 +88,9 @@ class DetailsSearchFragment : Fragment(), CoroutineScope {
             binding.detailSearchView.visibility = View.GONE
             launch {
                 delay(resources.getInteger(R.integer.fade_out_time).toLong())
+                val artist = viewModel.getArtist()
                 val action =
-                    DetailsSearchFragmentDirections.actionNavigationDetailsSearchToNavigationResult(viewModel.artistForm)
+                    DetailsSearchFragmentDirections.actionNavigationDetailsSearchToNavigationResult(artist)
                 findNavController().navigate(action)
                 state = 1
             }

@@ -10,7 +10,7 @@
 
 | Name | Summary |
 |---|---|
-| [&lt;init&gt;](-init-.md) | `MyPageTopViewModel(userUseCase: `[`UserUseCase`](../../com.example.musicdictionaryandroid.model.usecase/-user-use-case/index.md)`)`<br>設定画面_UIロジック |
+| [&lt;init&gt;](-init-.md) | `MyPageTopViewModel(userUseCase: `[`UserUseCase`](../../com.example.musicdictionaryandroid.domain.usecase/-user-use-case/index.md)`)`<br>設定画面_UIロジック |
 
 ### Properties
 

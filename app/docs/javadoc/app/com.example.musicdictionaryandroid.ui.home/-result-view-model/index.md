@@ -10,7 +10,7 @@
 
 | Name | Summary |
 |---|---|
-| [&lt;init&gt;](-init-.md) | `ResultViewModel(artistUseCase: `[`ArtistUseCase`](../../com.example.musicdictionaryandroid.model.usecase/-artist-use-case/index.md)`)`<br>検索結果画面_UIロジック |
+| [&lt;init&gt;](-init-.md) | `ResultViewModel(artistUseCase: `[`ArtistUseCase`](../../com.example.musicdictionaryandroid.domain.usecase/-artist-use-case/index.md)`)`<br>検索結果画面_UIロジック |
 
 ### Properties
 

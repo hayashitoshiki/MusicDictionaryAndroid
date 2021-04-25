@@ -86,7 +86,8 @@ class CategorySearchFragment : Fragment(), CoroutineScope {
             binding.categoryCard.visibility = View.GONE
             launch {
                 delay(resources.getInteger(R.integer.fade_out_time).toLong())
-                val action = CategorySearchFragmentDirections.actionCategorySearchToNavigationResult(viewModel.artistForm)
+                val artist = viewModel.getArtist()
+                val action = CategorySearchFragmentDirections.actionCategorySearchToNavigationResult(artist)
                 findNavController().navigate(action)
                 state = 1
             }

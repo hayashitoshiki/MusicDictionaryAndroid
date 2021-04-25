@@ -14,7 +14,7 @@ import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
 import com.example.musicdictionaryandroid.R
 import com.example.musicdictionaryandroid.databinding.FragmentMypageTopBinding
-import com.example.musicdictionaryandroid.model.util.Status
+import com.example.musicdictionaryandroid.data.util.Status
 import com.example.musicdictionaryandroid.ui.login.StartActivity
 import org.koin.android.viewmodel.ext.android.viewModel
 

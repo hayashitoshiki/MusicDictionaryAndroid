@@ -13,8 +13,8 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
 import com.example.musicdictionaryandroid.R
 import com.example.musicdictionaryandroid.databinding.ItemResultArtistBinding
-import com.example.musicdictionaryandroid.model.entity.ArtistsForm
-import com.example.musicdictionaryandroid.model.util.UserInfoChangeListUtil
+import com.example.musicdictionaryandroid.data.util.UserInfoChangeListUtil
+import com.example.musicdictionaryandroid.domain.model.entity.ArtistContents
 import com.example.musicdictionaryandroid.ui.transition.ResizeAnimation
 import com.github.mikephil.charting.charts.PieChart
 import com.github.mikephil.charting.data.PieData
@@ -29,7 +29,7 @@ import com.squareup.picasso.Picasso
  * @property context コンテキスト
  * @property artistList 取得したアーティスト情報
  */
-class ResultAdapter(private val context: Context, private val artistList: List<ArtistsForm>) :
+class ResultAdapter(private val context: Context, private val artistList: List<ArtistContents>) :
     RecyclerView.Adapter<ResultAdapter.ViewHolder>() {
 
     private var holdButton: ImageButton? = null
@@ -77,52 +77,52 @@ class ResultAdapter(private val context: Context, private val artistList: List<A
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val artist = artistList[position]
+        val contents = artistList[position]
         if (position == 0) {
             // タイトル設定
             holder.mainLayout.visibility = View.GONE
             holder.titleLayout.visibility = View.VISIBLE
-            when (artist.name) {
+            when (contents.artist.name) {
                 "急上昇", "おすすめ" -> {
-                    holder.titleTextView.text = artist.name
+                    holder.titleTextView.text = contents.artist.name
                     holder.searchNameTextView.visibility = View.GONE
                     holder.searchButton.visibility = View.GONE
                 }
                 else -> {
-                    if (artist.name != "") {
-                        holder.searchNameTextView.text = "アーティスト名：" + artist.name
+                    if (contents.artist.name != "") {
+                        holder.searchNameTextView.text = "アーティスト名：" + contents.artist.name
                     } else {
                         holder.searchNameTextView.visibility = View.GONE
                     }
                 }
             }
-            if (artist.gender != 0) {
-                holder.searchGenderTextView.text = UserInfoChangeListUtil.changeGender(artist.gender)
+            if (contents.artist.gender.value != 0) {
+                holder.searchGenderTextView.text = UserInfoChangeListUtil.changeGender(contents.artist.gender.value)
             } else {
                 holder.searchGenderTextView.visibility = View.GONE
             }
-            if (artist.genre1 != 0) {
-                holder.searchGenre1TextView.text = UserInfoChangeListUtil.changeGenre1(artist.genre1)
+            if (contents.artist.genre1.value != 0) {
+                holder.searchGenre1TextView.text = UserInfoChangeListUtil.changeGenre1(contents.artist.genre1.value)
             } else {
                 holder.searchGenre1TextView.visibility = View.GONE
             }
-            if (artist.genre2 != 0) {
-                holder.searchGenre2TextView.text = UserInfoChangeListUtil.changeGenre2(artist.genre1, artist.genre2)
+            if (contents.artist.genre2.value != 0) {
+                holder.searchGenre2TextView.text = UserInfoChangeListUtil.changeGenre2(contents.artist.genre1.value, contents.artist.genre2.value)
             } else {
                 holder.searchGenre2TextView.visibility = View.GONE
             }
-            if (artist.length != 0) {
-                holder.searchLengthTextView.text = UserInfoChangeListUtil.changeLength(artist.length)
+            if (contents.artist.length.value != 0) {
+                holder.searchLengthTextView.text = UserInfoChangeListUtil.changeLength(contents.artist.length.value)
             } else {
                 holder.searchLengthTextView.visibility = View.GONE
             }
-            if (artist.voice != 0) {
-                holder.searchVoiceTextView.text = UserInfoChangeListUtil.changeVoice(artist.voice)
+            if (contents.artist.voice.value != 0) {
+                holder.searchVoiceTextView.text = UserInfoChangeListUtil.changeVoice(contents.artist.voice.value)
             } else {
                 holder.searchVoiceTextView.visibility = View.GONE
             }
-            if (artist.lyrics != 0) {
-                holder.searchLyricTextView.text = UserInfoChangeListUtil.changeLyrics(artist.lyrics)
+            if (contents.artist.lyrics.value != 0) {
+                holder.searchLyricTextView.text = UserInfoChangeListUtil.changeLyrics(contents.artist.lyrics.value)
             } else {
                 holder.searchLyricTextView.visibility = View.GONE
             }
@@ -135,28 +135,27 @@ class ResultAdapter(private val context: Context, private val artistList: List<A
             holder.titleLayout.visibility = View.GONE
 
             // アーティスト名
-            holder.nameTextView.text = artist.name
+            holder.nameTextView.text = contents.artist.name
             // 性別
-            holder.genderTextView.text = UserInfoChangeListUtil.changeGender(artist.gender)
-            if (artist.gender == 1) {
+            holder.genderTextView.text = UserInfoChangeListUtil.changeGender(contents.artist.gender.value)
+            if (contents.artist.gender.value == 1) {
                 holder.genderTextView.setTextColor(Color.BLUE)
             } else {
                 holder.genderTextView.setTextColor(Color.RED)
             }
             // 声の高さ
-            holder.voiceRatingBar.rating = artist.voice.toFloat()
+            holder.voiceRatingBar.rating = contents.artist.voice.value.toFloat()
             // 曲の平均の長さ
-            holder.lengthRatingBar.rating = artist.length.toFloat()
+            holder.lengthRatingBar.rating = contents.artist.length.value.toFloat()
             // 歌詞の言語
-            holder.lyricsRatingBar.rating = artist.lyrics.toFloat()
+            holder.lyricsRatingBar.rating = contents.artist.lyrics.value.toFloat()
             // ジャンル１
-            holder.genre1TextView.text = UserInfoChangeListUtil.changeGenre1(artist.genre1)
+            holder.genre1TextView.text = UserInfoChangeListUtil.changeGenre1(contents.artist.genre1.value)
             // ジャンル２
             holder.genre2TextView.text =
-                UserInfoChangeListUtil.changeGenre2(artist.genre1, artist.genre2)
+                UserInfoChangeListUtil.changeGenre2(contents.artist.genre1.value, contents.artist.genre2.value)
             // 詳細ボタン
-            val collapseAnimation =
-                ResizeAnimation(holder.detailLayout, -originalHeight, originalHeight)
+            val collapseAnimation = ResizeAnimation(holder.detailLayout, -originalHeight, originalHeight)
             val expandAnimation = ResizeAnimation(holder.detailLayout, originalHeight, 0)
             collapseAnimation.duration = 300
             expandAnimation.duration = 300
@@ -182,29 +181,29 @@ class ResultAdapter(private val context: Context, private val artistList: List<A
                     holder.pieChart.also {
                         var totalValue = 0f
                         val entryList = mutableListOf<PieEntry>()
-                        if (artist.generation1 != 0) {
-                            entryList.add(PieEntry(artist.generation1.toFloat(), "10代"))
-                            totalValue += artist.generation1.toFloat()
+                        if (contents.generation1 != 0) {
+                            entryList.add(PieEntry(contents.generation1.toFloat(), "10代"))
+                            totalValue += contents.generation1.toFloat()
                         }
-                        if (artist.generation2 != 0) {
-                            entryList.add(PieEntry(artist.generation2.toFloat(), "20代"))
-                            totalValue += artist.generation2.toFloat()
+                        if (contents.generation2 != 0) {
+                            entryList.add(PieEntry(contents.generation2.toFloat(), "20代"))
+                            totalValue += contents.generation2.toFloat()
                         }
-                        if (artist.generation3 != 0) {
-                            entryList.add(PieEntry(artist.generation3.toFloat(), "30代"))
-                            totalValue += artist.generation3.toFloat()
+                        if (contents.generation3 != 0) {
+                            entryList.add(PieEntry(contents.generation3.toFloat(), "30代"))
+                            totalValue += contents.generation3.toFloat()
                         }
-                        if (artist.generation4 != 0) {
-                            entryList.add(PieEntry(artist.generation4.toFloat(), "40代"))
-                            totalValue += artist.generation4.toFloat()
+                        if (contents.generation4 != 0) {
+                            entryList.add(PieEntry(contents.generation4.toFloat(), "40代"))
+                            totalValue += contents.generation4.toFloat()
                         }
-                        if (artist.generation5 != 0) {
-                            entryList.add(PieEntry(artist.generation5.toFloat(), "50代"))
-                            totalValue += artist.generation5.toFloat()
+                        if (contents.generation5 != 0) {
+                            entryList.add(PieEntry(contents.generation5.toFloat(), "50代"))
+                            totalValue += contents.generation5.toFloat()
                         }
-                        if (artist.generation6 != 0) {
-                            entryList.add(PieEntry(artist.generation6.toFloat(), "60代"))
-                            totalValue += artist.generation6.toFloat()
+                        if (contents.generation6 != 0) {
+                            entryList.add(PieEntry(contents.generation6.toFloat(), "60代"))
+                            totalValue += contents.generation6.toFloat()
                         }
                         val data = PieDataSet(entryList, "年齢層").also { pieDataSet ->
                             val colorList = mutableListOf<Int>()
@@ -240,13 +239,13 @@ class ResultAdapter(private val context: Context, private val artistList: List<A
                     holder.genderChart.also {
                         var totalValue = 0f
                         val entryList = mutableListOf<PieEntry>()
-                        if (artist.user_man != 0) {
-                            entryList.add(PieEntry(artist.user_man.toFloat(), "男性"))
-                            totalValue += artist.user_man.toFloat()
+                        if (contents.user_man != 0) {
+                            entryList.add(PieEntry(contents.user_man.toFloat(), "男性"))
+                            totalValue += contents.user_man.toFloat()
                         }
-                        if (artist.user_woman != 0) {
-                            entryList.add(PieEntry(artist.user_woman.toFloat(), "女性"))
-                            totalValue += artist.user_woman.toFloat()
+                        if (contents.user_woman != 0) {
+                            entryList.add(PieEntry(contents.user_woman.toFloat(), "女性"))
+                            totalValue += contents.user_woman.toFloat()
                         }
                         val data = PieDataSet(entryList, "男女比率").also { pieDataSet ->
                             val colorList = mutableListOf<Int>()
@@ -292,8 +291,8 @@ class ResultAdapter(private val context: Context, private val artistList: List<A
                 }
             }
             // 再生ボタン
-            artist.preview?.let {
-                if (artist.preview != "") {
+            contents.preview?.let {
+                if (contents.preview != "") {
                     holder.playButton.visibility = View.VISIBLE
                     holder.playButton.setOnClickListener {
                         if (holdButton != holder.playButton) {
@@ -301,7 +300,7 @@ class ResultAdapter(private val context: Context, private val artistList: List<A
                             holder.playButton.setImageResource(R.mipmap.ic_button_music_pause_32)
                             holder.webView.settings.javaScriptEnabled = true
                             holder.webView.settings.domStorageEnabled = true
-                            holder.webView.loadUrl(artist.preview)
+                            holder.webView.loadUrl(contents.preview)
                             holdButton = holder.playButton
                             Handler().postDelayed(
                                 Runnable {
@@ -324,10 +323,10 @@ class ResultAdapter(private val context: Context, private val artistList: List<A
                 holder.playButton.visibility = View.GONE
             }
             // サムネイル
-            if (artist.thumb != null && artist.thumb != "") {
+            if (contents.thumb != null && contents.thumb != "") {
                 holder.imageView.visibility = View.VISIBLE
                 Picasso.with(context)
-                    .load(artist.thumb)
+                    .load(contents.thumb)
                     .fit()
                     .centerCrop()
                     .into(holder.imageView)

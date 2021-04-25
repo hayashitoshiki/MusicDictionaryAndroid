@@ -4,10 +4,10 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.musicdictionaryandroid.model.entity.User
-import com.example.musicdictionaryandroid.model.usecase.UserUseCase
-import com.example.musicdictionaryandroid.model.util.Status
-import com.example.musicdictionaryandroid.model.util.UserInfoChangeListUtil
+import com.example.musicdictionaryandroid.data.database.entity.User
+import com.example.musicdictionaryandroid.domain.usecase.UserUseCase
+import com.example.musicdictionaryandroid.data.util.Status
+import com.example.musicdictionaryandroid.data.util.UserInfoChangeListUtil
 import java.util.regex.Pattern
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.Job

@@ -11,8 +11,8 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.example.musicdictionaryandroid.R
 import com.example.musicdictionaryandroid.databinding.FragmentResultSoaringBinding
-import com.example.musicdictionaryandroid.model.entity.ArtistsForm
-import com.example.musicdictionaryandroid.model.util.Status
+import com.example.musicdictionaryandroid.data.util.Status
+import com.example.musicdictionaryandroid.domain.model.entity.ArtistContents
 import com.example.musicdictionaryandroid.ui.adapter.ResultAdapter
 import org.koin.android.viewmodel.ext.android.viewModel
 
@@ -46,17 +46,13 @@ class ResultSoaringFragment : Fragment() {
     }
 
     // ステータス監視
-    private fun onStateChanged(state: Status<ArrayList<ArtistsForm>?>) = when (state) {
+    private fun onStateChanged(state: Status<List<ArtistContents>>) = when (state) {
         is Status.Loading -> { showProgressbar() }
         is Status.Success -> {
             hideProgressbar()
             hideNoDataView()
-            state.data?.let {
-                if (it.size == 0) showNoDataView()
-                else viewUpDate(state.data)
-            } ?: run {
-                showNoDataView()
-            }
+            if (state.data.isEmpty()) showNoDataView()
+            else viewUpDate(state.data)
         }
         is Status.Failure -> {
             Log.i(TAG, "Failure:${state.throwable}")
@@ -66,7 +62,7 @@ class ResultSoaringFragment : Fragment() {
     }
 
     // データ反映
-    private fun viewUpDate(data: ArrayList<ArtistsForm>) {
+    private fun viewUpDate(data: List<ArtistContents>) {
         val adapter = ResultAdapter(requireContext(), data)
         val layoutManager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
         binding.recyclerView.adapter = adapter

@@ -1,11 +1,11 @@
 package com.example.musicdictionaryandroid.ui.adapter
 
-import com.example.musicdictionaryandroid.model.entity.ArtistsForm
+import com.example.musicdictionaryandroid.domain.model.entity.Artist
 
 /**
  * ダイアログ用コールバックリスナー
  *
  */
 interface DialogFragmentCallbackInterface {
-    fun callBackMethod(data: ArtistsForm)
+    fun callBackMethod(data: Artist)
 }

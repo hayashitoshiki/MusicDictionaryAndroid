@@ -24,7 +24,7 @@ MVVM
 | [com.example.musicdictionaryandroid.model.entity](com.example.musicdictionaryandroid.model.entity/index.md) | Entity管理 |
 | [com.example.musicdictionaryandroid.model.net](com.example.musicdictionaryandroid.model.net/index.md) | 通信処理管理 |
 | [com.example.musicdictionaryandroid.model.repository](com.example.musicdictionaryandroid.model.repository/index.md) | CRUD管理 |
-| [com.example.musicdictionaryandroid.model.usecase](com.example.musicdictionaryandroid.model.usecase/index.md) | ビジネスロジック管理 |
+| [com.example.musicdictionaryandroid.domain.usecase](com.example.musicdictionaryandroid.domain.usecase/index.md) | ビジネスロジック管理 |
 | [com.example.musicdictionaryandroid.model.util](com.example.musicdictionaryandroid.model.util/index.md) | 共通機能管理 |
 | [com.example.musicdictionaryandroid.ui](com.example.musicdictionaryandroid.ui/index.md) |  |
 | [com.example.musicdictionaryandroid.ui.adapter](com.example.musicdictionaryandroid.ui.adapter/index.md) | カスタムアダプター管理 |

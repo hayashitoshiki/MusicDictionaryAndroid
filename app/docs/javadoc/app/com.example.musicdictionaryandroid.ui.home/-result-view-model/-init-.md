@@ -2,7 +2,7 @@
 
 # &lt;init&gt;
 
-`ResultViewModel(artistUseCase: `[`ArtistUseCase`](../../com.example.musicdictionaryandroid.model.usecase/-artist-use-case/index.md)`)`
+`ResultViewModel(artistUseCase: `[`ArtistUseCase`](../../com.example.musicdictionaryandroid.domain.usecase/-artist-use-case/index.md)`)`
 
 検索結果画面_UIロジック
 

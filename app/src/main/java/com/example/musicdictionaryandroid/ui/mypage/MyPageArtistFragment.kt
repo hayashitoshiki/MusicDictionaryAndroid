@@ -18,9 +18,8 @@ import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
 import com.example.musicdictionaryandroid.R
 import com.example.musicdictionaryandroid.databinding.FragmentMypageArtistListBinding
-import com.example.musicdictionaryandroid.model.entity.Artist
-import com.example.musicdictionaryandroid.model.entity.ArtistsForm
-import com.example.musicdictionaryandroid.model.util.Status
+import com.example.musicdictionaryandroid.data.util.Status
+import com.example.musicdictionaryandroid.domain.model.entity.Artist
 import com.example.musicdictionaryandroid.ui.adapter.SettingBaseAdapter
 import kotlin.coroutines.CoroutineContext
 import kotlinx.coroutines.CoroutineScope
@@ -68,7 +67,7 @@ class MyPageArtistFragment : Fragment(), CoroutineScope {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         viewModel.status.observe(viewLifecycleOwner, Observer { onStateChanged(it) })
-        viewModel.artistList.observe(viewLifecycleOwner, Observer { viewUpDate(it) })
+        viewModel.artistEntityList.observe(viewLifecycleOwner, Observer { viewUpDate(it) })
 
         // アーティスト追加ボタン
         binding.artistAddButton.setOnClickListener {
@@ -79,7 +78,7 @@ class MyPageArtistFragment : Fragment(), CoroutineScope {
         // リストビューの各項目タップ
         binding.artistList.adapter = SettingBaseAdapter(context, listOf())
         binding.artistList.onItemClickListener = AdapterView.OnItemClickListener { _, v, position, _ ->
-            val artist = viewModel.artistList.value!![position]
+            val artist = viewModel.artistEntityList.value!![position]
             when (v.id) {
                 R.id.update_button -> {
                     val action =
@@ -99,7 +98,7 @@ class MyPageArtistFragment : Fragment(), CoroutineScope {
     }
 
     // ステータス監視
-    private fun onStateChanged(state: Status<List<ArtistsForm>?>) = when (state) {
+    private fun onStateChanged(state: Status<List<Artist>?>) = when (state) {
         is Status.Loading -> {
             hideNoDataView()
             showProgressbar()

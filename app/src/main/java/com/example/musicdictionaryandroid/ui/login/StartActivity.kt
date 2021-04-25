@@ -10,7 +10,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import com.example.musicdictionaryandroid.R
 import com.example.musicdictionaryandroid.databinding.ActivityStartBinding
-import com.example.musicdictionaryandroid.model.util.Status
+import com.example.musicdictionaryandroid.data.util.Status
 import com.example.musicdictionaryandroid.ui.MainActivity
 import org.koin.android.viewmodel.ext.android.viewModel
 
