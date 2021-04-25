@@ -2,8 +2,6 @@ package com.example.musicdictionaryandroid.ui.mypage
 
 import android.util.Log
 import androidx.lifecycle.*
-import com.example.musicdictionaryandroid.data.database.entity.ArtistEntity
-import com.example.musicdictionaryandroid.data.net.dto.ArtistsDto
 import com.example.musicdictionaryandroid.domain.usecase.ArtistUseCase
 import com.example.musicdictionaryandroid.domain.usecase.UserUseCase
 import com.example.musicdictionaryandroid.data.util.Result

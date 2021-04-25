@@ -1,7 +1,6 @@
 package com.example.musicdictionaryandroid.ui.home
 
 import androidx.lifecycle.*
-import com.example.musicdictionaryandroid.data.net.dto.ArtistsDto
 import com.example.musicdictionaryandroid.domain.model.entity.Artist
 import com.example.musicdictionaryandroid.domain.model.value.*
 

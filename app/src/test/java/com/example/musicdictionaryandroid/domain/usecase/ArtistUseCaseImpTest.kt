@@ -25,7 +25,7 @@ import org.junit.Test
 
 import org.junit.Assert.*
 
-class ArtistEntityUseCaseImpTest {
+class ArtistUseCaseImpTest {
 
     @ExperimentalCoroutinesApi
     private val testDispatcher = TestCoroutineDispatcher()
@@ -38,15 +38,12 @@ class ArtistEntityUseCaseImpTest {
     private lateinit var dataBaseRepository: DataBaseRepository
     private lateinit var preferenceRepository: PreferenceRepository
 
-
-
     private val user = User("test@com.jp","testA", 1 ,1, "2000/2/2", 1)
     private val artist = Artist("test", Gender.MAN, Voice(0), Length(0), Lyrics(0), Genre1(0), Genre2(0))
-
-    private val artistContents = ArtistContents(artist, null,null, 0, 0, 0, 0, 0, 0,0,0)
+    private val artistContents = ArtistContents(artist, null, null, 0, 0, 0, 0, 0, 0,0,0)
     private val artistContentsList = listOf(artistContents)
     private val artistList = listOf(artist, artist)
-    private val artistListLiveData =  MutableLiveData(listOf(artist))
+    private val artistListLiveData = MutableLiveData(listOf(artist))
     private val failureResult = Result.Error(IllegalArgumentException(""))
     private val successEmail = "success"
     private val failureEmail = "Failure"

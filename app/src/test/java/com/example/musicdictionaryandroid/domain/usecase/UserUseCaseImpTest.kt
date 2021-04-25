@@ -1,8 +1,6 @@
 package com.example.musicdictionaryandroid.domain.usecase
 
 import androidx.lifecycle.MutableLiveData
-import com.example.musicdictionaryandroid.data.database.entity.ArtistEntity
-import com.example.musicdictionaryandroid.data.net.dto.ArtistsDto
 import com.example.musicdictionaryandroid.data.database.entity.CallBackData
 import com.example.musicdictionaryandroid.data.database.entity.User
 import com.example.musicdictionaryandroid.data.repository.ApiServerRepository
@@ -44,7 +42,7 @@ class UserUseCaseImpTest {
     private val artist = Artist("test", Gender.MAN, Voice(0), Length(0), Lyrics(0), Genre1(0), Genre2(0))
 
     private val artistList = listOf(artist)
-    private val artistListLiveData =  MutableLiveData(listOf(artist))
+    private val artistListLiveData = MutableLiveData(listOf(artist))
     private val failureResult = Result.Error(IllegalArgumentException(""))
     private val successEmail = "success"
     private val failureEmail = "Failure"

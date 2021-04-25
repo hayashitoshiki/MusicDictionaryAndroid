@@ -6,7 +6,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import com.example.musicdictionaryandroid.R
-import com.example.musicdictionaryandroid.data.database.entity.ArtistEntity
 import com.example.musicdictionaryandroid.domain.model.entity.Artist
 
 /**

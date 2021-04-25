@@ -1,8 +1,6 @@
 package com.example.musicdictionaryandroid.domain.usecase
 
 import androidx.lifecycle.LiveData
-import com.example.musicdictionaryandroid.data.database.entity.ArtistEntity
-import com.example.musicdictionaryandroid.data.net.dto.ArtistsDto
 import com.example.musicdictionaryandroid.data.repository.*
 import com.example.musicdictionaryandroid.data.util.Result
 import com.example.musicdictionaryandroid.domain.model.entity.Artist
