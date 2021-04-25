@@ -2,7 +2,7 @@
 
 # &lt;init&gt;
 
-`StartViewModel(userUseCase: `[`UserUseCase`](../../com.example.musicdictionaryandroid.model.usecase/-user-use-case/index.md)`)`
+`StartViewModel(userUseCase: `[`UserUseCase`](../../com.example.musicdictionaryandroid.domain.usecase/-user-use-case/index.md)`)`
 
 ログイン・新規登録画面 BaseActivity_UIロジック
 

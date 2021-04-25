@@ -1,4 +1,4 @@
-[app](../../index.md) / [com.example.musicdictionaryandroid.model.usecase](../index.md) / [ArtistUseCaseImp](index.md) / [updateArtist](./update-artist.md)
+[app](../../index.md) / [com.example.musicdictionaryandroid.domain.usecase](../index.md) / [ArtistUseCaseImp](index.md) / [updateArtist](./update-artist.md)
 
 # updateArtist
 

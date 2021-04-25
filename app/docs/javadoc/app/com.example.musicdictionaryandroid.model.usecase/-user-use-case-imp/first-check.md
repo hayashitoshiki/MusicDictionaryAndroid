@@ -1,4 +1,4 @@
-[app](../../index.md) / [com.example.musicdictionaryandroid.model.usecase](../index.md) / [UserUseCaseImp](index.md) / [firstCheck](./first-check.md)
+[app](../../index.md) / [com.example.musicdictionaryandroid.domain.usecase](../index.md) / [UserUseCaseImp](index.md) / [firstCheck](./first-check.md)
 
 # firstCheck
 

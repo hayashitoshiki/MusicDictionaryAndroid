@@ -13,8 +13,8 @@ import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.example.musicdictionaryandroid.R
 import com.example.musicdictionaryandroid.databinding.FragmentResultBinding
-import com.example.musicdictionaryandroid.model.entity.ArtistsForm
-import com.example.musicdictionaryandroid.model.util.Status
+import com.example.musicdictionaryandroid.data.database.entity.ArtistsForm
+import com.example.musicdictionaryandroid.data.util.Status
 import com.example.musicdictionaryandroid.ui.adapter.DialogFragmentCallbackInterface
 import com.example.musicdictionaryandroid.ui.adapter.ResultAdapter
 import org.koin.android.viewmodel.ext.android.viewModel

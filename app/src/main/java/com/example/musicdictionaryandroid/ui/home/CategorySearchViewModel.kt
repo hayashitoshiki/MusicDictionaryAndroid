@@ -1,7 +1,7 @@
 package com.example.musicdictionaryandroid.ui.home
 
 import androidx.lifecycle.*
-import com.example.musicdictionaryandroid.model.entity.ArtistsForm
+import com.example.musicdictionaryandroid.data.database.entity.ArtistsForm
 
 /**
  * カテゴリ検索画面_UIロジック

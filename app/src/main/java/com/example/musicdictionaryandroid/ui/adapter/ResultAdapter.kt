@@ -13,8 +13,8 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
 import com.example.musicdictionaryandroid.R
 import com.example.musicdictionaryandroid.databinding.ItemResultArtistBinding
-import com.example.musicdictionaryandroid.model.entity.ArtistsForm
-import com.example.musicdictionaryandroid.model.util.UserInfoChangeListUtil
+import com.example.musicdictionaryandroid.data.database.entity.ArtistsForm
+import com.example.musicdictionaryandroid.data.util.UserInfoChangeListUtil
 import com.example.musicdictionaryandroid.ui.transition.ResizeAnimation
 import com.github.mikephil.charting.charts.PieChart
 import com.github.mikephil.charting.data.PieData

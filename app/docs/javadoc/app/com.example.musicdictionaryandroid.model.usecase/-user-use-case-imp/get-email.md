@@ -1,4 +1,4 @@
-[app](../../index.md) / [com.example.musicdictionaryandroid.model.usecase](../index.md) / [UserUseCaseImp](index.md) / [getEmail](./get-email.md)
+[app](../../index.md) / [com.example.musicdictionaryandroid.domain.usecase](../index.md) / [UserUseCaseImp](index.md) / [getEmail](./get-email.md)
 
 # getEmail
 

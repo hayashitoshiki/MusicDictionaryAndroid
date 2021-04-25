@@ -1,6 +1,6 @@
 package com.example.musicdictionaryandroid.ui.adapter
 
-import com.example.musicdictionaryandroid.model.entity.ArtistsForm
+import com.example.musicdictionaryandroid.data.database.entity.ArtistsForm
 
 /**
  * ダイアログ用コールバックリスナー

@@ -13,8 +13,8 @@
 | [com.example.musicdictionaryandroid.model.dao.AppDatabase](../com.example.musicdictionaryandroid.model.dao/-app-database/index.md) | DB定義 |
 | [com.example.musicdictionaryandroid.model.entity.Artist](../com.example.musicdictionaryandroid.model.entity/-artist/index.md) | アーティスト |
 | [com.example.musicdictionaryandroid.model.dao.ArtistDao](../com.example.musicdictionaryandroid.model.dao/-artist-dao/index.md) | DB呼び出しクエリ管理 |
-| [com.example.musicdictionaryandroid.model.usecase.ArtistUseCase](../com.example.musicdictionaryandroid.model.usecase/-artist-use-case/index.md) | アーティストに関するビジネスロジック |
-| [com.example.musicdictionaryandroid.model.usecase.ArtistUseCaseImp](../com.example.musicdictionaryandroid.model.usecase/-artist-use-case-imp/index.md) |  |
+| [com.example.musicdictionaryandroid.domain.usecase.ArtistUseCase](../com.example.musicdictionaryandroid.domain.usecase/-artist-use-case/index.md) | アーティストに関するビジネスロジック |
+| [com.example.musicdictionaryandroid.domain.usecase.ArtistUseCaseImp](../com.example.musicdictionaryandroid.domain.usecase/-artist-use-case-imp/index.md) |  |
 | [com.example.musicdictionaryandroid.model.entity.ArtistsForm](../com.example.musicdictionaryandroid.model.entity/-artists-form/index.md) | API連絡用アーティスト |
 | [com.example.musicdictionaryandroid.model.entity.CallBackData](../com.example.musicdictionaryandroid.model.entity/-call-back-data/index.md) | APIコールバック |
 | [com.example.musicdictionaryandroid.ui.home.CategorySearchFragment](../com.example.musicdictionaryandroid.ui.home/-category-search-fragment/index.md) | カテゴリ検索画面 |
@@ -64,5 +64,5 @@
 | [com.example.musicdictionaryandroid.model.util.Status](../com.example.musicdictionaryandroid.model.util/-status/index.md) | UIのステータス管理 |
 | [com.example.musicdictionaryandroid.model.entity.User](../com.example.musicdictionaryandroid.model.entity/-user/index.md) | ユーザー情報 |
 | [com.example.musicdictionaryandroid.model.util.UserInfoChangeListUtil](../com.example.musicdictionaryandroid.model.util/-user-info-change-list-util/index.md) | 各数値項目の変換 |
-| [com.example.musicdictionaryandroid.model.usecase.UserUseCase](../com.example.musicdictionaryandroid.model.usecase/-user-use-case/index.md) | ユーザーに関するビジネスロジック |
-| [com.example.musicdictionaryandroid.model.usecase.UserUseCaseImp](../com.example.musicdictionaryandroid.model.usecase/-user-use-case-imp/index.md) |  |
+| [com.example.musicdictionaryandroid.domain.usecase.UserUseCase](../com.example.musicdictionaryandroid.domain.usecase/-user-use-case/index.md) | ユーザーに関するビジネスロジック |
+| [com.example.musicdictionaryandroid.domain.usecase.UserUseCaseImp](../com.example.musicdictionaryandroid.domain.usecase/-user-use-case-imp/index.md) |  |

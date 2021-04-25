@@ -1,8 +1,8 @@
 package com.example.musicdictionaryandroid.ui.home
 
 import androidx.lifecycle.*
-import com.example.musicdictionaryandroid.model.entity.ArtistsForm
-import com.example.musicdictionaryandroid.model.repository.PreferenceRepository
+import com.example.musicdictionaryandroid.data.database.entity.ArtistsForm
+import com.example.musicdictionaryandroid.data.repository.PreferenceRepository
 
 /**
  * HOME画面_UIロジック

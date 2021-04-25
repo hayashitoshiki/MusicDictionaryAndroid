@@ -10,7 +10,7 @@
 
 | Name | Summary |
 |---|---|
-| [&lt;init&gt;](-init-.md) | `StartViewModel(userUseCase: `[`UserUseCase`](../../com.example.musicdictionaryandroid.model.usecase/-user-use-case/index.md)`)`<br>ログイン・新規登録画面 BaseActivity_UIロジック |
+| [&lt;init&gt;](-init-.md) | `StartViewModel(userUseCase: `[`UserUseCase`](../../com.example.musicdictionaryandroid.domain.usecase/-user-use-case/index.md)`)`<br>ログイン・新規登録画面 BaseActivity_UIロジック |
 
 ### Properties
 

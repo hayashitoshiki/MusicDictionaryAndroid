@@ -12,7 +12,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.example.musicdictionaryandroid.R
 import com.example.musicdictionaryandroid.databinding.DialogSearchBinding
-import com.example.musicdictionaryandroid.model.entity.ArtistsForm
+import com.example.musicdictionaryandroid.data.database.entity.ArtistsForm
 import com.example.musicdictionaryandroid.ui.adapter.DialogFragmentCallbackInterface
 import com.example.musicdictionaryandroid.ui.adapter.setSafeClickListener
 

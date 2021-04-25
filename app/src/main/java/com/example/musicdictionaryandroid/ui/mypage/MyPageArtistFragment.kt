@@ -18,9 +18,9 @@ import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
 import com.example.musicdictionaryandroid.R
 import com.example.musicdictionaryandroid.databinding.FragmentMypageArtistListBinding
-import com.example.musicdictionaryandroid.model.entity.Artist
-import com.example.musicdictionaryandroid.model.entity.ArtistsForm
-import com.example.musicdictionaryandroid.model.util.Status
+import com.example.musicdictionaryandroid.data.database.entity.Artist
+import com.example.musicdictionaryandroid.data.database.entity.ArtistsForm
+import com.example.musicdictionaryandroid.data.util.Status
 import com.example.musicdictionaryandroid.ui.adapter.SettingBaseAdapter
 import kotlin.coroutines.CoroutineContext
 import kotlinx.coroutines.CoroutineScope

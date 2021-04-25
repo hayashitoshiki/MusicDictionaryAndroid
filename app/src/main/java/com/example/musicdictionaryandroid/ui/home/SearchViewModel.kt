@@ -4,7 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.musicdictionaryandroid.model.entity.ArtistsForm
+import com.example.musicdictionaryandroid.data.database.entity.ArtistsForm
 
 /**
  * 検索条件ダイアログUIロジック

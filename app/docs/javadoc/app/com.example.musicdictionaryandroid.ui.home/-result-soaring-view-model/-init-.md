@@ -2,7 +2,7 @@
 
 # &lt;init&gt;
 
-`ResultSoaringViewModel(artistUseCase: `[`ArtistUseCase`](../../com.example.musicdictionaryandroid.model.usecase/-artist-use-case/index.md)`)`
+`ResultSoaringViewModel(artistUseCase: `[`ArtistUseCase`](../../com.example.musicdictionaryandroid.domain.usecase/-artist-use-case/index.md)`)`
 
 急上昇アーティスト一覧画面_UIロジック
 

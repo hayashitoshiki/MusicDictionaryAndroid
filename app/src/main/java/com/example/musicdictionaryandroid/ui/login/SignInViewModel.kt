@@ -1,8 +1,8 @@
 package com.example.musicdictionaryandroid.ui.login
 
 import androidx.lifecycle.*
-import com.example.musicdictionaryandroid.model.usecase.UserUseCase
-import com.example.musicdictionaryandroid.model.util.Status
+import com.example.musicdictionaryandroid.domain.usecase.UserUseCase
+import com.example.musicdictionaryandroid.data.util.Status
 import java.util.regex.Pattern
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.Job

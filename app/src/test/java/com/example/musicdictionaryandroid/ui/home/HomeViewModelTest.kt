@@ -2,7 +2,7 @@ package com.example.musicdictionaryandroid.ui.home
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.Observer
-import com.example.musicdictionaryandroid.model.repository.PreferenceRepository
+import com.example.musicdictionaryandroid.data.repository.PreferenceRepository
 import com.nhaarman.mockito_kotlin.mock
 import io.mockk.every
 import io.mockk.mockk

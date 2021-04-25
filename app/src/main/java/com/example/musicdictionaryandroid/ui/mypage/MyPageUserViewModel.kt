@@ -3,8 +3,8 @@ package com.example.musicdictionaryandroid.ui.mypage
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.musicdictionaryandroid.model.usecase.UserUseCase
-import com.example.musicdictionaryandroid.model.util.UserInfoChangeListUtil
+import com.example.musicdictionaryandroid.domain.usecase.UserUseCase
+import com.example.musicdictionaryandroid.data.util.UserInfoChangeListUtil
 
 /**
  * ユーザー情報画面_UIロジック

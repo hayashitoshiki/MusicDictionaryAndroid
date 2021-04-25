@@ -5,7 +5,7 @@ import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
-import com.example.musicdictionaryandroid.model.util.Status
+import com.example.musicdictionaryandroid.data.util.Status
 import com.example.musicdictionaryandroid.ui.login.StartActivity
 import org.koin.android.viewmodel.ext.android.viewModel
 

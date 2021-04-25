@@ -6,7 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import com.example.musicdictionaryandroid.R
-import com.example.musicdictionaryandroid.model.entity.Artist
+import com.example.musicdictionaryandroid.data.database.entity.Artist
 
 /**
  * アーティスト一覧画面(アーティストリスト)用Adapter

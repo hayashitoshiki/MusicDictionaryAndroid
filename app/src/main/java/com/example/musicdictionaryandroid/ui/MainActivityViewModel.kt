@@ -1,10 +1,9 @@
 package com.example.musicdictionaryandroid.ui
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.musicdictionaryandroid.model.usecase.ArtistUseCase
-import com.example.musicdictionaryandroid.model.usecase.UserUseCase
+import com.example.musicdictionaryandroid.domain.usecase.ArtistUseCase
+import com.example.musicdictionaryandroid.domain.usecase.UserUseCase
 import kotlinx.coroutines.launch
 
 class MainActivityViewModel(private val userUseCase: UserUseCase,

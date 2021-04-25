@@ -2,7 +2,7 @@
 
 # &lt;init&gt;
 
-`MyPageArtistAddViewModel(userUseCase: `[`UserUseCase`](../../com.example.musicdictionaryandroid.model.usecase/-user-use-case/index.md)`, artistUseCase: `[`ArtistUseCase`](../../com.example.musicdictionaryandroid.model.usecase/-artist-use-case/index.md)`)`
+`MyPageArtistAddViewModel(userUseCase: `[`UserUseCase`](../../com.example.musicdictionaryandroid.domain.usecase/-user-use-case/index.md)`, artistUseCase: `[`ArtistUseCase`](../../com.example.musicdictionaryandroid.domain.usecase/-artist-use-case/index.md)`)`
 
 アーティスト情報登録・追加画面_UIロジック
 

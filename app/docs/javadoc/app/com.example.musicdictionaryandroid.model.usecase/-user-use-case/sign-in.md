@@ -1,4 +1,4 @@
-[app](../../index.md) / [com.example.musicdictionaryandroid.model.usecase](../index.md) / [UserUseCase](index.md) / [signIn](./sign-in.md)
+[app](../../index.md) / [com.example.musicdictionaryandroid.domain.usecase](../index.md) / [UserUseCase](index.md) / [signIn](./sign-in.md)
 
 # signIn
 

@@ -10,7 +10,7 @@
 
 | Name | Summary |
 |---|---|
-| [&lt;init&gt;](-init-.md) | `ResultSoaringViewModel(artistUseCase: `[`ArtistUseCase`](../../com.example.musicdictionaryandroid.model.usecase/-artist-use-case/index.md)`)`<br>急上昇アーティスト一覧画面_UIロジック |
+| [&lt;init&gt;](-init-.md) | `ResultSoaringViewModel(artistUseCase: `[`ArtistUseCase`](../../com.example.musicdictionaryandroid.domain.usecase/-artist-use-case/index.md)`)`<br>急上昇アーティスト一覧画面_UIロジック |
 
 ### Properties
 

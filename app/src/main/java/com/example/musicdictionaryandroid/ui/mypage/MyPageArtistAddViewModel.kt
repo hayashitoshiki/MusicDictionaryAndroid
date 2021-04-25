@@ -2,12 +2,12 @@ package com.example.musicdictionaryandroid.ui.mypage
 
 import android.util.Log
 import androidx.lifecycle.*
-import com.example.musicdictionaryandroid.model.entity.Artist
-import com.example.musicdictionaryandroid.model.entity.ArtistsForm
-import com.example.musicdictionaryandroid.model.usecase.ArtistUseCase
-import com.example.musicdictionaryandroid.model.usecase.UserUseCase
-import com.example.musicdictionaryandroid.model.util.Result
-import com.example.musicdictionaryandroid.model.util.Status
+import com.example.musicdictionaryandroid.data.database.entity.Artist
+import com.example.musicdictionaryandroid.data.database.entity.ArtistsForm
+import com.example.musicdictionaryandroid.domain.usecase.ArtistUseCase
+import com.example.musicdictionaryandroid.domain.usecase.UserUseCase
+import com.example.musicdictionaryandroid.data.util.Result
+import com.example.musicdictionaryandroid.data.util.Status
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 

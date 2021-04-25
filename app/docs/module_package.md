@@ -22,7 +22,7 @@ Entity管理
 # Package com.example.musicdictionaryandroid.model.repository
 CRUD管理
 
-# Package com.example.musicdictionaryandroid.model.usecase
+# Package com.example.musicdictionaryandroid.domain.usecase
 ビジネスロジック管理
 
 # Package com.example.musicdictionaryandroid.model.util
