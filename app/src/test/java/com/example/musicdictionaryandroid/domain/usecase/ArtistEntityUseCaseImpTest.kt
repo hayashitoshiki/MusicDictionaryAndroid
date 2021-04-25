@@ -1,8 +1,8 @@
 package com.example.musicdictionaryandroid.domain.usecase
 
 import androidx.lifecycle.MutableLiveData
-import com.example.musicdictionaryandroid.data.database.entity.Artist
-import com.example.musicdictionaryandroid.data.database.entity.ArtistsForm
+import com.example.musicdictionaryandroid.data.database.entity.ArtistEntity
+import com.example.musicdictionaryandroid.data.net.dto.ArtistsDto
 import com.example.musicdictionaryandroid.data.database.entity.CallBackData
 import com.example.musicdictionaryandroid.data.database.entity.User
 import com.example.musicdictionaryandroid.data.repository.ApiServerRepository
@@ -24,7 +24,7 @@ import org.junit.Test
 
 import org.junit.Assert.*
 
-class ArtistUseCaseImpTest {
+class ArtistEntityUseCaseImpTest {
 
     @ExperimentalCoroutinesApi
     private val testDispatcher = TestCoroutineDispatcher()
@@ -40,11 +40,11 @@ class ArtistUseCaseImpTest {
 
 
     private val user = User("test@com.jp","testA", 1 ,1, "2000/2/2", 1)
-    private val artist = Artist(null, "artistA", 0, 0, 0, 0, 0, 0)
-    private val artistForm = ArtistsForm(artist.name!!, artist.gender!!, artist.voice!!, artist.length!!, artist.lyrics!!, artist.genre1!!, artist.genre2!!)
+    private val artist = ArtistEntity(null, "artistA", 0, 0, 0, 0, 0, 0)
+    private val artistForm = ArtistsDto(artist.name!!, artist.gender!!, artist.voice!!, artist.length!!, artist.lyrics!!, artist.genre1!!, artist.genre2!!)
     private val artistList = listOf(artistForm)
     private val artistArray = arrayListOf(artistForm, artistForm)
-    private val artistListLiveData =  MutableLiveData<List<Artist>>(listOf(artist))
+    private val artistListLiveData =  MutableLiveData<List<ArtistEntity>>(listOf(artist))
     private val failureResult = Result.Error(IllegalArgumentException(""))
     private val successEmail = "success"
     private val failureEmail = "Failure"

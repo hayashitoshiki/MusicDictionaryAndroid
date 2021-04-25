@@ -1,8 +1,9 @@
 package com.example.musicdictionaryandroid.data.repository
 
 import androidx.lifecycle.LiveData
-import com.example.musicdictionaryandroid.data.database.entity.Artist
-import com.example.musicdictionaryandroid.data.database.entity.ArtistsForm
+import com.example.musicdictionaryandroid.data.database.entity.ArtistEntity
+import com.example.musicdictionaryandroid.data.net.dto.ArtistsDto
+import com.example.musicdictionaryandroid.domain.model.entity.Artist
 
 /**
  * ローカルDBへのアーティスト情報関連のRepository
@@ -14,7 +15,7 @@ interface DataBaseRepository {
      *
      * @param artist 追加するアーティスト
      */
-    suspend fun addArtist(artist: ArtistsForm)
+    suspend fun addArtist(artist: Artist)
     /**
      * アーティスト削除
      *
@@ -31,13 +32,13 @@ interface DataBaseRepository {
      *
      * @param artist 更新するアーティスト情報
      */
-    suspend fun updateArtist(artist: ArtistsForm)
+    suspend fun updateArtist(artist: Artist)
     /**
      * 全アーティスト更新
      *
      * @param artists 更新するアーティストリスト
      */
-    suspend fun updateAll(artists: List<ArtistsForm>)
+    suspend fun updateAll(artists: List<Artist>)
     /**
      * アーティスト取得
      *
@@ -50,7 +51,7 @@ interface DataBaseRepository {
      *
      * @return ローカルDBに登録されている全てのアーティスト取得
      */
-    suspend fun getArtistAll(): ArrayList<ArtistsForm>
+    suspend fun getArtistAll(): List<Artist>
 
     // アーティストリスト取得
     fun getArtistList(): LiveData<List<Artist>>

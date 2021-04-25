@@ -1,10 +1,12 @@
 package com.example.musicdictionaryandroid.domain.usecase
 
 import androidx.lifecycle.LiveData
-import com.example.musicdictionaryandroid.data.database.entity.Artist
-import com.example.musicdictionaryandroid.data.database.entity.ArtistsForm
+import com.example.musicdictionaryandroid.data.database.entity.ArtistEntity
+import com.example.musicdictionaryandroid.data.net.dto.ArtistsDto
 import com.example.musicdictionaryandroid.data.repository.*
 import com.example.musicdictionaryandroid.data.util.Result
+import com.example.musicdictionaryandroid.domain.model.entity.Artist
+import com.example.musicdictionaryandroid.domain.model.entity.ArtistContents
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -21,17 +23,17 @@ class ArtistUseCaseImp(
     // region ホームタブ
 
     // 検索条件に一致するアーティスト取得
-    override suspend fun getArtistsBy(artists: ArtistsForm): Result<List<ArtistsForm>?> {
-        return apiRepository.getArtistsBy(artists)
+    override suspend fun getArtistsBy(artist: Artist): Result<List<ArtistContents>> {
+        return apiRepository.getArtistsBy(artist)
     }
 
     // おすすめアーティスト検索
-    override suspend fun getArtistsByRecommend(email: String): Result<List<ArtistsForm>?> {
+    override suspend fun getArtistsByRecommend(email: String): Result<List<ArtistContents>> {
         return apiRepository.getArtistsByRecommend(email)
     }
 
     // 急上昇アーティスト取得
-    override suspend fun getArtistsBySoaring(): Result<List<ArtistsForm>?> {
+    override suspend fun getArtistsBySoaring(): Result<List<ArtistContents>> {
         return apiRepository.getArtistsBySoaring()
     }
 
@@ -40,7 +42,7 @@ class ArtistUseCaseImp(
     // region 設定タブ
 
     // ユーザの登録したアーティスト取得
-    override suspend fun getArtistsByEmail(email: String): Result<List<ArtistsForm>?> {
+    override suspend fun getArtistsByEmail(email: String): Result<List<Artist>> {
         return when (val result = apiRepository.getArtistsByEmail(email)) {
             is Result.Success -> {
                 preferenceRepository.setFavorite(result.data.size)
@@ -54,17 +56,8 @@ class ArtistUseCaseImp(
     }
 
     // アーティスト登録
-    override suspend fun addArtist(artist: Artist, email: String): Result<ArtistsForm?> {
-        val artistsFrom = ArtistsForm(
-            artist.name!!,
-            artist.gender!!,
-            artist.voice!!,
-            artist.length!!,
-            artist.lyrics!!,
-            artist.genre1!!,
-            artist.genre2!!
-        )
-        return when (val result = apiRepository.addArtist(artistsFrom, email)) {
+    override suspend fun addArtist(artist: Artist, email: String): Result<Artist> {
+        return when (val result = apiRepository.addArtist(artist, email)) {
             is Result.Success -> {
                 externalScope.launch {
                     val size = preferenceRepository.getFavorite()
@@ -80,17 +73,8 @@ class ArtistUseCaseImp(
     }
 
     // アーティスト更新
-    override suspend fun updateArtist(artist: Artist, email: String): Result<ArtistsForm?> {
-        val artistsFrom = ArtistsForm(
-            artist.name!!,
-            artist.gender!!,
-            artist.voice!!,
-            artist.length!!,
-            artist.lyrics!!,
-            artist.genre1!!,
-            artist.genre2!!
-        )
-        return when (val result = apiRepository.updateArtist(artistsFrom, email)) {
+    override suspend fun updateArtist(artist: Artist, email: String): Result<Artist> {
+        return when (val result = apiRepository.updateArtist(artist, email)) {
             is Result.Success -> {
                 externalScope.launch {
                     dataBaseRepository.deleteAll()
@@ -103,7 +87,7 @@ class ArtistUseCaseImp(
     }
 
     // アーティスト削除
-    override suspend fun deleteArtist(name: String, email: String): Result<List<ArtistsForm>> {
+    override suspend fun deleteArtist(name: String, email: String): Result<List<Artist>> {
         return when (val result = apiRepository.deleteArtist(name, email)) {
             is Result.Success -> {
                 externalScope.launch {

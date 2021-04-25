@@ -16,13 +16,13 @@ import androidx.room.PrimaryKey
  * @property genre2 ジャンル２
  */
 @Entity(tableName = "artists")
-data class Artist(
+data class ArtistEntity(
     @PrimaryKey(autoGenerate = true) val id: Long?,
-    var name: String? = "アーティスト名",
-    var gender: Int? = 0,
-    var voice: Int? = 0,
-    var length: Int? = 0,
-    var lyrics: Int? = 0,
-    var genre1: Int? = 0,
-    var genre2: Int? = 0
+    var name: String,
+    var gender: Int,
+    var voice: Int,
+    var length: Int,
+    var lyrics: Int,
+    var genre1: Int,
+    var genre2: Int
 ) : java.io.Serializable

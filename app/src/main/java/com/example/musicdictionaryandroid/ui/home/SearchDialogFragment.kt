@@ -12,7 +12,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.example.musicdictionaryandroid.R
 import com.example.musicdictionaryandroid.databinding.DialogSearchBinding
-import com.example.musicdictionaryandroid.data.database.entity.ArtistsForm
+import com.example.musicdictionaryandroid.data.net.dto.ArtistsDto
 import com.example.musicdictionaryandroid.ui.adapter.DialogFragmentCallbackInterface
 import com.example.musicdictionaryandroid.ui.adapter.setSafeClickListener
 
@@ -53,7 +53,7 @@ class SearchDialogFragment : DialogFragment() {
             resources.getStringArray(R.array.genre62_spinner_list)
         )
         arguments?.let {
-            val artist = it.getSerializable("artist") as ArtistsForm
+            val artist = it.getSerializable("artist") as ArtistsDto
             viewModel.setArtist(artist)
         }
 
@@ -74,7 +74,8 @@ class SearchDialogFragment : DialogFragment() {
         }
         // 検索ボタン
         binding.submit.setSafeClickListener {
-            mListener!!.callBackMethod(viewModel.artistForm)
+            val artist = viewModel.getArtist()
+            mListener!!.callBackMethod(artist)
             dismiss()
         }
     }

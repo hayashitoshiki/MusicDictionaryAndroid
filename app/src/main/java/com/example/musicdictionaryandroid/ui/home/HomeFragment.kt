@@ -91,8 +91,7 @@ class HomeFragment : Fragment(), CoroutineScope {
             binding.homeView.visibility = View.GONE
             launch {
                 delay(resources.getInteger(R.integer.fade_out_time_home).toLong())
-                val action =
-                    HomeFragmentDirections.actionNavigationHomeToNavigationResultRecommend()
+                val action = HomeFragmentDirections.actionNavigationHomeToNavigationResultRecommend()
                 findNavController().navigate(action)
             }
         }
@@ -102,8 +101,8 @@ class HomeFragment : Fragment(), CoroutineScope {
             binding.homeView.visibility = View.GONE
             launch {
                 delay(resources.getInteger(R.integer.fade_out_time_home).toLong())
-                val action =
-                    HomeFragmentDirections.actionNavigationHomeToNavigationResult(viewModel.artistsFrom)
+                val artist = viewModel.getArtist()
+                val action = HomeFragmentDirections.actionNavigationHomeToNavigationResult(artist)
                 findNavController().navigate(action)
             }
         }

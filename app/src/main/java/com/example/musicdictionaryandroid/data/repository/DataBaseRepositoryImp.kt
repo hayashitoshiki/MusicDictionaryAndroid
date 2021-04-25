@@ -1,8 +1,10 @@
 package com.example.musicdictionaryandroid.data.repository
 
 import androidx.lifecycle.LiveData
-import com.example.musicdictionaryandroid.data.database.entity.Artist
-import com.example.musicdictionaryandroid.data.database.entity.ArtistsForm
+import androidx.lifecycle.MutableLiveData
+import com.example.musicdictionaryandroid.data.database.entity.ArtistEntity
+import com.example.musicdictionaryandroid.domain.model.entity.Artist
+import com.example.musicdictionaryandroid.domain.model.value.*
 import com.example.musicdictionaryandroid.ui.MyApplication
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
@@ -13,25 +15,29 @@ class DataBaseRepositoryImp(private val ioDispatcher: CoroutineDispatcher = Disp
     private val dao = MyApplication.database.artistDao()
 
     // アーティスト登録
-    override suspend fun addArtist(artist: ArtistsForm) {
+    override suspend fun addArtist(artist: Artist) {
         withContext(ioDispatcher) {
-            dao.insert(Artist(0, artist.name, artist.gender, artist.voice, artist.length, artist.lyrics))
+            val artistEntity = convertArtistEntityFromArtist(artist)
+            dao.insert(artistEntity)
         }
     }
 
     // アーティスト更新
-    override suspend fun updateArtist(artist: ArtistsForm) {
+    override suspend fun updateArtist(artist: Artist) {
         withContext(ioDispatcher) {
-            dao.update(Artist(0, artist.name, artist.gender, artist.voice, artist.length, artist.lyrics))
+            val artistEntity = convertArtistEntityFromArtist(artist)
+            dao.update(artistEntity)
         }
     }
 
     // 全アーティスト更新
-    override suspend fun updateAll(artists: List<ArtistsForm>) {
+    override suspend fun updateAll(artists: List<Artist>) {
         withContext(ioDispatcher) {
             dao.deleteAll()
             artists.forEach { artist ->
-                dao.insert(Artist(null, artist.name, artist.gender, artist.voice, artist.length, artist.lyrics)) }
+                val artistEntity = convertArtistEntityFromArtist(artist)
+                dao.insert(artistEntity)
+            }
         }
     }
 
@@ -50,35 +56,56 @@ class DataBaseRepositoryImp(private val ioDispatcher: CoroutineDispatcher = Disp
     }
 
     // アーティスト全取得
-    override suspend fun getArtistAll(): ArrayList<ArtistsForm> {
+    override suspend fun getArtistAll(): List<Artist> {
         return withContext(ioDispatcher) {
-            val artistList = arrayListOf<ArtistsForm>()
             val artists = dao.getAll()
-            artists.forEach {
-                val artist = ArtistsForm(
-                    it.name!!,
-                    it.gender!!,
-                    it.voice!!,
-                    it.length!!,
-                    it.lyrics!!,
-                    it.genre1!!,
-                    it.genre2!!,
-                    null)
-                artistList.add(artist)
+            return@withContext artists.map {
+                convertArtistFromArtistEntity(it)
             }
-            return@withContext artistList
         }
     }
 
     // アーティスト名一致取得
     override suspend fun findByName(name: String): Artist {
         return withContext(ioDispatcher) {
-            return@withContext dao.getArtistByName(name)
+             val artistEntity = dao.getArtistByName(name)
+            return@withContext convertArtistFromArtistEntity(artistEntity)
         }
     }
 
     // アーティストリスト取得
     override fun getArtistList(): LiveData<List<Artist>> {
-        return dao.getArtistList()
+        val artistEntityLiveData = dao.getArtistList()
+        val artistLiveData = MutableLiveData<List<Artist>>(listOf())
+
+        artistEntityLiveData.observeForever { artistEntityList ->
+            val artistList = artistEntityList.map{ artistEntity ->
+                convertArtistFromArtistEntity(artistEntity)
+            }
+            artistLiveData.postValue(artistList)
+        }
+        return artistLiveData
+    }
+
+    private fun convertArtistFromArtistEntity(artistEntity: ArtistEntity): Artist {
+        val name = artistEntity.name
+        val gender = Gender.getEnumByValue(artistEntity.gender)
+        val voice = Voice(artistEntity.voice)
+        val length = Length(artistEntity.length)
+        val lyrics = Lyrics(artistEntity.lyrics)
+        val genre1 = Genre1(artistEntity.genre1)
+        val genre2 = Genre2(artistEntity.genre2)
+        return Artist(name, gender, voice, length, lyrics, genre1, genre2)
+    }
+
+    private fun convertArtistEntityFromArtist(artist: Artist): ArtistEntity {
+        val name = artist.name
+        val gender = artist.gender.value
+        val voice = artist.voice.value
+        val length = artist.length.value
+        val lyrics = artist.lyrics.value
+        val genre1 = artist.genre1.value
+        val genre2 = artist.genre2.value
+        return ArtistEntity(null, name, gender, voice, length, lyrics, genre1, genre2)
     }
 }

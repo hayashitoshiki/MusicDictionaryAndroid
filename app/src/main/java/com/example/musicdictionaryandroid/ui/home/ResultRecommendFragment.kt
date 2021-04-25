@@ -11,8 +11,10 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.example.musicdictionaryandroid.R
 import com.example.musicdictionaryandroid.databinding.FragmentResultRecommendBinding
-import com.example.musicdictionaryandroid.data.database.entity.ArtistsForm
+import com.example.musicdictionaryandroid.data.net.dto.ArtistsDto
 import com.example.musicdictionaryandroid.data.util.Status
+import com.example.musicdictionaryandroid.domain.model.entity.Artist
+import com.example.musicdictionaryandroid.domain.model.entity.ArtistContents
 import com.example.musicdictionaryandroid.ui.adapter.ResultAdapter
 import org.koin.android.viewmodel.ext.android.viewModel
 
@@ -29,11 +31,7 @@ class ResultRecommendFragment : Fragment() {
     private val viewModel: ResultRecommendViewModel by viewModel()
     private lateinit var binding: FragmentResultRecommendBinding
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_result_recommend, container, false)
         binding.viewModel = viewModel
         return binding.root
@@ -46,17 +44,14 @@ class ResultRecommendFragment : Fragment() {
     }
 
     // ステータス監視
-    private fun onStateChanged(state: Status<ArrayList<ArtistsForm>?>) = when (state) {
+    private fun onStateChanged(state: Status<List<ArtistContents>>) = when (state) {
         is Status.Loading -> { showProgressbar() }
         is Status.Success -> {
             hideProgressbar()
             hideNoDataView()
-            state.data?.let {
-                if (it.size == 0) showNoDataView()
+                if (state.data.isEmpty()) showNoDataView()
                 else viewUpDate(state.data)
-            } ?: run {
-                showNoDataView()
-            }
+
         }
         is Status.Failure -> {
             Log.i(TAG, "Failure:${state.throwable}")
@@ -66,7 +61,7 @@ class ResultRecommendFragment : Fragment() {
     }
 
     // データ反映
-    private fun viewUpDate(data: ArrayList<ArtistsForm>) {
+    private fun viewUpDate(data: List<ArtistContents>) {
         val adapter = ResultAdapter(requireContext(), data)
         val layoutManager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
         binding.recyclerView.adapter = adapter

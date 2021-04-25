@@ -2,7 +2,7 @@ package com.example.musicdictionaryandroid.data.database.dao
 
 import androidx.lifecycle.LiveData
 import androidx.room.*
-import com.example.musicdictionaryandroid.data.database.entity.Artist
+import com.example.musicdictionaryandroid.data.database.entity.ArtistEntity
 
 /**
  * DB呼び出しクエリ管理
@@ -11,10 +11,10 @@ import com.example.musicdictionaryandroid.data.database.entity.Artist
 interface ArtistDao {
 
     @Insert
-    suspend fun insert(artist: Artist)
+    suspend fun insert(artistEntity: ArtistEntity)
 
     @Update
-    fun update(artist: Artist)
+    fun update(artistEntity: ArtistEntity)
 
     @Query("delete from artists WHERE name = :name")
     suspend fun deleteByName(name: String)
@@ -23,11 +23,11 @@ interface ArtistDao {
     fun deleteAll()
 
     @Query("SELECT * FROM artists")
-    suspend fun getAll(): Array<Artist>
+    suspend fun getAll(): Array<ArtistEntity>
 
     @Query("SELECT * FROM artists")
-    fun getArtistList(): LiveData<List<Artist>>
+    fun getArtistList(): LiveData<List<ArtistEntity>>
 
     @Query("select * from artists where name = :name")
-    fun getArtistByName(name: String): Artist
+    fun getArtistByName(name: String): ArtistEntity
 }

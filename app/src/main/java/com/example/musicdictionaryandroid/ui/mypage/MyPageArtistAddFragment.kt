@@ -21,8 +21,9 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.example.musicdictionaryandroid.R
 import com.example.musicdictionaryandroid.databinding.FragmentMypageArtistAddBinding
-import com.example.musicdictionaryandroid.data.database.entity.ArtistsForm
+import com.example.musicdictionaryandroid.data.net.dto.ArtistsDto
 import com.example.musicdictionaryandroid.data.util.Status
+import com.example.musicdictionaryandroid.domain.model.entity.Artist
 import com.example.musicdictionaryandroid.ui.adapter.setSafeClickListener
 import org.koin.android.viewmodel.ext.android.viewModel
 
@@ -108,8 +109,8 @@ class MyPageArtistAddFragment : Fragment() {
         )
 
         viewModel.status.observe(viewLifecycleOwner, Observer { onStateChanged(it) })
-        viewModel.genre1ValueInt.observe(viewLifecycleOwner, Observer { viewModel.changeGenre1(it) })
-        viewModel.genre2ValueInt.observe(viewLifecycleOwner, Observer { viewModel.changeGenre2(it) })
+        viewModel.genre1.observe(viewLifecycleOwner, Observer { viewModel.changeGenre1(it) })
+        viewModel.genre2.observe(viewLifecycleOwner, Observer { viewModel.changeGenre2(it) })
 
         // 送信ボタン
         binding.submit.setSafeClickListener {
@@ -118,15 +119,11 @@ class MyPageArtistAddFragment : Fragment() {
     }
 
     // ステータス監視
-    private fun onStateChanged(state: Status<ArtistsForm?>) = when (state) {
+    private fun onStateChanged(state: Status<Artist>) = when (state) {
         is Status.Loading -> { showProgressbar() }
         is Status.Success -> {
             hideProgressbar()
-            state.data?.let {
-                back()
-            } ?: run {
-                showServerError()
-            }
+            back()
         }
         is Status.Failure -> {
             Log.i(TAG, "Failure:${state.throwable}")

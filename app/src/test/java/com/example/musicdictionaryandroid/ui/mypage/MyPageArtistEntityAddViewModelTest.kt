@@ -2,8 +2,8 @@ package com.example.musicdictionaryandroid.ui.mypage
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.Observer
-import com.example.musicdictionaryandroid.data.database.entity.Artist
-import com.example.musicdictionaryandroid.data.database.entity.ArtistsForm
+import com.example.musicdictionaryandroid.data.database.entity.ArtistEntity
+import com.example.musicdictionaryandroid.data.net.dto.ArtistsDto
 import com.example.musicdictionaryandroid.domain.usecase.ArtistUseCase
 import com.example.musicdictionaryandroid.domain.usecase.UserUseCase
 import com.example.musicdictionaryandroid.data.util.Result
@@ -23,7 +23,7 @@ import org.junit.rules.TestRule
  * アーティスト登録・更新画面
  */
 
-class MyPageArtistAddViewModelTest {
+class MyPageArtistEntityAddViewModelTest {
 
     private val testDispatcher = TestCoroutineDispatcher()
     private val testScope = TestCoroutineScope(testDispatcher)
@@ -43,8 +43,8 @@ class MyPageArtistAddViewModelTest {
     private val array4 = arrayOf("")
     private val array5 = arrayOf("")
     private val array6 = arrayOf("")
-    private val artistsForm = ArtistsForm()
-    private val artist = Artist(1, "test", 1, 1, 1, 1, 1, 1)
+    private val artistsForm = ArtistsDto()
+    private val artist = ArtistEntity(1, "test", 1, 1, 1, 1, 1, 1)
 
     // coroutines用
     @Before
@@ -61,8 +61,8 @@ class MyPageArtistAddViewModelTest {
         }
         viewModel = MyPageArtistAddViewModel(userUseCase, artistUseCase)
         val observer = mock<Observer<Boolean>>()
-        val observerArtist = mock<Observer<Artist>>()
-        viewModel.artistForm.observeForever(observerArtist)
+        val observerArtist = mock<Observer<ArtistEntity>>()
+        viewModel.artistEntityForm.observeForever(observerArtist)
         viewModel.isEnableSubmitButton.observeForever(observer)
         viewModel.init(array0, array1, array2, array3, array4, array5, array6, artist)
     }

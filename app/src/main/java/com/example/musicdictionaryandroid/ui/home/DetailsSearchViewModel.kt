@@ -4,15 +4,15 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.musicdictionaryandroid.data.database.entity.ArtistsForm
+import com.example.musicdictionaryandroid.data.net.dto.ArtistsDto
+import com.example.musicdictionaryandroid.domain.model.entity.Artist
+import com.example.musicdictionaryandroid.domain.model.value.*
 
 /**
  * 詳細検索画面_UIロジック
  *
  */
 class DetailsSearchViewModel : ViewModel() {
-
-    var artistForm = ArtistsForm()
 
     // 絞り込みリスト
     private lateinit var genreKeyList: Array<String>
@@ -109,6 +109,16 @@ class DetailsSearchViewModel : ViewModel() {
         genre1KeyList.value = genreKeyList
     }
 
+    fun getArtist(): Artist {
+        val gender = Gender.getEnumByValue(genderValueInt.value!!)
+        val length = Length(lengthValueInt.value!!)
+        val voice = Voice(voiceValueInt.value!!)
+        val lyrics = Lyrics(lyricsValueInt.value!!)
+        val genre1 = Genre1(genre1ValueInt.value!!)
+        val genre2 = Genre2(genre2ValueInt.value!!)
+        return Artist("", gender, voice, length, lyrics, genre1, genre2)
+    }
+
     // バリデーションチェック
     private fun checkValidate() {
         _isEnableSubmitButton.value = genderValueInt.value!! != 0 ||
@@ -125,7 +135,6 @@ class DetailsSearchViewModel : ViewModel() {
         } else {
             genderValueInt.value = checkedId
         }
-        artistForm.gender = genderValueInt.value!!
     }
 
     // lengthの変更
@@ -135,7 +144,6 @@ class DetailsSearchViewModel : ViewModel() {
         } else {
             lengthValueInt.value = checkedId
         }
-        artistForm.length = lengthValueInt.value!!
     }
 
     // voiceの変更
@@ -145,7 +153,6 @@ class DetailsSearchViewModel : ViewModel() {
         } else {
             voiceValueInt.value = checkedId
         }
-        artistForm.voice = voiceValueInt.value!!
     }
 
     // 歌詞情報の変更
@@ -155,7 +162,6 @@ class DetailsSearchViewModel : ViewModel() {
         } else {
             lyricsValueInt.value = checkedId
         }
-        artistForm.lyrics = lyricsValueInt.value!!
     }
 
     /**

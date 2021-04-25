@@ -1,4 +1,4 @@
-package com.example.musicdictionaryandroid.data.database.entity
+package com.example.musicdictionaryandroid.data.net.dto
 
 /**
  * API連絡用アーティスト
@@ -11,7 +11,7 @@ package com.example.musicdictionaryandroid.data.database.entity
  * @property genre1 ジャンル１
  * @property genre2 ジャンル２
  */
-data class ArtistsForm(
+data class ArtistsDto(
     var name: String = "",
     var gender: Int = 0,
     var voice: Int = 0,

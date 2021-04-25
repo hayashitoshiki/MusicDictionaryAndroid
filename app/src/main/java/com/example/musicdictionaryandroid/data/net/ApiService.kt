@@ -1,6 +1,6 @@
 package com.example.musicdictionaryandroid.data.net
 
-import com.example.musicdictionaryandroid.data.database.entity.ArtistsForm
+import com.example.musicdictionaryandroid.data.net.dto.ArtistsDto
 import com.example.musicdictionaryandroid.data.database.entity.CallBackData
 import com.example.musicdictionaryandroid.data.database.entity.User
 import retrofit2.http.*
@@ -12,22 +12,22 @@ import retrofit2.http.*
 interface ApiService {
 
     @GET("artist/find.json")
-    suspend fun search(@QueryMap stringParams: Map<String, String>): List<ArtistsForm>
+    suspend fun search(@QueryMap stringParams: Map<String, String>): List<ArtistsDto>
 
     @GET("artist/find/recommend.json")
-    suspend fun getRecommend(@Query("email") email: String): List<ArtistsForm>
+    suspend fun getRecommend(@Query("email") email: String): List<ArtistsDto>
 
     @GET("artist/find/soaring.json")
-    suspend fun getSoaring(): List<ArtistsForm>
+    suspend fun getSoaring(): List<ArtistsDto>
 
     @GET("artist/find/email.json")
-    suspend fun findByEmail(@Query("email") email: String): List<ArtistsForm>
+    suspend fun findByEmail(@Query("email") email: String): List<ArtistsDto>
 
     @GET("artist/save.json")
-    suspend fun addArtist(@QueryMap stringParams: Map<String, String>, @Query("email") email: String): ArtistsForm
+    suspend fun addArtist(@QueryMap stringParams: Map<String, String>, @Query("email") email: String): ArtistsDto
 
     @GET("/artist/update.json")
-    suspend fun updateArtist(@QueryMap stringParams: Map<String, String>, @Query("email") email: String): ArtistsForm
+    suspend fun updateArtist(@QueryMap stringParams: Map<String, String>, @Query("email") email: String): ArtistsDto
 
     @GET("artist/delete.json")
     suspend fun deleteArtist(@Query("name") name: String, @Query("email") email: String): CallBackData

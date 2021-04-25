@@ -1,8 +1,10 @@
 package com.example.musicdictionaryandroid.ui.home
 
 import androidx.lifecycle.*
-import com.example.musicdictionaryandroid.data.database.entity.ArtistsForm
+import com.example.musicdictionaryandroid.data.net.dto.ArtistsDto
 import com.example.musicdictionaryandroid.data.repository.PreferenceRepository
+import com.example.musicdictionaryandroid.domain.model.entity.Artist
+import com.example.musicdictionaryandroid.domain.model.value.*
 
 /**
  * HOME画面_UIロジック
@@ -13,7 +15,6 @@ class HomeViewModel(
     private val preferenceRepository: PreferenceRepository
 ) : ViewModel() {
 
-    val artistsFrom = ArtistsForm()
     val searchText = MutableLiveData("")
 
     private val _isEnableSearchBar = MutableLiveData(true)
@@ -52,6 +53,17 @@ class HomeViewModel(
         }
     }
 
+    fun getArtist(): Artist {
+        val name = searchText.value.toString()
+        val gender = Gender.getEnumByValue(0)
+        val length = Length(0)
+        val voice = Voice(0)
+        val lyrics = Lyrics(0)
+        val genre1 = Genre1(0)
+        val genre2 = Genre2(0)
+        return Artist(name, gender, voice, length, lyrics, genre1, genre2)
+    }
+
     /**
      * 検索ボタン活性・非活性制御
      *
@@ -59,6 +71,5 @@ class HomeViewModel(
      */
     fun changeSubmitButton(count: Int) {
         _isEnableSubmitButton.value = count != 0
-        artistsFrom.name = searchText.value.toString()
     }
 }

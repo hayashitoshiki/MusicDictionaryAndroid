@@ -4,14 +4,15 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.musicdictionaryandroid.data.database.entity.ArtistsForm
+import com.example.musicdictionaryandroid.data.net.dto.ArtistsDto
+import com.example.musicdictionaryandroid.domain.model.entity.Artist
+import com.example.musicdictionaryandroid.domain.model.value.*
 
 /**
  * 検索条件ダイアログUIロジック
  *
  */
 class SearchViewModel : ViewModel() {
-    var artistForm = ArtistsForm()
 
     // 絞り込みリスト
     private lateinit var mainGenreList: Array<String>
@@ -36,7 +37,7 @@ class SearchViewModel : ViewModel() {
     val isEnableSubmitButton: LiveData<Boolean> = _isEnableSubmitButton
 
     init {
-        _isEnableSubmitButton.addSource(nameText) { changeArtistName(it!!) }
+        _isEnableSubmitButton.addSource(nameText) { checkValidate() }
         _isEnableSubmitButton.addSource(genderValueInt) { checkValidate() }
         _isEnableSubmitButton.addSource(lengthValueInt) { checkValidate() }
         _isEnableSubmitButton.addSource(voiceValueInt) { checkValidate() }
@@ -64,8 +65,18 @@ class SearchViewModel : ViewModel() {
         genre1ValueList.value = mainGenreList
     }
 
-    fun setArtist(artist: ArtistsForm) {
-        artistForm = artist
+    fun getArtist(): Artist {
+        val name = nameText.value.toString()
+        val gender = Gender.getEnumByValue(0)
+        val length = Length(0)
+        val voice = Voice(0)
+        val lyrics = Lyrics(0)
+        val genre1 = Genre1(0)
+        val genre2 = Genre2(0)
+        return Artist(name, gender, voice, length, lyrics, genre1, genre2)
+    }
+
+    fun setArtist(artist: ArtistsDto) {
         when (artist.genre1) {
             0 -> genre2ValueList.value = subGenre0List
             1 -> genre2ValueList.value = subGenre1List
@@ -84,12 +95,6 @@ class SearchViewModel : ViewModel() {
         genre2ValueInt.value = artist.genre2
     }
 
-    // アーティスト名変更
-    private fun changeArtistName(name: String) {
-        artistForm.name = name
-        checkValidate()
-    }
-
     // genderの変更
     fun checkedChangeGender(checkedId: Int) {
         if (genderValueInt.value == checkedId) {
@@ -97,7 +102,6 @@ class SearchViewModel : ViewModel() {
         } else {
             genderValueInt.value = checkedId
         }
-        artistForm.gender = genderValueInt.value!!
     }
 
     // lengthの変更
@@ -107,7 +111,6 @@ class SearchViewModel : ViewModel() {
         } else {
             lengthValueInt.value = checkedId
         }
-        artistForm.length = lengthValueInt.value!!
     }
 
     // voiceの変更
@@ -117,7 +120,6 @@ class SearchViewModel : ViewModel() {
         } else {
             voiceValueInt.value = checkedId
         }
-        artistForm.voice = voiceValueInt.value!!
     }
 
     // 歌詞情報の変更
@@ -127,12 +129,11 @@ class SearchViewModel : ViewModel() {
         } else {
             lyricsValueInt.value = checkedId
         }
-        artistForm.lyrics = lyricsValueInt.value!!
     }
 
     // ジャンル１の変更
     fun changeGenre1(index: Int) {
-        artistForm.genre1 = index
+        genre1ValueInt.value = index
         genre2ValueInt.value = 0
         when (index) {
             0 -> genre2ValueList.postValue(subGenre0List)
@@ -147,11 +148,11 @@ class SearchViewModel : ViewModel() {
 
     // ジャンル２の変更
     fun changeGenre2(index: Int) {
-        artistForm.genre2 = index
+        genre2ValueInt.value = index
     }
 
     // バリデーションチェック
     private fun checkValidate() {
-        _isEnableSubmitButton.value = artistForm.name != "" || artistForm.gender != 0 || artistForm.length != 0 || artistForm.voice != 0 || artistForm.lyrics != 0 || artistForm.genre1 != 0
+        _isEnableSubmitButton.value = nameText.value != "" || genderValueInt.value != 0 || lengthValueInt.value != 0 || voiceValueInt.value != 0 || lyricsValueInt.value != 0 || genre1ValueInt.value != 0
     }
 }

@@ -1,15 +1,15 @@
 package com.example.musicdictionaryandroid.ui.home
 
 import androidx.lifecycle.*
-import com.example.musicdictionaryandroid.data.database.entity.ArtistsForm
+import com.example.musicdictionaryandroid.data.net.dto.ArtistsDto
+import com.example.musicdictionaryandroid.domain.model.entity.Artist
+import com.example.musicdictionaryandroid.domain.model.value.*
 
 /**
  * カテゴリ検索画面_UIロジック
  *
  */
 class CategorySearchViewModel : ViewModel() {
-
-    var artistForm = ArtistsForm()
 
     // 絞り込みリスト
     private lateinit var mainGenreList: Array<String>
@@ -60,6 +60,16 @@ class CategorySearchViewModel : ViewModel() {
         genre1ValueList.value = mainGenreList
     }
 
+    fun getArtist(): Artist {
+        val gender = Gender.getEnumByValue(genderValueInt.value!!)
+        val length = Length(lengthValueInt.value!!)
+        val voice = Voice(voiceValueInt.value!!)
+        val lyrics = Lyrics(lyricsValueInt.value!!)
+        val genre1 = Genre1(genre1ValueInt.value!!)
+        val genre2 = Genre2(genre2ValueInt.value!!)
+        return Artist("", gender, voice, length, lyrics, genre1, genre2)
+    }
+
     // バリデーションチェック
     private fun checkValidate() {
         _isEnableSubmitButton.value = genderValueInt.value!! != 0 ||
@@ -76,7 +86,6 @@ class CategorySearchViewModel : ViewModel() {
         } else {
             genderValueInt.value = checkedId
         }
-        artistForm.gender = genderValueInt.value!!
     }
 
     // lengthの変更
@@ -86,7 +95,6 @@ class CategorySearchViewModel : ViewModel() {
         } else {
             lengthValueInt.value = checkedId
         }
-        artistForm.length = lengthValueInt.value!!
     }
 
     // voiceの変更
@@ -96,7 +104,6 @@ class CategorySearchViewModel : ViewModel() {
         } else {
             voiceValueInt.value = checkedId
         }
-        artistForm.voice = voiceValueInt.value!!
     }
 
     // 歌詞情報の変更
@@ -106,12 +113,10 @@ class CategorySearchViewModel : ViewModel() {
         } else {
             lyricsValueInt.value = checkedId
         }
-        artistForm.lyrics = lyricsValueInt.value!!
     }
 
     // ジャンル１の変更
     fun changeGenre1(index: Int) {
-        artistForm.genre1 = index
         genre2ValueInt.value = 0
         when (index) {
             0 -> genre2ValueList.postValue(subGenre0List)
@@ -126,7 +131,7 @@ class CategorySearchViewModel : ViewModel() {
 
     // ジャンル２の変更
     fun changeGenre2(index: Int) {
-        artistForm.genre2 = index
+        genre2ValueInt.value = index
     }
 
     fun onDestroy() {

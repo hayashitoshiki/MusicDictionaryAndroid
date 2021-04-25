@@ -1,9 +1,11 @@
 package com.example.musicdictionaryandroid.data.repository
 
-import com.example.musicdictionaryandroid.data.database.entity.ArtistsForm
+import com.example.musicdictionaryandroid.data.net.dto.ArtistsDto
 import com.example.musicdictionaryandroid.data.database.entity.CallBackData
 import com.example.musicdictionaryandroid.data.database.entity.User
 import com.example.musicdictionaryandroid.data.util.Result
+import com.example.musicdictionaryandroid.domain.model.entity.Artist
+import com.example.musicdictionaryandroid.domain.model.entity.ArtistContents
 import java.util.*
 
 /**
@@ -19,20 +21,20 @@ interface ApiServerRepository {
      * @param artists アーティスト検索条件
      * @return アーティストの検索結果一覧
      */
-    suspend fun getArtistsBy(artists: ArtistsForm): Result<List<ArtistsForm>>
+    suspend fun getArtistsBy(artist: Artist): Result<List<ArtistContents>>
     /**
      * おすすめアーティスト検索
      *
      * @param email ユーザのEmail
      * @return レコメンドアーティスト一覧
      */
-    suspend fun getArtistsByRecommend(email: String): Result<List<ArtistsForm>>
+    suspend fun getArtistsByRecommend(email: String): Result<List<ArtistContents>>
     /**
      * 急上昇アーティスト取得
      *
      * @return 急上昇アーティスト一覧
      */
-    suspend fun getArtistsBySoaring(): Result<List<ArtistsForm>>
+    suspend fun getArtistsBySoaring(): Result<List<ArtistContents>>
     /*----------------------------------------
         設定タブ
      ----------------------------------------*/
@@ -42,7 +44,7 @@ interface ApiServerRepository {
      * @param email ユーザーのemail
      * @return 登録済みアーティスト一覧
      */
-    suspend fun getArtistsByEmail(email: String): Result<List<ArtistsForm>>
+    suspend fun getArtistsByEmail(email: String): Result<List<Artist>>
     /**
      * アーティスト登録
      *
@@ -50,7 +52,7 @@ interface ApiServerRepository {
      * @param email ユーザのemail
      * @return 登録正常完了判定結果
      */
-    suspend fun addArtist(artist: ArtistsForm, email: String): Result<ArtistsForm>
+    suspend fun addArtist(artist: Artist, email: String): Result<Artist>
     /**
      * アーティスト更新
      *
@@ -59,7 +61,7 @@ interface ApiServerRepository {
      * @param email ユーザのemail
      * @return 更新正常完了判定結果
      */
-    suspend fun updateArtist(artist: ArtistsForm, email: String): Result<ArtistsForm>
+    suspend fun updateArtist(artist: Artist, email: String): Result<Artist>
     /**
      * アーティスト削除
      *
