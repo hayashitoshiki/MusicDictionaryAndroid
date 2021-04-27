@@ -1,8 +1,11 @@
 package com.example.musicdictionaryandroid.data.repository
 
-import android.util.Log
+import com.example.musicdictionaryandroid.data.util.Result
 import com.google.firebase.auth.FirebaseAuth
-import java.lang.Exception
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.channels.awaitClose
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.callbackFlow
 
 class FireBaseRepositoryImp : FireBaseRepository {
 
@@ -24,24 +27,22 @@ class FireBaseRepositoryImp : FireBaseRepository {
     }
 
     // ログイン機能
-    override fun signIn(email: String, password: String, onSuccess: () -> Unit, onError: (error: Exception?) -> Unit) {
-        Log.d("TAG", "repository")
-        auth.signInWithEmailAndPassword(email, password)
-            .addOnCompleteListener { task ->
-                when {
-                    task.isSuccessful -> {
-                        Log.d(TAG, "ログイン成功：" + task.isSuccessful)
-                        onSuccess()
-                    }
-                    task.isCanceled -> {
-                        Log.d(TAG, "ログインキャンセル：" + task.exception)
-                    }
-                    else -> {
-                        Log.d(TAG, "ログイン失敗：" + task.exception)
-                        onError(task.exception)
+    @ExperimentalCoroutinesApi
+    override fun signIn(email: String, password: String): Flow<Result<String>> = callbackFlow {
+        auth.signInWithEmailAndPassword(email, password).addOnCompleteListener { task ->
+            when {
+                task.isSuccessful -> offer(Result.Success("Success"))
+                task.isCanceled -> offer(Result.Error(IllegalAccessError("ログインキャンセル")))
+                else -> {
+                    task.exception?.let {
+                        offer(Result.Error(it))
+                    } ?: run {
+                        offer(Result.Error(IllegalAccessError("ログイン失敗")))
                     }
                 }
             }
+        }
+        awaitClose()
     }
 
     // ログアウト
@@ -50,30 +51,40 @@ class FireBaseRepositoryImp : FireBaseRepository {
     }
 
     // アカウント作成
-    override fun signUp(email: String, password: String, onSuccess: () -> Unit, onError: (error: Exception?) -> Unit) {
-        auth.createUserWithEmailAndPassword(email, password)
-            .addOnCompleteListener { task ->
-                if (task.isSuccessful) {
-                    Log.d(TAG, "アカウント作成成功")
-                    onSuccess()
-                } else {
-                    Log.w(TAG, "アカウント作成失敗", task.exception)
-                    onError(task.exception)
+    @ExperimentalCoroutinesApi
+    override fun signUp(email: String, password: String): Flow<Result<String>> = callbackFlow {
+        auth.createUserWithEmailAndPassword(email, password).addOnCompleteListener { task ->
+            when {
+                task.isSuccessful -> offer(Result.Success("Success"))
+                task.isCanceled -> offer(Result.Error(IllegalAccessError("アカウント作成キャンセル")))
+                else -> {
+                    task.exception?.let {
+                        offer(Result.Error(it))
+                    } ?: run {
+                        offer(Result.Error(IllegalAccessError("アカウント作成失敗")))
+                    }
                 }
             }
+        }
+        awaitClose()
     }
 
-    // ユーザー削除
-    override fun delete(onSuccess: () -> Unit, onError: (error: Exception?) -> Unit) {
-        auth.currentUser!!.delete()
-            .addOnCompleteListener { task ->
-                if (task.isSuccessful) {
-                    Log.d(TAG, "ユーザーを削除しました")
-                    onSuccess()
-                } else {
-                    Log.d(TAG, "予期せぬエラーが発生しました")
-                    onError(task.exception)
+    // アカウント削除
+    @ExperimentalCoroutinesApi
+    override fun delete(): Flow<Result<String>> = callbackFlow {
+        auth.currentUser!!.delete().addOnCompleteListener { task ->
+            when {
+                task.isSuccessful -> offer(Result.Success("Success"))
+                task.isCanceled -> offer(Result.Error(IllegalAccessError("アカウント削除キャンセル")))
+                else -> {
+                    task.exception?.let {
+                        offer(Result.Error(it))
+                    } ?: run {
+                        offer(Result.Error(IllegalAccessError("アカウント削除失敗")))
+                    }
                 }
             }
+        }
+        awaitClose()
     }
 }

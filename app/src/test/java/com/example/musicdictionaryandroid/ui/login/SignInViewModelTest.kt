@@ -9,11 +9,15 @@ import io.mockk.mockk
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.TestCoroutineDispatcher
+import kotlinx.coroutines.test.TestCoroutineScope
 import kotlinx.coroutines.test.resetMain
 import kotlinx.coroutines.test.setMain
-import org.junit.*
+import org.junit.After
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNotEquals
+import org.junit.Before
+import org.junit.Rule
+import org.junit.Test
 import org.junit.rules.TestRule
 
 /**
@@ -24,6 +28,10 @@ class SignInViewModelTest {
 
     @ExperimentalCoroutinesApi
     private val testDispatcher = TestCoroutineDispatcher()
+
+    @ExperimentalCoroutinesApi
+    private val testScope = TestCoroutineScope(testDispatcher)
+
     private lateinit var viewModel: SignInViewModel
 
     // LiveData用
@@ -35,11 +43,11 @@ class SignInViewModelTest {
     fun before() {
         Dispatchers.setMain(testDispatcher)
         // テストクラス作成
-        val userUseCase = mockk<UserUseCase> ().also {
+        val userUseCase = mockk<UserUseCase>().also {
             coEvery { it.getEmail() } returns "responseUser"
         }
         val observer = mock<Observer<Boolean>>()
-        viewModel = SignInViewModel(userUseCase)
+        viewModel = SignInViewModel(userUseCase, testScope)
         viewModel.isEnableSubmitButton.observeForever(observer)
     }
 

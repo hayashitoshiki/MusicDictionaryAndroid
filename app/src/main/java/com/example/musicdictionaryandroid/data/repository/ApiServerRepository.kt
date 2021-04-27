@@ -1,6 +1,5 @@
 package com.example.musicdictionaryandroid.data.repository
 
-import com.example.musicdictionaryandroid.data.net.dto.ArtistsDto
 import com.example.musicdictionaryandroid.data.database.entity.CallBackData
 import com.example.musicdictionaryandroid.data.database.entity.User
 import com.example.musicdictionaryandroid.data.util.Result
@@ -22,6 +21,7 @@ interface ApiServerRepository {
      * @return アーティストの検索結果一覧
      */
     suspend fun getArtistsBy(artist: Artist): Result<List<ArtistContents>>
+
     /**
      * おすすめアーティスト検索
      *
@@ -29,6 +29,7 @@ interface ApiServerRepository {
      * @return レコメンドアーティスト一覧
      */
     suspend fun getArtistsByRecommend(email: String): Result<List<ArtistContents>>
+
     /**
      * 急上昇アーティスト取得
      *
@@ -45,6 +46,7 @@ interface ApiServerRepository {
      * @return 登録済みアーティスト一覧
      */
     suspend fun getArtistsByEmail(email: String): Result<List<Artist>>
+
     /**
      * アーティスト登録
      *
@@ -53,6 +55,7 @@ interface ApiServerRepository {
      * @return 登録正常完了判定結果
      */
     suspend fun addArtist(artist: Artist, email: String): Result<Artist>
+
     /**
      * アーティスト更新
      *
@@ -62,6 +65,7 @@ interface ApiServerRepository {
      * @return 更新正常完了判定結果
      */
     suspend fun updateArtist(artist: Artist, email: String): Result<Artist>
+
     /**
      * アーティスト削除
      *
@@ -69,7 +73,7 @@ interface ApiServerRepository {
      * @param email ユーザのemail
      * @return 削除正常完了判定結果
      */
-    suspend fun deleteArtist(name: String, email: String): Result<CallBackData>
+    suspend fun deleteArtist(name: String, email: String): Result<String>
     /*----------------------------------------
         ユーザー情報
      ----------------------------------------*/
@@ -80,13 +84,15 @@ interface ApiServerRepository {
      * @return 登録したユーザー情報取得
      */
     suspend fun getUserByEmail(email: String): Result<User>
+
     /**
      * ユーザー登録
      *
      * @param user 登録数ユーザー情報
      * @return 登録処理結果
      */
-    suspend fun createUser(user: String): Result<CallBackData>
+    suspend fun createUser(user: String): Result<String>
+
     /**
      * ユーザー情報変更
      *

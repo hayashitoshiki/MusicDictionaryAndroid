@@ -1,14 +1,19 @@
 package com.example.musicdictionaryandroid.domain.usecase
 
-import android.util.Log
 import com.example.musicdictionaryandroid.data.database.entity.CallBackData
 import com.example.musicdictionaryandroid.data.database.entity.User
-import com.example.musicdictionaryandroid.data.repository.*
+import com.example.musicdictionaryandroid.data.repository.ApiServerRepository
+import com.example.musicdictionaryandroid.data.repository.DataBaseRepository
+import com.example.musicdictionaryandroid.data.repository.FireBaseRepository
+import com.example.musicdictionaryandroid.data.repository.PreferenceRepository
 import com.example.musicdictionaryandroid.data.util.Result
-import com.example.musicdictionaryandroid.data.util.UserInfoChangeListUtil
 import com.squareup.moshi.Moshi
-import java.lang.Exception
-import kotlinx.coroutines.*
+import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.flow
 
 class UserUseCaseImp(
     private val apiRepository: ApiServerRepository,
@@ -21,14 +26,7 @@ class UserUseCaseImp(
 
     // ユーザー情報取得(SharedPreferences)
     override fun getUserByCache(): User {
-        return User(
-            preferenceRepository.getEmail()!!,
-            preferenceRepository.getName()!!,
-            preferenceRepository.getGender(),
-            preferenceRepository.getArea(),
-            UserInfoChangeListUtil.getBirthday(preferenceRepository.getBirthday()),
-            preferenceRepository.getFavorite()
-        )
+        return preferenceRepository.getUser()
     }
 
     // 登録したユーザーの情報取得
@@ -37,32 +35,23 @@ class UserUseCaseImp(
     }
 
     // ユーザー登録
-    override suspend fun createUser(
-        email: String,
-        password: String,
-        user: User,
-        onSuccess: (result: CallBackData?) -> Unit,
-        onError: (error: Throwable) -> Unit
-    ) {
-        fireBaseRepository.signUp(email, password, {
-                val json: String = Moshi.Builder().build().adapter(User::class.java).toJson(user)
-                externalScope.launch(defaultDispatcher) {
-                    when (val result = apiRepository.createUser(json)) {
+    override suspend fun createUser(email: String, password: String, user: User): Flow<Result<String>> = flow {
+        fireBaseRepository.signUp(email, password).collect { firebaseResult ->
+            when (firebaseResult) {
+                is Result.Success -> {
+                    val json: String = Moshi.Builder().build().adapter(User::class.java).toJson(user)
+                    when (val apiResult = apiRepository.createUser(json)) {
                         is Result.Success -> {
-                            preferenceRepository.setEmail(user.email)
-                            preferenceRepository.setName(user.name)
-                            preferenceRepository.setGender(user.gender)
-                            preferenceRepository.setBirthday(UserInfoChangeListUtil.changeBirthdayString(user.birthday))
-                            preferenceRepository.setArea(user.area)
-                            preferenceRepository.setFavorite(0)
-                            onSuccess(result.data)
+                            preferenceRepository.setUser(user)
+                            emit(firebaseResult)
                         }
-                        is Result.Error -> onError(result.exception)
+                        is Result.Error -> emit(apiResult)
                     }
                 }
-            },
-            { onError(throw Exception("firebase アカウント作成失敗")) }
-        )
+                is Result.Error -> emit(firebaseResult)
+            }
+        }
+
     }
 
     // ユーザー情報変更
@@ -71,8 +60,8 @@ class UserUseCaseImp(
     }
 
     // ユーザー削除
-    override fun delete(onSuccess: () -> Unit, onError: (error: Throwable?) -> Unit) {
-        fireBaseRepository.delete({ onSuccess() }, { onError(it) })
+    override fun delete(): Flow<Result<String>> {
+        return fireBaseRepository.delete()
     }
 
     // ログイン状態チェック
@@ -81,37 +70,24 @@ class UserUseCaseImp(
     }
 
     // ログイン
-    override suspend fun signIn(
-        email: String,
-        password: String,
-        onSuccess: () -> Unit,
-        onError: (error: Throwable?) -> Unit
-    ) {
-        fireBaseRepository.signIn(email, password, {
-            Log.d("TAG", "signIn　signIn")
-            externalScope.launch(defaultDispatcher) {
-                when (val result = apiRepository.getUserByEmail(email)){
-                    is Result.Success -> {
-                        Log.d("TAG", "API　ログイン成功")
-                        result.data.let { user ->
-                            preferenceRepository.setEmail(user.email)
-                            preferenceRepository.setName(user.name)
-                            preferenceRepository.setGender(user.gender)
-                            preferenceRepository.setBirthday(UserInfoChangeListUtil.changeBirthdayString(user.birthday))
-                            preferenceRepository.setArea(user.area)
-                            preferenceRepository.setFavorite(user.artist_count)
+    override suspend fun signIn(email: String, password: String): Flow<Result<String>> = flow {
+        fireBaseRepository.signIn(email, password).collect {
+            when (it) {
+                is Result.Success -> {
+                    when (val result = apiRepository.getUserByEmail(email)) {
+                        is Result.Success -> {
+                            preferenceRepository.setUser(result.data)
+                            emit(it)
                         }
-                        onSuccess()
-                    }
-                    is Result.Error -> {
-                        Log.d("TAG", "API　ログイン失敗")
-                        fireBaseRepository.signOut()
-                        onError(result.exception)
+                        is Result.Error -> {
+                            fireBaseRepository.signOut()
+                            emit(result)
+                        }
                     }
                 }
+                is Result.Error -> emit(it)
             }
-        }, { onError(it) }
-        )
+        }
     }
 
     // ログアウト

@@ -14,16 +14,17 @@ import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.every
 import io.mockk.mockk
-import kotlinx.coroutines.*
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.test.TestCoroutineDispatcher
 import kotlinx.coroutines.test.TestCoroutineScope
 import kotlinx.coroutines.test.resetMain
 import kotlinx.coroutines.test.setMain
 import org.junit.After
+import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
-
-import org.junit.Assert.*
 
 class ArtistUseCaseImpTest {
 
@@ -38,12 +39,13 @@ class ArtistUseCaseImpTest {
     private lateinit var dataBaseRepository: DataBaseRepository
     private lateinit var preferenceRepository: PreferenceRepository
 
-    private val user = User("test@com.jp","testA", 1 ,1, "2000/2/2", 1)
+    private val user = User("test@com.jp", "testA", 1, 1, "2000/2/2", 1)
     private val artist = Artist("test", Gender.MAN, Voice(0), Length(0), Lyrics(0), Genre1(0), Genre2(0))
-    private val artistContents = ArtistContents(artist, null, null, 0, 0, 0, 0, 0, 0,0,0)
+    private val artistContents = ArtistContents(artist, null, null, 0, 0, 0, 0, 0, 0, 0, 0)
     private val artistContentsList = listOf(artistContents)
     private val artistList = listOf(artist, artist)
     private val artistListLiveData = MutableLiveData(listOf(artist))
+    private val successResult = Result.Success("Success")
     private val failureResult = Result.Error(IllegalArgumentException(""))
     private val successEmail = "success"
     private val failureEmail = "Failure"
@@ -62,10 +64,10 @@ class ArtistUseCaseImpTest {
             coEvery { it.addArtist(any(), failureEmail) } returns failureResult
             coEvery { it.updateArtist(any(), successEmail) } returns Result.Success(artist)
             coEvery { it.updateArtist(any(), failureEmail) } returns failureResult
-            coEvery { it.deleteArtist(any(), successEmail) } returns Result.Success(CallBackData())
+            coEvery { it.deleteArtist(any(), successEmail) } returns successResult
             coEvery { it.deleteArtist(any(), failureEmail) } returns failureResult
             coEvery { it.getUserByEmail(any()) } returns Result.Success(user)
-            coEvery { it.createUser(any()) } returns Result.Success(CallBackData())
+            coEvery { it.createUser(any()) } returns successResult
             coEvery { it.changeUser(any(), any()) } returns Result.Success(CallBackData())
         }
         dataBaseRepository = mockk<DataBaseRepository>().also {

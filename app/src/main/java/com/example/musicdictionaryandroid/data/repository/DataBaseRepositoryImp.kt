@@ -15,62 +15,48 @@ class DataBaseRepositoryImp(private val ioDispatcher: CoroutineDispatcher = Disp
     private val dao = MyApplication.database.artistDao()
 
     // アーティスト登録
-    override suspend fun addArtist(artist: Artist) {
-        withContext(ioDispatcher) {
+    override suspend fun addArtist(artist: Artist) = withContext(ioDispatcher) {
+        val artistEntity = convertArtistEntityFromArtist(artist)
+        dao.insert(artistEntity)
+    }
+
+    // アーティスト更新
+    override suspend fun updateArtist(artist: Artist) = withContext(ioDispatcher) {
+        val artistEntity = convertArtistEntityFromArtist(artist)
+        dao.update(artistEntity)
+    }
+
+    // 全アーティスト更新
+    override suspend fun updateAll(artists: List<Artist>) = withContext(ioDispatcher) {
+        dao.deleteAll()
+        artists.forEach { artist ->
             val artistEntity = convertArtistEntityFromArtist(artist)
             dao.insert(artistEntity)
         }
     }
 
-    // アーティスト更新
-    override suspend fun updateArtist(artist: Artist) {
-        withContext(ioDispatcher) {
-            val artistEntity = convertArtistEntityFromArtist(artist)
-            dao.update(artistEntity)
-        }
-    }
-
-    // 全アーティスト更新
-    override suspend fun updateAll(artists: List<Artist>) {
-        withContext(ioDispatcher) {
-            dao.deleteAll()
-            artists.forEach { artist ->
-                val artistEntity = convertArtistEntityFromArtist(artist)
-                dao.insert(artistEntity)
-            }
-        }
-    }
-
     // アーティスト削除
-    override suspend fun deleteArtist(name: String) {
-        withContext(ioDispatcher) {
-            dao.deleteByName(name)
-        }
+    override suspend fun deleteArtist(name: String) = withContext(ioDispatcher) {
+        dao.deleteByName(name)
     }
 
     // 全アーティスト削除
-    override suspend fun deleteAll() {
-        withContext(ioDispatcher) {
-            dao.deleteAll()
-        }
+    override suspend fun deleteAll() = withContext(ioDispatcher) {
+        dao.deleteAll()
     }
 
     // アーティスト全取得
-    override suspend fun getArtistAll(): List<Artist> {
-        return withContext(ioDispatcher) {
-            val artists = dao.getAll()
-            return@withContext artists.map {
-                convertArtistFromArtistEntity(it)
-            }
+    override suspend fun getArtistAll(): List<Artist> = withContext(ioDispatcher) {
+        val artists = dao.getAll()
+        return@withContext artists.map {
+            convertArtistFromArtistEntity(it)
         }
     }
 
     // アーティスト名一致取得
-    override suspend fun findByName(name: String): Artist {
-        return withContext(ioDispatcher) {
-             val artistEntity = dao.getArtistByName(name)
-            return@withContext convertArtistFromArtistEntity(artistEntity)
-        }
+    override suspend fun findByName(name: String): Artist = withContext(ioDispatcher) {
+        val artistEntity = dao.getArtistByName(name)
+        return@withContext convertArtistFromArtistEntity(artistEntity)
     }
 
     // アーティストリスト取得
@@ -79,7 +65,7 @@ class DataBaseRepositoryImp(private val ioDispatcher: CoroutineDispatcher = Disp
         val artistLiveData = MutableLiveData<List<Artist>>(listOf())
 
         artistEntityLiveData.observeForever { artistEntityList ->
-            val artistList = artistEntityList.map{ artistEntity ->
+            val artistList = artistEntityList.map { artistEntity ->
                 convertArtistFromArtistEntity(artistEntity)
             }
             artistLiveData.postValue(artistList)
@@ -87,6 +73,7 @@ class DataBaseRepositoryImp(private val ioDispatcher: CoroutineDispatcher = Disp
         return artistLiveData
     }
 
+    // アーティストテーブルからアーティストモデルべ変換
     private fun convertArtistFromArtistEntity(artistEntity: ArtistEntity): Artist {
         val name = artistEntity.name
         val gender = Gender.getEnumByValue(artistEntity.gender)
@@ -98,6 +85,7 @@ class DataBaseRepositoryImp(private val ioDispatcher: CoroutineDispatcher = Disp
         return Artist(name, gender, voice, length, lyrics, genre1, genre2)
     }
 
+    // アーティストモデルからアーティストテーブルへ変換
     private fun convertArtistEntityFromArtist(artist: Artist): ArtistEntity {
         val name = artist.name
         val gender = artist.gender.value

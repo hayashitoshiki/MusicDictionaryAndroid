@@ -10,16 +10,16 @@ import com.example.musicdictionaryandroid.data.repository.PreferenceRepository
 import com.example.musicdictionaryandroid.data.util.Result
 import com.example.musicdictionaryandroid.domain.model.entity.Artist
 import com.example.musicdictionaryandroid.domain.model.value.*
-import io.mockk.coEvery
-import io.mockk.coVerify
-import io.mockk.every
-import io.mockk.mockk
+import com.squareup.moshi.Moshi
+import io.mockk.*
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.test.TestCoroutineDispatcher
 import kotlinx.coroutines.test.TestCoroutineScope
 import org.junit.After
-import org.junit.Assert.*
+import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
 
@@ -38,14 +38,20 @@ class UserUseCaseImpTest {
     private lateinit var preferenceRepository: PreferenceRepository
     private lateinit var fireBaseRepository: FireBaseRepository
 
-    private val user = User("test@com.jp", "testA", 1, 1, "2000/2/2", 1)
+    private val successUser = User("test@com.jp", "testSuccess", 1, 1, "2000/2/2", 1)
+    private val failureUser = User("test@com.jp", "testFailure", 1, 1, "2000/2/2", 1)
+
     private val artist = Artist("test", Gender.MAN, Voice(0), Length(0), Lyrics(0), Genre1(0), Genre2(0))
 
+    private val successJson: String = Moshi.Builder().build().adapter(User::class.java).toJson(successUser)
+    private val failureJson: String = Moshi.Builder().build().adapter(User::class.java).toJson(failureUser)
     private val artistList = listOf(artist)
     private val artistListLiveData = MutableLiveData(listOf(artist))
     private val failureResult = Result.Error(IllegalArgumentException(""))
     private val successEmail = "success"
     private val failureEmail = "Failure"
+    private val successResult = Result.Success("Success")
+    private val createSuccessResult = Result.Success(successUser)
 
     @ExperimentalCoroutinesApi
     @Before
@@ -53,8 +59,10 @@ class UserUseCaseImpTest {
         apiRepository = mockk<ApiServerRepository>().also {
             coEvery { it.getArtistsByEmail(successEmail) } returns Result.Success(artistList)
             coEvery { it.getArtistsByEmail(failureEmail) } returns failureResult
-            coEvery { it.getUserByEmail(any()) } returns Result.Success(user)
-            coEvery { it.createUser(any()) } returns Result.Success(CallBackData())
+            coEvery { it.getUserByEmail(successEmail) } returns createSuccessResult
+            coEvery { it.getUserByEmail(failureEmail) } returns failureResult
+            coEvery { it.createUser(successJson) } returns successResult
+            coEvery { it.createUser(failureJson) } returns failureResult
             coEvery { it.changeUser(any(), any()) } returns Result.Success(CallBackData())
         }
         dataBaseRepository = mockk<DataBaseRepository>().also {
@@ -68,14 +76,18 @@ class UserUseCaseImpTest {
             coEvery { it.getArtistList() } returns artistListLiveData
         }
         fireBaseRepository = mockk<FireBaseRepository>().also {
-            every { it.signIn(any(), any(), any(), any()) } returns Unit
+            every { it.signIn(any(), successEmail) } returns flow { emit(successResult) }
+            every { it.signIn(any(), failureEmail) } returns flow { emit(failureResult) }
             every { it.signOut() } returns Unit
             every { it.firstCheck() } returns true
-            every { it.signUp(any(), any(), any(), any()) } returns Unit
-            every { it.delete(any(), any()) } returns Unit
+            every { it.signUp(successEmail, any()) } returns flow { emit(successResult) }
+            every { it.signUp(failureEmail, any()) } returns flow { emit(failureResult) }
+            every { it.delete() } returns flow { emit(successResult) }
             every { it.getEmail() } returns "testA"
         }
         preferenceRepository = mockk<PreferenceRepository>().also {
+            every { it.setUser(any()) } returns Unit
+            every { it.getUser() } returns successUser
             every { it.setFavorite(any()) } returns Unit
             every { it.getFavorite() } returns 1
             every { it.getEmail() } returns "testA"
@@ -95,6 +107,22 @@ class UserUseCaseImpTest {
     fun tearDown() {
     }
 
+    // region ユーザ情報取得
+
+    /**
+     * ユーザ情報取得
+     * 条件：なし
+     * 結果：preferenceRepositoryのユーザ情報取得メソッドが呼ばれること
+     */
+    @Test
+    fun getUserByCache() {
+        val result = useCase.getUserByCache()
+        verify(exactly = 1) { preferenceRepository.getUser() }
+        assertEquals(successUser, result)
+    }
+
+    // endregion
+
     // region 登録したユーザーの情報取得
 
     /**
@@ -105,20 +133,62 @@ class UserUseCaseImpTest {
     @Test
     fun getUserByEmail() {
         runBlocking {
-            val result = useCase.getUserByEmail("")
-            coVerify(exactly = 1) { (apiRepository).getUserByEmail("") }
-            assertEquals(Result.Success(user), result)
+            val result = useCase.getUserByEmail(successEmail)
+            coVerify(exactly = 1) { (apiRepository).getUserByEmail(successEmail) }
+            assertEquals(createSuccessResult, result)
         }
     }
 
     // endregion
 
-    // TODO: Flow導入時にテスト記載
+    // region ユーザ登録
+
+    /**
+     * ユーザ登録
+     * 条件：全て成功
+     * 結果：成功Resultが帰ること
+     */
     @Test
-    fun createUser() {
+    fun createUserSuccess() {
+        runBlocking {
+            val result = useCase.createUser(successEmail, successEmail, successUser).first()
+            coVerify(exactly = 1) { (apiRepository).createUser(successJson) }
+            assertEquals(successResult, result)
+        }
     }
 
+    /**
+     * ユーザ登録
+     * 条件：自作Apiでエラー
+     * 結果：ApiのエラーResultが帰ること
+     */
+    @Test
+    fun createUserApiError() {
+        runBlocking {
+            val result = useCase.createUser(successEmail, successEmail, failureUser).first()
+            coVerify(exactly = 1) { (apiRepository).createUser(failureJson) }
+            assertEquals(failureResult, result)
+        }
+    }
+
+    /**
+     * ユーザ登録
+     * 条件：Firebase認証でエラー
+     * 結果：FireBaseのエラーResultが帰ること
+     */
+    @Test
+    fun createUserFirebaseError() {
+        runBlocking {
+            val result = useCase.createUser(failureEmail, failureEmail, successUser).first()
+            coVerify(exactly = 0) { (apiRepository).createUser(any()) }
+            assertEquals(failureResult, result)
+        }
+    }
+
+    // endregion
+
     // region ユーザ情報変更
+
     /**
      * ユーザ情報変更
      * 条件：なし
@@ -127,8 +197,8 @@ class UserUseCaseImpTest {
     @Test
     fun changeUser() {
         runBlocking {
-            useCase.changeUser(user, "testA")
-            coVerify(exactly = 1) { (apiRepository).changeUser(user, "testA") }
+            useCase.changeUser(successUser, "testA")
+            coVerify(exactly = 1) { (apiRepository).changeUser(successUser, "testA") }
         }
     }
 
@@ -143,8 +213,11 @@ class UserUseCaseImpTest {
      */
     @Test
     fun delete() {
-        useCase.delete({}, {})
-        coVerify(exactly = 1) { (fireBaseRepository).delete(any(), any()) }
+        runBlocking {
+            val result = useCase.delete().first()
+            coVerify(exactly = 1) { (fireBaseRepository).delete() }
+            assertEquals(successResult, result)
+        }
     }
 
     // endregion
@@ -163,10 +236,52 @@ class UserUseCaseImpTest {
 
     // endregion
 
+    // region ログイン
+
     // TODO: Flow導入時にテスト記載
+    /**
+     * ログイン処理
+     * 条件：FirebaseとApiのログインが成功
+     * 結果：成功Resultが返ること
+     */
     @Test
     fun signIn() {
+        runBlocking {
+            val result = useCase.signIn(successEmail, successEmail).first()
+            coVerify(exactly = 1) { (apiRepository).getUserByEmail(successEmail) }
+            assertEquals(successResult, result)
+        }
     }
+
+    /**
+     * ログイン処理
+     * 条件：Apiのログインが失敗
+     * 結果：失敗Resultが返ること
+     */
+    @Test
+    fun signInApiError() {
+        runBlocking {
+            val result = useCase.signIn(failureEmail, successEmail).first()
+            coVerify(exactly = 1) { (apiRepository).getUserByEmail(failureEmail) }
+            assertEquals(failureResult, result)
+        }
+    }
+
+    /**
+     * ログイン処理
+     * 条件：Firebaseのログインが失敗
+     * 結果：失敗Resultが返ること
+     */
+    @Test
+    fun signInFirebaseError() {
+        runBlocking {
+            val result = useCase.signIn(failureEmail, failureEmail).first()
+            coVerify(exactly = 0) { (apiRepository).getUserByEmail(successEmail) }
+            assertEquals(failureResult, result)
+        }
+    }
+
+    // endregion
 
     // region ログアウト
 

@@ -11,8 +11,8 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import com.example.musicdictionaryandroid.R
-import com.example.musicdictionaryandroid.databinding.FragmentSignInBinding
 import com.example.musicdictionaryandroid.data.util.Status
+import com.example.musicdictionaryandroid.databinding.FragmentSignInBinding
 import org.koin.android.viewmodel.ext.android.viewModel
 
 /**
@@ -80,17 +80,15 @@ class SignInFragment : Fragment() {
         is Status.Success -> {
             viewModel.hideProgressBer()
             (activity as StartActivity).endLoading()
-            if (state.data) (activity as StartActivity).startApp()
-            else (activity as StartActivity).showErrorEmailPassword()
-            viewModel.status.postValue(Status.Non)
+            (activity as StartActivity).startApp()
         }
         is Status.Failure -> {
             Log.i(TAG, "Failure:${state.throwable}")
             viewModel.hideProgressBer()
             (activity as StartActivity).endLoading()
             (activity as StartActivity).showErrorEmailPassword()
-            viewModel.status.postValue(Status.Non)
         }
-        is Status.Non -> { }
+        is Status.Non -> {
+        }
     }
 }

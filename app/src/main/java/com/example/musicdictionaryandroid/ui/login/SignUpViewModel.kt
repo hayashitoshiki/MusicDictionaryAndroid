@@ -5,13 +5,15 @@ import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.musicdictionaryandroid.data.database.entity.User
-import com.example.musicdictionaryandroid.domain.usecase.UserUseCase
+import com.example.musicdictionaryandroid.data.util.Result
 import com.example.musicdictionaryandroid.data.util.Status
 import com.example.musicdictionaryandroid.data.util.UserInfoChangeListUtil
-import java.util.regex.Pattern
-import kotlinx.coroutines.GlobalScope
+import com.example.musicdictionaryandroid.domain.usecase.UserUseCase
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Job
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
+import java.util.regex.Pattern
 
 /**
  * 新規登録画面_UIロジック
@@ -19,7 +21,8 @@ import kotlinx.coroutines.launch
  * @property userUseCase
  */
 class SignUpViewModel(
-    private val userUseCase: UserUseCase
+    private val userUseCase: UserUseCase,
+    private val externalScope: CoroutineScope
 ) : ViewModel() {
 
     val status = MutableLiveData<Status<String?>>()
@@ -60,7 +63,8 @@ class SignUpViewModel(
 
     // ボタンのバリデート
     private fun validateSubmit() {
-        _isEnableSubmitButton.value = validateEmail() && validatePassword() && validateName() && validateGender() && validateArea() && validateBirthday() && validateProgressBar()
+        _isEnableSubmitButton.value =
+            validateEmail() && validatePassword() && validateName() && validateGender() && validateArea() && validateBirthday() && validateProgressBar()
     }
 
     // email入力欄
@@ -164,15 +168,16 @@ class SignUpViewModel(
     /**
      * 新規作成
      */
-    fun signUp(): Job = GlobalScope.launch {
+    fun signUp(): Job = externalScope.launch {
         status.postValue(Status.Loading)
         val birthday = UserInfoChangeListUtil.getBirthday(birthdaySelectedPosition.value!!)
         val user = User(emailText.value!!, nameText.value!!, genderInt.value!!, areaSelectedPosition.value!!, birthday, 0)
-        userUseCase.createUser(
-            emailText.value!!, password1Text.value!!, user,
-            { status.postValue(Status.Success(it!!.status)) },
-            { status.postValue(Status.Failure(it)) }
-        )
+        userUseCase.createUser(emailText.value!!, password1Text.value!!, user).collect {
+            when (it) {
+                is Result.Success -> status.postValue(Status.Success(it.data))
+                is Result.Error -> status.postValue(Status.Failure(it.exception))
+            }
+        }
     }
 
     // genderの変更

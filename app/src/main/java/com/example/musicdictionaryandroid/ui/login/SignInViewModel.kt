@@ -1,24 +1,31 @@
 package com.example.musicdictionaryandroid.ui.login
 
-import androidx.lifecycle.*
-import com.example.musicdictionaryandroid.domain.usecase.UserUseCase
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MediatorLiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
+import com.example.musicdictionaryandroid.data.util.Result
 import com.example.musicdictionaryandroid.data.util.Status
-import java.util.regex.Pattern
-import kotlinx.coroutines.GlobalScope
+import com.example.musicdictionaryandroid.domain.usecase.UserUseCase
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Job
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
+import java.util.regex.Pattern
 
 /**
  * ログイン画面_UIロジック
  */
 class SignInViewModel(
-    private val userUseCase: UserUseCase
+    private val userUseCase: UserUseCase,
+    private val externalScope: CoroutineScope
 ) : ViewModel() {
 
-    val status = MutableLiveData<Status<Boolean>>()
+    private val _status = MutableLiveData<Status<Boolean>>(Status.Non)
+    val status: LiveData<Status<Boolean>> = _status
 
-    val emailText = MutableLiveData("")
-    val passwordText = MutableLiveData("")
+    val emailText = MutableLiveData<String>()
+    val passwordText = MutableLiveData<String>()
     private val _emailErrorText = MutableLiveData<String>()
     val emailErrorText: LiveData<String> = _emailErrorText
     private val _passwordErrorText = MutableLiveData<String>()
@@ -98,16 +105,14 @@ class SignInViewModel(
     /**
      * ログイン処理
      */
-    fun signIn(): Job = GlobalScope.launch {
-        status.postValue(Status.Loading)
-        userUseCase.signIn(
-            emailText.value!!, passwordText.value!!,
-            { status.postValue(Status.Success(true)) },
-            {
-                if (it != null) status.postValue(Status.Failure(it))
-                else status.postValue(Status.Success(false))
+    fun signIn(): Job = externalScope.launch {
+        _status.postValue(Status.Loading)
+        userUseCase.signIn(emailText.value!!, passwordText.value!!).collect {
+            when (it) {
+                is Result.Success -> _status.postValue(Status.Success(true))
+                is Result.Error -> _status.postValue(Status.Failure(it.exception))
             }
-        )
+        }
     }
 
     // プログレスバー表示
