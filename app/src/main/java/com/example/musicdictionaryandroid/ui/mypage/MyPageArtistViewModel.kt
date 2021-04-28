@@ -1,9 +1,6 @@
 package com.example.musicdictionaryandroid.ui.mypage
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.*
 import com.example.musicdictionaryandroid.data.util.Result
 import com.example.musicdictionaryandroid.data.util.Status
 import com.example.musicdictionaryandroid.domain.model.entity.Artist
@@ -17,7 +14,7 @@ import kotlinx.coroutines.launch
  */
 class MyPageArtistViewModel(private val artistUseCase: ArtistUseCase) : ViewModel() {
 
-    val artistEntityList: LiveData<List<Artist>> = artistUseCase.getArtistList()
+    val artistEntityList: LiveData<List<Artist>> = artistUseCase.getArtistList().asLiveData()
     val status = MutableLiveData<Status<List<Artist>>>(Status.Non)
 
     /**

@@ -1,9 +1,9 @@
 package com.example.musicdictionaryandroid.domain.usecase
 
-import androidx.lifecycle.LiveData
 import com.example.musicdictionaryandroid.data.util.Result
 import com.example.musicdictionaryandroid.domain.model.entity.Artist
 import com.example.musicdictionaryandroid.domain.model.entity.ArtistContents
+import kotlinx.coroutines.flow.Flow
 
 /**
  * アーティストに関するビジネスロジック
@@ -78,5 +78,5 @@ interface ArtistUseCase {
     suspend fun deleteArtist(name: String): Result<List<Artist>>
 
     // アーティストリスト取得
-    fun getArtistList(): LiveData<List<Artist>>
+    fun getArtistList(): Flow<List<Artist>>
 }

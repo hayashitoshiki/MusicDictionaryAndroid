@@ -1,6 +1,5 @@
 package com.example.musicdictionaryandroid.domain.usecase
 
-import androidx.lifecycle.MutableLiveData
 import com.example.musicdictionaryandroid.data.database.entity.CallBackData
 import com.example.musicdictionaryandroid.data.database.entity.User
 import com.example.musicdictionaryandroid.data.repository.ApiServerRepository
@@ -46,7 +45,7 @@ class UserUseCaseImpTest {
     private val successJson: String = Moshi.Builder().build().adapter(User::class.java).toJson(successUser)
     private val failureJson: String = Moshi.Builder().build().adapter(User::class.java).toJson(failureUser)
     private val artistList = listOf(artist)
-    private val artistListLiveData = MutableLiveData(listOf(artist))
+    private val artistListFlow = flow { emit(listOf(artist)) }
     private val failureResult = Result.Error(IllegalArgumentException(""))
     private val successEmail = "success"
     private val failureEmail = "Failure"
@@ -73,7 +72,7 @@ class UserUseCaseImpTest {
             coEvery { it.updateAll(any()) } returns Unit
             coEvery { it.findByName(any()) } returns artist
             coEvery { it.getArtistAll() } returns artistList
-            coEvery { it.getArtistList() } returns artistListLiveData
+            coEvery { it.getArtistList() } returns artistListFlow
         }
         fireBaseRepository = mockk<FireBaseRepository>().also {
             every { it.signIn(any(), successEmail) } returns flow { emit(successResult) }

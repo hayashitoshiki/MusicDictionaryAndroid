@@ -1,13 +1,13 @@
 package com.example.musicdictionaryandroid.data.repository
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import com.example.musicdictionaryandroid.data.database.entity.ArtistEntity
 import com.example.musicdictionaryandroid.domain.model.entity.Artist
 import com.example.musicdictionaryandroid.domain.model.value.*
 import com.example.musicdictionaryandroid.ui.MyApplication
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.withContext
 
 class DataBaseRepositoryImp(private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO) : DataBaseRepository {
@@ -60,17 +60,12 @@ class DataBaseRepositoryImp(private val ioDispatcher: CoroutineDispatcher = Disp
     }
 
     // アーティストリスト取得
-    override fun getArtistList(): LiveData<List<Artist>> {
-        val artistEntityLiveData = dao.getArtistList()
-        val artistLiveData = MutableLiveData<List<Artist>>(listOf())
-
-        artistEntityLiveData.observeForever { artistEntityList ->
-            val artistList = artistEntityList.map { artistEntity ->
+    override fun getArtistList(): Flow<List<Artist>> {
+        return dao.getArtistList().map { artistEntityList ->
+            artistEntityList.map { artistEntity ->
                 convertArtistFromArtistEntity(artistEntity)
             }
-            artistLiveData.postValue(artistList)
         }
-        return artistLiveData
     }
 
     // アーティストテーブルからアーティストモデルべ変換

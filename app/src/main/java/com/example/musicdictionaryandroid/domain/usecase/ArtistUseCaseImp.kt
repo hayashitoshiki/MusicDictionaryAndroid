@@ -1,6 +1,5 @@
 package com.example.musicdictionaryandroid.domain.usecase
 
-import androidx.lifecycle.LiveData
 import com.example.musicdictionaryandroid.data.repository.ApiServerRepository
 import com.example.musicdictionaryandroid.data.repository.DataBaseRepository
 import com.example.musicdictionaryandroid.data.repository.PreferenceRepository
@@ -10,6 +9,7 @@ import com.example.musicdictionaryandroid.domain.model.entity.ArtistContents
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
 
 class ArtistUseCaseImp(
@@ -108,7 +108,7 @@ class ArtistUseCaseImp(
     }
 
     // アーティストリスト取得
-    override fun getArtistList(): LiveData<List<Artist>> {
+    override fun getArtistList(): Flow<List<Artist>> {
         return dataBaseRepository.getArtistList()
     }
 

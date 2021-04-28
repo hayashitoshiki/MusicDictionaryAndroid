@@ -63,12 +63,12 @@ class MyApplication : Application() {
 
     // Koinモジュール
     private val module: Module = module {
-        viewModel { MainActivityViewModel(get(), get()) }
+        viewModel { MainActivityViewModel(get()) }
 
         viewModel { MyPageTopViewModel(get()) }
         viewModel { MyPageUserViewModel(get()) }
-        viewModel { MyPageArtistAddViewModel(get(), get()) }
-        viewModel { MyPageArtistViewModel(get(), get()) }
+        viewModel { MyPageArtistAddViewModel(get()) }
+        viewModel { MyPageArtistViewModel(get()) }
         viewModel { SignInViewModel(get(), applicationScope) }
         viewModel { SignUpViewModel(get(), applicationScope) }
         viewModel { ResultViewModel(get()) }
