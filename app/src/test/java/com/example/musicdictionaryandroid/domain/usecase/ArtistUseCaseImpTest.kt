@@ -81,9 +81,14 @@ class ArtistUseCaseImpTest {
             coEvery { it.getArtistList() } returns artistListLiveData
         }
         preferenceRepository = mockk<PreferenceRepository>().also {
+            every { it.getEmail() } returns successEmail
             every { it.setFavorite(any()) } returns Unit
             every { it.getFavorite() } returns 1
         }
+        useCase = ArtistUseCaseImp(apiRepository, dataBaseRepository, preferenceRepository, testScope, testDispatcher)
+    }
+
+    private fun reLoad() {
         useCase = ArtistUseCaseImp(apiRepository, dataBaseRepository, preferenceRepository, testScope, testDispatcher)
     }
 
@@ -124,9 +129,9 @@ class ArtistUseCaseImpTest {
     @Test
     fun getArtistsByRecommend() {
         runBlocking {
-            val result = useCase.getArtistsByRecommend("test@com.jp")
+            val result = useCase.getArtistsByRecommend()
             assertEquals(Result.Success(artistContentsList), result)
-            coVerify(exactly = 1) { (apiRepository).getArtistsByRecommend("test@com.jp") }
+            coVerify(exactly = 1) { (apiRepository).getArtistsByRecommend(any()) }
         }
     }
 
@@ -165,7 +170,7 @@ class ArtistUseCaseImpTest {
     @Test
     fun getArtistsByEmailSuccess() {
         runBlocking {
-            val result = useCase.getArtistsByEmail(successEmail)
+            val result = useCase.getArtistsByEmail()
             assertEquals(Result.Success(artistList), result)
             coVerify(exactly = 1) { (apiRepository).getArtistsByEmail(successEmail) }
             coVerify(exactly = 1) { (dataBaseRepository).updateAll(artistList) }
@@ -185,7 +190,11 @@ class ArtistUseCaseImpTest {
     @Test
     fun getArtistsByEmailFailure() {
         runBlocking {
-            useCase.getArtistsByEmail(failureEmail)
+            preferenceRepository = mockk<PreferenceRepository>().also {
+                every { it.getEmail() } returns failureEmail
+            }
+            reLoad()
+            useCase.getArtistsByEmail()
             coVerify(exactly = 1) { (apiRepository).getArtistsByEmail(failureEmail) }
             coVerify(exactly = 0) { (dataBaseRepository).updateAll(artistList) }
             coVerify(exactly = 0) { (preferenceRepository).setFavorite(artistList.size) }
@@ -207,7 +216,7 @@ class ArtistUseCaseImpTest {
     @Test
     fun addArtistSuccess() {
         runBlocking {
-            useCase.addArtist(artist, successEmail)
+            useCase.addArtist(artist)
             coVerify(exactly = 1) { (apiRepository).addArtist(artist, successEmail) }
             coVerify(exactly = 1) { (dataBaseRepository).addArtist(artist) }
         }
@@ -223,7 +232,11 @@ class ArtistUseCaseImpTest {
     @Test
     fun addArtistFailure() {
         runBlocking {
-            val result = useCase.addArtist(artist, failureEmail)
+            preferenceRepository = mockk<PreferenceRepository>().also {
+                every { it.getEmail() } returns failureEmail
+            }
+            reLoad()
+            val result = useCase.addArtist(artist)
             assertEquals(failureResult, result)
             coVerify(exactly = 1) { (apiRepository).addArtist(artist, failureEmail) }
             coVerify(exactly = 0) { (dataBaseRepository).addArtist(artist) }
@@ -244,7 +257,7 @@ class ArtistUseCaseImpTest {
     @Test
     fun updateArtistSuccess() {
         runBlocking {
-            useCase.updateArtist(artist, successEmail)
+            useCase.updateArtist(artist)
             coVerify(exactly = 1) { (apiRepository).updateArtist(artist, successEmail) }
             coVerify(exactly = 1) { (dataBaseRepository).updateArtist(artist) }
         }
@@ -260,7 +273,11 @@ class ArtistUseCaseImpTest {
     @Test
     fun updateArtistFailure() {
         runBlocking {
-            useCase.updateArtist(artist, failureEmail)
+            preferenceRepository = mockk<PreferenceRepository>().also {
+                every { it.getEmail() } returns failureEmail
+            }
+            reLoad()
+            useCase.updateArtist(artist)
             coVerify(exactly = 1) { (apiRepository).updateArtist(artist, failureEmail) }
             coVerify(exactly = 0) { (dataBaseRepository).updateArtist(artist) }
         }
@@ -278,7 +295,7 @@ class ArtistUseCaseImpTest {
     @Test
     fun deleteArtistSuccess() {
         runBlocking {
-            useCase.deleteArtist(artist.name, successEmail)
+            useCase.deleteArtist(artist.name)
             coVerify(exactly = 1) { (apiRepository).deleteArtist(artist.name, successEmail) }
             coVerify(exactly = 1) { (dataBaseRepository).deleteArtist(artist.name) }
         }
@@ -294,7 +311,11 @@ class ArtistUseCaseImpTest {
     @Test
     fun deleteArtistFailure() {
         runBlocking {
-            useCase.deleteArtist(artist.name, failureEmail)
+            preferenceRepository = mockk<PreferenceRepository>().also {
+                every { it.getEmail() } returns failureEmail
+            }
+            reLoad()
+            useCase.deleteArtist(artist.name)
             coVerify(exactly = 1) { (apiRepository).deleteArtist(artist.name, failureEmail) }
             coVerify(exactly = 0) { (dataBaseRepository).deleteArtist(artist.name) }
         }

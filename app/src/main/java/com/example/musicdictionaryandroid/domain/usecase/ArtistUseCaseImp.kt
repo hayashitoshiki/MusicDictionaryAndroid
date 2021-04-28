@@ -1,7 +1,9 @@
 package com.example.musicdictionaryandroid.domain.usecase
 
 import androidx.lifecycle.LiveData
-import com.example.musicdictionaryandroid.data.repository.*
+import com.example.musicdictionaryandroid.data.repository.ApiServerRepository
+import com.example.musicdictionaryandroid.data.repository.DataBaseRepository
+import com.example.musicdictionaryandroid.data.repository.PreferenceRepository
 import com.example.musicdictionaryandroid.data.util.Result
 import com.example.musicdictionaryandroid.domain.model.entity.Artist
 import com.example.musicdictionaryandroid.domain.model.entity.ArtistContents
@@ -26,8 +28,9 @@ class ArtistUseCaseImp(
     }
 
     // おすすめアーティスト検索
-    override suspend fun getArtistsByRecommend(email: String): Result<List<ArtistContents>> {
-        return apiRepository.getArtistsByRecommend(email)
+    override suspend fun getArtistsByRecommend(): Result<List<ArtistContents>> {
+        val email = preferenceRepository.getEmail()
+        return apiRepository.getArtistsByRecommend(email!!)
     }
 
     // 急上昇アーティスト取得
@@ -40,8 +43,9 @@ class ArtistUseCaseImp(
     // region 設定タブ
 
     // ユーザの登録したアーティスト取得
-    override suspend fun getArtistsByEmail(email: String): Result<List<Artist>> {
-        return when (val result = apiRepository.getArtistsByEmail(email)) {
+    override suspend fun getArtistsByEmail(): Result<List<Artist>> {
+        val email = preferenceRepository.getEmail()
+        return when (val result = apiRepository.getArtistsByEmail(email!!)) {
             is Result.Success -> {
                 preferenceRepository.setFavorite(result.data.size)
                 dataBaseRepository.updateAll(result.data)
@@ -54,8 +58,9 @@ class ArtistUseCaseImp(
     }
 
     // アーティスト登録
-    override suspend fun addArtist(artist: Artist, email: String): Result<Artist> {
-        return when (val result = apiRepository.addArtist(artist, email)) {
+    override suspend fun addArtist(artist: Artist): Result<Artist> {
+        val email = preferenceRepository.getEmail()
+        return when (val result = apiRepository.addArtist(artist, email!!)) {
             is Result.Success -> {
                 externalScope.launch {
                     val size = preferenceRepository.getFavorite()
@@ -71,8 +76,9 @@ class ArtistUseCaseImp(
     }
 
     // アーティスト更新
-    override suspend fun updateArtist(artist: Artist, email: String): Result<Artist> {
-        return when (val result = apiRepository.updateArtist(artist, email)) {
+    override suspend fun updateArtist(artist: Artist): Result<Artist> {
+        val email = preferenceRepository.getEmail()
+        return when (val result = apiRepository.updateArtist(artist, email!!)) {
             is Result.Success -> {
                 externalScope.launch {
                     dataBaseRepository.deleteAll()
@@ -85,8 +91,9 @@ class ArtistUseCaseImp(
     }
 
     // アーティスト削除
-    override suspend fun deleteArtist(name: String, email: String): Result<List<Artist>> {
-        return when (val result = apiRepository.deleteArtist(name, email)) {
+    override suspend fun deleteArtist(name: String): Result<List<Artist>> {
+        val email = preferenceRepository.getEmail()
+        return when (val result = apiRepository.deleteArtist(name, email!!)) {
             is Result.Success -> {
                 externalScope.launch {
                     dataBaseRepository.deleteArtist(name)

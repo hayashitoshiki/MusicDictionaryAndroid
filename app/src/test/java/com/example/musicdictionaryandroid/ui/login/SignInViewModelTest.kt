@@ -4,7 +4,6 @@ import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.Observer
 import com.example.musicdictionaryandroid.domain.usecase.UserUseCase
 import com.nhaarman.mockito_kotlin.mock
-import io.mockk.coEvery
 import io.mockk.mockk
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -43,9 +42,7 @@ class SignInViewModelTest {
     fun before() {
         Dispatchers.setMain(testDispatcher)
         // テストクラス作成
-        val userUseCase = mockk<UserUseCase>().also {
-            coEvery { it.getEmail() } returns "responseUser"
-        }
+        val userUseCase = mockk<UserUseCase>()
         val observer = mock<Observer<Boolean>>()
         viewModel = SignInViewModel(userUseCase, testScope)
         viewModel.isEnableSubmitButton.observeForever(observer)

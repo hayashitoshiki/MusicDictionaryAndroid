@@ -20,13 +20,14 @@ interface ArtistUseCase {
      * @return アーティストの検索結果一覧
      */
     suspend fun getArtistsBy(artist: Artist): Result<List<ArtistContents>>
+
     /**
      * おすすめアーティスト検索
      *
-     * @param email ユーザのEmail
      * @return レコメンドアーティスト一覧
      */
-    suspend fun getArtistsByRecommend(email: String): Result<List<ArtistContents>>
+    suspend fun getArtistsByRecommend(): Result<List<ArtistContents>>
+
     /**
      * 急上昇アーティスト取得
      *
@@ -41,20 +42,20 @@ interface ArtistUseCase {
      * ユーザーの登録したアーティストをAPIサーバーから取得する。
      * もしつながらない場合は、ローカルDBから取得する
      *
-     * @param email ユーザーのemail
      * @return 登録済みアーティスト一覧
      */
-    suspend fun getArtistsByEmail(email: String): Result<List<Artist>>
+    suspend fun getArtistsByEmail(): Result<List<Artist>>
+
     /**
      * アーティスト登録
      * 1. APIへ登録する（登録失敗したら終了）
      * 2. 登録できたらローカルDBへ登録　
      *
      * @param artist 登録したいアーティスト
-     * @param email ユーザのemail
      * @return 登録正常完了判定結果
      */
-    suspend fun addArtist(artist: Artist, email: String): Result<Artist>
+    suspend fun addArtist(artist: Artist): Result<Artist>
+
     /**
      * アーティスト更新
      * 1. APIのアーティスト更新（更新失敗したら終了）
@@ -62,20 +63,19 @@ interface ArtistUseCase {
      *
      * @param artistEntity 更新したいアーティストの新しいデータ
      * @param beforeName 更新したいアーティストの元の名前
-     * @param email ユーザのemail
      * @return 更新正常完了判定結果
      */
-    suspend fun updateArtist(artist: Artist, email: String): Result<Artist>
+    suspend fun updateArtist(artist: Artist): Result<Artist>
+
     /**
      * アーティスト削除
      * 1. APIのアーティスト削除（削除失敗したら終了）
      * 2. 削除成功したらローカルDB削除
      *
      * @param name 削除したいアーティストの名前
-     * @param email ユーザのemail
      * @return 削除正常完了判定結果
      */
-    suspend fun deleteArtist(name: String, email: String): Result<List<Artist>>
+    suspend fun deleteArtist(name: String): Result<List<Artist>>
 
     // アーティストリスト取得
     fun getArtistList(): LiveData<List<Artist>>

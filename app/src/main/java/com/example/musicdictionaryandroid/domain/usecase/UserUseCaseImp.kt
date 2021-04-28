@@ -24,14 +24,9 @@ class UserUseCaseImp(
     private val defaultDispatcher: CoroutineDispatcher = Dispatchers.Default
 ) : UserUseCase {
 
-    // ユーザー情報取得(SharedPreferences)
+    // ユーザー情報取得
     override fun getUserByCache(): User {
         return preferenceRepository.getUser()
-    }
-
-    // 登録したユーザーの情報取得
-    override suspend fun getUserByEmail(email: String): Result<User?> {
-        return apiRepository.getUserByEmail(email)
     }
 
     // ユーザー登録
@@ -95,10 +90,5 @@ class UserUseCaseImp(
         fireBaseRepository.signOut()
         preferenceRepository.removeAll()
         dataBaseRepository.deleteAll()
-    }
-
-    // ユーザーのEmail取得
-    override fun getEmail(): String {
-        return fireBaseRepository.getEmail()
     }
 }

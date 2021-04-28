@@ -19,14 +19,6 @@ interface UserUseCase {
     fun getUserByCache(): User
 
     /**
-     * 登録したユーザーの情報取得
-     *
-     * @param email ユーザーのEmail
-     * @return 登録したユーザー情報取得
-     */
-    suspend fun getUserByEmail(email: String): Result<User?>
-
-    /**
      * ユーザー登録
      *
      * @param user 登録数ユーザー情報
@@ -71,11 +63,4 @@ interface UserUseCase {
      * @return　ユーザ削除処理結果
      */
     fun delete(): Flow<Result<String>>
-
-    /**
-     * ユーザーのEmail取得
-     *
-     * @return ユーザーのEmail
-     */
-    fun getEmail(): String
 }

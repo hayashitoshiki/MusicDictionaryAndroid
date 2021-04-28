@@ -123,24 +123,6 @@ class UserUseCaseImpTest {
 
     // endregion
 
-    // region 登録したユーザーの情報取得
-
-    /**
-     * 登録したユーザ情報取得
-     * 条件：なし
-     * 結果：APIからユーザ情報取得するメソッドが呼ばれること
-     */
-    @Test
-    fun getUserByEmail() {
-        runBlocking {
-            val result = useCase.getUserByEmail(successEmail)
-            coVerify(exactly = 1) { (apiRepository).getUserByEmail(successEmail) }
-            assertEquals(createSuccessResult, result)
-        }
-    }
-
-    // endregion
-
     // region ユーザ登録
 
     /**
@@ -301,21 +283,6 @@ class UserUseCaseImpTest {
             coVerify(exactly = 1) { (preferenceRepository).removeAll() }
             coVerify(exactly = 1) { (dataBaseRepository).deleteAll() }
         }
-    }
-
-    // endregion
-
-    // region ユーザのメールアドレス取得
-
-    /**
-     * ユーザのEmailを取得する
-     * 条件：なし
-     * 結果：Firebaseからユーザのメールアドレスを取得するメソッドが呼ばれること
-     */
-    @Test
-    fun getEmail() {
-        useCase.getEmail()
-        coVerify(exactly = 1) { (fireBaseRepository).getEmail() }
     }
 
     // endregion

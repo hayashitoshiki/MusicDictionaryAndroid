@@ -2,27 +2,21 @@ package com.example.musicdictionaryandroid.ui.mypage
 
 import android.util.Log
 import androidx.lifecycle.*
-import com.example.musicdictionaryandroid.domain.usecase.ArtistUseCase
-import com.example.musicdictionaryandroid.domain.usecase.UserUseCase
 import com.example.musicdictionaryandroid.data.util.Result
 import com.example.musicdictionaryandroid.data.util.Status
 import com.example.musicdictionaryandroid.domain.model.entity.Artist
 import com.example.musicdictionaryandroid.domain.model.value.*
+import com.example.musicdictionaryandroid.domain.usecase.ArtistUseCase
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 
 /**
  * アーティスト情報登録・追加画面_UIロジック
  *
- * @property userUseCase
  * @property artistUseCase
  */
-class MyPageArtistAddViewModel(
-    private val userUseCase: UserUseCase,
-    private val artistUseCase: ArtistUseCase
-) : ViewModel() {
+class MyPageArtistAddViewModel(private val artistUseCase: ArtistUseCase) : ViewModel() {
 
-    private var email = userUseCase.getEmail()
     val status = MutableLiveData<Status<Artist>>()
 
     // 絞り込みリスト
@@ -35,7 +29,7 @@ class MyPageArtistAddViewModel(
     private lateinit var subGenre5List: List<String>
     private lateinit var subGenre6List: List<String>
 
-//    private val _artist = MutableLiveData<Artist>()
+    //    private val _artist = MutableLiveData<Artist>()
 //    val artist: LiveData<Artist> = _artist
     private val _editMode = MutableLiveData<Int>()
     val editMode: LiveData<Int> = _editMode
@@ -154,17 +148,25 @@ class MyPageArtistAddViewModel(
 
     // アーティスト登録
     private fun addArtist(artist: Artist): Job = viewModelScope.launch {
-        when (val result = artistUseCase.addArtist(artist, email)) {
-            is Result.Success -> { status.value = Status.Success(result.data) }
-            is Result.Error -> { status.value = Status.Failure(result.exception) }
+        when (val result = artistUseCase.addArtist(artist)) {
+            is Result.Success -> {
+                status.value = Status.Success(result.data)
+            }
+            is Result.Error -> {
+                status.value = Status.Failure(result.exception)
+            }
         }
     }
 
     // アーティスト更新
     private fun updateArtist(artist: Artist): Job = viewModelScope.launch {
-        when (val result = artistUseCase.updateArtist(artist, email)) {
-            is Result.Success -> { status.value = Status.Success(result.data) }
-            is Result.Error -> { status.value = Status.Failure(result.exception) }
+        when (val result = artistUseCase.updateArtist(artist)) {
+            is Result.Success -> {
+                status.value = Status.Success(result.data)
+            }
+            is Result.Error -> {
+                status.value = Status.Failure(result.exception)
+            }
         }
     }
 
