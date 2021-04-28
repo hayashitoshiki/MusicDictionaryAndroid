@@ -15,12 +15,8 @@ class GravityArcMotion : ArcMotion {
     private var mMaximumTangent =
         DEFAULT_MAX_TANGENT
 
-    constructor() {}
-    constructor(context: Context?, attrs: AttributeSet?) : super(
-        context,
-        attrs
-    ) {
-    }
+    constructor()
+    constructor(context: Context?, attrs: AttributeSet?) : super(context, attrs)
 
     /**
      * @inheritDoc

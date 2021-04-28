@@ -1,6 +1,12 @@
 package com.example.musicdictionaryandroid.data.repository
 
+import com.example.musicdictionaryandroid.data.database.entity.User
+
 interface PreferenceRepository {
+
+    fun setUser(user: User)
+
+    fun getUser(): User
 
     fun setEmail(value: String)
 

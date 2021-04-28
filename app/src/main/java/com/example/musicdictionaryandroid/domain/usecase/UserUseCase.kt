@@ -3,6 +3,7 @@ package com.example.musicdictionaryandroid.domain.usecase
 import com.example.musicdictionaryandroid.data.database.entity.CallBackData
 import com.example.musicdictionaryandroid.data.database.entity.User
 import com.example.musicdictionaryandroid.data.util.Result
+import kotlinx.coroutines.flow.Flow
 
 /**
  * ユーザーに関するビジネスロジック
@@ -16,26 +17,15 @@ interface UserUseCase {
      * @return 登録したユーザー情報取得
      */
     fun getUserByCache(): User
-    /**
-     * 登録したユーザーの情報取得
-     *
-     * @param email ユーザーのEmail
-     * @return 登録したユーザー情報取得
-     */
-    suspend fun getUserByEmail(email: String): Result<User?>
+
     /**
      * ユーザー登録
      *
      * @param user 登録数ユーザー情報
      * @return 登録処理結果
      */
-    suspend fun createUser(
-        email: String,
-        password: String,
-        user: User,
-        onSuccess: (result: CallBackData?) -> Unit,
-        onError: (error: Throwable) -> Unit
-    )
+    suspend fun createUser(email: String, password: String, user: User): Flow<Result<String>>
+
     /**
      * ユーザー情報変更
      *
@@ -48,40 +38,29 @@ interface UserUseCase {
     /**
      * ログイン状態チェック
      *
-     * @param onSuccess　成功
-     * @param onError　失敗
+     * @return ログイン状態
      */
     fun firstCheck(): Boolean
+
     /**
      * ログイン
      *
      * @param email ユーザーのEmail
      * @param password ユーザーのPassword
-     * @param onSuccess 成功
-     * @param onError 失敗
+     * @return ログイン処理結果
      */
-    suspend fun signIn(
-        email: String,
-        password: String,
-        onSuccess: () -> Unit,
-        onError: (error: Throwable?) -> Unit
-    )
+    suspend fun signIn(email: String, password: String): Flow<Result<String>>
+
     /**
      * ログアウト
      *
      */
     suspend fun signOut()
+
     /**
      * ユーザー削除
      *
-     * @param onSuccess 成功
-     * @param onError 失敗
+     * @return　ユーザ削除処理結果
      */
-    fun delete(onSuccess: () -> Unit, onError: (error: Throwable?) -> Unit)
-    /**
-     * ユーザーのEmail取得
-     *
-     * @return ユーザーのEmail
-     */
-    fun getEmail(): String
+    fun delete(): Flow<Result<String>>
 }

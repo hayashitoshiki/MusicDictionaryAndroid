@@ -3,14 +3,13 @@ package com.example.musicdictionaryandroid.ui.login
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
-import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import com.example.musicdictionaryandroid.R
-import com.example.musicdictionaryandroid.databinding.ActivityStartBinding
 import com.example.musicdictionaryandroid.data.util.Status
+import com.example.musicdictionaryandroid.databinding.ActivityStartBinding
 import com.example.musicdictionaryandroid.ui.MainActivity
 import org.koin.android.viewmodel.ext.android.viewModel
 
@@ -25,9 +24,6 @@ class StartActivity : AppCompatActivity() {
 
     private val viewModel: StartViewModel by viewModel()
 
-    private lateinit var signInView: SignInFragment
-    private lateinit var signUpView: SignUpFragment
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val binding: ActivityStartBinding = DataBindingUtil.setContentView(this, R.layout.activity_start)
@@ -38,41 +34,43 @@ class StartActivity : AppCompatActivity() {
         viewModel.status.observe(this, Observer { onStateChanged(it) })
         viewModel.firstCheck()
 
-        signInView = SignInFragment.newInstance()
-        signUpView = SignUpFragment.newInstance()
+        val signInView = SignInFragment.newInstance()
+        val signUpView = SignUpFragment.newInstance()
         supportFragmentManager
             .beginTransaction()
             .add(R.id.fragment, signInView)
             .commit()
+
+        // 新規作成ボタン
+        binding.signUpButton.setOnClickListener {
+            supportFragmentManager
+                .beginTransaction()
+                .replace(R.id.fragment, signUpView)
+                .commit()
+        }
+
+        // ログインボタン
+        binding.signInButton.setOnClickListener {
+            supportFragmentManager
+                .beginTransaction()
+                .replace(R.id.fragment, signInView)
+                .commit()
+        }
     }
 
     // ステータス監視
     private fun onStateChanged(state: Status<Boolean>) {
         when (state) {
-            is Status.Loading -> { }
+            is Status.Loading -> {
+            }
             is Status.Success -> {
                 if (state.data) {
                     startApp()
                 }
             }
-            is Status.Failure -> { }
+            is Status.Failure -> {
+            }
         }
-    }
-
-    // ログイン切り替えボタン
-    fun signInButton(view: View) {
-        supportFragmentManager
-            .beginTransaction()
-            .replace(R.id.fragment, signInView)
-            .commit()
-    }
-
-    // 新規作成切り替えボタン
-    fun signUpButton(view: View) {
-        supportFragmentManager
-            .beginTransaction()
-            .replace(R.id.fragment, signUpView)
-            .commit()
     }
 
     // 画面遷移

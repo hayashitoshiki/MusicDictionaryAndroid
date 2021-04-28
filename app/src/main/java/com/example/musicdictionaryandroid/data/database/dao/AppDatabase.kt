@@ -7,7 +7,7 @@ import com.example.musicdictionaryandroid.data.database.entity.ArtistEntity
 /**
  * DB定義
  */
-@Database(entities = arrayOf(ArtistEntity::class), version = 1, exportSchema = false)
+@Database(entities = [ArtistEntity::class], version = 1, exportSchema = false)
 abstract class AppDatabase : RoomDatabase() {
     abstract fun artistDao(): ArtistDao
 }

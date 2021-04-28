@@ -5,13 +5,15 @@ import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.musicdictionaryandroid.data.database.entity.User
-import com.example.musicdictionaryandroid.domain.usecase.UserUseCase
+import com.example.musicdictionaryandroid.data.util.Result
 import com.example.musicdictionaryandroid.data.util.Status
 import com.example.musicdictionaryandroid.data.util.UserInfoChangeListUtil
-import java.util.regex.Pattern
-import kotlinx.coroutines.GlobalScope
+import com.example.musicdictionaryandroid.domain.usecase.UserUseCase
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Job
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
+import java.util.regex.Pattern
 
 /**
  * 新規登録画面_UIロジック
@@ -19,7 +21,8 @@ import kotlinx.coroutines.launch
  * @property userUseCase
  */
 class SignUpViewModel(
-    private val userUseCase: UserUseCase
+    private val userUseCase: UserUseCase,
+    private val externalScope: CoroutineScope
 ) : ViewModel() {
 
     val status = MutableLiveData<Status<String?>>()
@@ -28,14 +31,14 @@ class SignUpViewModel(
     val password1Text = MutableLiveData<String>()
     val password2Text = MutableLiveData<String>()
     val nameText = MutableLiveData<String>()
-    private val _emailErrorText = MutableLiveData<String>()
-    val emailErrorText: LiveData<String> = _emailErrorText
-    private val _passwordError1Text = MutableLiveData<String>()
-    val passwordError1Text: LiveData<String> = _passwordError1Text
-    private val _passwordError2Text = MutableLiveData<String>()
-    val passwordError2Text: LiveData<String> = _passwordError2Text
-    private val _nameErrorText = MutableLiveData<String>()
-    val nameErrorText: LiveData<String> = _nameErrorText
+    private val _emailErrorText = MutableLiveData<String?>()
+    val emailErrorText: LiveData<String?> = _emailErrorText
+    private val _passwordError1Text = MutableLiveData<String?>()
+    val passwordError1Text: LiveData<String?> = _passwordError1Text
+    private val _passwordError2Text = MutableLiveData<String?>()
+    val passwordError2Text: LiveData<String?> = _passwordError2Text
+    private val _nameErrorText = MutableLiveData<String?>()
+    val nameErrorText: LiveData<String?> = _nameErrorText
     val genderInt = MutableLiveData(0)
     val areaSelectedPosition = MutableLiveData(0)
     val birthdaySelectedPosition = MutableLiveData(0)
@@ -60,7 +63,8 @@ class SignUpViewModel(
 
     // ボタンのバリデート
     private fun validateSubmit() {
-        _isEnableSubmitButton.value = validateEmail() && validatePassword() && validateName() && validateGender() && validateArea() && validateBirthday() && validateProgressBar()
+        _isEnableSubmitButton.value =
+            validateEmail() && validatePassword() && validateName() && validateGender() && validateArea() && validateBirthday() && validateProgressBar()
     }
 
     // email入力欄
@@ -69,7 +73,7 @@ class SignUpViewModel(
             return if (email.isNotEmpty() && email.length <= 5) {
                 false
             } else {
-                val expression = "^[\\w\\.-]+@([\\w\\-]+\\.)+[A-Z]{2,4}$"
+                val expression = "^[\\w.-]+@([\\w\\-]+\\.)+[A-Z]{2,4}$"
                 val pattern = Pattern.compile(expression, Pattern.CASE_INSENSITIVE)
                 val matcher = pattern.matcher(email)
                 !(email.isNotEmpty() && !matcher.matches())
@@ -116,7 +120,7 @@ class SignUpViewModel(
             if (email.isNotEmpty() && email.length <= 5) {
                 _emailErrorText.value = "メールアドレスは最低でも６文字必要です"
             } else {
-                val expression = "^[\\w\\.-]+@([\\w\\-]+\\.)+[A-Z]{2,4}$"
+                val expression = "^[\\w.-]+@([\\w\\-]+\\.)+[A-Z]{2,4}$"
                 val pattern = Pattern.compile(expression, Pattern.CASE_INSENSITIVE)
                 val matcher = pattern.matcher(email)
                 if (!matcher.matches()) {
@@ -164,15 +168,16 @@ class SignUpViewModel(
     /**
      * 新規作成
      */
-    fun signUp(): Job = GlobalScope.launch {
+    fun signUp(): Job = externalScope.launch {
         status.postValue(Status.Loading)
         val birthday = UserInfoChangeListUtil.getBirthday(birthdaySelectedPosition.value!!)
         val user = User(emailText.value!!, nameText.value!!, genderInt.value!!, areaSelectedPosition.value!!, birthday, 0)
-        userUseCase.createUser(
-            emailText.value!!, password1Text.value!!, user,
-            { status.postValue(Status.Success(it!!.status)) },
-            { status.postValue(Status.Failure(it)) }
-        )
+        userUseCase.createUser(emailText.value!!, password1Text.value!!, user).collect {
+            when (it) {
+                is Result.Success -> status.postValue(Status.Success(it.data))
+                is Result.Error -> status.postValue(Status.Failure(it.exception))
+            }
+        }
     }
 
     // genderの変更

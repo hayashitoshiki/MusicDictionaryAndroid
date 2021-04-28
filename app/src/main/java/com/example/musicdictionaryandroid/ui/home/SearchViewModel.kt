@@ -5,7 +5,6 @@ import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.musicdictionaryandroid.data.net.dto.ArtistsDto
-import com.example.musicdictionaryandroid.domain.model.entity.Artist
 import com.example.musicdictionaryandroid.domain.model.value.*
 
 /**
@@ -65,15 +64,15 @@ class SearchViewModel : ViewModel() {
         genre1ValueList.value = mainGenreList
     }
 
-    fun getArtist(): Artist {
+    fun getArtist(): ArtistConditions {
         val name = nameText.value.toString()
-        val gender = Gender.getEnumByValue(0)
-        val length = Length(0)
-        val voice = Voice(0)
-        val lyrics = Lyrics(0)
-        val genre1 = Genre1(0)
-        val genre2 = Genre2(0)
-        return Artist(name, gender, voice, length, lyrics, genre1, genre2)
+        val gender = Gender.getEnumByValue(genderValueInt.value!!)
+        val length = Length(lengthValueInt.value!!)
+        val voice = Voice(voiceValueInt.value!!)
+        val lyrics = Lyrics(lyricsValueInt.value!!)
+        val genre1 = Genre1(genre1ValueInt.value!!)
+        val genre2 = Genre2(genre2ValueInt.value!!)
+        return ArtistConditions(name, gender, voice, length, lyrics, genre1, genre2)
     }
 
     fun setArtist(artist: ArtistsDto) {
@@ -153,6 +152,7 @@ class SearchViewModel : ViewModel() {
 
     // バリデーションチェック
     private fun checkValidate() {
-        _isEnableSubmitButton.value = nameText.value != "" || genderValueInt.value != 0 || lengthValueInt.value != 0 || voiceValueInt.value != 0 || lyricsValueInt.value != 0 || genre1ValueInt.value != 0
+        _isEnableSubmitButton.value =
+            nameText.value != "" || genderValueInt.value != 0 || lengthValueInt.value != 0 || voiceValueInt.value != 0 || lyricsValueInt.value != 0 || genre1ValueInt.value != 0
     }
 }

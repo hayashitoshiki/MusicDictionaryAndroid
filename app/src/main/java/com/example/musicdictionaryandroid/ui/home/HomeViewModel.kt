@@ -1,9 +1,10 @@
 package com.example.musicdictionaryandroid.ui.home
 
-import androidx.lifecycle.*
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
 import com.example.musicdictionaryandroid.data.repository.PreferenceRepository
-import com.example.musicdictionaryandroid.domain.model.entity.Artist
-import com.example.musicdictionaryandroid.domain.model.value.*
+import com.example.musicdictionaryandroid.domain.model.value.ArtistConditions
 
 /**
  * HOME画面_UIロジック
@@ -52,15 +53,9 @@ class HomeViewModel(
         }
     }
 
-    fun getArtist(): Artist {
+    fun getArtist(): ArtistConditions {
         val name = searchText.value.toString()
-        val gender = Gender.getEnumByValue(0)
-        val length = Length(0)
-        val voice = Voice(0)
-        val lyrics = Lyrics(0)
-        val genre1 = Genre1(0)
-        val genre2 = Genre2(0)
-        return Artist(name, gender, voice, length, lyrics, genre1, genre2)
+        return ArtistConditions(name, null, null, null, null, null, null)
     }
 
     /**

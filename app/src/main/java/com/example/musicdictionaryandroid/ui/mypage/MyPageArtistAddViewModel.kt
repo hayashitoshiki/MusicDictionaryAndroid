@@ -2,27 +2,21 @@ package com.example.musicdictionaryandroid.ui.mypage
 
 import android.util.Log
 import androidx.lifecycle.*
-import com.example.musicdictionaryandroid.domain.usecase.ArtistUseCase
-import com.example.musicdictionaryandroid.domain.usecase.UserUseCase
 import com.example.musicdictionaryandroid.data.util.Result
 import com.example.musicdictionaryandroid.data.util.Status
 import com.example.musicdictionaryandroid.domain.model.entity.Artist
 import com.example.musicdictionaryandroid.domain.model.value.*
+import com.example.musicdictionaryandroid.domain.usecase.ArtistUseCase
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 
 /**
  * アーティスト情報登録・追加画面_UIロジック
  *
- * @property userUseCase
  * @property artistUseCase
  */
-class MyPageArtistAddViewModel(
-    private val userUseCase: UserUseCase,
-    private val artistUseCase: ArtistUseCase
-) : ViewModel() {
+class MyPageArtistAddViewModel(private val artistUseCase: ArtistUseCase) : ViewModel() {
 
-    private var email = userUseCase.getEmail()
     val status = MutableLiveData<Status<Artist>>()
 
     // 絞り込みリスト
@@ -35,7 +29,7 @@ class MyPageArtistAddViewModel(
     private lateinit var subGenre5List: List<String>
     private lateinit var subGenre6List: List<String>
 
-//    private val _artist = MutableLiveData<Artist>()
+    //    private val _artist = MutableLiveData<Artist>()
 //    val artist: LiveData<Artist> = _artist
     private val _editMode = MutableLiveData<Int>()
     val editMode: LiveData<Int> = _editMode
@@ -149,59 +143,30 @@ class MyPageArtistAddViewModel(
                 Log.e(TAG, "指定モードが正しくありません。mode = " + editMode.value)
             }
         }
-
     }
 
     // アーティスト登録
     private fun addArtist(artist: Artist): Job = viewModelScope.launch {
-        when (val result = artistUseCase.addArtist(artist, email)) {
-            is Result.Success -> { status.value = Status.Success(result.data) }
-            is Result.Error -> { status.value = Status.Failure(result.exception) }
+        when (val result = artistUseCase.addArtist(artist)) {
+            is Result.Success -> {
+                status.value = Status.Success(result.data)
+            }
+            is Result.Error -> {
+                status.value = Status.Failure(result.exception)
+            }
         }
     }
 
     // アーティスト更新
     private fun updateArtist(artist: Artist): Job = viewModelScope.launch {
-        when (val result = artistUseCase.updateArtist(artist, email)) {
-            is Result.Success -> { status.value = Status.Success(result.data) }
-            is Result.Error -> { status.value = Status.Failure(result.exception) }
+        when (val result = artistUseCase.updateArtist(artist)) {
+            is Result.Success -> {
+                status.value = Status.Success(result.data)
+            }
+            is Result.Error -> {
+                status.value = Status.Failure(result.exception)
+            }
         }
-    }
-
-    // アーティスト名変更
-    fun changeArtistName(name: String) {
-//        _artist.value!!.name = name
-//        _artist.value = _artist.value
-    }
-
-    // genderの変更
-    fun checkedChangeGender(checkedId: Int) {
-//        _artist.value!!.gender = checkedId
-//        _artist.value = _artist.value
-    }
-
-    // lengthの変更
-    fun checkedChangeLength(checkedId: Int) {
-//        _artist.value!!.length = checkedId
-//        _artist.value = _artist.value
-    }
-
-    // voiceの変更
-    fun checkedChangeVoice(checkedId: Int) {
-//        _artist.value!!.voice = checkedId
-//        _artist.value = _artist.value
-    }
-
-    // 歌詞情報の変更
-    fun checkedChangeLyric(checkedId: Int) {
-//        _artistForm.value!!.lyrics = checkedId
-//        _artistForm.value = _artistForm.value
-    }
-
-    // 歌詞情報の変更
-    fun changeGenre2(index: Int) {
-//        _artistForm.value!!.genre2 = index
-//        _artistForm.value = _artistForm.value
     }
 
     /**
@@ -210,7 +175,6 @@ class MyPageArtistAddViewModel(
      * @param index 大分類ジャンルの中のインデックス値
      */
     fun changeGenre1(index: Int) {
-//        genre1.value = index
         when (index) {
             0 -> _genre2ValueList.postValue(subGenre0List.toList())
             1 -> _genre2ValueList.postValue(subGenre1List.toList())

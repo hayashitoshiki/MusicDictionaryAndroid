@@ -10,8 +10,8 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.example.musicdictionaryandroid.R
-import com.example.musicdictionaryandroid.databinding.FragmentResultRecommendBinding
 import com.example.musicdictionaryandroid.data.util.Status
+import com.example.musicdictionaryandroid.databinding.FragmentResultRecommendBinding
 import com.example.musicdictionaryandroid.domain.model.entity.ArtistContents
 import com.example.musicdictionaryandroid.ui.adapter.ResultAdapter
 import org.koin.android.viewmodel.ext.android.viewModel
@@ -43,19 +43,21 @@ class ResultRecommendFragment : Fragment() {
 
     // ステータス監視
     private fun onStateChanged(state: Status<List<ArtistContents>>) = when (state) {
-        is Status.Loading -> { showProgressbar() }
+        is Status.Loading -> {
+            showProgressbar()
+        }
         is Status.Success -> {
             hideProgressbar()
             hideNoDataView()
-                if (state.data.isEmpty()) showNoDataView()
-                else viewUpDate(state.data)
-
+            if (state.data.isEmpty()) showNoDataView()
+            else viewUpDate(state.data)
         }
         is Status.Failure -> {
             Log.i(TAG, "Failure:${state.throwable}")
             hideProgressbar()
         }
-        is Status.Non -> { }
+        is Status.Non -> {
+        }
     }
 
     // データ反映

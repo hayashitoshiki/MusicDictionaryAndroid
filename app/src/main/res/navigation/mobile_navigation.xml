@@ -9,7 +9,7 @@
         android:id="@+id/navigation_home"
         android:name="com.example.musicdictionaryandroid.ui.home.HomeFragment"
         android:label="@string/title_navigation_home"
-        tools:layout="@layout/fragment_home" >
+        tools:layout="@layout/fragment_home">
         <action
             android:id="@+id/action_navigation_home_to_navigation_result"
             app:destination="@id/navigation_result" />
@@ -51,29 +51,29 @@
         android:id="@+id/navigation_result"
         android:name="com.example.musicdictionaryandroid.ui.home.ResultFragment"
         android:label="ResultFragment"
-        tools:layout="@layout/fragment_result" >
+        tools:layout="@layout/fragment_result">
         <argument
             android:name="data"
-            app:argType="com.example.musicdictionaryandroid.domain.model.entity.Artist" />
+            app:argType="com.example.musicdictionaryandroid.domain.model.value.ArtistConditions" />
     </fragment>
 
     <fragment
         android:id="@+id/navigation_result_recommend"
         android:name="com.example.musicdictionaryandroid.ui.home.ResultRecommendFragment"
         android:label="ResultRecommendFragment"
-        tools:layout="@layout/fragment_result_recommend"/>
+        tools:layout="@layout/fragment_result_recommend" />
 
     <fragment
         android:id="@+id/navigation_result_soaring"
         android:name="com.example.musicdictionaryandroid.ui.home.ResultSoaringFragment"
         android:label="ResultSoaringFragment"
-        tools:layout="@layout/fragment_result_soaring"/>
+        tools:layout="@layout/fragment_result_soaring" />
 
     <fragment
         android:id="@+id/navigation_mypage"
         android:name="com.example.musicdictionaryandroid.ui.mypage.MyPageTopFragment"
         android:label="@string/title_navigation_mypage"
-        tools:layout="@layout/fragment_mypage_top" >
+        tools:layout="@layout/fragment_mypage_top">
         <action
             android:id="@+id/action_navigation_mypage_to_my_page_artist"
             app:destination="@id/navigation_mypage_artist" />
@@ -107,7 +107,7 @@
         android:id="@+id/navigation_mypage_user"
         android:name="com.example.musicdictionaryandroid.ui.mypage.MyPageUserFragment"
         android:label="MyPageUserInfoFragment"
-        tools:layout="@layout/fragment_mypage_user"/>
+        tools:layout="@layout/fragment_mypage_user" />
 
 
 </navigation>

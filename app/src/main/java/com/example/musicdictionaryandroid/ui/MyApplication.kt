@@ -9,7 +9,10 @@ import com.example.musicdictionaryandroid.domain.usecase.ArtistUseCase
 import com.example.musicdictionaryandroid.domain.usecase.ArtistUseCaseImp
 import com.example.musicdictionaryandroid.domain.usecase.UserUseCase
 import com.example.musicdictionaryandroid.domain.usecase.UserUseCaseImp
-import com.example.musicdictionaryandroid.ui.home.*
+import com.example.musicdictionaryandroid.ui.home.HomeViewModel
+import com.example.musicdictionaryandroid.ui.home.ResultRecommendViewModel
+import com.example.musicdictionaryandroid.ui.home.ResultSoaringViewModel
+import com.example.musicdictionaryandroid.ui.home.ResultViewModel
 import com.example.musicdictionaryandroid.ui.login.SignInViewModel
 import com.example.musicdictionaryandroid.ui.login.SignUpViewModel
 import com.example.musicdictionaryandroid.ui.login.StartViewModel
@@ -60,14 +63,14 @@ class MyApplication : Application() {
 
     // Koinモジュール
     private val module: Module = module {
-        viewModel { MainActivityViewModel(get(), get()) }
+        viewModel { MainActivityViewModel(get()) }
 
         viewModel { MyPageTopViewModel(get()) }
         viewModel { MyPageUserViewModel(get()) }
-        viewModel { MyPageArtistAddViewModel(get(), get()) }
-        viewModel { MyPageArtistViewModel(get(), get()) }
-        viewModel { SignInViewModel(get()) }
-        viewModel { SignUpViewModel(get()) }
+        viewModel { MyPageArtistAddViewModel(get()) }
+        viewModel { MyPageArtistViewModel(get()) }
+        viewModel { SignInViewModel(get(), applicationScope) }
+        viewModel { SignUpViewModel(get(), applicationScope) }
         viewModel { ResultViewModel(get()) }
         viewModel { ResultRecommendViewModel(get(), get()) }
         viewModel { ResultSoaringViewModel(get()) }
@@ -75,12 +78,12 @@ class MyApplication : Application() {
         viewModel { StartViewModel(get()) }
         viewModel { SplashViewModel(get()) }
 
-        factory <ArtistUseCase> { ArtistUseCaseImp(get(), get(), get(), applicationScope) }
-        factory <UserUseCase> { UserUseCaseImp(get(), get(), get(), get(), applicationScope) }
+        factory<ArtistUseCase> { ArtistUseCaseImp(get(), get(), get(), applicationScope) }
+        factory<UserUseCase> { UserUseCaseImp(get(), get(), get(), get(), applicationScope) }
 
-        factory <FireBaseRepository> { FireBaseRepositoryImp() }
-        factory <ApiServerRepository> { ApiServerRepositoryImp() }
-        factory <DataBaseRepository> { DataBaseRepositoryImp() }
-        single <PreferenceRepository> { PreferenceRepositoryImp() }
+        factory<FireBaseRepository> { FireBaseRepositoryImp() }
+        factory<ApiServerRepository> { ApiServerRepositoryImp() }
+        factory<DataBaseRepository> { DataBaseRepositoryImp() }
+        single<PreferenceRepository> { PreferenceRepositoryImp() }
     }
 }

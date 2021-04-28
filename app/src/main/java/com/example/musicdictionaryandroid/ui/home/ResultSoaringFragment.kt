@@ -10,8 +10,8 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.example.musicdictionaryandroid.R
-import com.example.musicdictionaryandroid.databinding.FragmentResultSoaringBinding
 import com.example.musicdictionaryandroid.data.util.Status
+import com.example.musicdictionaryandroid.databinding.FragmentResultSoaringBinding
 import com.example.musicdictionaryandroid.domain.model.entity.ArtistContents
 import com.example.musicdictionaryandroid.ui.adapter.ResultAdapter
 import org.koin.android.viewmodel.ext.android.viewModel
@@ -29,11 +29,7 @@ class ResultSoaringFragment : Fragment() {
     private val viewModel: ResultSoaringViewModel by viewModel()
     private lateinit var binding: FragmentResultSoaringBinding
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_result_soaring, container, false)
         binding.viewModel = viewModel
         return binding.root
@@ -47,7 +43,9 @@ class ResultSoaringFragment : Fragment() {
 
     // ステータス監視
     private fun onStateChanged(state: Status<List<ArtistContents>>) = when (state) {
-        is Status.Loading -> { showProgressbar() }
+        is Status.Loading -> {
+            showProgressbar()
+        }
         is Status.Success -> {
             hideProgressbar()
             hideNoDataView()
@@ -58,7 +56,8 @@ class ResultSoaringFragment : Fragment() {
             Log.i(TAG, "Failure:${state.throwable}")
             hideProgressbar()
         }
-        is Status.Non -> { }
+        is Status.Non -> {
+        }
     }
 
     // データ反映

@@ -1,9 +1,11 @@
 package com.example.musicdictionaryandroid.data.net
 
-import com.example.musicdictionaryandroid.data.net.dto.ArtistsDto
 import com.example.musicdictionaryandroid.data.database.entity.CallBackData
 import com.example.musicdictionaryandroid.data.database.entity.User
-import retrofit2.http.*
+import com.example.musicdictionaryandroid.data.net.dto.ArtistsDto
+import retrofit2.http.GET
+import retrofit2.http.Query
+import retrofit2.http.QueryMap
 
 /**
  * 各URLの管理

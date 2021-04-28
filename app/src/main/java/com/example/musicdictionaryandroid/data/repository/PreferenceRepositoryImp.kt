@@ -1,6 +1,8 @@
 package com.example.musicdictionaryandroid.data.repository
 
 import android.content.Context
+import com.example.musicdictionaryandroid.data.database.entity.User
+import com.example.musicdictionaryandroid.data.util.UserInfoChangeListUtil
 import com.example.musicdictionaryandroid.ui.MyApplication
 
 /**
@@ -13,16 +15,30 @@ class PreferenceRepositoryImp : PreferenceRepository {
     private enum class Key {
         // Eメール
         EMAIL,
+
         // 名前
         NAME,
+
         // 性別
         GENDER,
+
         // 地域
         AREA,
+
         // 生年月日
         BIRTHDAY,
+
         // 登録数
         FAVORITE
+    }
+
+    override fun setUser(user: User) {
+        setEmail(user.email)
+        setName(user.name)
+        setGender(user.gender)
+        setBirthday(UserInfoChangeListUtil.changeBirthdayString(user.birthday))
+        setArea(user.area)
+        setFavorite(user.artist_count)
     }
 
     override fun setEmail(value: String) {
@@ -35,6 +51,17 @@ class PreferenceRepositoryImp : PreferenceRepository {
 
     override fun setName(value: String) {
         setString(Key.NAME, value)
+    }
+
+    override fun getUser(): User {
+        return User(
+            getEmail()!!,
+            getName()!!,
+            getGender(),
+            getArea(),
+            UserInfoChangeListUtil.getBirthday(getBirthday()),
+            getFavorite()
+        )
     }
 
     override fun getName(): String? {
@@ -100,6 +127,7 @@ class PreferenceRepositoryImp : PreferenceRepository {
         editor.putInt(key.name, value)
         editor.apply()
     }
+
     private fun getInt(key: Key, default: Int = 0): Int {
         val preferences = context.getSharedPreferences("mucisDictionary", Context.MODE_PRIVATE)
         return preferences.getInt(key.name, default)

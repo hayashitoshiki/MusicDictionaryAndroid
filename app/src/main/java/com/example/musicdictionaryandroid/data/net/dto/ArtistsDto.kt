@@ -36,7 +36,9 @@ data class ArtistsDto(
 ) : java.io.Serializable {
     fun getMapList(): Map<String, String> {
         val mutableMap: MutableMap<String, String> = mutableMapOf()
-        mutableMap["name"] = name
+        name?.let {
+            mutableMap["name"] = it
+        }
         mutableMap["gender"] = gender.toString()
         mutableMap["voice"] = voice.toString()
         mutableMap["length"] = length.toString()

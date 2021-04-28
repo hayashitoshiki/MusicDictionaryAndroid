@@ -2,21 +2,25 @@ package com.example.musicdictionaryandroid.ui.mypage
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.Observer
-import com.example.musicdictionaryandroid.domain.usecase.ArtistUseCase
-import com.example.musicdictionaryandroid.domain.usecase.UserUseCase
 import com.example.musicdictionaryandroid.data.util.Result
 import com.example.musicdictionaryandroid.domain.model.entity.Artist
 import com.example.musicdictionaryandroid.domain.model.value.*
+import com.example.musicdictionaryandroid.domain.usecase.ArtistUseCase
+import com.example.musicdictionaryandroid.domain.usecase.UserUseCase
 import com.nhaarman.mockito_kotlin.mock
 import io.mockk.coEvery
 import io.mockk.coVerify
-import io.mockk.every
 import io.mockk.mockk
 import junit.framework.Assert.assertEquals
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.test.*
-import org.junit.*
+import kotlinx.coroutines.test.TestCoroutineDispatcher
+import kotlinx.coroutines.test.resetMain
+import kotlinx.coroutines.test.setMain
+import org.junit.After
+import org.junit.Before
+import org.junit.Rule
+import org.junit.Test
 import org.junit.rules.TestRule
 
 /**
@@ -53,13 +57,11 @@ class MyPageArtistEntityAddViewModelTest {
 
         // テストクラス作成
         artistUseCase = mockk<ArtistUseCase>().also {
-            coEvery { it.addArtist(any(), any()) } returns Result.Success(artist)
-            coEvery { it.updateArtist(any(), any()) } returns Result.Success(artist)
+            coEvery { it.addArtist(any()) } returns Result.Success(artist)
+            coEvery { it.updateArtist(any()) } returns Result.Success(artist)
         }
-        userUseCase = mockk<UserUseCase> ().also {
-            every { it.getEmail() } returns "test1"
-        }
-        viewModel = MyPageArtistAddViewModel(userUseCase, artistUseCase)
+        userUseCase = mockk()
+        viewModel = MyPageArtistAddViewModel(artistUseCase)
         val observer = mock<Observer<Boolean>>()
         viewModel.isEnableSubmitButton.observeForever(observer)
         viewModel.init(array0, array1, array2, array3, array4, array5, array6, artist)
@@ -154,12 +156,12 @@ class MyPageArtistEntityAddViewModelTest {
         // アーティスト新規登録
         viewModel.init(array0, array1, array2, array3, array4, array5, array6, null)
         viewModel.submit()
-        coVerify(exactly = 1) { (artistUseCase).addArtist(any(), any()) }
-        coVerify(exactly = 0) { (artistUseCase).updateArtist(any(), any()) }
+        coVerify(exactly = 1) { (artistUseCase).addArtist(any()) }
+        coVerify(exactly = 0) { (artistUseCase).updateArtist(any()) }
         // アーティスト更新
         viewModel.init(array0, array1, array2, array3, array4, array5, array6, artist)
         viewModel.submit()
-        coVerify(exactly = 1) { (artistUseCase).addArtist(any(), any()) }
-        coVerify(exactly = 1) { (artistUseCase).updateArtist(any(), any()) }
+        coVerify(exactly = 1) { (artistUseCase).addArtist(any()) }
+        coVerify(exactly = 1) { (artistUseCase).updateArtist(any()) }
     }
 }
