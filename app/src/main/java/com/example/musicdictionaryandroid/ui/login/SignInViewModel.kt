@@ -7,11 +7,11 @@ import androidx.lifecycle.ViewModel
 import com.example.musicdictionaryandroid.data.util.Result
 import com.example.musicdictionaryandroid.data.util.Status
 import com.example.musicdictionaryandroid.domain.usecase.UserUseCase
-import java.util.regex.Pattern
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
+import java.util.regex.Pattern
 
 /**
  * ログイン画面_UIロジック
@@ -26,10 +26,10 @@ class SignInViewModel(
 
     val emailText = MutableLiveData<String>()
     val passwordText = MutableLiveData<String>()
-    private val _emailErrorText = MutableLiveData<String>()
-    val emailErrorText: LiveData<String> = _emailErrorText
-    private val _passwordErrorText = MutableLiveData<String>()
-    val passwordErrorText: LiveData<String> = _passwordErrorText
+    private val _emailErrorText = MutableLiveData<String?>()
+    val emailErrorText: LiveData<String?> = _emailErrorText
+    private val _passwordErrorText = MutableLiveData<String?>()
+    val passwordErrorText: LiveData<String?> = _passwordErrorText
     private val _isEnableSubmitButton = MediatorLiveData<Boolean>()
     val isEnableSubmitButton: LiveData<Boolean> = _isEnableSubmitButton
     private val _isProgressBer = MutableLiveData(false)
