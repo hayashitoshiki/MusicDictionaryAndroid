@@ -8,16 +8,16 @@ import com.example.musicdictionaryandroid.data.util.Result
 import com.example.musicdictionaryandroid.domain.model.entity.Artist
 import com.example.musicdictionaryandroid.domain.model.entity.ArtistContents
 import com.example.musicdictionaryandroid.domain.model.value.*
+import java.util.*
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
-import java.util.*
 
 class ApiServerRepositoryImp(private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO) : ApiServerRepository {
 
     // 指定した検索条件で検索した時のアーティストリストを返す  あくまで検索結果の"アーティストリストを返す"
-    override suspend fun getArtistsBy(artist: Artist): Result<List<ArtistContents>> = withContext(ioDispatcher) {
-        val artistDto = convertArtistDtoFromArtist(artist)
+    override suspend fun getArtistsBy(artist: ArtistConditions): Result<List<ArtistContents>> = withContext(ioDispatcher) {
+        val artistDto = convertArtistDtoFromArtistConditions(artist)
         return@withContext runCatching { Provider.api().search(artistDto.getMapList()) }.fold(
             onSuccess = {
                 val artistList = it.map { artistDto ->
@@ -25,7 +25,8 @@ class ApiServerRepositoryImp(private val ioDispatcher: CoroutineDispatcher = Dis
                 }
                 Result.Success(artistList)
             },
-            onFailure = { Result.Error(it) })
+            onFailure = { Result.Error(it) }
+        )
     }
 
     // おすすめアーティストリストを返す
@@ -37,7 +38,8 @@ class ApiServerRepositoryImp(private val ioDispatcher: CoroutineDispatcher = Dis
                 }
                 Result.Success(artistList)
             },
-            onFailure = { Result.Error(it) })
+            onFailure = { Result.Error(it) }
+        )
     }
 
     // 急上昇アーティストリストを返す
@@ -49,7 +51,8 @@ class ApiServerRepositoryImp(private val ioDispatcher: CoroutineDispatcher = Dis
                 }
                 Result.Success(artistList)
             },
-            onFailure = { Result.Error(it) })
+            onFailure = { Result.Error(it) }
+        )
     }
 
     // ユーザー登録したアーティスト取得
@@ -61,7 +64,8 @@ class ApiServerRepositoryImp(private val ioDispatcher: CoroutineDispatcher = Dis
                 }
                 Result.Success(artistList)
             },
-            onFailure = { Result.Error(it) })
+            onFailure = { Result.Error(it) }
+        )
     }
 
     // アーティスト登録
@@ -72,7 +76,8 @@ class ApiServerRepositoryImp(private val ioDispatcher: CoroutineDispatcher = Dis
                 val result = convertArtistFromArtistDto(artistDtoResponse)
                 Result.Success(result)
             },
-            onFailure = { Result.Error(it) })
+            onFailure = { Result.Error(it) }
+        )
     }
 
     // アーティスト編集
@@ -83,36 +88,40 @@ class ApiServerRepositoryImp(private val ioDispatcher: CoroutineDispatcher = Dis
                 val result = convertArtistFromArtistDto(artistDtoResponse)
                 Result.Success(result)
             },
-            onFailure = { Result.Error(it) })
+            onFailure = { Result.Error(it) }
+        )
     }
 
     // アーティスト削除
     override suspend fun deleteArtist(name: String, email: String): Result<String> = withContext(ioDispatcher) {
         return@withContext runCatching { Provider.api().deleteArtist(name, email) }.fold(
             onSuccess = { Result.Success("Success") },
-            onFailure = { Result.Error(it) })
+            onFailure = { Result.Error(it) }
+        )
     }
 
     // ユーザー取得
     override suspend fun getUserByEmail(email: String): Result<User> = withContext(ioDispatcher) {
         return@withContext runCatching { Provider.api().getUserByEmail(email) }.fold(
             onSuccess = { Result.Success(it) },
-            onFailure = { Result.Error(it) })
+            onFailure = { Result.Error(it) }
+        )
     }
 
     // ユーザー登録
     override suspend fun createUser(user: String): Result<String> = withContext(ioDispatcher) {
         return@withContext runCatching { Provider.api().createUser(user) }.fold(
             onSuccess = { Result.Success("Success") },
-            onFailure = { Result.Error(it) })
-
+            onFailure = { Result.Error(it) }
+        )
     }
 
     // ユーザー情報変更
     override suspend fun changeUser(user: User, email: String): Result<CallBackData> = withContext(ioDispatcher) {
         return@withContext runCatching { Provider.api().changeUser(user, email) }.fold(
             onSuccess = { Result.Success(it) },
-            onFailure = { Result.Error(it) })
+            onFailure = { Result.Error(it) }
+        )
     }
 
     // アーティストDtoからアーティストモデルへ変換
@@ -164,6 +173,18 @@ class ApiServerRepositoryImp(private val ioDispatcher: CoroutineDispatcher = Dis
         val lyrics = artist.lyrics.value
         val genre1 = artist.genre1.value
         val genre2 = artist.genre2.value
+        return ArtistsDto(name, gender, voice, length, lyrics, genre1, genre2)
+    }
+
+    // アーティスト検索条件からアーティストDtoへ変換
+    private fun convertArtistDtoFromArtistConditions(artist: ArtistConditions): ArtistsDto {
+        val name = artist.name ?: ""
+        val gender = artist.gender?.value ?: 0
+        val voice = artist.voice?.value ?: 0
+        val length = artist.length?.value ?: 0
+        val lyrics = artist.lyrics?.value ?: 0
+        val genre1 = artist.genre1?.value ?: 0
+        val genre2 = artist.genre2?.value ?: 0
         return ArtistsDto(name, gender, voice, length, lyrics, genre1, genre2)
     }
 }

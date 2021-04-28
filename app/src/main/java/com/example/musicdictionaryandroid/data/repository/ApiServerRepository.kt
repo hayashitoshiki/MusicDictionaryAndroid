@@ -5,7 +5,7 @@ import com.example.musicdictionaryandroid.data.database.entity.User
 import com.example.musicdictionaryandroid.data.util.Result
 import com.example.musicdictionaryandroid.domain.model.entity.Artist
 import com.example.musicdictionaryandroid.domain.model.entity.ArtistContents
-import java.util.*
+import com.example.musicdictionaryandroid.domain.model.value.ArtistConditions
 
 /**
  * API呼び出し関連のRepository
@@ -17,10 +17,10 @@ interface ApiServerRepository {
     /**
      * 検索条件に一致するアーティスト取得
      *
-     * @param artists アーティスト検索条件
+     * @param artist アーティスト検索条件
      * @return アーティストの検索結果一覧
      */
-    suspend fun getArtistsBy(artist: Artist): Result<List<ArtistContents>>
+    suspend fun getArtistsBy(artist: ArtistConditions): Result<List<ArtistContents>>
 
     /**
      * おすすめアーティスト検索
@@ -60,7 +60,6 @@ interface ApiServerRepository {
      * アーティスト更新
      *
      * @param artist 更新したいアーティストの新しいデータ
-     * @param beforeName 更新したいアーティストの元の名前
      * @param email ユーザのemail
      * @return 更新正常完了判定結果
      */

@@ -7,11 +7,11 @@ import androidx.lifecycle.ViewModel
 import com.example.musicdictionaryandroid.data.util.Result
 import com.example.musicdictionaryandroid.data.util.Status
 import com.example.musicdictionaryandroid.domain.usecase.UserUseCase
+import java.util.regex.Pattern
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
-import java.util.regex.Pattern
 
 /**
  * ログイン画面_UIロジック
@@ -55,7 +55,7 @@ class SignInViewModel(
             return if (email.isEmpty() || email.length <= 5) {
                 false
             } else {
-                val expression = "^[\\w\\.-]+@([\\w\\-]+\\.)+[A-Z]{2,4}$"
+                val expression = "^[\\w.-]+@([\\w\\-]+\\.)+[A-Z]{2,4}$"
                 val pattern = Pattern.compile(expression, Pattern.CASE_INSENSITIVE)
                 val matcher = pattern.matcher(email)
                 !(email.isNotEmpty() && !matcher.matches())
@@ -81,7 +81,7 @@ class SignInViewModel(
             if (email.isNotEmpty() && email.length <= 5) {
                 _emailErrorText.value = "メールアドレスは最低でも６文字必要です"
             } else {
-                val expression = "^[\\w\\.-]+@([\\w\\-]+\\.)+[A-Z]{2,4}$"
+                val expression = "^[\\w.-]+@([\\w\\-]+\\.)+[A-Z]{2,4}$"
                 val pattern = Pattern.compile(expression, Pattern.CASE_INSENSITIVE)
                 val matcher = pattern.matcher(email)
                 if (email.isNotEmpty() && !matcher.matches()) {

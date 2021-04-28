@@ -20,8 +20,8 @@ import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.example.musicdictionaryandroid.R
-import com.example.musicdictionaryandroid.databinding.FragmentMypageArtistAddBinding
 import com.example.musicdictionaryandroid.data.util.Status
+import com.example.musicdictionaryandroid.databinding.FragmentMypageArtistAddBinding
 import com.example.musicdictionaryandroid.domain.model.entity.Artist
 import com.example.musicdictionaryandroid.ui.adapter.setSafeClickListener
 import org.koin.android.viewmodel.ext.android.viewModel
@@ -109,7 +109,6 @@ class MyPageArtistAddFragment : Fragment() {
 
         viewModel.status.observe(viewLifecycleOwner, Observer { onStateChanged(it) })
         viewModel.genre1.observe(viewLifecycleOwner, Observer { viewModel.changeGenre1(it) })
-        viewModel.genre2.observe(viewLifecycleOwner, Observer { viewModel.changeGenre2(it) })
 
         // 送信ボタン
         binding.submit.setSafeClickListener {
@@ -119,7 +118,9 @@ class MyPageArtistAddFragment : Fragment() {
 
     // ステータス監視
     private fun onStateChanged(state: Status<Artist>) = when (state) {
-        is Status.Loading -> { showProgressbar() }
+        is Status.Loading -> {
+            showProgressbar()
+        }
         is Status.Success -> {
             hideProgressbar()
             back()
@@ -129,7 +130,8 @@ class MyPageArtistAddFragment : Fragment() {
             hideProgressbar()
             showServerError()
         }
-        is Status.Non -> { }
+        is Status.Non -> {
+        }
     }
 
     // 設定画面へ画面戻る

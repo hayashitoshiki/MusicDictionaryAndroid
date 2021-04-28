@@ -12,10 +12,10 @@ import androidx.lifecycle.Observer
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.example.musicdictionaryandroid.R
-import com.example.musicdictionaryandroid.databinding.FragmentResultBinding
 import com.example.musicdictionaryandroid.data.util.Status
-import com.example.musicdictionaryandroid.domain.model.entity.Artist
+import com.example.musicdictionaryandroid.databinding.FragmentResultBinding
 import com.example.musicdictionaryandroid.domain.model.entity.ArtistContents
+import com.example.musicdictionaryandroid.domain.model.value.ArtistConditions
 import com.example.musicdictionaryandroid.ui.adapter.DialogFragmentCallbackInterface
 import com.example.musicdictionaryandroid.ui.adapter.ResultAdapter
 import org.koin.android.viewmodel.ext.android.viewModel
@@ -46,7 +46,7 @@ class ResultFragment : Fragment(), DialogFragmentCallbackInterface {
         viewModel.status.observe(viewLifecycleOwner, Observer { onStateChanged(it) })
 
         if (savedInstanceState != null) {
-            val artist = savedInstanceState.getSerializable("artistSave") as Artist
+            val artist = savedInstanceState.getSerializable("artistSave") as ArtistConditions
             viewModel.getArtists(artist)
         } else {
             viewModel.getArtists(args.data)
@@ -55,19 +55,21 @@ class ResultFragment : Fragment(), DialogFragmentCallbackInterface {
 
     // ステータス監視
     private fun onStateChanged(state: Status<List<ArtistContents>>) = when (state) {
-        is Status.Loading -> { showProgressbar() }
+        is Status.Loading -> {
+            showProgressbar()
+        }
         is Status.Success -> {
             hideProgressbar()
             hideNoDataView()
             if (state.data.isEmpty()) showNoDataView()
             else viewUpDate(state.data)
-
         }
         is Status.Failure -> {
             Log.i(TAG, "Failure:${state.throwable}")
             hideProgressbar()
         }
-        is Status.Non -> { }
+        is Status.Non -> {
+        }
     }
 
     // データ反映
@@ -78,16 +80,14 @@ class ResultFragment : Fragment(), DialogFragmentCallbackInterface {
         binding.recyclerView.layoutAnimation = controller
         binding.recyclerView.adapter = adapter
         binding.recyclerView.layoutManager = layoutManager
-        adapter.setOnItemClickListener(
-            View.OnClickListener { _ ->
-                val dialogFragment = SearchDialogFragment()
-                val bundle = Bundle()
-                bundle.putSerializable("artist", args.data)
-                dialogFragment.arguments = bundle
-                dialogFragment.setCallbackListener(this)
-                dialogFragment.show(requireActivity().supportFragmentManager, null)
-            }
-        )
+        adapter.setOnItemClickListener {
+            val dialogFragment = SearchDialogFragment()
+            val bundle = Bundle()
+            bundle.putSerializable("artist", args.data)
+            dialogFragment.arguments = bundle
+            dialogFragment.setCallbackListener(this)
+            dialogFragment.show(requireActivity().supportFragmentManager, null)
+        }
     }
 
     // 一致データなし表示
@@ -116,7 +116,7 @@ class ResultFragment : Fragment(), DialogFragmentCallbackInterface {
     }
 
     // ダイアログコールバック
-    override fun callBackMethod(data: Artist) {
+    override fun callBackMethod(data: ArtistConditions) {
         viewModel.getArtists(data)
     }
 }

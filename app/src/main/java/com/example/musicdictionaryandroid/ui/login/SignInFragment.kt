@@ -32,11 +32,7 @@ class SignInFragment : Fragment() {
     private val viewModel: SignInViewModel by viewModel()
     private lateinit var binding: FragmentSignInBinding
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_sign_in, container, false)
         binding.lifecycleOwner = viewLifecycleOwner
         binding.viewModel = viewModel

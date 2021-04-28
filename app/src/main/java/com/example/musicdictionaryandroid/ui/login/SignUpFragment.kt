@@ -12,8 +12,8 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import com.example.musicdictionaryandroid.R
-import com.example.musicdictionaryandroid.databinding.FragmentSignUpBinding
 import com.example.musicdictionaryandroid.data.util.Status
+import com.example.musicdictionaryandroid.databinding.FragmentSignUpBinding
 import org.koin.android.viewmodel.ext.android.viewModel
 
 /**

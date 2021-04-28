@@ -22,7 +22,6 @@ import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
 
-
 class UserUseCaseImpTest {
 
     @ExperimentalCoroutinesApi
@@ -90,7 +89,7 @@ class UserUseCaseImpTest {
             every { it.setFavorite(any()) } returns Unit
             every { it.getFavorite() } returns 1
             every { it.getEmail() } returns "testA"
-            every { it.getName() } returns "tesetAname"
+            every { it.getName() } returns "testAName"
             every { it.getGender() } returns 1
             every { it.getArea() } returns 1
             every { it.getBirthday() } returns 1

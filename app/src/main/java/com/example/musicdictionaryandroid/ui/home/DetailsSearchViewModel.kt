@@ -4,7 +4,6 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.musicdictionaryandroid.domain.model.entity.Artist
 import com.example.musicdictionaryandroid.domain.model.value.*
 
 /**
@@ -108,14 +107,14 @@ class DetailsSearchViewModel : ViewModel() {
         genre1KeyList.value = genreKeyList
     }
 
-    fun getArtist(): Artist {
+    fun getArtist(): ArtistConditions {
         val gender = Gender.getEnumByValue(genderValueInt.value!!)
         val length = Length(lengthValueInt.value!!)
         val voice = Voice(voiceValueInt.value!!)
         val lyrics = Lyrics(lyricsValueInt.value!!)
         val genre1 = Genre1(genre1ValueInt.value!!)
         val genre2 = Genre2(genre2ValueInt.value!!)
-        return Artist("", gender, voice, length, lyrics, genre1, genre2)
+        return ArtistConditions(null, gender, voice, length, lyrics, genre1, genre2)
     }
 
     // バリデーションチェック
@@ -177,7 +176,12 @@ class DetailsSearchViewModel : ViewModel() {
             4 -> changeGenreKey(genre4KeyList.value?.get(index), genre4ValueList, _isSortGenre4ValueList)
         }
     }
-    private fun changeGenreKey(categoryName: String?, KeySpinner: MutableLiveData<Array<String>>, valueSpinner: MutableLiveData<Boolean>) {
+
+    private fun changeGenreKey(
+        categoryName: String?,
+        KeySpinner: MutableLiveData<Array<String>>,
+        valueSpinner: MutableLiveData<Boolean>
+    ) {
         val data = when (categoryName) {
             genreKeyList[1] -> genre1List
             genreKeyList[2] -> genre2List
@@ -200,11 +204,42 @@ class DetailsSearchViewModel : ViewModel() {
      */
     fun addSortList(position: Int) {
         when (position) {
-            1 -> { listFilter(genre1KeyList.value, genre1KeyInt.value, genre2KeyList, _isGenreButtonArea1, _isSortContainer2, _isSortGenre1Key, _isSortGenre1Label) }
-            2 -> { listFilter(genre2KeyList.value, genre2KeyInt.value, genre3KeyList, _isGenreButtonArea2, _isSortContainer3, _isSortGenre2Key, _isSortGenre2Label) }
-            3 -> { listFilter(genre3KeyList.value, genre3KeyInt.value, genre4KeyList, _isGenreButtonArea3, _isSortContainer4, _isSortGenre3Key, _isSortGenre3Label) }
+            1 -> {
+                listFilter(
+                    genre1KeyList.value,
+                    genre1KeyInt.value,
+                    genre2KeyList,
+                    _isGenreButtonArea1,
+                    _isSortContainer2,
+                    _isSortGenre1Key,
+                    _isSortGenre1Label
+                )
+            }
+            2 -> {
+                listFilter(
+                    genre2KeyList.value,
+                    genre2KeyInt.value,
+                    genre3KeyList,
+                    _isGenreButtonArea2,
+                    _isSortContainer3,
+                    _isSortGenre2Key,
+                    _isSortGenre2Label
+                )
+            }
+            3 -> {
+                listFilter(
+                    genre3KeyList.value,
+                    genre3KeyInt.value,
+                    genre4KeyList,
+                    _isGenreButtonArea3,
+                    _isSortContainer4,
+                    _isSortGenre3Key,
+                    _isSortGenre3Label
+                )
+            }
         }
     }
+
     private fun listFilter(
         keyList: Array<String>?,
         position: Int?,
@@ -233,6 +268,7 @@ class DetailsSearchViewModel : ViewModel() {
             4 -> deleteGenre(_isGenreButtonArea3, _isSortContainer4, _isSortGenre3Key, _isSortGenre3Label)
         }
     }
+
     private fun deleteGenre(
         buttonArea: MutableLiveData<Boolean>,
         newSortArea: MutableLiveData<Boolean>,
@@ -253,6 +289,7 @@ class DetailsSearchViewModel : ViewModel() {
             3 -> changeGenreValue(index, _isGenreAddButton3)
         }
     }
+
     private fun changeGenreValue(position: Int, button: MutableLiveData<Boolean>) {
         button.value = when (position) {
             0 -> false

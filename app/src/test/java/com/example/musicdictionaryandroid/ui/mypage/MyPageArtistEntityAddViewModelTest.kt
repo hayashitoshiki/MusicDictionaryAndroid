@@ -60,7 +60,7 @@ class MyPageArtistEntityAddViewModelTest {
             coEvery { it.addArtist(any()) } returns Result.Success(artist)
             coEvery { it.updateArtist(any()) } returns Result.Success(artist)
         }
-        userUseCase = mockk<UserUseCase>()
+        userUseCase = mockk()
         viewModel = MyPageArtistAddViewModel(artistUseCase)
         val observer = mock<Observer<Boolean>>()
         viewModel.isEnableSubmitButton.observeForever(observer)

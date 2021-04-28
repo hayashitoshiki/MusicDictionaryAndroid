@@ -41,6 +41,7 @@ class ArtistUseCaseImpTest {
 
     private val user = User("test@com.jp", "testA", 1, 1, "2000/2/2", 1)
     private val artist = Artist("test", Gender.MAN, Voice(0), Length(0), Lyrics(0), Genre1(0), Genre2(0))
+    private val artistConditions = ArtistConditions("test", null, null, null, null, null, null)
     private val artistContents = ArtistContents(artist, null, null, 0, 0, 0, 0, 0, 0, 0, 0)
     private val artistContentsList = listOf(artistContents)
     private val artistList = listOf(artist, artist)
@@ -118,9 +119,9 @@ class ArtistUseCaseImpTest {
     @Test
     fun getArtistsBy() {
         runBlocking {
-            val result = useCase.getArtistsBy(artist)
+            val result = useCase.getArtistsBy(artistConditions)
             assertEquals(Result.Success(artistContentsList), result)
-            coVerify(exactly = 1) { (apiRepository).getArtistsBy(artist) }
+            coVerify(exactly = 1) { (apiRepository).getArtistsBy(artistConditions) }
         }
     }
 

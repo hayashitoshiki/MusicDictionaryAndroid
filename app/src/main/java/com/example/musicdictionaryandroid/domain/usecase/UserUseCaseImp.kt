@@ -46,7 +46,6 @@ class UserUseCaseImp(
                 is Result.Error -> emit(firebaseResult)
             }
         }
-
     }
 
     // ユーザー情報変更

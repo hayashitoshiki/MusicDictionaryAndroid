@@ -6,6 +6,7 @@ import com.example.musicdictionaryandroid.data.repository.PreferenceRepository
 import com.example.musicdictionaryandroid.data.util.Result
 import com.example.musicdictionaryandroid.domain.model.entity.Artist
 import com.example.musicdictionaryandroid.domain.model.entity.ArtistContents
+import com.example.musicdictionaryandroid.domain.model.value.ArtistConditions
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -23,7 +24,7 @@ class ArtistUseCaseImp(
     // region ホームタブ
 
     // 検索条件に一致するアーティスト取得
-    override suspend fun getArtistsBy(artist: Artist): Result<List<ArtistContents>> {
+    override suspend fun getArtistsBy(artist: ArtistConditions): Result<List<ArtistContents>> {
         return apiRepository.getArtistsBy(artist)
     }
 

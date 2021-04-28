@@ -1,7 +1,9 @@
 package com.example.musicdictionaryandroid.ui.home
 
-import androidx.lifecycle.*
-import com.example.musicdictionaryandroid.domain.model.entity.Artist
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MediatorLiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
 import com.example.musicdictionaryandroid.domain.model.value.*
 
 /**
@@ -59,14 +61,14 @@ class CategorySearchViewModel : ViewModel() {
         genre1ValueList.value = mainGenreList
     }
 
-    fun getArtist(): Artist {
+    fun getArtist(): ArtistConditions {
         val gender = Gender.getEnumByValue(genderValueInt.value!!)
         val length = Length(lengthValueInt.value!!)
         val voice = Voice(voiceValueInt.value!!)
         val lyrics = Lyrics(lyricsValueInt.value!!)
         val genre1 = Genre1(genre1ValueInt.value!!)
         val genre2 = Genre2(genre2ValueInt.value!!)
-        return Artist("", gender, voice, length, lyrics, genre1, genre2)
+        return ArtistConditions(null, gender, voice, length, lyrics, genre1, genre2)
     }
 
     // バリデーションチェック

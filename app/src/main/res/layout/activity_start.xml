@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <!-- Binding Objects -->
     <data>
+
         <variable
             name="viewModel"
             type="com.example.musicdictionaryandroid.ui.login.StartViewModel" />
     </data>
+
     <androidx.constraintlayout.widget.ConstraintLayout
 
         android:layout_width="match_parent"
@@ -41,11 +42,11 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_bias="0.0">
+
                 <RadioButton
                     android:text="@string/title_sign_in"
-                    android:id="@+id/RadioButtonB1"
+                    android:id="@+id/signInButton"
                     android:textSize="@dimen/category_title"
-                    android:onClick="signInButton"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:background="@drawable/button_radio_left"
@@ -56,14 +57,12 @@
                     android:button="@null"
                     android:checked="true"
                     android:gravity="center"
-                    android:enabled="@{viewModel.isEnableRadioButton}">
-                </RadioButton>
+                    android:enabled="@{viewModel.isEnableRadioButton}"></RadioButton>
 
                 <RadioButton
                     android:text="@string/title_sign_up"
-                    android:id="@+id/RadioButtonB4"
+                    android:id="@+id/signUpButton"
                     android:textSize="@dimen/category_title"
-                    android:onClick="signUpButton"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:background="@drawable/button_radio_right"
@@ -73,8 +72,7 @@
                     android:layout_weight="1"
                     android:button="@null"
                     android:gravity="center"
-                    android:enabled="@{viewModel.isEnableRadioButton}">
-                </RadioButton>
+                    android:enabled="@{viewModel.isEnableRadioButton}"></RadioButton>
             </RadioGroup>
 
             <FrameLayout

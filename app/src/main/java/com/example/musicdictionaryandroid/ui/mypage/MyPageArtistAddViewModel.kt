@@ -143,7 +143,6 @@ class MyPageArtistAddViewModel(private val artistUseCase: ArtistUseCase) : ViewM
                 Log.e(TAG, "指定モードが正しくありません。mode = " + editMode.value)
             }
         }
-
     }
 
     // アーティスト登録
@@ -170,49 +169,12 @@ class MyPageArtistAddViewModel(private val artistUseCase: ArtistUseCase) : ViewM
         }
     }
 
-    // アーティスト名変更
-    fun changeArtistName(name: String) {
-//        _artist.value!!.name = name
-//        _artist.value = _artist.value
-    }
-
-    // genderの変更
-    fun checkedChangeGender(checkedId: Int) {
-//        _artist.value!!.gender = checkedId
-//        _artist.value = _artist.value
-    }
-
-    // lengthの変更
-    fun checkedChangeLength(checkedId: Int) {
-//        _artist.value!!.length = checkedId
-//        _artist.value = _artist.value
-    }
-
-    // voiceの変更
-    fun checkedChangeVoice(checkedId: Int) {
-//        _artist.value!!.voice = checkedId
-//        _artist.value = _artist.value
-    }
-
-    // 歌詞情報の変更
-    fun checkedChangeLyric(checkedId: Int) {
-//        _artistForm.value!!.lyrics = checkedId
-//        _artistForm.value = _artistForm.value
-    }
-
-    // 歌詞情報の変更
-    fun changeGenre2(index: Int) {
-//        _artistForm.value!!.genre2 = index
-//        _artistForm.value = _artistForm.value
-    }
-
     /**
      * 絞り込みジャンル変更処理
      *
      * @param index 大分類ジャンルの中のインデックス値
      */
     fun changeGenre1(index: Int) {
-//        genre1.value = index
         when (index) {
             0 -> _genre2ValueList.postValue(subGenre0List.toList())
             1 -> _genre2ValueList.postValue(subGenre1List.toList())

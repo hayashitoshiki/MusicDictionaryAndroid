@@ -3,6 +3,7 @@ package com.example.musicdictionaryandroid.domain.usecase
 import com.example.musicdictionaryandroid.data.util.Result
 import com.example.musicdictionaryandroid.domain.model.entity.Artist
 import com.example.musicdictionaryandroid.domain.model.entity.ArtistContents
+import com.example.musicdictionaryandroid.domain.model.value.ArtistConditions
 import kotlinx.coroutines.flow.Flow
 
 /**
@@ -19,7 +20,7 @@ interface ArtistUseCase {
      * @param artist アーティスト検索条件
      * @return アーティストの検索結果一覧
      */
-    suspend fun getArtistsBy(artist: Artist): Result<List<ArtistContents>>
+    suspend fun getArtistsBy(artist: ArtistConditions): Result<List<ArtistContents>>
 
     /**
      * おすすめアーティスト検索
@@ -61,8 +62,7 @@ interface ArtistUseCase {
      * 1. APIのアーティスト更新（更新失敗したら終了）
      * 2. 更新成功したらローカルDB更新
      *
-     * @param artistEntity 更新したいアーティストの新しいデータ
-     * @param beforeName 更新したいアーティストの元の名前
+     * @param artist 更新したいアーティストの新しいデータ
      * @return 更新正常完了判定結果
      */
     suspend fun updateArtist(artist: Artist): Result<Artist>
