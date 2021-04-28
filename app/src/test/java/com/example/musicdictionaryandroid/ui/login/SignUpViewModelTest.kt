@@ -44,7 +44,7 @@ class SignUpViewModelTest {
         // テストクラス作成
         val userUseCase = mockk<UserUseCase>()
         val observer = mock<Observer<Boolean>>()
-        val observerString = mock<Observer<String>>()
+        val observerString = mock<Observer<String?>>()
         viewModel = SignUpViewModel(userUseCase, testScope)
         viewModel.isEnableSubmitButton.observeForever(observer)
         viewModel.emailText.observeForever(observerString)
