@@ -14,7 +14,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.musicdictionaryandroid.R
 import com.example.musicdictionaryandroid.data.util.UserInfoChangeListUtil
 import com.example.musicdictionaryandroid.databinding.ItemResultArtistBinding
-import com.example.musicdictionaryandroid.domain.model.entity.ArtistContents
+import com.example.musicdictionaryandroid.domain.model.value.ArtistSearchContents
 import com.example.musicdictionaryandroid.ui.transition.ResizeAnimation
 import com.github.mikephil.charting.charts.PieChart
 import com.github.mikephil.charting.data.PieData
@@ -29,7 +29,7 @@ import com.squareup.picasso.Picasso
  * @property context コンテキスト
  * @property artistList 取得したアーティスト情報
  */
-class ResultAdapter(private val context: Context, private val artistList: List<ArtistContents>) :
+class ResultAdapter(private val context: Context, private val artistList: List<ArtistSearchContents<*>>) :
     RecyclerView.Adapter<ResultAdapter.ViewHolder>() {
 
     private var holdButton: ImageButton? = null
@@ -77,261 +77,266 @@ class ResultAdapter(private val context: Context, private val artistList: List<A
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val contents = artistList[position]
-        if (position == 0) {
-            // タイトル設定
-            holder.mainLayout.visibility = View.GONE
-            holder.titleLayout.visibility = View.VISIBLE
-            when (contents.artist.name) {
-                "急上昇", "おすすめ" -> {
-                    holder.titleTextView.text = contents.artist.name
-                    holder.searchNameTextView.visibility = View.GONE
-                    holder.searchButton.visibility = View.GONE
-                }
-                else -> {
-                    if (contents.artist.name != "") {
-                        holder.searchNameTextView.text = "アーティスト名：" + contents.artist.name
-                    } else {
+        when (val contents = artistList[position]) {
+            is ArtistSearchContents.Conditions -> {
+                val conditions = contents.value
+                // タイトル設定
+                holder.mainLayout.visibility = View.GONE
+                holder.titleLayout.visibility = View.VISIBLE
+                when (conditions.name) {
+                    "急上昇", "おすすめ" -> {
+                        holder.titleTextView.text = conditions.name
                         holder.searchNameTextView.visibility = View.GONE
+                        holder.searchButton.visibility = View.GONE
                     }
-                }
-            }
-            if (contents.artist.gender.value != 0) {
-                holder.searchGenderTextView.text = UserInfoChangeListUtil.changeGender(contents.artist.gender.value)
-            } else {
-                holder.searchGenderTextView.visibility = View.GONE
-            }
-            if (contents.artist.genre1.value != 0) {
-                holder.searchGenre1TextView.text = UserInfoChangeListUtil.changeGenre1(contents.artist.genre1.value)
-            } else {
-                holder.searchGenre1TextView.visibility = View.GONE
-            }
-            if (contents.artist.genre2.value != 0) {
-                holder.searchGenre2TextView.text = UserInfoChangeListUtil.changeGenre2(contents.artist.genre1.value, contents.artist.genre2.value)
-            } else {
-                holder.searchGenre2TextView.visibility = View.GONE
-            }
-            if (contents.artist.length.value != 0) {
-                holder.searchLengthTextView.text = UserInfoChangeListUtil.changeLength(contents.artist.length.value)
-            } else {
-                holder.searchLengthTextView.visibility = View.GONE
-            }
-            if (contents.artist.voice.value != 0) {
-                holder.searchVoiceTextView.text = UserInfoChangeListUtil.changeVoice(contents.artist.voice.value)
-            } else {
-                holder.searchVoiceTextView.visibility = View.GONE
-            }
-            if (contents.artist.lyrics.value != 0) {
-                holder.searchLyricTextView.text = UserInfoChangeListUtil.changeLyrics(contents.artist.lyrics.value)
-            } else {
-                holder.searchLyricTextView.visibility = View.GONE
-            }
-            holder.searchButton.setOnClickListener { view ->
-                listener.onClick(view)
-            }
-        } else {
-            // アーティスト情報設定
-            holder.mainLayout.visibility = View.VISIBLE
-            holder.titleLayout.visibility = View.GONE
-
-            // アーティスト名
-            holder.nameTextView.text = contents.artist.name
-            // 性別
-            holder.genderTextView.text = UserInfoChangeListUtil.changeGender(contents.artist.gender.value)
-            if (contents.artist.gender.value == 1) {
-                holder.genderTextView.setTextColor(Color.BLUE)
-            } else {
-                holder.genderTextView.setTextColor(Color.RED)
-            }
-            // 声の高さ
-            holder.voiceRatingBar.rating = contents.artist.voice.value.toFloat()
-            // 曲の平均の長さ
-            holder.lengthRatingBar.rating = contents.artist.length.value.toFloat()
-            // 歌詞の言語
-            holder.lyricsRatingBar.rating = contents.artist.lyrics.value.toFloat()
-            // ジャンル１
-            holder.genre1TextView.text = UserInfoChangeListUtil.changeGenre1(contents.artist.genre1.value)
-            // ジャンル２
-            holder.genre2TextView.text =
-                UserInfoChangeListUtil.changeGenre2(contents.artist.genre1.value, contents.artist.genre2.value)
-            // 詳細ボタン
-            val collapseAnimation = ResizeAnimation(holder.detailLayout, -originalHeight, originalHeight)
-            val expandAnimation = ResizeAnimation(holder.detailLayout, originalHeight, 0)
-            collapseAnimation.duration = 300
-            expandAnimation.duration = 300
-            holder.pieChart.visibility = View.GONE
-            holder.genderChart.visibility = View.GONE
-            holder.detailLayout.visibility = View.GONE
-            holder.detailButton.text = context.getString(R.string.page_open)
-            holder.detailButton.setOnClickListener {
-                holder.detailLayout.clearAnimation()
-                if (holder.detailLayout.visibility == View.VISIBLE) {
-                    holder.detailLayout.startAnimation(collapseAnimation)
-                    Handler().postDelayed(
-                        Runnable {
-                            holder.pieChart.visibility = View.GONE
-                            holder.genderChart.visibility = View.GONE
-                            holder.detailLayout.visibility = View.GONE
-                        },
-                        300
-                    )
-                    holder.detailButton.text = context.getString(R.string.page_open)
-                } else {
-                    // 年齢毎の比率表示
-                    holder.pieChart.also {
-                        var totalValue = 0f
-                        val entryList = mutableListOf<PieEntry>()
-                        if (contents.generation1 != 0) {
-                            entryList.add(PieEntry(contents.generation1.toFloat(), "10代"))
-                            totalValue += contents.generation1.toFloat()
-                        }
-                        if (contents.generation2 != 0) {
-                            entryList.add(PieEntry(contents.generation2.toFloat(), "20代"))
-                            totalValue += contents.generation2.toFloat()
-                        }
-                        if (contents.generation3 != 0) {
-                            entryList.add(PieEntry(contents.generation3.toFloat(), "30代"))
-                            totalValue += contents.generation3.toFloat()
-                        }
-                        if (contents.generation4 != 0) {
-                            entryList.add(PieEntry(contents.generation4.toFloat(), "40代"))
-                            totalValue += contents.generation4.toFloat()
-                        }
-                        if (contents.generation5 != 0) {
-                            entryList.add(PieEntry(contents.generation5.toFloat(), "50代"))
-                            totalValue += contents.generation5.toFloat()
-                        }
-                        if (contents.generation6 != 0) {
-                            entryList.add(PieEntry(contents.generation6.toFloat(), "60代"))
-                            totalValue += contents.generation6.toFloat()
-                        }
-                        val data = PieDataSet(entryList, "年齢層").also { pieDataSet ->
-                            val colorList = mutableListOf<Int>()
-                            entryList.forEach { pieEntry ->
-                                when (pieEntry.label) {
-                                    "10代" -> colorList.add(context.getColor(R.color.red_500))
-                                    "20代" -> colorList.add(context.getColor(R.color.blue_500))
-                                    "30代" -> colorList.add(context.getColor(R.color.yellow_500))
-                                    "40代" -> colorList.add(context.getColor(R.color.green_500))
-                                    "50代" -> colorList.add(context.getColor(R.color.purple_500))
-                                    "60代" -> colorList.add(context.getColor(R.color.brown_500))
-                                }
-                            }
-                            pieDataSet.colors = colorList
-                            pieDataSet.valueTextSize = 15f
-                            pieDataSet.valueFormatter = object : ValueFormatter() {
-                                override fun getFormattedValue(value: Float): String {
-                                    return "%.0f".format(value / totalValue * 100) + "%"
-                                }
-                            }
-                        }
-
-                        it.centerText = "年齢層"
-                        it.setCenterTextSize(15f)
-                        it.setEntryLabelTextSize(10f)
-                        it.data = PieData(data)
-                        it.legend.isEnabled = false
-                        it.description.isEnabled = false
-                        it.invalidate()
-                    }
-
-                    // 男女比率表示
-                    holder.genderChart.also {
-                        var totalValue = 0f
-                        val entryList = mutableListOf<PieEntry>()
-                        if (contents.user_man != 0) {
-                            entryList.add(PieEntry(contents.user_man.toFloat(), "男性"))
-                            totalValue += contents.user_man.toFloat()
-                        }
-                        if (contents.user_woman != 0) {
-                            entryList.add(PieEntry(contents.user_woman.toFloat(), "女性"))
-                            totalValue += contents.user_woman.toFloat()
-                        }
-                        val data = PieDataSet(entryList, "男女比率").also { pieDataSet ->
-                            val colorList = mutableListOf<Int>()
-                            entryList.forEach { pieEntry ->
-                                when (pieEntry.label) {
-                                    "男性" -> colorList.add(context.getColor(R.color.light_blue_500))
-                                    "女性" -> colorList.add(context.getColor(R.color.pink_500))
-                                }
-                            }
-                            pieDataSet.colors = colorList
-                            pieDataSet.valueTextSize = 15f
-                            pieDataSet.valueFormatter = object : ValueFormatter() {
-                                override fun getFormattedValue(value: Float): String {
-                                    return "%.0f".format(value / totalValue * 100) + "%"
-                                }
-                            }
-                        }
-
-                        it.centerText = "男女比率"
-                        it.setCenterTextSize(15f)
-                        it.legend.isEnabled = false
-                        it.description.isEnabled = false
-                        it.data = PieData(data)
-                        it.invalidate()
-                    }
-                    holder.detailLayout.visibility = View.VISIBLE
-                    holder.detailLayout.startAnimation(expandAnimation)
-                    Handler().postDelayed(
-                        Runnable {
-                            holder.pieChart.startAnimation(anim1)
-                            holder.pieChart.visibility = View.VISIBLE
-                        },
-                        150
-                    )
-                    Handler().postDelayed(
-                        Runnable {
-                            holder.genderChart.startAnimation(anim2)
-                            holder.genderChart.visibility = View.VISIBLE
-                        },
-                        300
-                    )
-                    holder.detailButton.text = context.getString(R.string.page_close)
-                }
-            }
-            // 再生ボタン
-            contents.preview?.let {
-                if (contents.preview != "") {
-                    holder.playButton.visibility = View.VISIBLE
-                    holder.playButton.setOnClickListener {
-                        if (holdButton != holder.playButton) {
-                            holdButton?.setImageResource(R.mipmap.ic_button_music_play_32)
-                            holder.playButton.setImageResource(R.mipmap.ic_button_music_pause_32)
-                            holder.webView.settings.javaScriptEnabled = true
-                            holder.webView.settings.domStorageEnabled = true
-                            holder.webView.loadUrl(contents.preview)
-                            holdButton = holder.playButton
-                            Handler().postDelayed(
-                                Runnable {
-                                    if (holdButton == holder.playButton) {
-                                        holdButton?.setImageResource(R.mipmap.ic_button_music_play_32)
-                                    }
-                                },
-                                30500
-                            )
+                    else -> {
+                        if (!conditions.name.isNullOrEmpty()) {
+                            holder.searchNameTextView.text = "アーティスト名：" + conditions.name
                         } else {
-                            holder.webView.loadUrl("about:blank")
-                            holdButton?.setImageResource(R.mipmap.ic_button_music_play_32)
-                            holdButton = null
+                            holder.searchNameTextView.visibility = View.GONE
                         }
                     }
+                }
+                if (conditions.gender != null && conditions.gender.value != 0) {
+                    holder.searchGenderTextView.text = UserInfoChangeListUtil.changeGender(conditions.gender.value)
                 } else {
+                    holder.searchGenderTextView.visibility = View.GONE
+                }
+                if (conditions.genre1 != null && conditions.genre1.value != 0) {
+                    holder.searchGenre1TextView.text = UserInfoChangeListUtil.changeGenre1(conditions.genre1.value)
+                } else {
+                    holder.searchGenre1TextView.visibility = View.GONE
+                }
+                if (conditions.genre1 != null && conditions.genre1.value != 0 && conditions.genre2 != null && conditions.genre2.value != 0) {
+                    holder.searchGenre2TextView.text =
+                        UserInfoChangeListUtil.changeGenre2(conditions.genre1.value, conditions.genre2.value)
+                } else {
+                    holder.searchGenre2TextView.visibility = View.GONE
+                }
+                if (conditions.length != null && conditions.length.value != 0) {
+                    holder.searchLengthTextView.text = UserInfoChangeListUtil.changeLength(conditions.length.value)
+                } else {
+                    holder.searchLengthTextView.visibility = View.GONE
+                }
+                if (conditions.voice != null && conditions.voice.value != 0) {
+                    holder.searchVoiceTextView.text = UserInfoChangeListUtil.changeVoice(conditions.voice.value)
+                } else {
+                    holder.searchVoiceTextView.visibility = View.GONE
+                }
+                if (conditions.lyrics != null && conditions.lyrics.value != 0) {
+                    holder.searchLyricTextView.text = UserInfoChangeListUtil.changeLyrics(conditions.lyrics.value)
+                } else {
+                    holder.searchLyricTextView.visibility = View.GONE
+                }
+                holder.searchButton.setOnClickListener { view ->
+                    listener.onClick(view)
+                }
+            }
+            is ArtistSearchContents.Item -> {
+                val item = contents.value
+                // アーティスト情報設定
+                holder.mainLayout.visibility = View.VISIBLE
+                holder.titleLayout.visibility = View.GONE
+
+                // アーティスト名
+                holder.nameTextView.text = item.artist.name
+                // 性別
+                holder.genderTextView.text = UserInfoChangeListUtil.changeGender(item.artist.gender.value)
+                if (item.artist.gender.value == 1) {
+                    holder.genderTextView.setTextColor(Color.BLUE)
+                } else {
+                    holder.genderTextView.setTextColor(Color.RED)
+                }
+                // 声の高さ
+                holder.voiceRatingBar.rating = item.artist.voice.value.toFloat()
+                // 曲の平均の長さ
+                holder.lengthRatingBar.rating = item.artist.length.value.toFloat()
+                // 歌詞の言語
+                holder.lyricsRatingBar.rating = item.artist.lyrics.value.toFloat()
+                // ジャンル１
+                holder.genre1TextView.text = UserInfoChangeListUtil.changeGenre1(item.artist.genre1.value)
+                // ジャンル２
+                holder.genre2TextView.text =
+                    UserInfoChangeListUtil.changeGenre2(item.artist.genre1.value, item.artist.genre2.value)
+                // 詳細ボタン
+                val collapseAnimation = ResizeAnimation(holder.detailLayout, -originalHeight, originalHeight)
+                val expandAnimation = ResizeAnimation(holder.detailLayout, originalHeight, 0)
+                collapseAnimation.duration = 300
+                expandAnimation.duration = 300
+                holder.pieChart.visibility = View.GONE
+                holder.genderChart.visibility = View.GONE
+                holder.detailLayout.visibility = View.GONE
+                holder.detailButton.text = context.getString(R.string.page_open)
+                holder.detailButton.setOnClickListener {
+                    holder.detailLayout.clearAnimation()
+                    if (holder.detailLayout.visibility == View.VISIBLE) {
+                        holder.detailLayout.startAnimation(collapseAnimation)
+                        Handler().postDelayed(
+                            Runnable {
+                                holder.pieChart.visibility = View.GONE
+                                holder.genderChart.visibility = View.GONE
+                                holder.detailLayout.visibility = View.GONE
+                            },
+                            300
+                        )
+                        holder.detailButton.text = context.getString(R.string.page_open)
+                    } else {
+                        // 年齢毎の比率表示
+                        holder.pieChart.also {
+                            var totalValue = 0f
+                            val entryList = mutableListOf<PieEntry>()
+                            if (item.generation1 != 0) {
+                                entryList.add(PieEntry(item.generation1.toFloat(), "10代"))
+                                totalValue += item.generation1.toFloat()
+                            }
+                            if (item.generation2 != 0) {
+                                entryList.add(PieEntry(item.generation2.toFloat(), "20代"))
+                                totalValue += item.generation2.toFloat()
+                            }
+                            if (item.generation3 != 0) {
+                                entryList.add(PieEntry(item.generation3.toFloat(), "30代"))
+                                totalValue += item.generation3.toFloat()
+                            }
+                            if (item.generation4 != 0) {
+                                entryList.add(PieEntry(item.generation4.toFloat(), "40代"))
+                                totalValue += item.generation4.toFloat()
+                            }
+                            if (item.generation5 != 0) {
+                                entryList.add(PieEntry(item.generation5.toFloat(), "50代"))
+                                totalValue += item.generation5.toFloat()
+                            }
+                            if (item.generation6 != 0) {
+                                entryList.add(PieEntry(item.generation6.toFloat(), "60代"))
+                                totalValue += item.generation6.toFloat()
+                            }
+                            val data = PieDataSet(entryList, "年齢層").also { pieDataSet ->
+                                val colorList = mutableListOf<Int>()
+                                entryList.forEach { pieEntry ->
+                                    when (pieEntry.label) {
+                                        "10代" -> colorList.add(context.getColor(R.color.red_500))
+                                        "20代" -> colorList.add(context.getColor(R.color.blue_500))
+                                        "30代" -> colorList.add(context.getColor(R.color.yellow_500))
+                                        "40代" -> colorList.add(context.getColor(R.color.green_500))
+                                        "50代" -> colorList.add(context.getColor(R.color.purple_500))
+                                        "60代" -> colorList.add(context.getColor(R.color.brown_500))
+                                    }
+                                }
+                                pieDataSet.colors = colorList
+                                pieDataSet.valueTextSize = 15f
+                                pieDataSet.valueFormatter = object : ValueFormatter() {
+                                    override fun getFormattedValue(value: Float): String {
+                                        return "%.0f".format(value / totalValue * 100) + "%"
+                                    }
+                                }
+                            }
+
+                            it.centerText = "年齢層"
+                            it.setCenterTextSize(15f)
+                            it.setEntryLabelTextSize(10f)
+                            it.data = PieData(data)
+                            it.legend.isEnabled = false
+                            it.description.isEnabled = false
+                            it.invalidate()
+                        }
+
+                        // 男女比率表示
+                        holder.genderChart.also {
+                            var totalValue = 0f
+                            val entryList = mutableListOf<PieEntry>()
+                            if (item.user_man != 0) {
+                                entryList.add(PieEntry(item.user_man.toFloat(), "男性"))
+                                totalValue += item.user_man.toFloat()
+                            }
+                            if (item.user_woman != 0) {
+                                entryList.add(PieEntry(item.user_woman.toFloat(), "女性"))
+                                totalValue += item.user_woman.toFloat()
+                            }
+                            val data = PieDataSet(entryList, "男女比率").also { pieDataSet ->
+                                val colorList = mutableListOf<Int>()
+                                entryList.forEach { pieEntry ->
+                                    when (pieEntry.label) {
+                                        "男性" -> colorList.add(context.getColor(R.color.light_blue_500))
+                                        "女性" -> colorList.add(context.getColor(R.color.pink_500))
+                                    }
+                                }
+                                pieDataSet.colors = colorList
+                                pieDataSet.valueTextSize = 15f
+                                pieDataSet.valueFormatter = object : ValueFormatter() {
+                                    override fun getFormattedValue(value: Float): String {
+                                        return "%.0f".format(value / totalValue * 100) + "%"
+                                    }
+                                }
+                            }
+
+                            it.centerText = "男女比率"
+                            it.setCenterTextSize(15f)
+                            it.legend.isEnabled = false
+                            it.description.isEnabled = false
+                            it.data = PieData(data)
+                            it.invalidate()
+                        }
+                        holder.detailLayout.visibility = View.VISIBLE
+                        holder.detailLayout.startAnimation(expandAnimation)
+                        Handler().postDelayed(
+                            Runnable {
+                                holder.pieChart.startAnimation(anim1)
+                                holder.pieChart.visibility = View.VISIBLE
+                            },
+                            150
+                        )
+                        Handler().postDelayed(
+                            Runnable {
+                                holder.genderChart.startAnimation(anim2)
+                                holder.genderChart.visibility = View.VISIBLE
+                            },
+                            300
+                        )
+                        holder.detailButton.text = context.getString(R.string.page_close)
+                    }
+                }
+                // 再生ボタン
+                item.preview?.let {
+                    if (item.preview != "") {
+                        holder.playButton.visibility = View.VISIBLE
+                        holder.playButton.setOnClickListener {
+                            if (holdButton != holder.playButton) {
+                                holdButton?.setImageResource(R.mipmap.ic_button_music_play_32)
+                                holder.playButton.setImageResource(R.mipmap.ic_button_music_pause_32)
+                                holder.webView.settings.javaScriptEnabled = true
+                                holder.webView.settings.domStorageEnabled = true
+                                holder.webView.loadUrl(item.preview)
+                                holdButton = holder.playButton
+                                Handler().postDelayed(
+                                    Runnable {
+                                        if (holdButton == holder.playButton) {
+                                            holdButton?.setImageResource(R.mipmap.ic_button_music_play_32)
+                                        }
+                                    },
+                                    30500
+                                )
+                            } else {
+                                holder.webView.loadUrl("about:blank")
+                                holdButton?.setImageResource(R.mipmap.ic_button_music_play_32)
+                                holdButton = null
+                            }
+                        }
+                    } else {
+                        holder.playButton.visibility = View.GONE
+                    }
+                } ?: run {
                     holder.playButton.visibility = View.GONE
                 }
-            } ?: run {
-                holder.playButton.visibility = View.GONE
-            }
-            // サムネイル
-            if (contents.thumb != null && contents.thumb != "") {
-                holder.imageView.visibility = View.VISIBLE
-                Picasso.with(context)
-                    .load(contents.thumb)
-                    .fit()
-                    .centerCrop()
-                    .into(holder.imageView)
-            } else {
-                holder.imageView.visibility = View.GONE
+                // サムネイル
+                if (item.thumb != null && item.thumb != "") {
+                    holder.imageView.visibility = View.VISIBLE
+                    Picasso.with(context)
+                        .load(item.thumb)
+                        .fit()
+                        .centerCrop()
+                        .into(holder.imageView)
+                } else {
+                    holder.imageView.visibility = View.GONE
+                }
             }
         }
     }

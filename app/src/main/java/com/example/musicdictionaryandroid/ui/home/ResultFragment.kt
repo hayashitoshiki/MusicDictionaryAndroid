@@ -14,8 +14,8 @@ import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.example.musicdictionaryandroid.R
 import com.example.musicdictionaryandroid.data.util.Status
 import com.example.musicdictionaryandroid.databinding.FragmentResultBinding
-import com.example.musicdictionaryandroid.domain.model.entity.ArtistContents
 import com.example.musicdictionaryandroid.domain.model.value.ArtistConditions
+import com.example.musicdictionaryandroid.domain.model.value.ArtistSearchContents
 import com.example.musicdictionaryandroid.ui.adapter.DialogFragmentCallbackInterface
 import com.example.musicdictionaryandroid.ui.adapter.ResultAdapter
 import org.koin.android.viewmodel.ext.android.viewModel
@@ -54,7 +54,7 @@ class ResultFragment : Fragment(), DialogFragmentCallbackInterface {
     }
 
     // ステータス監視
-    private fun onStateChanged(state: Status<List<ArtistContents>>) = when (state) {
+    private fun onStateChanged(state: Status<List<ArtistSearchContents<*>>>) = when (state) {
         is Status.Loading -> {
             showProgressbar()
         }
@@ -73,7 +73,7 @@ class ResultFragment : Fragment(), DialogFragmentCallbackInterface {
     }
 
     // データ反映
-    private fun viewUpDate(data: List<ArtistContents>) {
+    private fun viewUpDate(data: List<ArtistSearchContents<*>>) {
         val adapter = ResultAdapter(requireContext(), data)
         val layoutManager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
         val controller = AnimationUtils.loadLayoutAnimation(context, R.anim.layout_animation_fall_down)

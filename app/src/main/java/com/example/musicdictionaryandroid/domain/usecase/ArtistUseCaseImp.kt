@@ -82,7 +82,6 @@ class ArtistUseCaseImp(
         return when (val result = apiRepository.updateArtist(artist, email!!)) {
             is Result.Success -> {
                 externalScope.launch {
-                    dataBaseRepository.deleteAll()
                     dataBaseRepository.updateArtist(result.data)
                 }.join()
                 result

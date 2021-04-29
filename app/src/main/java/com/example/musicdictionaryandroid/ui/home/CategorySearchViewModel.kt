@@ -130,11 +130,6 @@ class CategorySearchViewModel : ViewModel() {
         }
     }
 
-    // ジャンル２の変更
-    fun changeGenre2(index: Int) {
-        genre2ValueInt.value = index
-    }
-
     fun onDestroy() {
         _isEnableSubmitButton.removeSource(genderValueInt)
         _isEnableSubmitButton.removeSource(lengthValueInt)

@@ -5,8 +5,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.musicdictionaryandroid.data.util.Result
 import com.example.musicdictionaryandroid.data.util.Status
-import com.example.musicdictionaryandroid.domain.model.entity.ArtistContents
 import com.example.musicdictionaryandroid.domain.model.value.ArtistConditions
+import com.example.musicdictionaryandroid.domain.model.value.ArtistSearchContents
 import com.example.musicdictionaryandroid.domain.usecase.ArtistUseCase
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
@@ -20,7 +20,7 @@ class ResultViewModel(
     private val artistUseCase: ArtistUseCase
 ) : ViewModel() {
 
-    val status = MutableLiveData<Status<List<ArtistContents>>>()
+    val status = MutableLiveData<Status<List<ArtistSearchContents<*>>>>()
 
     /**
      * アーティスト検索
@@ -32,10 +32,11 @@ class ResultViewModel(
         status.value = Status.Loading
         when (val result = artistUseCase.getArtistsBy(artist)) {
             is Result.Success -> {
-                // val artistContents = ArtistContents(artist, null, null, 0, 0, 0, 0, 0, 0, 0, 0)
-                // val arrayList = arrayListOf(artistContents)
-                val arrayList = arrayListOf<ArtistContents>()
-                arrayList.addAll(result.data)
+                val conditions = ArtistSearchContents.Conditions(artist)
+                val arrayList = arrayListOf<ArtistSearchContents<*>>(conditions)
+                result.data.forEach { contents ->
+                    arrayList.add(ArtistSearchContents.Item(contents))
+                }
                 status.postValue(Status.Success(arrayList))
             }
             is Result.Error -> {

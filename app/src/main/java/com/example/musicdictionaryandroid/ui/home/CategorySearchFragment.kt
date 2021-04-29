@@ -1,10 +1,7 @@
 package com.example.musicdictionaryandroid.ui.home
 
 import android.os.Bundle
-import android.transition.ChangeBounds
-import android.transition.ChangeClipBounds
-import android.transition.ChangeTransform
-import android.transition.TransitionSet
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,12 +11,16 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
+import androidx.transition.ChangeBounds
+import androidx.transition.ChangeClipBounds
+import androidx.transition.ChangeTransform
+import androidx.transition.TransitionSet
 import com.example.musicdictionaryandroid.R
 import com.example.musicdictionaryandroid.databinding.FragmentCategorySearchBinding
 import com.example.musicdictionaryandroid.ui.transition.FabTransform
 import com.example.musicdictionaryandroid.ui.transition.HOME_CATEGORY_BUTTON
-import kotlin.coroutines.CoroutineContext
 import kotlinx.coroutines.*
+import kotlin.coroutines.CoroutineContext
 
 /**
  * カテゴリ検索画面
@@ -43,6 +44,7 @@ class CategorySearchFragment : Fragment(), CoroutineScope {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+        Log.d("カテゴリ検索画面", "スタート")
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_category_search, container, false)
         binding.lifecycleOwner = viewLifecycleOwner
         binding.viewModel = viewModel
@@ -52,7 +54,11 @@ class CategorySearchFragment : Fragment(), CoroutineScope {
             addTransition(ChangeTransform())
             addTransition(ChangeClipBounds())
         }
-        val trans = FabTransform(resources.getColor(R.color.bg_color_primary, null), R.drawable.round_primary_dark_button, HOME_CATEGORY_BUTTON)
+        val trans = FabTransform(
+            resources.getColor(R.color.bg_color_primary, null),
+            R.drawable.round_primary_dark_button,
+            HOME_CATEGORY_BUTTON
+        )
         sharedElementEnterTransition = trans
         sharedElementReturnTransition = transition
 
@@ -66,7 +72,7 @@ class CategorySearchFragment : Fragment(), CoroutineScope {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        Log.d("カテゴリ検索画面", "描画描開始")
         viewModel.init(
             resources.getStringArray(R.array.genre1_spinner_list),
             resources.getStringArray(R.array.genre12_spinner_list),
@@ -77,7 +83,6 @@ class CategorySearchFragment : Fragment(), CoroutineScope {
             resources.getStringArray(R.array.genre62_spinner_list)
         )
         viewModel.genre1ValueInt.observe(viewLifecycleOwner, Observer { viewModel.changeGenre1(it) })
-        viewModel.genre2ValueInt.observe(viewLifecycleOwner, Observer { viewModel.changeGenre2(it) })
 
         // 検索ボタン
         binding.submit.setOnClickListener {

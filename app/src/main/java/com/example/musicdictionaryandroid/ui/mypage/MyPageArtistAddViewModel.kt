@@ -169,6 +169,26 @@ class MyPageArtistAddViewModel(private val artistUseCase: ArtistUseCase) : ViewM
         }
     }
 
+    // genderの変更
+    fun checkedChangeGender(checkedId: Int) {
+        gender.value = checkedId
+    }
+
+    // lengthの変更
+    fun checkedChangeLength(checkedId: Int) {
+        length.value = checkedId
+    }
+
+    // voiceの変更
+    fun checkedChangeVoice(checkedId: Int) {
+        voice.value = checkedId
+    }
+
+    // 歌詞情報の変更
+    fun checkedChangeLyric(checkedId: Int) {
+        lyrics.value = checkedId
+    }
+
     /**
      * 絞り込みジャンル変更処理
      *

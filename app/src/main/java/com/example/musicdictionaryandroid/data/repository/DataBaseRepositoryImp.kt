@@ -22,8 +22,14 @@ class DataBaseRepositoryImp(private val ioDispatcher: CoroutineDispatcher = Disp
 
     // アーティスト更新
     override suspend fun updateArtist(artist: Artist) = withContext(ioDispatcher) {
-        val artistEntity = convertArtistEntityFromArtist(artist)
-        dao.update(artistEntity)
+        val name = artist.name
+        val gender = artist.gender.value
+        val voice = artist.voice.value
+        val length = artist.length.value
+        val lyrics = artist.lyrics.value
+        val genre1 = artist.genre1.value
+        val genre2 = artist.genre2.value
+        dao.update(name, gender, voice, length, lyrics, genre1, genre2)
     }
 
     // 全アーティスト更新
