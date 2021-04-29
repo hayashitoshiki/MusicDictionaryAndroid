@@ -4,7 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.musicdictionaryandroid.data.net.dto.ArtistsDto
+import com.example.musicdictionaryandroid.data.remote.network.dto.ArtistDto
 import com.example.musicdictionaryandroid.domain.model.value.*
 
 /**
@@ -75,7 +75,7 @@ class SearchViewModel : ViewModel() {
         return ArtistConditions(name, gender, voice, length, lyrics, genre1, genre2)
     }
 
-    fun setArtist(artist: ArtistsDto) {
+    fun setArtist(artist: ArtistDto) {
         when (artist.genre1) {
             0 -> genre2ValueList.value = subGenre0List
             1 -> genre2ValueList.value = subGenre1List

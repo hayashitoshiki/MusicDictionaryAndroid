@@ -12,8 +12,8 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import com.example.musicdictionaryandroid.R
-import com.example.musicdictionaryandroid.data.util.Status
 import com.example.musicdictionaryandroid.databinding.FragmentSignUpBinding
+import com.example.musicdictionaryandroid.ui.util.Status
 import org.koin.android.viewmodel.ext.android.viewModel
 
 /**
@@ -49,7 +49,11 @@ class SignUpFragment : Fragment() {
 
         // spinner 設定
         binding.areaSpinner.let { spinner ->
-            val arrayAdapter = ArrayAdapter(requireActivity(), android.R.layout.simple_dropdown_item_1line, resources.getStringArray(R.array.area_spinner_list))
+            val arrayAdapter = ArrayAdapter(
+                requireActivity(),
+                android.R.layout.simple_dropdown_item_1line,
+                resources.getStringArray(R.array.area_spinner_list)
+            )
             spinner.setAdapter(arrayAdapter)
             spinner.keyListener = null
             spinner.setOnItemClickListener { _, _, position, _ ->
@@ -58,7 +62,11 @@ class SignUpFragment : Fragment() {
             }
         }
         binding.birthdaySpinner.let { spinner ->
-            val arrayAdapter = ArrayAdapter(requireActivity(), android.R.layout.simple_dropdown_item_1line, resources.getStringArray(R.array.birthday_spinner_list))
+            val arrayAdapter = ArrayAdapter(
+                requireActivity(),
+                android.R.layout.simple_dropdown_item_1line,
+                resources.getStringArray(R.array.birthday_spinner_list)
+            )
             spinner.setAdapter(arrayAdapter)
             spinner.keyListener = null
             spinner.setOnItemClickListener { _, _, position, _ ->
@@ -120,6 +128,7 @@ class SignUpFragment : Fragment() {
             (activity as StartActivity).showErrorEmailPassword()
             viewModel.status.postValue(Status.Non)
         }
-        is Status.Non -> { }
+        is Status.Non -> {
+        }
     }
 }

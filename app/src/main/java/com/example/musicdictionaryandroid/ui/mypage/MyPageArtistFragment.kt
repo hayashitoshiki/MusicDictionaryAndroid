@@ -17,16 +17,16 @@ import androidx.lifecycle.Observer
 import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
 import com.example.musicdictionaryandroid.R
-import com.example.musicdictionaryandroid.data.util.Status
 import com.example.musicdictionaryandroid.databinding.FragmentMypageArtistListBinding
 import com.example.musicdictionaryandroid.domain.model.entity.Artist
 import com.example.musicdictionaryandroid.ui.adapter.SettingBaseAdapter
-import kotlin.coroutines.CoroutineContext
+import com.example.musicdictionaryandroid.ui.util.Status
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.launch
 import org.koin.android.viewmodel.ext.android.viewModel
+import kotlin.coroutines.CoroutineContext
 
 /**
  * 登録済みアーティスト一覧画面
@@ -87,7 +87,9 @@ class MyPageArtistFragment : Fragment(), CoroutineScope {
                         )
                     findNavController().navigate(action)
                 }
-                R.id.delete_button -> { viewModel.deleteArtist(artist) }
+                R.id.delete_button -> {
+                    viewModel.deleteArtist(artist)
+                }
             }
         }
     }
@@ -103,12 +105,16 @@ class MyPageArtistFragment : Fragment(), CoroutineScope {
             hideNoDataView()
             showProgressbar()
         }
-        is Status.Success -> { hideProgressbar() }
+        is Status.Success -> {
+            hideProgressbar()
+        }
         is Status.Failure -> {
             Log.e(TAG, "Failure:${state.throwable}")
             hideProgressbar()
         }
-        is Status.Non -> { hideNoDataView() }
+        is Status.Non -> {
+            hideNoDataView()
+        }
     }
 
     // データ反映

@@ -2,9 +2,9 @@ package com.example.musicdictionaryandroid.ui.mypage
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.Observer
-import com.example.musicdictionaryandroid.data.util.Result
 import com.example.musicdictionaryandroid.domain.model.entity.Artist
 import com.example.musicdictionaryandroid.domain.model.value.*
+import com.example.musicdictionaryandroid.domain.model.value.Result
 import com.example.musicdictionaryandroid.domain.usecase.ArtistUseCase
 import com.example.musicdictionaryandroid.domain.usecase.UserUseCase
 import com.nhaarman.mockito_kotlin.mock

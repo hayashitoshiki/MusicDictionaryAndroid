@@ -1,12 +1,12 @@
 package com.example.musicdictionaryandroid.domain.usecase
 
-import com.example.musicdictionaryandroid.data.repository.ApiServerRepository
-import com.example.musicdictionaryandroid.data.repository.DataBaseRepository
-import com.example.musicdictionaryandroid.data.repository.PreferenceRepository
-import com.example.musicdictionaryandroid.data.util.Result
+import com.example.musicdictionaryandroid.data.repository.LocalArtistRepository
+import com.example.musicdictionaryandroid.data.repository.LocalUserRepository
+import com.example.musicdictionaryandroid.data.repository.RemoteArtistRepository
 import com.example.musicdictionaryandroid.domain.model.entity.Artist
 import com.example.musicdictionaryandroid.domain.model.entity.ArtistContents
 import com.example.musicdictionaryandroid.domain.model.value.ArtistConditions
+import com.example.musicdictionaryandroid.domain.model.value.Result
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -14,9 +14,9 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
 
 class ArtistUseCaseImp(
-    private val apiRepository: ApiServerRepository,
-    private val dataBaseRepository: DataBaseRepository,
-    private val preferenceRepository: PreferenceRepository,
+    private val remoteArtistRepository: RemoteArtistRepository,
+    private val localArtistRepository: LocalArtistRepository,
+    private val localUserRepository: LocalUserRepository,
     private val externalScope: CoroutineScope,
     private val defaultDispatcher: CoroutineDispatcher = Dispatchers.Default
 ) : ArtistUseCase {
@@ -25,18 +25,18 @@ class ArtistUseCaseImp(
 
     // 検索条件に一致するアーティスト取得
     override suspend fun getArtistsBy(artist: ArtistConditions): Result<List<ArtistContents>> {
-        return apiRepository.getArtistsBy(artist)
+        return remoteArtistRepository.getArtistsBy(artist)
     }
 
     // おすすめアーティスト検索
     override suspend fun getArtistsByRecommend(): Result<List<ArtistContents>> {
-        val email = preferenceRepository.getEmail()
-        return apiRepository.getArtistsByRecommend(email!!)
+        val email = localUserRepository.getEmail()
+        return remoteArtistRepository.getArtistsByRecommend(email)
     }
 
     // 急上昇アーティスト取得
     override suspend fun getArtistsBySoaring(): Result<List<ArtistContents>> {
-        return apiRepository.getArtistsBySoaring()
+        return remoteArtistRepository.getArtistsBySoaring()
     }
 
     //endregion
@@ -45,28 +45,28 @@ class ArtistUseCaseImp(
 
     // ユーザの登録したアーティスト取得
     override suspend fun getArtistsByEmail(): Result<List<Artist>> {
-        val email = preferenceRepository.getEmail()
-        return when (val result = apiRepository.getArtistsByEmail(email!!)) {
+        val email = localUserRepository.getEmail()
+        return when (val result = remoteArtistRepository.getArtistsByEmail(email)) {
             is Result.Success -> {
-                preferenceRepository.setFavorite(result.data.size)
-                dataBaseRepository.updateAll(result.data)
+                localUserRepository.setFavorite(result.data.size)
+                localArtistRepository.updateAll(result.data)
                 result
             }
             is Result.Error -> {
-                Result.Success(dataBaseRepository.getArtistAll())
+                result
             }
         }
     }
 
     // アーティスト登録
     override suspend fun addArtist(artist: Artist): Result<Artist> {
-        val email = preferenceRepository.getEmail()
-        return when (val result = apiRepository.addArtist(artist, email!!)) {
+        val email = localUserRepository.getEmail()
+        return when (val result = remoteArtistRepository.addArtist(artist, email)) {
             is Result.Success -> {
                 externalScope.launch {
-                    val size = preferenceRepository.getFavorite()
-                    preferenceRepository.setFavorite(size + 1)
-                    dataBaseRepository.addArtist(result.data)
+                    val size = localUserRepository.getFavorite()
+                    localUserRepository.setFavorite(size + 1)
+                    localArtistRepository.addArtist(result.data)
                 }.join()
                 result
             }
@@ -78,11 +78,11 @@ class ArtistUseCaseImp(
 
     // アーティスト更新
     override suspend fun updateArtist(artist: Artist): Result<Artist> {
-        val email = preferenceRepository.getEmail()
-        return when (val result = apiRepository.updateArtist(artist, email!!)) {
+        val email = localUserRepository.getEmail()
+        return when (val result = remoteArtistRepository.updateArtist(artist, email)) {
             is Result.Success -> {
                 externalScope.launch {
-                    dataBaseRepository.updateArtist(result.data)
+                    localArtistRepository.updateArtist(result.data)
                 }.join()
                 result
             }
@@ -92,15 +92,15 @@ class ArtistUseCaseImp(
 
     // アーティスト削除
     override suspend fun deleteArtist(name: String): Result<List<Artist>> {
-        val email = preferenceRepository.getEmail()
-        return when (val result = apiRepository.deleteArtist(name, email!!)) {
+        val email = localUserRepository.getEmail()
+        return when (val result = remoteArtistRepository.deleteArtist(name, email)) {
             is Result.Success -> {
                 externalScope.launch {
-                    dataBaseRepository.deleteArtist(name)
-                    val size = preferenceRepository.getFavorite()
-                    preferenceRepository.setFavorite(size - 1)
+                    localArtistRepository.deleteArtist(name)
+                    val size = localUserRepository.getFavorite()
+                    localUserRepository.setFavorite(size - 1)
                 }.join()
-                val artist = dataBaseRepository.getArtistAll()
+                val artist = localArtistRepository.getArtistAll()
                 Result.Success(artist)
             }
             is Result.Error -> result
@@ -109,7 +109,7 @@ class ArtistUseCaseImp(
 
     // アーティストリスト取得
     override fun getArtistList(): Flow<List<Artist>> {
-        return dataBaseRepository.getArtistList()
+        return localArtistRepository.getArtistList()
     }
 
     //endregion

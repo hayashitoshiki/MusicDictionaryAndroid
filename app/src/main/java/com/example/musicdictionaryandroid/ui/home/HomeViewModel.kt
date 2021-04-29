@@ -3,16 +3,16 @@ package com.example.musicdictionaryandroid.ui.home
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.musicdictionaryandroid.data.repository.PreferenceRepository
+import com.example.musicdictionaryandroid.data.repository.LocalUserRepository
 import com.example.musicdictionaryandroid.domain.model.value.ArtistConditions
 
 /**
  * HOME画面_UIロジック
  *
- * @property preferenceRepository
+ * @property localUserRepository
  */
 class HomeViewModel(
-    private val preferenceRepository: PreferenceRepository
+    private val localUserRepository: LocalUserRepository
 ) : ViewModel() {
 
     val searchText = MutableLiveData("")
@@ -34,7 +34,7 @@ class HomeViewModel(
      * タップ可能ボタンのバリデート
      */
     init {
-        val count = preferenceRepository.getFavorite()
+        val count = localUserRepository.getFavorite()
 
         if (count == 0) {
             _isEnableSearchBar.value = false

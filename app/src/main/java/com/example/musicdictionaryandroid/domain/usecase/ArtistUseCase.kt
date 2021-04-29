@@ -1,9 +1,9 @@
 package com.example.musicdictionaryandroid.domain.usecase
 
-import com.example.musicdictionaryandroid.data.util.Result
 import com.example.musicdictionaryandroid.domain.model.entity.Artist
 import com.example.musicdictionaryandroid.domain.model.entity.ArtistContents
 import com.example.musicdictionaryandroid.domain.model.value.ArtistConditions
+import com.example.musicdictionaryandroid.domain.model.value.Result
 import kotlinx.coroutines.flow.Flow
 
 /**

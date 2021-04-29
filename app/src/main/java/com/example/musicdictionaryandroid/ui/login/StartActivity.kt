@@ -8,9 +8,9 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import com.example.musicdictionaryandroid.R
-import com.example.musicdictionaryandroid.data.util.Status
 import com.example.musicdictionaryandroid.databinding.ActivityStartBinding
 import com.example.musicdictionaryandroid.ui.MainActivity
+import com.example.musicdictionaryandroid.ui.util.Status
 import org.koin.android.viewmodel.ext.android.viewModel
 
 /**

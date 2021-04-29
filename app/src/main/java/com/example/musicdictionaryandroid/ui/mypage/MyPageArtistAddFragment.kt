@@ -20,10 +20,10 @@ import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.example.musicdictionaryandroid.R
-import com.example.musicdictionaryandroid.data.util.Status
 import com.example.musicdictionaryandroid.databinding.FragmentMypageArtistAddBinding
 import com.example.musicdictionaryandroid.domain.model.entity.Artist
 import com.example.musicdictionaryandroid.ui.adapter.setSafeClickListener
+import com.example.musicdictionaryandroid.ui.util.Status
 import org.koin.android.viewmodel.ext.android.viewModel
 
 /**

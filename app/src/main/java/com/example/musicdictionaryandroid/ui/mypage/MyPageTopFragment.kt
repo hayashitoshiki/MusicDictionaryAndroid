@@ -13,9 +13,9 @@ import androidx.lifecycle.Observer
 import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
 import com.example.musicdictionaryandroid.R
-import com.example.musicdictionaryandroid.data.util.Status
 import com.example.musicdictionaryandroid.databinding.FragmentMypageTopBinding
 import com.example.musicdictionaryandroid.ui.login.StartActivity
+import com.example.musicdictionaryandroid.ui.util.Status
 import org.koin.android.viewmodel.ext.android.viewModel
 
 /**
@@ -69,10 +69,16 @@ class MyPageTopFragment : Fragment() {
     // ステータス監視
     @Suppress("IMPLICIT_CAST_TO_ANY")
     private fun onStateChanged(state: Status<*>) = when (state) {
-        is Status.Loading -> { }
-        is Status.Success -> { activityFinish() }
-        is Status.Failure -> { Log.i(TAG, "Failure:${state.throwable}") }
-        is Status.Non -> { }
+        is Status.Loading -> {
+        }
+        is Status.Success -> {
+            activityFinish()
+        }
+        is Status.Failure -> {
+            Log.i(TAG, "Failure:${state.throwable}")
+        }
+        is Status.Non -> {
+        }
     }
 
     // 終了

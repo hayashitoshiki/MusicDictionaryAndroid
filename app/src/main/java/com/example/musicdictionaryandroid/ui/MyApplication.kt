@@ -3,7 +3,9 @@ package com.example.musicdictionaryandroid.ui
 import android.app.Application
 import android.util.Log
 import androidx.room.Room
-import com.example.musicdictionaryandroid.data.database.dao.AppDatabase
+import com.example.musicdictionaryandroid.data.local.database.AppDatabase
+import com.example.musicdictionaryandroid.data.local.preferences.UserSharedPreferences
+import com.example.musicdictionaryandroid.data.local.preferences.UserSharedPreferencesImp
 import com.example.musicdictionaryandroid.data.repository.*
 import com.example.musicdictionaryandroid.domain.usecase.ArtistUseCase
 import com.example.musicdictionaryandroid.domain.usecase.ArtistUseCaseImp
@@ -79,11 +81,13 @@ class MyApplication : Application() {
         viewModel { SplashViewModel(get()) }
 
         factory<ArtistUseCase> { ArtistUseCaseImp(get(), get(), get(), applicationScope) }
-        factory<UserUseCase> { UserUseCaseImp(get(), get(), get(), get(), applicationScope) }
+        factory<UserUseCase> { UserUseCaseImp(get(), get(), get(), applicationScope) }
 
-        factory<FireBaseRepository> { FireBaseRepositoryImp() }
-        factory<ApiServerRepository> { ApiServerRepositoryImp() }
-        factory<DataBaseRepository> { DataBaseRepositoryImp() }
-        single<PreferenceRepository> { PreferenceRepositoryImp() }
+        factory<RemoteArtistRepository> { RemoteArtistRepositoryImp() }
+        factory<RemoteUserRepository> { RemoteUserRepositoryImp() }
+        factory<LocalArtistRepository> { LocalArtistRepositoryImp() }
+        factory<LocalUserRepository> { LocalUserRepositoryImp(get()) }
+
+        factory<UserSharedPreferences> { UserSharedPreferencesImp() }
     }
 }

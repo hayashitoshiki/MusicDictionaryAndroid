@@ -10,10 +10,10 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.example.musicdictionaryandroid.R
-import com.example.musicdictionaryandroid.data.util.Status
 import com.example.musicdictionaryandroid.databinding.FragmentResultRecommendBinding
 import com.example.musicdictionaryandroid.domain.model.value.ArtistSearchContents
 import com.example.musicdictionaryandroid.ui.adapter.ResultAdapter
+import com.example.musicdictionaryandroid.ui.util.Status
 import org.koin.android.viewmodel.ext.android.viewModel
 
 /**

@@ -3,8 +3,8 @@ package com.example.musicdictionaryandroid.ui.mypage
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.musicdictionaryandroid.data.util.Status
 import com.example.musicdictionaryandroid.domain.usecase.UserUseCase
+import com.example.musicdictionaryandroid.ui.util.Status
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 

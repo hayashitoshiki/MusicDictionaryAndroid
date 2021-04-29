@@ -2,7 +2,7 @@ package com.example.musicdictionaryandroid.ui.home
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.Observer
-import com.example.musicdictionaryandroid.data.repository.PreferenceRepository
+import com.example.musicdictionaryandroid.data.repository.LocalUserRepository
 import com.nhaarman.mockito_kotlin.mock
 import io.mockk.every
 import io.mockk.mockk
@@ -28,34 +28,34 @@ class HomeViewModelTest {
     @Test
     fun checkValidate() {
         // モック作成
-        val count0 = mockk<PreferenceRepository>().also {
+        val count0 = mockk<LocalUserRepository>().also {
             every { it.getFavorite() } returns 0
         }
-        val count1 = mockk<PreferenceRepository>().also {
+        val count1 = mockk<LocalUserRepository>().also {
             every { it.getFavorite() } returns 1
         }
-        val count2 = mockk<PreferenceRepository>().also {
+        val count2 = mockk<LocalUserRepository>().also {
             every { it.getFavorite() } returns 2
         }
-        val count3 = mockk<PreferenceRepository>().also {
+        val count3 = mockk<LocalUserRepository>().also {
             every { it.getFavorite() } returns 3
         }
-        val count4 = mockk<PreferenceRepository>().also {
+        val count4 = mockk<LocalUserRepository>().also {
             every { it.getFavorite() } returns 4
         }
-        val count5 = mockk<PreferenceRepository>().also {
+        val count5 = mockk<LocalUserRepository>().also {
             every { it.getFavorite() } returns 5
         }
-        val count6 = mockk<PreferenceRepository>().also {
+        val count6 = mockk<LocalUserRepository>().also {
             every { it.getFavorite() } returns 6
         }
-        val count7 = mockk<PreferenceRepository>().also {
+        val count7 = mockk<LocalUserRepository>().also {
             every { it.getFavorite() } returns 7
         }
-        val count9 = mockk<PreferenceRepository>().also {
+        val count9 = mockk<LocalUserRepository>().also {
             every { it.getFavorite() } returns 9
         }
-        val count10 = mockk<PreferenceRepository>().also {
+        val count10 = mockk<LocalUserRepository>().also {
             every { it.getFavorite() } returns 10
         }
         var viewModel = HomeViewModel(count0)

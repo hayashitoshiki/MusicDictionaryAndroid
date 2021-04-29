@@ -12,10 +12,10 @@ import android.widget.*
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
 import com.example.musicdictionaryandroid.R
-import com.example.musicdictionaryandroid.data.util.UserInfoChangeListUtil
 import com.example.musicdictionaryandroid.databinding.ItemResultArtistBinding
 import com.example.musicdictionaryandroid.domain.model.value.ArtistSearchContents
 import com.example.musicdictionaryandroid.ui.transition.ResizeAnimation
+import com.example.musicdictionaryandroid.ui.util.UserInfoChangeListUtil
 import com.github.mikephil.charting.charts.PieChart
 import com.github.mikephil.charting.data.PieData
 import com.github.mikephil.charting.data.PieDataSet

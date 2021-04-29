@@ -4,11 +4,11 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.musicdictionaryandroid.data.database.entity.User
-import com.example.musicdictionaryandroid.data.util.Result
-import com.example.musicdictionaryandroid.data.util.Status
-import com.example.musicdictionaryandroid.data.util.UserInfoChangeListUtil
+import com.example.musicdictionaryandroid.domain.model.entity.User
+import com.example.musicdictionaryandroid.domain.model.value.Result
 import com.example.musicdictionaryandroid.domain.usecase.UserUseCase
+import com.example.musicdictionaryandroid.ui.util.Status
+import com.example.musicdictionaryandroid.ui.util.UserInfoChangeListUtil
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.collect
@@ -171,7 +171,8 @@ class SignUpViewModel(
     fun signUp(): Job = externalScope.launch {
         status.postValue(Status.Loading)
         val birthday = UserInfoChangeListUtil.getBirthday(birthdaySelectedPosition.value!!)
-        val user = User(emailText.value!!, nameText.value!!, genderInt.value!!, areaSelectedPosition.value!!, birthday, 0)
+        val user =
+            User(emailText.value!!, nameText.value!!, genderInt.value!!, areaSelectedPosition.value!!, birthday, 0)
         userUseCase.createUser(emailText.value!!, password1Text.value!!, user).collect {
             when (it) {
                 is Result.Success -> status.postValue(Status.Success(it.data))

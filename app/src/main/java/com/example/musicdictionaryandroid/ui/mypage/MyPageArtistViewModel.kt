@@ -1,10 +1,10 @@
 package com.example.musicdictionaryandroid.ui.mypage
 
 import androidx.lifecycle.*
-import com.example.musicdictionaryandroid.data.util.Result
-import com.example.musicdictionaryandroid.data.util.Status
 import com.example.musicdictionaryandroid.domain.model.entity.Artist
+import com.example.musicdictionaryandroid.domain.model.value.Result
 import com.example.musicdictionaryandroid.domain.usecase.ArtistUseCase
+import com.example.musicdictionaryandroid.ui.util.Status
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 

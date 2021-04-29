@@ -11,7 +11,7 @@ import androidx.fragment.app.DialogFragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.example.musicdictionaryandroid.R
-import com.example.musicdictionaryandroid.data.net.dto.ArtistsDto
+import com.example.musicdictionaryandroid.data.remote.network.dto.ArtistDto
 import com.example.musicdictionaryandroid.databinding.DialogSearchBinding
 import com.example.musicdictionaryandroid.ui.adapter.DialogFragmentCallbackInterface
 import com.example.musicdictionaryandroid.ui.adapter.setSafeClickListener
@@ -49,7 +49,7 @@ class SearchDialogFragment : DialogFragment() {
             resources.getStringArray(R.array.genre62_spinner_list)
         )
         arguments?.let {
-            val artist = it.getSerializable("artist") as ArtistsDto
+            val artist = it.getSerializable("artist") as ArtistDto
             viewModel.setArtist(artist)
         }
 
