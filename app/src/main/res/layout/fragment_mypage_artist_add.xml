@@ -396,7 +396,7 @@
                         android:layout_width="120dp"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:entries="@{viewModel.genre1ValueList}"
+                        android:entries="@{viewModel.genre1List}"
                         android:selectedItemPosition="@={viewModel.genre1}" />
 
                     <TextView
@@ -415,7 +415,7 @@
                         android:layout_width="120dp"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:entries="@{viewModel.genre2ValueList}"
+                        android:entries="@{viewModel.genre2List}"
                         android:selectedItemPosition="@={viewModel.genre2}" />
                 </LinearLayout>
             </ScrollView>
@@ -442,7 +442,7 @@
 
         <ProgressBar
             android:id="@+id/progressBar"
-            android:visibility="invisible"
+            android:visibility="@{viewModel.isProgressBar ? View.VISIBLE : View.GONE}"
             style="?android:attr/progressBarStyle"
             android:layout_width="64dp"
             android:layout_height="64dp"

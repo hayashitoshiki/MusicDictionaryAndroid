@@ -1,4 +1,4 @@
-package com.example.musicdictionaryandroid.ui.adapter
+package com.example.musicdictionaryandroid.ui.util
 
 import android.os.Handler
 import android.view.View

@@ -7,7 +7,6 @@ import android.transition.ChangeBounds
 import android.transition.ChangeClipBounds
 import android.transition.ChangeTransform
 import android.transition.TransitionSet
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -22,8 +21,8 @@ import androidx.navigation.fragment.navArgs
 import com.example.musicdictionaryandroid.R
 import com.example.musicdictionaryandroid.databinding.FragmentMypageArtistAddBinding
 import com.example.musicdictionaryandroid.domain.model.entity.Artist
-import com.example.musicdictionaryandroid.ui.adapter.setSafeClickListener
 import com.example.musicdictionaryandroid.ui.util.Status
+import com.example.musicdictionaryandroid.ui.util.setSafeClickListener
 import org.koin.android.viewmodel.ext.android.viewModel
 
 /**
@@ -31,20 +30,12 @@ import org.koin.android.viewmodel.ext.android.viewModel
  */
 class MyPageArtistAddFragment : Fragment() {
 
-    companion object {
-        const val TAG = "MyPageArtistAddFragment"
-    }
-
     private lateinit var binding: FragmentMypageArtistAddBinding
     private val args: MyPageArtistAddFragmentArgs by navArgs()
     private val viewModel: MyPageArtistAddViewModel by viewModel()
 
     @SuppressLint("ClickableViewAccessibility")
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_mypage_artist_add, container, false)
         binding.lifecycleOwner = viewLifecycleOwner
         binding.viewModel = viewModel
@@ -78,18 +69,6 @@ class MyPageArtistAddFragment : Fragment() {
         binding.genre2Title.startAnimation(anim3)
         binding.genre2Value.startAnimation(anim3)
         binding.submit.startAnimation(anim3)
-
-        // editTextフォーカス制御
-        binding.artistNameEdit.setOnFocusChangeListener { v, hasFocus ->
-            if (!hasFocus) {
-                val imm = activity?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-                imm.hideSoftInputFromWindow(v.windowToken, InputMethodManager.HIDE_NOT_ALWAYS)
-            }
-        }
-        binding.root.setOnTouchListener { v, event ->
-            binding.root.requestFocus()
-            v?.onTouchEvent(event) ?: true
-        }
         return binding.root
     }
 
@@ -114,20 +93,29 @@ class MyPageArtistAddFragment : Fragment() {
         binding.submit.setSafeClickListener {
             viewModel.submit()
         }
+
+        // editTextフォーカス制御
+        binding.artistNameEdit.setOnFocusChangeListener { v, hasFocus ->
+            if (!hasFocus) {
+                val imm = activity?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+                imm.hideSoftInputFromWindow(v.windowToken, InputMethodManager.HIDE_NOT_ALWAYS)
+            }
+        }
+        binding.root.setOnTouchListener { v, event ->
+            binding.root.requestFocus()
+            v?.onTouchEvent(event) ?: true
+        }
+
     }
 
     // ステータス監視
     private fun onStateChanged(state: Status<Artist>) = when (state) {
         is Status.Loading -> {
-            showProgressbar()
         }
         is Status.Success -> {
-            hideProgressbar()
             back()
         }
         is Status.Failure -> {
-            Log.i(TAG, "Failure:${state.throwable}")
-            hideProgressbar()
             showServerError()
         }
         is Status.Non -> {
@@ -142,15 +130,5 @@ class MyPageArtistAddFragment : Fragment() {
     // エラートースト表示
     private fun showServerError() {
         Toast.makeText(requireContext(), "エラーが発生しました", Toast.LENGTH_SHORT).show()
-    }
-
-    // プログレスバー表示
-    private fun showProgressbar() {
-        binding.progressBar.visibility = View.VISIBLE
-    }
-
-    // プログレスバー非表示
-    private fun hideProgressbar() {
-        binding.progressBar.visibility = View.GONE
     }
 }

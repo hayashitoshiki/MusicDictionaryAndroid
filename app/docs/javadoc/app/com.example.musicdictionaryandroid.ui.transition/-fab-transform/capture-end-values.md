@@ -1,4 +1,4 @@
-[app](../../index.md) / [com.example.musicdictionaryandroid.ui.transition](../index.md) / [FabTransform](index.md) / [captureEndValues](./capture-end-values.md)
+[app](../../index.md) / [com.example.musicdictionaryandroid.ui.util.transition](../index.md) / [FabTransform](index.md) / [captureEndValues](./capture-end-values.md)
 
 # captureEndValues
 

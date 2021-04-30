@@ -1,4 +1,4 @@
-package com.example.musicdictionaryandroid.ui.transition
+package com.example.musicdictionaryandroid.ui.util.transition
 
 import android.view.View
 import android.view.animation.Animation

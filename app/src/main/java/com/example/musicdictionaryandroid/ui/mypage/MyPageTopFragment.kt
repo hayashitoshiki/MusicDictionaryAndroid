@@ -2,7 +2,6 @@ package com.example.musicdictionaryandroid.ui.mypage
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -23,19 +22,11 @@ import org.koin.android.viewmodel.ext.android.viewModel
  */
 class MyPageTopFragment : Fragment() {
 
-    companion object {
-        const val TAG = "MyPageTopFragment"
-    }
-
     private val viewModel: MyPageTopViewModel by viewModel()
     private lateinit var binding: FragmentMypageTopBinding
     private var isFirst = true
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_mypage_top, container, false)
         binding.lifecycleOwner = viewLifecycleOwner
         binding.viewModel = viewModel
@@ -75,7 +66,6 @@ class MyPageTopFragment : Fragment() {
             activityFinish()
         }
         is Status.Failure -> {
-            Log.i(TAG, "Failure:${state.throwable}")
         }
         is Status.Non -> {
         }

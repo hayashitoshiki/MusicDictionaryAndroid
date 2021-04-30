@@ -11,12 +11,17 @@ import kotlinx.coroutines.launch
 
 /**
  * アーティスト情報登録・追加画面_UIロジック
- *
- * @property artistUseCase
  */
 class MyPageArtistAddViewModel(private val artistUseCase: ArtistUseCase) : ViewModel() {
 
-    val status = MutableLiveData<Status<Artist>>()
+    companion object {
+        const val ADD_MODE = 1
+        const val CHANGE_MODE = 2
+    }
+
+    // 送信ステータス
+    private val _status = MutableLiveData<Status<Artist>>(Status.Non)
+    val status: LiveData<Status<Artist>> = _status
 
     // 絞り込みリスト
     private lateinit var mainGenreList: List<String>
@@ -28,35 +33,30 @@ class MyPageArtistAddViewModel(private val artistUseCase: ArtistUseCase) : ViewM
     private lateinit var subGenre5List: List<String>
     private lateinit var subGenre6List: List<String>
 
-    //    private val _artist = MutableLiveData<Artist>()
-//    val artist: LiveData<Artist> = _artist
-    private val _editMode = MutableLiveData<Int>()
-    val editMode: LiveData<Int> = _editMode
+    // 入力項目
     private val _titleText = MutableLiveData("")
     val titleText: LiveData<String> = _titleText
-    val nameText = MutableLiveData<String>()
-
+    val nameText = MutableLiveData("")
     val gender = MutableLiveData(0)
     val voice = MutableLiveData(0)
     val length = MutableLiveData(0)
     val lyrics = MutableLiveData(0)
-
-    private val _genre1ValueList = MutableLiveData<List<String>>(listOf())
-    val genre1ValueList: LiveData<List<String>> = _genre1ValueList
-    private val _genre2ValueList = MutableLiveData<List<String>>(listOf())
-    val genre2ValueList: LiveData<List<String>> = _genre2ValueList
     val genre1 = MutableLiveData(0)
     val genre2 = MutableLiveData(0)
+    private val _genre1List = MutableLiveData<List<String>>(listOf())
+    val genre1List: LiveData<List<String>> = _genre1List
+    private val _genre2List = MutableLiveData<List<String>>(listOf())
+    val genre2List: LiveData<List<String>> = _genre2List
+
+    // その他View制御
+    private val _editMode = MutableLiveData<Int>()
+    val editMode: LiveData<Int> = _editMode
     private val _submitText = MutableLiveData<String>()
     val submitText: LiveData<String> = _submitText
     private val _isEnableSubmitButton = MediatorLiveData<Boolean>()
     val isEnableSubmitButton: LiveData<Boolean> = _isEnableSubmitButton
-
-    companion object {
-        const val ADD_MODE = 1
-        const val CHANGE_MODE = 2
-        const val TAG = "MyPageArtistAddViewModel"
-    }
+    private val _isProgressBar = MediatorLiveData<Boolean>()
+    val isProgressBar: LiveData<Boolean> = _isProgressBar
 
     init {
         _isEnableSubmitButton.addSource(nameText) { validate() }
@@ -66,6 +66,7 @@ class MyPageArtistAddViewModel(private val artistUseCase: ArtistUseCase) : ViewM
         _isEnableSubmitButton.addSource(lyrics) { validate() }
         _isEnableSubmitButton.addSource(genre1) { validate() }
         _isEnableSubmitButton.addSource(genre2) { validate() }
+        _isProgressBar.addSource(status, Observer { changeProgressBar(it) })
     }
 
     fun init(
@@ -86,17 +87,17 @@ class MyPageArtistAddViewModel(private val artistUseCase: ArtistUseCase) : ViewM
         this.subGenre4List = genre4List.toList()
         this.subGenre5List = genre5List.toList()
         this.subGenre6List = genre6List.toList()
-        _genre1ValueList.value = mainGenreList.toList()
+        _genre1List.value = mainGenreList.toList()
 
         artist?.let {
             when (artist.genre1.value) {
-                0 -> _genre2ValueList.value = subGenre0List.toList()
-                1 -> _genre2ValueList.value = subGenre1List.toList()
-                2 -> _genre2ValueList.value = subGenre2List.toList()
-                3 -> _genre2ValueList.value = subGenre3List.toList()
-                4 -> _genre2ValueList.value = subGenre4List.toList()
-                5 -> _genre2ValueList.value = subGenre5List.toList()
-                6 -> _genre2ValueList.value = subGenre6List.toList()
+                0 -> _genre2List.value = subGenre0List.toList()
+                1 -> _genre2List.value = subGenre1List.toList()
+                2 -> _genre2List.value = subGenre2List.toList()
+                3 -> _genre2List.value = subGenre3List.toList()
+                4 -> _genre2List.value = subGenre4List.toList()
+                5 -> _genre2List.value = subGenre5List.toList()
+                6 -> _genre2List.value = subGenre6List.toList()
             }
             _editMode.value = CHANGE_MODE
             _titleText.value = "アーティスト編集"
@@ -122,9 +123,12 @@ class MyPageArtistAddViewModel(private val artistUseCase: ArtistUseCase) : ViewM
             lyrics.value != 0 && genre1.value != 0 && genre2.value != 0
     }
 
-    /**
-     * 送信処理
-     */
+    // プログレスバーの表示制御
+    private fun changeProgressBar(status: Status<Artist>) {
+        _isProgressBar.value = status is Status.Loading
+    }
+
+    // 送信処理
     fun submit() {
         val name = nameText.value!!
         val gender = Gender.getEnumByValue(gender.value!!)
@@ -139,7 +143,7 @@ class MyPageArtistAddViewModel(private val artistUseCase: ArtistUseCase) : ViewM
             ADD_MODE -> addArtist(artist)
             CHANGE_MODE -> updateArtist(artist)
             else -> {
-                Log.e(TAG, "指定モードが正しくありません。mode = " + editMode.value)
+                Log.e("TAG", "指定モードが正しくありません。mode = " + editMode.value)
             }
         }
     }
@@ -148,10 +152,10 @@ class MyPageArtistAddViewModel(private val artistUseCase: ArtistUseCase) : ViewM
     private fun addArtist(artist: Artist): Job = viewModelScope.launch {
         when (val result = artistUseCase.addArtist(artist)) {
             is Result.Success -> {
-                status.value = Status.Success(result.data)
+                _status.value = Status.Success(result.data)
             }
             is Result.Error -> {
-                status.value = Status.Failure(result.exception)
+                _status.value = Status.Failure(result.exception)
             }
         }
     }
@@ -160,10 +164,10 @@ class MyPageArtistAddViewModel(private val artistUseCase: ArtistUseCase) : ViewM
     private fun updateArtist(artist: Artist): Job = viewModelScope.launch {
         when (val result = artistUseCase.updateArtist(artist)) {
             is Result.Success -> {
-                status.value = Status.Success(result.data)
+                _status.value = Status.Success(result.data)
             }
             is Result.Error -> {
-                status.value = Status.Failure(result.exception)
+                _status.value = Status.Failure(result.exception)
             }
         }
     }
@@ -188,20 +192,16 @@ class MyPageArtistAddViewModel(private val artistUseCase: ArtistUseCase) : ViewM
         lyrics.value = checkedId
     }
 
-    /**
-     * 絞り込みジャンル変更処理
-     *
-     * @param index 大分類ジャンルの中のインデックス値
-     */
+    // 絞り込みジャンル変更処理
     fun changeGenre1(index: Int) {
         when (index) {
-            0 -> _genre2ValueList.postValue(subGenre0List.toList())
-            1 -> _genre2ValueList.postValue(subGenre1List.toList())
-            2 -> _genre2ValueList.postValue(subGenre2List.toList())
-            3 -> _genre2ValueList.postValue(subGenre3List.toList())
-            4 -> _genre2ValueList.postValue(subGenre4List.toList())
-            5 -> _genre2ValueList.postValue(subGenre5List.toList())
-            6 -> _genre2ValueList.postValue(subGenre6List.toList())
+            0 -> _genre2List.postValue(subGenre0List.toList())
+            1 -> _genre2List.postValue(subGenre1List.toList())
+            2 -> _genre2List.postValue(subGenre2List.toList())
+            3 -> _genre2List.postValue(subGenre3List.toList())
+            4 -> _genre2List.postValue(subGenre4List.toList())
+            5 -> _genre2List.postValue(subGenre5List.toList())
+            6 -> _genre2List.postValue(subGenre6List.toList())
         }
     }
 }

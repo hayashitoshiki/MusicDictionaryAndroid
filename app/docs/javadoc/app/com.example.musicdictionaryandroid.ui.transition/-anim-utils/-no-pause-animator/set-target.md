@@ -1,4 +1,4 @@
-[app](../../../index.md) / [com.example.musicdictionaryandroid.ui.transition](../../index.md) / [AnimUtils](../index.md) / [NoPauseAnimator](index.md) / [setTarget](./set-target.md)
+[app](../../../index.md) / [com.example.musicdictionaryandroid.ui.util.transition](../../index.md) / [AnimUtils](../index.md) / [NoPauseAnimator](index.md) / [setTarget](./set-target.md)
 
 # setTarget
 

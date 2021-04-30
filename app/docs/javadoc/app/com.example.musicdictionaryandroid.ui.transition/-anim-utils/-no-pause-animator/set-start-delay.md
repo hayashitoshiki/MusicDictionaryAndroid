@@ -1,4 +1,4 @@
-[app](../../../index.md) / [com.example.musicdictionaryandroid.ui.transition](../../index.md) / [AnimUtils](../index.md) / [NoPauseAnimator](index.md) / [setStartDelay](./set-start-delay.md)
+[app](../../../index.md) / [com.example.musicdictionaryandroid.ui.util.transition](../../index.md) / [AnimUtils](../index.md) / [NoPauseAnimator](index.md) / [setStartDelay](./set-start-delay.md)
 
 # setStartDelay
 

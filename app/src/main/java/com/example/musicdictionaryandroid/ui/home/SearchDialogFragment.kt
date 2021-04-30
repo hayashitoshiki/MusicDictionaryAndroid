@@ -13,8 +13,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.example.musicdictionaryandroid.R
 import com.example.musicdictionaryandroid.data.remote.network.dto.ArtistDto
 import com.example.musicdictionaryandroid.databinding.DialogSearchBinding
-import com.example.musicdictionaryandroid.ui.adapter.DialogFragmentCallbackInterface
-import com.example.musicdictionaryandroid.ui.adapter.setSafeClickListener
+import com.example.musicdictionaryandroid.ui.util.setSafeClickListener
 
 /**
  * 検索条件ダイアログ

@@ -1,9 +1,6 @@
 package com.example.musicdictionaryandroid.ui.login
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MediatorLiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
+import androidx.lifecycle.*
 import com.example.musicdictionaryandroid.domain.model.value.Result
 import com.example.musicdictionaryandroid.domain.usecase.UserUseCase
 import com.example.musicdictionaryandroid.ui.util.Status
@@ -21,32 +18,34 @@ class SignInViewModel(
     private val externalScope: CoroutineScope
 ) : ViewModel() {
 
+    // ステータス
     private val _status = MutableLiveData<Status<Boolean>>(Status.Non)
     val status: LiveData<Status<Boolean>> = _status
 
+    // 入力項目
     val emailText = MutableLiveData<String>()
     val passwordText = MutableLiveData<String>()
     private val _emailErrorText = MutableLiveData<String?>()
     val emailErrorText: LiveData<String?> = _emailErrorText
     private val _passwordErrorText = MutableLiveData<String?>()
     val passwordErrorText: LiveData<String?> = _passwordErrorText
+
+    // ボタン制御
     private val _isEnableSubmitButton = MediatorLiveData<Boolean>()
     val isEnableSubmitButton: LiveData<Boolean> = _isEnableSubmitButton
-    private val _isProgressBer = MutableLiveData(false)
-    val isProgressBer: LiveData<Boolean> = _isProgressBer
+    private val _isProgressBar = MediatorLiveData<Boolean>()
+    val isProgressBar: LiveData<Boolean> = _isProgressBar
 
-    /**
-     * ボタンバリデート
-     */
     init {
         _isEnableSubmitButton.addSource(emailText) { validateSubmit() }
         _isEnableSubmitButton.addSource(passwordText) { validateSubmit() }
-        _isEnableSubmitButton.addSource(isProgressBer) { validateSubmit() }
+        _isEnableSubmitButton.addSource(isProgressBar) { validateSubmit() }
+        _isProgressBar.addSource(_status, Observer { changeProgressBar(it) })
     }
 
     // バリデート判定
     private fun validateSubmit() {
-        _isEnableSubmitButton.value = validateEmail() && validatePassword() && validateProgressBar()
+        _isEnableSubmitButton.value = validateEmail() && validatePassword() && !isProgressBar.value!!
     }
 
     // email入力欄バリデート
@@ -70,9 +69,9 @@ class SignInViewModel(
         return passwordText.value != null && passwordText.value!!.length > 5
     }
 
-    // progressBarバリデート
-    private fun validateProgressBar(): Boolean {
-        return _isProgressBer.value != null && !_isProgressBer.value!!
+    // プログレスバーの表示制御
+    private fun changeProgressBar(status: Status<Boolean>) {
+        _isProgressBar.value = status is Status.Loading
     }
 
     // メールアドレスエラー文言表示
@@ -102,9 +101,7 @@ class SignInViewModel(
         }
     }
 
-    /**
-     * ログイン処理
-     */
+    // ログイン処理
     fun signIn(): Job = externalScope.launch {
         _status.postValue(Status.Loading)
         userUseCase.signIn(emailText.value!!, passwordText.value!!).collect {
@@ -113,15 +110,5 @@ class SignInViewModel(
                 is Result.Error -> _status.postValue(Status.Failure(it.exception))
             }
         }
-    }
-
-    // プログレスバー表示
-    fun showProgressBer() {
-        _isProgressBer.value = true
-    }
-
-    // プログレスバー非表示
-    fun hideProgressBer() {
-        _isProgressBer.value = false
     }
 }

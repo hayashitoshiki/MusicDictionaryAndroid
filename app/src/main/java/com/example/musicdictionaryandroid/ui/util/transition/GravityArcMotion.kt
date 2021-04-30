@@ -1,4 +1,4 @@
-package com.example.musicdictionaryandroid.ui.transition
+package com.example.musicdictionaryandroid.ui.util.transition
 
 import android.content.Context
 import android.graphics.Path

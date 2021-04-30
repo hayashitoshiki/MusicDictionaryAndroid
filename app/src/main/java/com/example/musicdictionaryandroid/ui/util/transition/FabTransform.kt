@@ -1,4 +1,4 @@
-package com.example.musicdictionaryandroid.ui.transition
+package com.example.musicdictionaryandroid.ui.util.transition
 
 import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
@@ -296,6 +296,7 @@ class FabTransform : Transition {
     companion object {
         private const val EXTRA_FAB_COLOR = "EXTRA_FAB_COLOR"
         private const val EXTRA_FAB_ICON_RES_ID = "EXTRA_FAB_ICON_RES_ID"
+
         // 矩形時間 Defaoult 240L
         private const val DEFAULT_DURATION = 500L
         private const val PROP_BOUNDS = "plaid:fabTransform:bounds"

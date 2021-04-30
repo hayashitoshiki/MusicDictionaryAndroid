@@ -1,4 +1,4 @@
-[app](../../../index.md) / [com.example.musicdictionaryandroid.ui.transition](../../index.md) / [AnimUtils](../index.md) / [NoPauseAnimator](index.md) / [start](./start.md)
+[app](../../../index.md) / [com.example.musicdictionaryandroid.ui.util.transition](../../index.md) / [AnimUtils](../index.md) / [NoPauseAnimator](index.md) / [start](./start.md)
 
 # start
 

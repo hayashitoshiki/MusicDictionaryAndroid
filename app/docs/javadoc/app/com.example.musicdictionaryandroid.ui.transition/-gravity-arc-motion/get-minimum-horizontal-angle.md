@@ -1,4 +1,4 @@
-[app](../../index.md) / [com.example.musicdictionaryandroid.ui.transition](../index.md) / [GravityArcMotion](index.md) / [getMinimumHorizontalAngle](./get-minimum-horizontal-angle.md)
+[app](../../index.md) / [com.example.musicdictionaryandroid.ui.util.transition](../index.md) / [GravityArcMotion](index.md) / [getMinimumHorizontalAngle](./get-minimum-horizontal-angle.md)
 
 # getMinimumHorizontalAngle
 

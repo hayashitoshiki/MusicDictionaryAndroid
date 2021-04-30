@@ -42,5 +42,5 @@ CRUD管理
 # Package com.example.musicdictionaryandroid.ui.login
 ログイン系画面管理
 
-# Package com.example.musicdictionaryandroid.ui.transition
+# Package com.example.musicdictionaryandroid.ui.util.transition
 アニメーション管理

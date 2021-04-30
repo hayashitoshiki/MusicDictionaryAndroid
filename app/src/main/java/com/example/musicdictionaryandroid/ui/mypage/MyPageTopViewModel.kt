@@ -1,5 +1,6 @@
 package com.example.musicdictionaryandroid.ui.mypage
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -10,22 +11,18 @@ import kotlinx.coroutines.launch
 
 /**
  * 設定画面_UIロジック
- *
- * @property userUseCase
  */
 class MyPageTopViewModel(
     private val userUseCase: UserUseCase
 ) : ViewModel() {
 
-    val authStatus = MutableLiveData<Status<*>>()
+    private val _authStatus = MutableLiveData<Status<*>>()
+    val authStatus: LiveData<Status<*>> = _authStatus
 
-    /**
-     * ログアウト
-     *
-     */
+    // ログアウト
     fun signOut(): Job = viewModelScope.launch {
-        authStatus.value = Status.Loading
+        _authStatus.value = Status.Loading
         userUseCase.signOut()
-        authStatus.postValue(Status.Success(true))
+        _authStatus.postValue(Status.Success(true))
     }
 }

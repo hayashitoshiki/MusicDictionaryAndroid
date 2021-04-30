@@ -74,7 +74,7 @@ class MyApplication : Application() {
         viewModel { SignInViewModel(get(), applicationScope) }
         viewModel { SignUpViewModel(get(), applicationScope) }
         viewModel { ResultViewModel(get()) }
-        viewModel { ResultRecommendViewModel(get(), get()) }
+        viewModel { ResultRecommendViewModel(get()) }
         viewModel { ResultSoaringViewModel(get()) }
         viewModel { HomeViewModel(get()) }
         viewModel { StartViewModel(get()) }

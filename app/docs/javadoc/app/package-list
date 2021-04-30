@@ -12,4 +12,4 @@ com.example.musicdictionaryandroid.ui.adapter
 com.example.musicdictionaryandroid.ui.home
 com.example.musicdictionaryandroid.ui.login
 com.example.musicdictionaryandroid.ui.mypage
-com.example.musicdictionaryandroid.ui.transition
+com.example.musicdictionaryandroid.ui.util.transition

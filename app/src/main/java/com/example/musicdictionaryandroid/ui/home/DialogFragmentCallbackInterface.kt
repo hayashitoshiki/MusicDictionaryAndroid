@@ -1,4 +1,4 @@
-package com.example.musicdictionaryandroid.ui.adapter
+package com.example.musicdictionaryandroid.ui.home
 
 import com.example.musicdictionaryandroid.domain.model.value.ArtistConditions
 

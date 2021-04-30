@@ -1,8 +1,6 @@
 package com.example.musicdictionaryandroid.ui.home
 
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.*
 import com.example.musicdictionaryandroid.domain.model.value.ArtistConditions
 import com.example.musicdictionaryandroid.domain.model.value.ArtistSearchContents
 import com.example.musicdictionaryandroid.domain.model.value.Result
@@ -13,23 +11,43 @@ import kotlinx.coroutines.launch
 
 /**
  * 検索結果画面_UIロジック
- *
- * @property artistUseCase
  */
 class ResultViewModel(
     private val artistUseCase: ArtistUseCase
 ) : ViewModel() {
 
-    val status = MutableLiveData<Status<List<ArtistSearchContents<*>>>>()
+    // ステータス
+    private val _status = MutableLiveData<Status<List<ArtistSearchContents<*>>>>()
+    val status: LiveData<Status<List<ArtistSearchContents<*>>>> = _status
 
-    /**
-     * アーティスト検索
-     *
-     * @param artist 検索するアーティストの条件
-     * @return 一致したアーティスト一覧
-     */
+    // Viewの表示制御
+    private val _isProgressBar = MediatorLiveData<Boolean>()
+    val isProgressBar: LiveData<Boolean> = _isProgressBar
+    private val _isNoDataText = MediatorLiveData<Boolean>()
+    val isNoDataText: LiveData<Boolean> = _isNoDataText
+
+    init {
+        _isProgressBar.addSource(status, Observer { changeProgressBar(it) })
+        _isNoDataText.addSource(status, Observer { changeNoDataText(it) })
+    }
+
+    // プログレスバーの表示制御
+    private fun changeProgressBar(status: Status<List<ArtistSearchContents<*>>>) {
+        _isProgressBar.value = status is Status.Loading
+    }
+
+    // データ０件文言の表示制御
+    private fun changeNoDataText(status: Status<List<ArtistSearchContents<*>>>) {
+        _isNoDataText.value = when (status) {
+            is Status.Success -> status.data.size < 2
+            else -> false
+        }
+    }
+
+
+    // アーティスト検索
     fun getArtists(artist: ArtistConditions): Job = viewModelScope.launch {
-        status.value = Status.Loading
+        _status.value = Status.Loading
         when (val result = artistUseCase.getArtistsBy(artist)) {
             is Result.Success -> {
                 val conditions = ArtistSearchContents.Conditions(artist)
@@ -37,10 +55,10 @@ class ResultViewModel(
                 result.data.forEach { contents ->
                     arrayList.add(ArtistSearchContents.Item(contents))
                 }
-                status.postValue(Status.Success(arrayList))
+                _status.postValue(Status.Success(arrayList))
             }
             is Result.Error -> {
-                status.postValue(Status.Failure(result.exception))
+                _status.postValue(Status.Failure(result.exception))
             }
         }
     }

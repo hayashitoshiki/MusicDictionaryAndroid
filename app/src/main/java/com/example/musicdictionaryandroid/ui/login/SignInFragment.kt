@@ -2,7 +2,6 @@ package com.example.musicdictionaryandroid.ui.login
 
 import android.content.Context
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -21,7 +20,6 @@ import org.koin.android.viewmodel.ext.android.viewModel
 class SignInFragment : Fragment() {
 
     companion object {
-        private const val TAG = "SignInFragment"
 
         @JvmStatic
         fun newInstance(): SignInFragment {
@@ -71,16 +69,12 @@ class SignInFragment : Fragment() {
     private fun onStateChanged(state: Status<Boolean>) = when (state) {
         is Status.Loading -> {
             (activity as StartActivity).loading()
-            viewModel.showProgressBer()
         }
         is Status.Success -> {
-            viewModel.hideProgressBer()
             (activity as StartActivity).endLoading()
             (activity as StartActivity).startApp()
         }
         is Status.Failure -> {
-            Log.i(TAG, "Failure:${state.throwable}")
-            viewModel.hideProgressBer()
             (activity as StartActivity).endLoading()
             (activity as StartActivity).showErrorEmailPassword()
         }

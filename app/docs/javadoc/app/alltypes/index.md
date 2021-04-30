@@ -6,7 +6,7 @@
 
 | Name | Summary |
 |---|---|
-| [com.example.musicdictionaryandroid.ui.transition.AnimUtils](../com.example.musicdictionaryandroid.ui.transition/-anim-utils/index.md) |  |
+| [com.example.musicdictionaryandroid.ui.util.transition.AnimUtils](../com.example.musicdictionaryandroid.ui.util.transition/-anim-utils/index.md) |  |
 | [com.example.musicdictionaryandroid.model.repository.ApiServerRepository](../com.example.musicdictionaryandroid.model.repository/-api-server-repository/index.md) | API呼び出し関連のRepository |
 | [com.example.musicdictionaryandroid.model.repository.ApiServerRepositoryImp](../com.example.musicdictionaryandroid.model.repository/-api-server-repository-imp/index.md) |  |
 | [com.example.musicdictionaryandroid.model.net.ApiService](../com.example.musicdictionaryandroid.model.net/-api-service/index.md) | 各URLの管理 |
@@ -24,11 +24,11 @@
 | [com.example.musicdictionaryandroid.model.repository.DataBaseRepositoryImp](../com.example.musicdictionaryandroid.model.repository/-data-base-repository-imp/index.md) |  |
 | [com.example.musicdictionaryandroid.ui.home.DetailsSearchFragment](../com.example.musicdictionaryandroid.ui.home/-details-search-fragment/index.md) | 詳細検索画面 |
 | [com.example.musicdictionaryandroid.ui.home.DetailsSearchViewModel](../com.example.musicdictionaryandroid.ui.home/-details-search-view-model/index.md) | 詳細検索画面_UIロジック |
-| [com.example.musicdictionaryandroid.ui.adapter.DialogFragmentCallbackInterface](../com.example.musicdictionaryandroid.ui.adapter/-dialog-fragment-callback-interface/index.md) | ダイアログ用コールバックリスナー |
-| [com.example.musicdictionaryandroid.ui.transition.FabTransform](../com.example.musicdictionaryandroid.ui.transition/-fab-transform/index.md) |  |
+| [com.example.musicdictionaryandroid.ui.home.DialogFragmentCallbackInterface](../com.example.musicdictionaryandroid.ui.adapter/-dialog-fragment-callback-interface/index.md) | ダイアログ用コールバックリスナー |
+| [com.example.musicdictionaryandroid.ui.util.transition.FabTransform](../com.example.musicdictionaryandroid.ui.util.transition/-fab-transform/index.md) |  |
 | [com.example.musicdictionaryandroid.model.repository.FireBaseRepository](../com.example.musicdictionaryandroid.model.repository/-fire-base-repository/index.md) | FireBase呼び出し関連のRepository |
 | [com.example.musicdictionaryandroid.model.repository.FireBaseRepositoryImp](../com.example.musicdictionaryandroid.model.repository/-fire-base-repository-imp/index.md) |  |
-| [com.example.musicdictionaryandroid.ui.transition.GravityArcMotion](../com.example.musicdictionaryandroid.ui.transition/-gravity-arc-motion/index.md) |  |
+| [com.example.musicdictionaryandroid.ui.util.transition.GravityArcMotion](../com.example.musicdictionaryandroid.ui.util.transition/-gravity-arc-motion/index.md) |  |
 | [com.example.musicdictionaryandroid.ui.home.HomeFragment](../com.example.musicdictionaryandroid.ui.home/-home-fragment/index.md) | HOME画面 |
 | [com.example.musicdictionaryandroid.ui.home.HomeViewModel](../com.example.musicdictionaryandroid.ui.home/-home-view-model/index.md) | HOME画面_UIロジック |
 | [com.example.musicdictionaryandroid.ui.MainActivity](../com.example.musicdictionaryandroid.ui/-main-activity/index.md) |  |
@@ -45,7 +45,7 @@
 | [com.example.musicdictionaryandroid.model.repository.PreferenceRepositoryImp](../com.example.musicdictionaryandroid.model.repository/-preference-repository-imp/index.md) | SharedPreferences管理 |
 | [com.example.musicdictionaryandroid.model.net.Provider](../com.example.musicdictionaryandroid.model.net/-provider/index.md) | API接続先設定 |
 | [com.example.musicdictionaryandroid.model.util.Result](../com.example.musicdictionaryandroid.model.util/-result/index.md) | ビジネスロジックの非同期処理ののResultクラス |
-| [com.example.musicdictionaryandroid.ui.adapter.ResultAdapter](../com.example.musicdictionaryandroid.ui.adapter/-result-adapter/index.md) | アーティスト検索結果画面のリサイクルビュー |
+| [com.example.musicdictionaryandroid.ui.home.ResultAdapter](../com.example.musicdictionaryandroid.ui.adapter/-result-adapter/index.md) | アーティスト検索結果画面のリサイクルビュー |
 | [com.example.musicdictionaryandroid.ui.home.ResultFragment](../com.example.musicdictionaryandroid.ui.home/-result-fragment/index.md) | 検索結果画面 |
 | [com.example.musicdictionaryandroid.ui.home.ResultRecommendFragment](../com.example.musicdictionaryandroid.ui.home/-result-recommend-fragment/index.md) | おすすめアーティスト検索結果画面 |
 | [com.example.musicdictionaryandroid.ui.home.ResultRecommendViewModel](../com.example.musicdictionaryandroid.ui.home/-result-recommend-view-model/index.md) | おすすめアーティスト検索結果画面_UIロジック |
@@ -54,7 +54,7 @@
 | [com.example.musicdictionaryandroid.ui.home.ResultViewModel](../com.example.musicdictionaryandroid.ui.home/-result-view-model/index.md) | 検索結果画面_UIロジック |
 | [com.example.musicdictionaryandroid.ui.home.SearchDialogFragment](../com.example.musicdictionaryandroid.ui.home/-search-dialog-fragment/index.md) | 検索条件ダイアログ |
 | [com.example.musicdictionaryandroid.ui.home.SearchViewModel](../com.example.musicdictionaryandroid.ui.home/-search-view-model/index.md) | 検索条件ダイアログUIロジック |
-| [com.example.musicdictionaryandroid.ui.adapter.SettingBaseAdapter](../com.example.musicdictionaryandroid.ui.adapter/-setting-base-adapter/index.md) | アーティスト一覧画面(アーティストリスト)用Adapter |
+| [com.example.musicdictionaryandroid.ui.mypage.SettingBaseAdapter](../com.example.musicdictionaryandroid.ui.adapter/-setting-base-adapter/index.md) | アーティスト一覧画面(アーティストリスト)用Adapter |
 | [com.example.musicdictionaryandroid.ui.login.SignInFragment](../com.example.musicdictionaryandroid.ui.login/-sign-in-fragment/index.md) | ログイン画面 |
 | [com.example.musicdictionaryandroid.ui.login.SignInViewModel](../com.example.musicdictionaryandroid.ui.login/-sign-in-view-model/index.md) | ログイン画面_UIロジック |
 | [com.example.musicdictionaryandroid.ui.login.SignUpFragment](../com.example.musicdictionaryandroid.ui.login/-sign-up-fragment/index.md) | 新規登録画面 |

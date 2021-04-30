@@ -16,10 +16,10 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.example.musicdictionaryandroid.R
 import com.example.musicdictionaryandroid.databinding.FragmentDetailsSearchBinding
-import com.example.musicdictionaryandroid.ui.transition.FabTransform
-import com.example.musicdictionaryandroid.ui.transition.HOME_DETAILS_BUTTON
-import kotlin.coroutines.CoroutineContext
+import com.example.musicdictionaryandroid.ui.util.transition.FabTransform
+import com.example.musicdictionaryandroid.ui.util.transition.HOME_DETAILS_BUTTON
 import kotlinx.coroutines.*
+import kotlin.coroutines.CoroutineContext
 
 /**
  * 詳細検索画面
@@ -51,7 +51,11 @@ class DetailsSearchFragment : Fragment(), CoroutineScope {
         binding.lifecycleOwner = viewLifecycleOwner
         binding.viewModel = viewModel
 
-        val trans = FabTransform(resources.getColor(R.color.bg_color_primary, null), R.drawable.round_primary_dark_button, HOME_DETAILS_BUTTON)
+        val trans = FabTransform(
+            resources.getColor(R.color.bg_color_primary, null),
+            R.drawable.round_primary_dark_button,
+            HOME_DETAILS_BUTTON
+        )
         sharedElementEnterTransition = trans
         sharedElementReturnTransition = transition
         if (state == 1) {

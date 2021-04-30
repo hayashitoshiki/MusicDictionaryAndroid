@@ -22,12 +22,9 @@ class MyPageUserFragment : Fragment() {
 
     private val viewModel: MyPageUserViewModel by viewModel()
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        val root: FragmentMypageUserBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_mypage_user, container, false)
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
+        val root: FragmentMypageUserBinding =
+            DataBindingUtil.inflate(inflater, R.layout.fragment_mypage_user, container, false)
         root.viewModel = viewModel
 
         val anim1 = AnimationUtils.loadAnimation(requireContext(), R.anim.fade_in_offset_300_anim)

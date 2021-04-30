@@ -13,6 +13,7 @@ class MyPageUserViewModel(
     userUseCase: UserUseCase
 ) : ViewModel() {
 
+    // ユーザ情報
     private val _emailText = MutableLiveData<String>()
     val emailText: LiveData<String> = _emailText
     private val _nameText = MutableLiveData<String>()

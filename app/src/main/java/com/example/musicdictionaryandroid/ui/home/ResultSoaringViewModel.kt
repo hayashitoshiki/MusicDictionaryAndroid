@@ -1,8 +1,6 @@
 package com.example.musicdictionaryandroid.ui.home
 
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.*
 import com.example.musicdictionaryandroid.domain.model.value.ArtistConditions
 import com.example.musicdictionaryandroid.domain.model.value.ArtistSearchContents
 import com.example.musicdictionaryandroid.domain.model.value.Result
@@ -13,8 +11,6 @@ import kotlinx.coroutines.launch
 
 /**
  * 急上昇アーティスト一覧画面_UIロジック
- *
- * @property artistUseCase
  */
 class ResultSoaringViewModel(
     private val artistUseCase: ArtistUseCase
@@ -22,11 +18,20 @@ class ResultSoaringViewModel(
 
     val status = MutableLiveData<Status<List<ArtistSearchContents<*>>>>()
 
-    /**
-     * アーティスト検索
-     *
-     * @return 急上昇アーティスト一覧
-     */
+    // Viewの表示制御
+    private val _isProgressBar = MediatorLiveData<Boolean>()
+    val isProgressBar: LiveData<Boolean> = _isProgressBar
+
+    init {
+        _isProgressBar.addSource(status, Observer { changeProgressBar(it) })
+    }
+
+    // プログレスバーの表示制御
+    private fun changeProgressBar(status: Status<List<ArtistSearchContents<*>>>) {
+        _isProgressBar.value = status is Status.Loading
+    }
+
+    // アーティスト検索
     fun getSoaring(): Job = viewModelScope.launch {
         status.value = Status.Loading
         when (val result = artistUseCase.getArtistsBySoaring()) {

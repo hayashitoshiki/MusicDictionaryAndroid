@@ -1,16 +1,18 @@
-package com.example.musicdictionaryandroid.ui.adapter
+package com.example.musicdictionaryandroid.ui.mypage
 
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.*
+import android.widget.BaseAdapter
+import android.widget.Button
+import android.widget.ListView
+import android.widget.TextView
 import com.example.musicdictionaryandroid.R
 import com.example.musicdictionaryandroid.domain.model.entity.Artist
 
 /**
  * アーティスト一覧画面(アーティストリスト)用Adapter
- *
  */
 class SettingBaseAdapter(context: Context?, private var items: List<Artist>) : BaseAdapter() {
 

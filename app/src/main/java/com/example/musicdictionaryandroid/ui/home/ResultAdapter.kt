@@ -1,4 +1,4 @@
-package com.example.musicdictionaryandroid.ui.adapter
+package com.example.musicdictionaryandroid.ui.home
 
 import android.content.Context
 import android.graphics.Color
@@ -14,8 +14,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.musicdictionaryandroid.R
 import com.example.musicdictionaryandroid.databinding.ItemResultArtistBinding
 import com.example.musicdictionaryandroid.domain.model.value.ArtistSearchContents
-import com.example.musicdictionaryandroid.ui.transition.ResizeAnimation
 import com.example.musicdictionaryandroid.ui.util.UserInfoChangeListUtil
+import com.example.musicdictionaryandroid.ui.util.transition.ResizeAnimation
 import com.github.mikephil.charting.charts.PieChart
 import com.github.mikephil.charting.data.PieData
 import com.github.mikephil.charting.data.PieDataSet
@@ -25,9 +25,6 @@ import com.squareup.picasso.Picasso
 
 /**
  * アーティスト検索結果画面のリサイクルビュー
- *
- * @property context コンテキスト
- * @property artistList 取得したアーティスト情報
  */
 class ResultAdapter(private val context: Context, private val artistList: List<ArtistSearchContents<*>>) :
     RecyclerView.Adapter<ResultAdapter.ViewHolder>() {

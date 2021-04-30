@@ -2,7 +2,6 @@ package com.example.musicdictionaryandroid.ui.login
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
@@ -18,9 +17,6 @@ import org.koin.android.viewmodel.ext.android.viewModel
  */
 class StartActivity : AppCompatActivity() {
 
-    companion object {
-        const val TAG = "StartActivity"
-    }
 
     private val viewModel: StartViewModel by viewModel()
 
@@ -29,7 +25,6 @@ class StartActivity : AppCompatActivity() {
         val binding: ActivityStartBinding = DataBindingUtil.setContentView(this, R.layout.activity_start)
         binding.viewModel = viewModel
         binding.lifecycleOwner = this
-        Log.d(TAG, "onCreate")
 
         viewModel.status.observe(this, Observer { onStateChanged(it) })
         viewModel.firstCheck()

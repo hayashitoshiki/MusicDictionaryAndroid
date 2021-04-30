@@ -1,7 +1,6 @@
 package com.example.musicdictionaryandroid.ui.home
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -17,14 +16,13 @@ import androidx.transition.ChangeTransform
 import androidx.transition.TransitionSet
 import com.example.musicdictionaryandroid.R
 import com.example.musicdictionaryandroid.databinding.FragmentCategorySearchBinding
-import com.example.musicdictionaryandroid.ui.transition.FabTransform
-import com.example.musicdictionaryandroid.ui.transition.HOME_CATEGORY_BUTTON
+import com.example.musicdictionaryandroid.ui.util.transition.FabTransform
+import com.example.musicdictionaryandroid.ui.util.transition.HOME_CATEGORY_BUTTON
 import kotlinx.coroutines.*
 import kotlin.coroutines.CoroutineContext
 
 /**
  * カテゴリ検索画面
- *
  */
 class CategorySearchFragment : Fragment(), CoroutineScope {
 
@@ -44,7 +42,6 @@ class CategorySearchFragment : Fragment(), CoroutineScope {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        Log.d("カテゴリ検索画面", "スタート")
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_category_search, container, false)
         binding.lifecycleOwner = viewLifecycleOwner
         binding.viewModel = viewModel
@@ -72,7 +69,6 @@ class CategorySearchFragment : Fragment(), CoroutineScope {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        Log.d("カテゴリ検索画面", "描画描開始")
         viewModel.init(
             resources.getStringArray(R.array.genre1_spinner_list),
             resources.getStringArray(R.array.genre12_spinner_list),

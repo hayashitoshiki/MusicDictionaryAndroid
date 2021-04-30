@@ -116,14 +116,6 @@ class ArtistUseCaseImpTest {
      * ・アーティスト検索Repositoryが呼ばれること
      * ・戻り値がアーティスト検索Repositoryの戻り値と同じであること
      */
-
-    /**
-     * 検索条件に一致するアーティスト取得
-     * 条件：なし
-     * 結果：
-     * ・アーティスト検索Repositoryが呼ばれること
-     * ・戻り値がアーティスト検索Repositoryの戻り値と同じであること
-     */
     @Test
     fun getArtistsBy() {
         runBlocking {
@@ -136,13 +128,7 @@ class ArtistUseCaseImpTest {
     // endregion
 
     // region おすすめアーティスト検索
-    /**
-     * おすすめアーティスト取得
-     * 条件：なし
-     * 結果：
-     * ・おすすめアーティスト取得Repositoryが呼ばれること
-     * ・戻り値がおすすめアーティスト取得Repositoryの戻り値と同じであること
-     */
+
     /**
      * おすすめアーティスト取得
      * 条件：なし
@@ -162,14 +148,6 @@ class ArtistUseCaseImpTest {
     // endregion
 
     // region 急上昇アーティスト取得
-
-    /**
-     * 急上昇アーティスト取得
-     * 条件：なし
-     * 結果：
-     * ・急上昇アーティスト取得Repositoryが呼ばれること
-     * ・戻り値が急上昇アーティスト取得Repositoryの戻り値と同じであること
-     */
 
     /**
      * 急上昇アーティスト取得
@@ -199,15 +177,6 @@ class ArtistUseCaseImpTest {
      * ・ローカルDBで保持しているデータが更新されること
      * ・登録しているアーティストの件数が更新されること
      */
-
-    /**
-     * 登録しているアーティスト取得
-     * 条件：通信取得成功時
-     * 結果：
-     * ・戻り値が取得したアーティストリストであること
-     * ・ローカルDBで保持しているデータが更新されること
-     * ・登録しているアーティストの件数が更新されること
-     */
     @Test
     fun getArtistsByEmailSuccess() {
         runBlocking {
@@ -218,16 +187,6 @@ class ArtistUseCaseImpTest {
             coVerify(exactly = 1) { (localUserRepository).setFavorite(artistList.size) }
         }
     }
-
-    /**
-     * 登録しているアーティスト取得
-     * 条件：通信取得失敗時
-     * 結果：
-     * ・戻り値がローカルDBから取得したアーティストリストであること
-     * ・ローカルDBで保持しているデータが更新されないこと
-     * ・登録しているアーティストの件数が更新されないこと
-     * ・ローカルDBで保持している登録済みアーティストリストから取得すること
-     */
 
     /**
      * 登録しているアーティスト取得
@@ -263,14 +222,6 @@ class ArtistUseCaseImpTest {
      * ・APIに登録するアーティストを送信するメソッドが呼ばれること
      * ・ローカルDBに登録したを追加するメソッドが呼ばれること
      */
-
-    /**
-     * アーティスト登録
-     * 条件：通信取得成功時
-     * 結果：
-     * ・APIに登録するアーティストを送信するメソッドが呼ばれること
-     * ・ローカルDBに登録したを追加するメソッドが呼ばれること
-     */
     @Test
     fun addArtistSuccess() {
         runBlocking {
@@ -279,14 +230,6 @@ class ArtistUseCaseImpTest {
             coVerify(exactly = 1) { (localArtistRepository).addArtist(artist) }
         }
     }
-
-    /**
-     * アーティスト登録
-     * 条件：通信取得失敗時
-     * 結果：
-     * ・APIに登録するアーティストを送信するメソッドが呼ばれること
-     * ・ローカルDBに登録したを追加するメソッドが呼ばれること
-     */
 
     /**
      * アーティスト登録
@@ -320,14 +263,6 @@ class ArtistUseCaseImpTest {
      * ・APIに更新するアーティストを送信するメソッドが呼ばれること
      * ・ローカルDBに更新したアーティストを更新するメソッドが呼ばれること
      */
-
-    /**
-     * アーティスト更新
-     * 条件：通信取得成功時
-     * 結果：
-     * ・APIに更新するアーティストを送信するメソッドが呼ばれること
-     * ・ローカルDBに更新したアーティストを更新するメソッドが呼ばれること
-     */
     @Test
     fun updateArtistSuccess() {
         runBlocking {
@@ -336,14 +271,6 @@ class ArtistUseCaseImpTest {
             coVerify(exactly = 1) { (localArtistRepository).updateArtist(artist) }
         }
     }
-
-    /**
-     * アーティスト更新
-     * 条件：通信取得失敗時
-     * 結果：
-     * ・APIに更新するアーティストを送信するメソッドが呼ばれること
-     * ・ローカルDBに更新したアーティストを更新するメソッドが呼ばれること
-     */
 
     /**
      * アーティスト更新
@@ -374,14 +301,6 @@ class ArtistUseCaseImpTest {
      * ・APIに削除するアーティストを送信するメソッドが呼ばれること
      * ・ローカルDBに削除したアーティストを削除するメソッドが呼ばれること
      */
-
-    /**
-     * アーティスト更新
-     * 条件：通信取得成功時
-     * 結果：
-     * ・APIに削除するアーティストを送信するメソッドが呼ばれること
-     * ・ローカルDBに削除したアーティストを削除するメソッドが呼ばれること
-     */
     @Test
     fun deleteArtistSuccess() {
         runBlocking {
@@ -390,14 +309,6 @@ class ArtistUseCaseImpTest {
             coVerify(exactly = 1) { (localArtistRepository).deleteArtist(artist.name) }
         }
     }
-
-    /**
-     * アーティスト削除
-     * 条件：通信取得失敗時
-     * 結果：
-     * ・APIに削除するアーティストを送信するメソッドが呼ばれること
-     * ・ローカルDBに削除したアーティストを削除するメソッドが呼ばれること
-     */
 
     /**
      * アーティスト削除
@@ -422,12 +333,6 @@ class ArtistUseCaseImpTest {
     // endregion
 
     // region アーティストリスト取得
-
-    /**
-     * アーティストリスト取得
-     * 条件：なし
-     * 結果：ローカルDBのアーティスト取得メソッドが呼ばれること
-     */
 
     /**
      * アーティストリスト取得

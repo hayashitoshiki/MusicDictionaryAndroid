@@ -1,6 +1,6 @@
-[app](../index.md) / [com.example.musicdictionaryandroid.ui.transition](./index.md)
+[app](../index.md) / [com.example.musicdictionaryandroid.ui.util.transition](./index.md)
 
-## Package com.example.musicdictionaryandroid.ui.transition
+## Package com.example.musicdictionaryandroid.ui.util.transition
 
 アニメーション管理
 

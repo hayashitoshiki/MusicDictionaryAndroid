@@ -18,10 +18,7 @@ class StartViewModel(private val userUseCase: UserUseCase) : ViewModel() {
     private val _isEnableRadioButton = MutableLiveData(true)
     val isEnableRadioButton: LiveData<Boolean> = _isEnableRadioButton
 
-    /**
-     * ログインチェック
-     *
-     */
+    // ログインチェック
     fun firstCheck() {
         _status.value = Status.Loading
         if (userUseCase.firstCheck()) {

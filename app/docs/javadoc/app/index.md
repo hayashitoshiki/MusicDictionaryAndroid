@@ -31,7 +31,7 @@ MVVM
 | [com.example.musicdictionaryandroid.ui.home](com.example.musicdictionaryandroid.ui.home/index.md) | ホームタブ画面管理 |
 | [com.example.musicdictionaryandroid.ui.login](com.example.musicdictionaryandroid.ui.login/index.md) | ログイン系画面管理 |
 | [com.example.musicdictionaryandroid.ui.mypage](com.example.musicdictionaryandroid.ui.mypage/index.md) | 設定タブ画面管理 |
-| [com.example.musicdictionaryandroid.ui.transition](com.example.musicdictionaryandroid.ui.transition/index.md) | アニメーション管理 |
+| [com.example.musicdictionaryandroid.ui.util.transition](com.example.musicdictionaryandroid.ui.util.transition/index.md) | アニメーション管理 |
 
 ### Index
 

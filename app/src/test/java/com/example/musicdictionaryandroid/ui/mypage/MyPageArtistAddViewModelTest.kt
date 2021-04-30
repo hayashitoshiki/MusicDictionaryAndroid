@@ -27,7 +27,7 @@ import org.junit.rules.TestRule
  * アーティスト登録・更新画面
  */
 
-class MyPageArtistEntityAddViewModelTest {
+class MyPageArtistAddViewModelTest {
 
     @ExperimentalCoroutinesApi
     private val testDispatcher = TestCoroutineDispatcher()
@@ -73,51 +73,132 @@ class MyPageArtistEntityAddViewModelTest {
         Dispatchers.resetMain()
     }
 
+    // region 送信ボタンバリデート
+
     /**
      * 入力バリデートロジック
      *
-     * 条件：１つずつ入力していき全てのバリデートが通ること
-     * 期待結果：５種類全部のバリデートが通ること
+     * 条件：アーティスト新規登録時の初期状態
+     * 期待結果：送信ボタンが非活性状態であること
      */
     @ExperimentalCoroutinesApi
     @Test
-    fun onSubmitError() {
-        // アーティスト名未入力
+    fun onSubmitValidateByInitNew() {
+        assertEquals(false, viewModel.isEnableSubmitButton.value!!)
+    }
+
+    /**
+     * 入力バリデートロジック
+     *
+     * 条件：アーティスト新規更新時の初期状態
+     * 期待結果：送信ボタンが活性状態であること
+     */
+    @ExperimentalCoroutinesApi
+    @Test
+    fun onSubmitValidateByInitUpdate() {
+        viewModel.init(array0, array1, array2, array3, array4, array5, array6, artist)
+        assertEquals(false, viewModel.isEnableSubmitButton.value!!)
+    }
+
+    /**
+     * 入力バリデートロジック
+     *
+     * 条件：アーティスト名のみ未入力
+     * 期待結果：送信ボタンが非活性状態であること
+     */
+    @ExperimentalCoroutinesApi
+    @Test
+    fun onSubmitValidateByNameNull() {
         viewModel.nameText.value = ""
         viewModel.gender.value = 1
         viewModel.length.value = 1
         viewModel.voice.value = 1
         viewModel.lyrics.value = 1
-        assertEquals(false, viewModel.isEnableSubmitButton.value!!)
-        // 性別未選択
+        val result = viewModel.isEnableSubmitButton.value!!
+        assertEquals(false, result)
+    }
+
+    /**
+     * 入力バリデートロジック
+     *
+     * 条件：性別のみ未入力
+     * 期待結果：送信ボタンが非活性状態であること
+     */
+    @ExperimentalCoroutinesApi
+    @Test
+    fun onSubmitValidateByGenderNull() {
         viewModel.nameText.value = "test"
         viewModel.gender.value = 0
         viewModel.length.value = 1
         viewModel.voice.value = 1
         viewModel.lyrics.value = 1
-        assertEquals(false, viewModel.isEnableSubmitButton.value!!)
-        // 長さ未選択
+        val result = viewModel.isEnableSubmitButton.value!!
+        assertEquals(false, result)
+    }
+
+    /**
+     * 入力バリデートロジック
+     *
+     * 条件：長さのみ未入力
+     * 期待結果：送信ボタンが非活性状態であること
+     */
+    @ExperimentalCoroutinesApi
+    @Test
+    fun onSubmitValidateByLengthNull() {
         viewModel.nameText.value = "test"
         viewModel.gender.value = 1
         viewModel.length.value = 0
         viewModel.voice.value = 1
         viewModel.lyrics.value = 1
-        assertEquals(viewModel.isEnableSubmitButton.value!!, false)
-        // 声の高さ未選択
+        val result = viewModel.isEnableSubmitButton.value!!
+        assertEquals(false, result)
+    }
+
+    /**
+     * 入力バリデートロジック
+     *
+     * 条件：声の高さのみ未入力
+     * 期待結果：送信ボタンが非活性状態であること
+     */
+    @ExperimentalCoroutinesApi
+    @Test
+    fun onSubmitValidateByVoiceNull() {
         viewModel.nameText.value = "test"
         viewModel.gender.value = 1
         viewModel.length.value = 1
         viewModel.voice.value = 0
         viewModel.lyrics.value = 1
-        assertEquals(viewModel.isEnableSubmitButton.value!!, false)
-        // 歌詞の言語未選択
+        val result = viewModel.isEnableSubmitButton.value!!
+        assertEquals(false, result)
+    }
+
+    /**
+     * 入力バリデートロジック
+     *
+     * 条件：歌詞情報のみ未入力
+     * 期待結果：送信ボタンが非活性状態であること
+     */
+    @ExperimentalCoroutinesApi
+    @Test
+    fun onSubmitValidateByLyricsNull() {
         viewModel.nameText.value = "test"
         viewModel.gender.value = 1
         viewModel.length.value = 1
         viewModel.voice.value = 1
         viewModel.lyrics.value = 0
-        assertEquals(viewModel.isEnableSubmitButton.value!!, false)
-        // ジャンル１未選択
+        val result = viewModel.isEnableSubmitButton.value!!
+        assertEquals(false, result)
+    }
+
+    /**
+     * 入力バリデートロジック
+     *
+     * 条件：ジャンル１のみ未入力
+     * 期待結果：送信ボタンが非活性状態であること
+     */
+    @ExperimentalCoroutinesApi
+    @Test
+    fun onSubmitValidateByGenre1Null() {
         viewModel.nameText.value = "test"
         viewModel.gender.value = 1
         viewModel.length.value = 1
@@ -125,8 +206,19 @@ class MyPageArtistEntityAddViewModelTest {
         viewModel.lyrics.value = 1
         viewModel.genre1.value = 0
         viewModel.genre2.value = 1
-        assertEquals(viewModel.isEnableSubmitButton.value!!, false)
-        // ジャンル２未選択
+        val result = viewModel.isEnableSubmitButton.value!!
+        assertEquals(false, result)
+    }
+
+    /**
+     * 入力バリデートロジック
+     *
+     * 条件：ジャンル２のみ未入力
+     * 期待結果：送信ボタンが非活性状態であること
+     */
+    @ExperimentalCoroutinesApi
+    @Test
+    fun onSubmitValidateByGenre2rNull() {
         viewModel.nameText.value = "test"
         viewModel.gender.value = 1
         viewModel.length.value = 1
@@ -134,8 +226,19 @@ class MyPageArtistEntityAddViewModelTest {
         viewModel.lyrics.value = 1
         viewModel.genre1.value = 1
         viewModel.genre2.value = 0
-        assertEquals(viewModel.isEnableSubmitButton.value!!, false)
-        // 正常系
+        val result = viewModel.isEnableSubmitButton.value!!
+        assertEquals(false, result)
+    }
+
+    /**
+     * 入力バリデートロジック
+     *
+     * 条件：全て入力済みであること
+     * 期待結果：送信ボタンが非活性状態であること
+     */
+    @ExperimentalCoroutinesApi
+    @Test
+    fun onSubmitValidateBySuccess() {
         viewModel.nameText.value = "test"
         viewModel.gender.value = 1
         viewModel.length.value = 1
@@ -143,25 +246,41 @@ class MyPageArtistEntityAddViewModelTest {
         viewModel.lyrics.value = 1
         viewModel.genre1.value = 1
         viewModel.genre2.value = 1
-        assertEquals(viewModel.isEnableSubmitButton.value!!, true)
+        val result = viewModel.isEnableSubmitButton.value!!
+        assertEquals(true, result)
     }
+
+    // endregion
+
+    // region 送信ボタン
 
     /**
      *　送信ロジック
-     * 初期化時にアーティスト情報がなければ新規登録、
-     * 初期化時にアーティスト情報があれば更新が呼ばれる
+     *
+     * 条件：初期表示時にアーティスト情報なし
+     * 結果：アーティスト業務ロジッククラスの新規登録メソッドが呼ばれること
      */
     @Test
-    fun submit() {
-        // アーティスト新規登録
+    fun submitByNew() {
         viewModel.init(array0, array1, array2, array3, array4, array5, array6, null)
         viewModel.submit()
         coVerify(exactly = 1) { (artistUseCase).addArtist(any()) }
         coVerify(exactly = 0) { (artistUseCase).updateArtist(any()) }
-        // アーティスト更新
+    }
+
+    /**
+     *　送信ロジック
+     *
+     * 条件：初期表示時にアーティスト情報あり
+     * 結果：アーティスト業務ロジッククラスの更新メソッドが呼ばれること
+     */
+    @Test
+    fun submitByUpdate() {
         viewModel.init(array0, array1, array2, array3, array4, array5, array6, artist)
         viewModel.submit()
-        coVerify(exactly = 1) { (artistUseCase).addArtist(any()) }
+        coVerify(exactly = 0) { (artistUseCase).addArtist(any()) }
         coVerify(exactly = 1) { (artistUseCase).updateArtist(any()) }
     }
+
+    // endregion
 }
