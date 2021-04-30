@@ -76,13 +76,13 @@ class MyPageArtistAddFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         viewModel.init(
-            resources.getStringArray(R.array.genre1_spinner_list),
-            resources.getStringArray(R.array.genre12_spinner_list),
-            resources.getStringArray(R.array.genre22_spinner_list),
-            resources.getStringArray(R.array.genre32_spinner_list),
-            resources.getStringArray(R.array.genre42_spinner_list),
-            resources.getStringArray(R.array.genre52_spinner_list),
-            resources.getStringArray(R.array.genre62_spinner_list),
+            resources.getStringArray(R.array.genre1_spinner_list).toList(),
+            resources.getStringArray(R.array.genre12_spinner_list).toList(),
+            resources.getStringArray(R.array.genre22_spinner_list).toList(),
+            resources.getStringArray(R.array.genre32_spinner_list).toList(),
+            resources.getStringArray(R.array.genre42_spinner_list).toList(),
+            resources.getStringArray(R.array.genre52_spinner_list).toList(),
+            resources.getStringArray(R.array.genre62_spinner_list).toList(),
             args.data
         )
 

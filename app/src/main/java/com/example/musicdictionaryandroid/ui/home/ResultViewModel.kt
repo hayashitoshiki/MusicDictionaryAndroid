@@ -44,7 +44,6 @@ class ResultViewModel(
         }
     }
 
-
     // アーティスト検索
     fun getArtists(artist: ArtistConditions): Job = viewModelScope.launch {
         _status.value = Status.Loading

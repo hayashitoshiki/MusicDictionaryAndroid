@@ -15,7 +15,9 @@ import kotlinx.coroutines.launch
 class ResultRecommendViewModel(private val artistUseCase: ArtistUseCase) : ViewModel() {
 
     // ステータス
-    val status = MutableLiveData<Status<List<ArtistSearchContents<*>>>>()
+    private val _status = MutableLiveData<Status<List<ArtistSearchContents<*>>>>()
+    val status: LiveData<Status<List<ArtistSearchContents<*>>>> = _status
+
 
     // Viewの表示制御
     private val _isProgressBar = MediatorLiveData<Boolean>()
@@ -32,7 +34,7 @@ class ResultRecommendViewModel(private val artistUseCase: ArtistUseCase) : ViewM
 
     // アーティスト検索
     fun getRecommend(): Job = viewModelScope.launch {
-        status.value = Status.Loading
+        _status.value = Status.Loading
         when (val result = artistUseCase.getArtistsByRecommend()) {
             is Result.Success -> {
                 val artist = ArtistConditions("おすすめ", null, null, null, null, null, null)
@@ -41,10 +43,10 @@ class ResultRecommendViewModel(private val artistUseCase: ArtistUseCase) : ViewM
                 result.data.forEach { contents ->
                     arrayList.add(ArtistSearchContents.Item(contents))
                 }
-                status.postValue(Status.Success(arrayList))
+                _status.postValue(Status.Success(arrayList))
             }
             is Result.Error -> {
-                status.postValue(Status.Failure(result.exception))
+                _status.postValue(Status.Failure(result.exception))
             }
         }
     }

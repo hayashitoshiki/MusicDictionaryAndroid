@@ -1,76 +1,187 @@
 package com.example.musicdictionaryandroid.ui.home
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
-import androidx.lifecycle.Observer
-import com.nhaarman.mockito_kotlin.mock
+import com.example.musicdictionaryandroid.BaseTestUnit
 import junit.framework.Assert.assertEquals
-import kotlinx.coroutines.ExperimentalCoroutinesApi
+import org.junit.After
+import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.rules.TestRule
 
 /**
  * カテゴリ検索画面
- *
  */
-class CategorySearchViewModelTest {
+class CategorySearchViewModelTest : BaseTestUnit() {
 
     // LiveData用
     @get:Rule
     val rule: TestRule = InstantTaskExecutorRule()
 
+    private val viewModel = CategorySearchViewModel()
+
+    @Before
+    fun setUp() {
+        viewModel.isEnableSubmitButton.observeForever(observerBoolean)
+    }
+
+    @After
+    fun tearDown() {
+    }
+
+    // region 各種バリデーション
+
     /**
      * バリデーションロジック
      *
-     * 条件：各カテゴリのジャンルのどれか１つを選択していれば活性化する、１つも選択していな場合、非活性となる
-     * 期待結果：バリデーション条件を満たさない場合false、満たす場合trueが帰る
+     * 条件：初期状態
+     * 期待結果：非活性状態になること
      */
-    @ExperimentalCoroutinesApi
     @Test
-    fun onButtonValidate() {
-        // テストクラス作成
-        val viewModel = CategorySearchViewModel()
-        val observer = mock<Observer<Boolean>>()
-        viewModel.isEnableSubmitButton.observeForever(observer)
+    fun onButtonValidateByInit() {
+        val buttonEnable = viewModel.isEnableSubmitButton.value!!
+        assertEquals(false, buttonEnable)
+    }
 
-        // 実行
-        // 初期状態
-        viewModel.checkedChangeGender(0)
-        viewModel.checkedChangeLength(0)
-        viewModel.checkedChangeLyric(0)
-        viewModel.checkedChangeVoice(0)
-        assertEquals(viewModel.isEnableSubmitButton.value!!, false)
-        // 性別選択
-        for (i in 1..4) {
+    /**
+     * バリデーションロジック
+     *
+     * 条件：性別のみ選択
+     * 期待結果：活性状態になること
+     */
+    @Test
+    fun onButtonValidateByGender() {
+        for (i in 1..2) {
             viewModel.checkedChangeGender(i)
             viewModel.checkedChangeLength(0)
             viewModel.checkedChangeLyric(0)
             viewModel.checkedChangeVoice(0)
-            assertEquals(viewModel.isEnableSubmitButton.value!!, true)
+            val buttonEnable = viewModel.isEnableSubmitButton.value
+            assertEquals(true, buttonEnable)
         }
-        // 長さ選択
+    }
+
+    /**
+     * バリデーションロジック
+     *
+     * 条件：長さのみ選択
+     * 期待結果：活性状態になること
+     */
+    @Test
+    fun onButtonValidateByLength() {
         for (i in 1..4) {
             viewModel.checkedChangeGender(0)
             viewModel.checkedChangeLength(i)
             viewModel.checkedChangeLyric(0)
             viewModel.checkedChangeVoice(0)
-            assertEquals(viewModel.isEnableSubmitButton.value!!, true)
+            val buttonEnable = viewModel.isEnableSubmitButton.value
+            assertEquals(true, buttonEnable)
         }
-        // 歌詞の言語選択
+    }
+
+    /**
+     * バリデーションロジック
+     *
+     * 条件：歌詞の言語のみ選択
+     * 期待結果：活性状態になること
+     */
+    @Test
+    fun onButtonValidateByLyrics() {
         for (i in 1..4) {
             viewModel.checkedChangeGender(0)
             viewModel.checkedChangeLength(0)
             viewModel.checkedChangeLyric(i)
             viewModel.checkedChangeVoice(0)
-            assertEquals(viewModel.isEnableSubmitButton.value!!, true)
+            val buttonEnable = viewModel.isEnableSubmitButton.value
+            assertEquals(true, buttonEnable)
         }
-        // 声の高さ選択
+    }
+
+    /**
+     * バリデーションロジック
+     *
+     * 条件：声の高さのみ選択
+     * 期待結果：活性状態になること
+     */
+    @Test
+    fun onButtonValidateByVoice() {
         for (i in 1..4) {
             viewModel.checkedChangeGender(0)
             viewModel.checkedChangeLength(0)
             viewModel.checkedChangeLyric(0)
             viewModel.checkedChangeVoice(i)
-            assertEquals(viewModel.isEnableSubmitButton.value!!, true)
+            val buttonEnable = viewModel.isEnableSubmitButton.value
+            assertEquals(true, buttonEnable)
         }
     }
+
+    // endregion
+
+    // region 選択解除
+
+    /**
+     * 選択解除ロジック
+     *
+     * 条件：前回選択した性別と同じボタンをタップ
+     * 期待結果：選択解除されること
+     */
+    @Test
+    fun onCancelByGender() {
+        for (i in 1..2) {
+            viewModel.checkedChangeGender(i)
+            viewModel.checkedChangeGender(i)
+            val checkId = viewModel.genderValueInt.value
+            assertEquals(0, checkId)
+        }
+    }
+
+    /**
+     * バリデーションロジック
+     *
+     * 条件：前回選択した曲の長さと同じボタンをタップ
+     * 期待結果：選択解除されること
+     */
+    @Test
+    fun onCancelByLength() {
+        for (i in 1..4) {
+            viewModel.checkedChangeLength(i)
+            viewModel.checkedChangeLength(i)
+            val checkId = viewModel.lengthValueInt.value
+            assertEquals(0, checkId)
+        }
+    }
+
+    /**
+     * バリデーションロジック
+     *
+     * 条件：前回選択した歌詞の言語と同じボタンをタップ
+     * 期待結果：選択解除されること
+     */
+    @Test
+    fun onCancelByLyrics() {
+        for (i in 1..4) {
+            viewModel.checkedChangeLyric(i)
+            viewModel.checkedChangeLyric(i)
+            val checkId = viewModel.lyricsValueInt.value
+            assertEquals(0, checkId)
+        }
+    }
+
+    /**
+     * バリデーションロジック
+     *
+     * 条件：前回選択した声の高さと同じボタンをタップ
+     * 期待結果：活性状態になること
+     */
+    @Test
+    fun onCancelByVoice() {
+        for (i in 1..4) {
+            viewModel.checkedChangeVoice(i)
+            viewModel.checkedChangeVoice(i)
+            val checkId = viewModel.voiceValueInt.value
+            assertEquals(0, checkId)
+        }
+    }
+
+    // endregion
 }

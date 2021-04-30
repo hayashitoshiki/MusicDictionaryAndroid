@@ -22,6 +22,8 @@ import com.example.musicdictionaryandroid.ui.mypage.MyPageArtistAddViewModel
 import com.example.musicdictionaryandroid.ui.mypage.MyPageArtistViewModel
 import com.example.musicdictionaryandroid.ui.mypage.MyPageTopViewModel
 import com.example.musicdictionaryandroid.ui.mypage.MyPageUserViewModel
+import com.example.musicdictionaryandroid.ui.util.UserInfoChangeListUtil
+import com.example.musicdictionaryandroid.ui.util.UserInfoChangeListUtilImp
 import kotlinx.coroutines.MainScope
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.viewmodel.dsl.viewModel
@@ -68,11 +70,11 @@ class MyApplication : Application() {
         viewModel { MainActivityViewModel(get()) }
 
         viewModel { MyPageTopViewModel(get()) }
-        viewModel { MyPageUserViewModel(get()) }
+        viewModel { MyPageUserViewModel(get(), get()) }
         viewModel { MyPageArtistAddViewModel(get()) }
         viewModel { MyPageArtistViewModel(get()) }
         viewModel { SignInViewModel(get(), applicationScope) }
-        viewModel { SignUpViewModel(get(), applicationScope) }
+        viewModel { SignUpViewModel(get(), get(), applicationScope) }
         viewModel { ResultViewModel(get()) }
         viewModel { ResultRecommendViewModel(get()) }
         viewModel { ResultSoaringViewModel(get()) }
@@ -88,6 +90,8 @@ class MyApplication : Application() {
         factory<LocalArtistRepository> { LocalArtistRepositoryImp() }
         factory<LocalUserRepository> { LocalUserRepositoryImp(get()) }
 
-        factory<UserSharedPreferences> { UserSharedPreferencesImp() }
+        factory<UserSharedPreferences> { UserSharedPreferencesImp(get()) }
+
+        single<UserInfoChangeListUtil> { UserInfoChangeListUtilImp }
     }
 }

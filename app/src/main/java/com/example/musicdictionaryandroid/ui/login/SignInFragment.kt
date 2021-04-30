@@ -66,7 +66,7 @@ class SignInFragment : Fragment() {
 
     // ステータス監視
     @Suppress("IMPLICIT_CAST_TO_ANY")
-    private fun onStateChanged(state: Status<Boolean>) = when (state) {
+    private fun onStateChanged(state: Status<String>) = when (state) {
         is Status.Loading -> {
             (activity as StartActivity).loading()
         }

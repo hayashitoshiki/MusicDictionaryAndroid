@@ -1,5 +1,6 @@
 package com.example.musicdictionaryandroid.domain.usecase
 
+import com.example.musicdictionaryandroid.BaseTestUnit
 import com.example.musicdictionaryandroid.data.repository.LocalArtistRepository
 import com.example.musicdictionaryandroid.data.repository.LocalUserRepository
 import com.example.musicdictionaryandroid.data.repository.RemoteUserRepository
@@ -13,20 +14,12 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.runBlocking
-import kotlinx.coroutines.test.TestCoroutineDispatcher
-import kotlinx.coroutines.test.TestCoroutineScope
 import org.junit.After
 import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
 
-class UserEntityUseCaseImpTest {
-
-    @ExperimentalCoroutinesApi
-    private val testDispatcher = TestCoroutineDispatcher()
-
-    @ExperimentalCoroutinesApi
-    private val testScope = TestCoroutineScope(testDispatcher)
+class UserEntityUseCaseImpTest : BaseTestUnit() {
 
     private lateinit var useCase: UserUseCaseImp
     private lateinit var localArtistRepository: LocalArtistRepository

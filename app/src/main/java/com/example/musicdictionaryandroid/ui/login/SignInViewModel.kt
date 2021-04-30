@@ -19,8 +19,8 @@ class SignInViewModel(
 ) : ViewModel() {
 
     // ステータス
-    private val _status = MutableLiveData<Status<Boolean>>(Status.Non)
-    val status: LiveData<Status<Boolean>> = _status
+    private val _status = MutableLiveData<Status<String>>(Status.Non)
+    val status: LiveData<Status<String>> = _status
 
     // 入力項目
     val emailText = MutableLiveData<String>()
@@ -41,6 +41,11 @@ class SignInViewModel(
         _isEnableSubmitButton.addSource(passwordText) { validateSubmit() }
         _isEnableSubmitButton.addSource(isProgressBar) { validateSubmit() }
         _isProgressBar.addSource(_status, Observer { changeProgressBar(it) })
+    }
+
+    // プログレスバーの表示制御
+    private fun changeProgressBar(status: Status<String>) {
+        _isProgressBar.value = status is Status.Loading
     }
 
     // バリデート判定
@@ -67,11 +72,6 @@ class SignInViewModel(
     // password入力欄バリデート
     private fun validatePassword(): Boolean {
         return passwordText.value != null && passwordText.value!!.length > 5
-    }
-
-    // プログレスバーの表示制御
-    private fun changeProgressBar(status: Status<Boolean>) {
-        _isProgressBar.value = status is Status.Loading
     }
 
     // メールアドレスエラー文言表示
@@ -106,7 +106,7 @@ class SignInViewModel(
         _status.postValue(Status.Loading)
         userUseCase.signIn(emailText.value!!, passwordText.value!!).collect {
             when (it) {
-                is Result.Success -> _status.postValue(Status.Success(true))
+                is Result.Success -> _status.postValue(Status.Success(it.data))
                 is Result.Error -> _status.postValue(Status.Failure(it.exception))
             }
         }

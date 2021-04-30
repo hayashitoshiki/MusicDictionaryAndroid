@@ -1,5 +1,6 @@
 package com.example.musicdictionaryandroid.domain.usecase
 
+import com.example.musicdictionaryandroid.BaseTestUnit
 import com.example.musicdictionaryandroid.data.repository.LocalArtistRepository
 import com.example.musicdictionaryandroid.data.repository.LocalUserRepository
 import com.example.musicdictionaryandroid.data.repository.RemoteArtistRepository
@@ -16,8 +17,6 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.runBlocking
-import kotlinx.coroutines.test.TestCoroutineDispatcher
-import kotlinx.coroutines.test.TestCoroutineScope
 import kotlinx.coroutines.test.resetMain
 import kotlinx.coroutines.test.setMain
 import org.junit.After
@@ -25,13 +24,7 @@ import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
 
-class ArtistUseCaseImpTest {
-
-    @ExperimentalCoroutinesApi
-    private val testDispatcher = TestCoroutineDispatcher()
-
-    @ExperimentalCoroutinesApi
-    private val testScope = TestCoroutineScope(testDispatcher)
+class ArtistUseCaseImpTest : BaseTestUnit() {
 
     private lateinit var useCase: ArtistUseCaseImp
     private lateinit var remoteArtistRepository: RemoteArtistRepository

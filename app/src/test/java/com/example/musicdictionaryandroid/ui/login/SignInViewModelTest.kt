@@ -1,14 +1,15 @@
 package com.example.musicdictionaryandroid.ui.login
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
-import androidx.lifecycle.Observer
+import com.example.musicdictionaryandroid.BaseTestUnit
+import com.example.musicdictionaryandroid.domain.model.value.Result
 import com.example.musicdictionaryandroid.domain.usecase.UserUseCase
-import com.nhaarman.mockito_kotlin.mock
+import com.example.musicdictionaryandroid.ui.util.Status
+import io.mockk.coEvery
 import io.mockk.mockk
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.test.TestCoroutineDispatcher
-import kotlinx.coroutines.test.TestCoroutineScope
+import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.test.resetMain
 import kotlinx.coroutines.test.setMain
 import org.junit.After
@@ -22,16 +23,19 @@ import org.junit.rules.TestRule
 /**
  * ログイン画面
  */
+class SignInViewModelTest : BaseTestUnit() {
 
-class SignInViewModelTest {
-
-    @ExperimentalCoroutinesApi
-    private val testDispatcher = TestCoroutineDispatcher()
-
-    @ExperimentalCoroutinesApi
-    private val testScope = TestCoroutineScope(testDispatcher)
-
+    // mock
     private lateinit var viewModel: SignInViewModel
+
+    // data
+    private val successEmail = "successEmail"
+    private val successResult = Result.Success("Success")
+    private val successStatus = Status.Success("Success")
+    private val failureEmail = "failureEmail"
+    private val failure = IllegalArgumentException("")
+    private val failureResult = Result.Error(failure)
+    private val failureStatus = Status.Failure(failure)
 
     // LiveData用
     @get:Rule
@@ -41,11 +45,12 @@ class SignInViewModelTest {
     @Before
     fun before() {
         Dispatchers.setMain(testDispatcher)
-        // テストクラス作成
-        val userUseCase = mockk<UserUseCase>()
-        val observer = mock<Observer<Boolean>>()
+        val userUseCase = mockk<UserUseCase>().also() {
+            coEvery { it.signIn(successEmail, any()) } returns flow { emit(successResult) }
+            coEvery { it.signIn(failureEmail, any()) } returns flow { emit(failureResult) }
+        }
         viewModel = SignInViewModel(userUseCase, testScope)
-        viewModel.isEnableSubmitButton.observeForever(observer)
+        viewModel.isEnableSubmitButton.observeForever(observerBoolean)
     }
 
     @ExperimentalCoroutinesApi
@@ -54,76 +59,225 @@ class SignInViewModelTest {
         Dispatchers.resetMain()
     }
 
+    // region メールアドレス入力欄のエラー文言制御
+
     /**
      * メールアドレス入力欄のエラー文言制御
-     * emailErrorText： エラー文言の有無
+     *
+     * 条件：初期表示
+     * 結果：エラー文言が表示されないこと
      */
     @ExperimentalCoroutinesApi
     @Test
-    fun focusChangeEmail() {
-        // 初期状態
+    fun focusChangeEmailByInit() {
         viewModel.focusChangeEmail()
-        assertEquals(viewModel.emailErrorText.value, null)
-        // ５文字
+        val emailError = viewModel.emailErrorText.value
+        assertEquals(null, emailError)
+    }
+
+    /**
+     * メールアドレス入力欄のエラー文言制御
+     *
+     * 条件：メールアドレス入力済み & ５文字
+     * 結果：エラー文言が表示されること
+     */
+    @ExperimentalCoroutinesApi
+    @Test
+    fun focusChangeEmailByEmail5() {
         viewModel.emailText.value = "12345"
         viewModel.focusChangeEmail()
-        assertNotEquals(viewModel.emailErrorText.value!!, null)
-        // ６文字 && メールアドレス形式ではない
+        val emailError = viewModel.emailErrorText.value
+        assertNotEquals(null, emailError)
+    }
+
+    /**
+     * メールアドレス入力欄のエラー文言制御
+     *
+     * 条件：メールアドレス入力済み & メールアドレスの形式ではない
+     * 結果：エラー文言が表示されること
+     */
+    @ExperimentalCoroutinesApi
+    @Test
+    fun focusChangeEmailByEmailAndNotEmail() {
         viewModel.emailText.value = "123456"
         viewModel.focusChangeEmail()
-        assertNotEquals(viewModel.emailErrorText.value!!, null)
-        // ６文字以上 && メールアドレス形式
+        val emailError = viewModel.emailErrorText.value
+        assertNotEquals(null, emailError)
+    }
+
+    /**
+     * メールアドレス入力欄のエラー文言制御
+     *
+     * 条件：メールアドレス入力済み & メールアドレスの形式である
+     * 結果：エラー文言が表示されないこと
+     */
+    @ExperimentalCoroutinesApi
+    @Test
+    fun focusChangeEmailByEmailAndEmail() {
         viewModel.emailText.value = "abc@aaa.ne.jp"
         viewModel.focusChangeEmail()
-        assertEquals(viewModel.emailErrorText.value, null)
+        val emailError = viewModel.emailErrorText.value
+        assertEquals(null, emailError)
+    }
+
+    // endregion
+
+    // region パスワード入力欄のエラー文言制御
+
+    /**
+     * パスワード入力欄のエラー文言制御
+     *
+     * 条件：初期状態
+     * 結果：エラー文言が表示されないこと
+     */
+    @ExperimentalCoroutinesApi
+    @Test
+    fun focusChangePasswordByInit() {
+        viewModel.focusChangePassword()
+        val passwordError = viewModel.passwordErrorText.value
+        assertEquals(null, passwordError)
     }
 
     /**
      * パスワード入力欄のエラー文言制御
-     * passwordErrorText： エラー文言の有無
+     *
+     * 条件：パスワード入力済み && ５文字
+     * 結果：エラー文言が表示されること
      */
     @ExperimentalCoroutinesApi
     @Test
-    fun focusChangePassword() {
-        // 初期状態
-        viewModel.focusChangePassword()
-        assertEquals(viewModel.passwordErrorText.value, null)
-        // ５文字
+    fun focusChangePasswordByPassword5() {
         viewModel.passwordText.value = "12345"
         viewModel.focusChangePassword()
-        assertNotEquals(viewModel.passwordErrorText.value, null)
-        // ６文字
+        val passwordError = viewModel.passwordErrorText.value
+        assertNotEquals(null, passwordError)
+    }
+
+    /**
+     * パスワード入力欄のエラー文言制御
+     *
+     * 条件：パスワード入力済み && ６文字
+     * 結果：エラー文言が表示されること
+     */
+    @ExperimentalCoroutinesApi
+    @Test
+    fun focusChangePasswordByPassword6() {
         viewModel.passwordText.value = "123456"
         viewModel.focusChangePassword()
-        assertEquals(viewModel.passwordErrorText.value, null)
+        val passwordError = viewModel.passwordErrorText.value
+        assertEquals(null, passwordError)
+    }
+
+    // endregion
+
+    // region 送信ボタンのバリデーション制御
+
+    /**
+     * バリデーションロジック
+     *
+     * 条件：初期状態
+     * 結果：非活性状態であること
+     */
+    @ExperimentalCoroutinesApi
+    @Test
+    fun onButtonValidateByInit() {
+        val buttonValidate = viewModel.isEnableSubmitButton.value!!
+        assertEquals(false, buttonValidate)
     }
 
     /**
      * バリデーションロジック
      *
-     * 条件：Emailが６文字以上、passwordが６文字以上でなければfalseを返す
-     * 期待結果：バリデーション条件を満たさない場合false、満たす場合trueが帰る
+     * 条件：メールアドレスが５文字
+     * 結果：非活性状態であること
      */
     @ExperimentalCoroutinesApi
     @Test
-    fun onButtonValidate() {
-        // 初期状態
-        assertEquals(viewModel.isEnableSubmitButton.value!!, false)
-        // Email５文字、Password６文字
+    fun onButtonValidateByEmail5() {
         viewModel.emailText.value = "12345"
         viewModel.passwordText.value = "12@4.6"
-        assertEquals(viewModel.isEnableSubmitButton.value!!, false)
-        // Email６文字、Password５文字
+        val buttonValidate = viewModel.isEnableSubmitButton.value!!
+        assertEquals(false, buttonValidate)
+    }
+
+    /**
+     * バリデーションロジック
+     *
+     * 条件：パスワードが５文字
+     * 結果：非活性状態であること
+     */
+    @ExperimentalCoroutinesApi
+    @Test
+    fun onButtonValidateByPassword5() {
         viewModel.emailText.value = "123456"
         viewModel.passwordText.value = "12345"
-        assertEquals(viewModel.isEnableSubmitButton.value!!, false)
-        // Email６文字、Password６文字(メール形式じゃない)
+        val buttonValidate = viewModel.isEnableSubmitButton.value!!
+        assertEquals(false, buttonValidate)
+    }
+
+    /**
+     * バリデーションロジック
+     *
+     * 条件：メールアドレスがメール形式ではない
+     * 結果：非活性状態であること
+     */
+    @ExperimentalCoroutinesApi
+    @Test
+    fun onButtonValidateByEmailAndNotEmail() {
         viewModel.emailText.value = "123456"
         viewModel.passwordText.value = "123456"
-        assertEquals(viewModel.isEnableSubmitButton.value!!, false)
-        // Email６文字、Password６文字(メール形式)
+        val buttonValidate = viewModel.isEnableSubmitButton.value!!
+        assertEquals(false, buttonValidate)
+    }
+
+    /**
+     * バリデーションロジック
+     *
+     * 条件：正常系
+     * 結果：活性状態であること
+     */
+    @ExperimentalCoroutinesApi
+    @Test
+    fun onButtonValidateBySuccess() {
         viewModel.emailText.value = "aaa@ezweb.ne.jp"
         viewModel.passwordText.value = "123456"
-        assertEquals(viewModel.isEnableSubmitButton.value!!, true)
+        val buttonValidate = viewModel.isEnableSubmitButton.value!!
+        assertEquals(true, buttonValidate)
     }
+
+    // endregion
+
+    // region ログイン処理
+
+    /**
+     * ログイン処理
+     *
+     * 条件：ログイン成功
+     * 結果：ログインのステータスが成功になること
+     */
+    @Test
+    fun signUpBySuccess() {
+        viewModel.emailText.value = successEmail
+        viewModel.passwordText.value = "123456"
+        viewModel.signIn()
+        val result = viewModel.status.value
+        assertEquals(successStatus, result)
+    }
+
+    /**
+     * ログイン処理
+     *
+     * 条件：ログイン失敗
+     * 結果：ログインのステータスが失敗になること
+     */
+    @Test
+    fun signUpByError() {
+        viewModel.emailText.value = failureEmail
+        viewModel.passwordText.value = "123456"
+        viewModel.signIn()
+        val result = viewModel.status.value
+        assertEquals(failureStatus, result)
+    }
+
+    // endregion
 }

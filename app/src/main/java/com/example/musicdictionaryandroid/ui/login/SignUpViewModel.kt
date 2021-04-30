@@ -16,8 +16,9 @@ import java.util.regex.Pattern
  * 新規登録画面_UIロジック
  */
 class SignUpViewModel(
+    private val userInfoChangeListUtil: UserInfoChangeListUtil,
     private val userUseCase: UserUseCase,
-    private val externalScope: CoroutineScope
+    private val externalScope: CoroutineScope,
 ) : ViewModel() {
 
     // ステータス
@@ -29,6 +30,11 @@ class SignUpViewModel(
     val password1Text = MutableLiveData<String>()
     val password2Text = MutableLiveData<String>()
     val nameText = MutableLiveData<String>()
+    val genderInt = MutableLiveData(0)
+    val areaSelectedPosition = MutableLiveData(0)
+    val birthdaySelectedPosition = MutableLiveData(0)
+
+    // エラー制御
     private val _emailErrorText = MutableLiveData<String?>()
     val emailErrorText: LiveData<String?> = _emailErrorText
     private val _passwordError1Text = MutableLiveData<String?>()
@@ -37,9 +43,6 @@ class SignUpViewModel(
     val passwordError2Text: LiveData<String?> = _passwordError2Text
     private val _nameErrorText = MutableLiveData<String?>()
     val nameErrorText: LiveData<String?> = _nameErrorText
-    val genderInt = MutableLiveData(0)
-    val areaSelectedPosition = MutableLiveData(0)
-    val birthdaySelectedPosition = MutableLiveData(0)
 
     // ボタン制御
     private val _isEnableSubmitButton = MediatorLiveData<Boolean>()
@@ -67,7 +70,7 @@ class SignUpViewModel(
     // ボタンのバリデート
     private fun validateSubmit() {
         _isEnableSubmitButton.value =
-            validateEmail() && validatePassword() && validateName() && validateGender() && validateArea() && validateBirthday() && validateProgressBar()
+            validateEmail() && validatePassword() && validateName() && validateGender() && validateArea() && validateBirthday()
     }
 
     // email入力欄
@@ -110,11 +113,6 @@ class SignUpViewModel(
     // 年齢入力欄
     private fun validateBirthday(): Boolean {
         return birthdaySelectedPosition.value != null && birthdaySelectedPosition.value!! != 0
-    }
-
-    // progressBarバリデート
-    private fun validateProgressBar(): Boolean {
-        return isProgressBar.value != null && !isProgressBar.value!!
     }
 
     // メールアドレスエラー文言表示
@@ -171,10 +169,14 @@ class SignUpViewModel(
     // 新規作成
     fun signUp(): Job = externalScope.launch {
         _status.postValue(Status.Loading)
-        val birthday = UserInfoChangeListUtil.getBirthday(birthdaySelectedPosition.value!!)
-        val user =
-            User(emailText.value!!, nameText.value!!, genderInt.value!!, areaSelectedPosition.value!!, birthday, 0)
-        userUseCase.createUser(emailText.value!!, password1Text.value!!, user).collect {
+        val email = emailText.value!!
+        val name = nameText.value!!
+        val gender = genderInt.value!!
+        val area = areaSelectedPosition.value!!
+        val birthday = userInfoChangeListUtil.getBirthday(birthdaySelectedPosition.value!!)
+        val password = password1Text.value!!
+        val user = User(email, name, gender, area, birthday, 0)
+        userUseCase.createUser(email, password, user).collect {
             when (it) {
                 is Result.Success -> _status.postValue(Status.Success(it.data))
                 is Result.Error -> _status.postValue(Status.Failure(it.exception))

@@ -4,13 +4,13 @@ import com.example.musicdictionaryandroid.data.local.preferences.PreferenceManag
 import com.example.musicdictionaryandroid.domain.model.entity.User
 import com.example.musicdictionaryandroid.ui.util.UserInfoChangeListUtil
 
-class UserSharedPreferencesImp : UserSharedPreferences {
+class UserSharedPreferencesImp(private val userInfoChangeListUtil: UserInfoChangeListUtil) : UserSharedPreferences {
 
     override fun setUser(user: User) {
         setEmail(user.email)
         setName(user.name)
         setGender(user.gender)
-        setBirthday(UserInfoChangeListUtil.changeBirthdayString(user.birthday))
+        setBirthday(userInfoChangeListUtil.changeBirthdayString(user.birthday))
         setArea(user.area)
         setFavorite(user.artist_count)
     }
@@ -31,7 +31,7 @@ class UserSharedPreferencesImp : UserSharedPreferences {
             getName(),
             getGender(),
             getArea(),
-            UserInfoChangeListUtil.getBirthday(getBirthday()),
+            userInfoChangeListUtil.getBirthday(getBirthday()),
             getFavorite()
         )
     }

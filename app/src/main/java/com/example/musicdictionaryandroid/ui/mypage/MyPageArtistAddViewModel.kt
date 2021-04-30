@@ -70,34 +70,34 @@ class MyPageArtistAddViewModel(private val artistUseCase: ArtistUseCase) : ViewM
     }
 
     fun init(
-        genreList: Array<String>,
-        genre1List: Array<String>,
-        genre2List: Array<String>,
-        genre3List: Array<String>,
-        genre4List: Array<String>,
-        genre5List: Array<String>,
-        genre6List: Array<String>,
+        genreList: List<String>,
+        genre1List: List<String>,
+        genre2List: List<String>,
+        genre3List: List<String>,
+        genre4List: List<String>,
+        genre5List: List<String>,
+        genre6List: List<String>,
         artist: Artist?
     ) {
-        this.mainGenreList = genreList.toList()
+        this.mainGenreList = genreList
         this.subGenre0List = listOf("未選択")
-        this.subGenre1List = genre1List.toList()
-        this.subGenre2List = genre2List.toList()
-        this.subGenre3List = genre3List.toList()
-        this.subGenre4List = genre4List.toList()
-        this.subGenre5List = genre5List.toList()
-        this.subGenre6List = genre6List.toList()
-        _genre1List.value = mainGenreList.toList()
+        this.subGenre1List = genre1List
+        this.subGenre2List = genre2List
+        this.subGenre3List = genre3List
+        this.subGenre4List = genre4List
+        this.subGenre5List = genre5List
+        this.subGenre6List = genre6List
+        _genre1List.value = mainGenreList
 
         artist?.let {
             when (artist.genre1.value) {
-                0 -> _genre2List.value = subGenre0List.toList()
-                1 -> _genre2List.value = subGenre1List.toList()
-                2 -> _genre2List.value = subGenre2List.toList()
-                3 -> _genre2List.value = subGenre3List.toList()
-                4 -> _genre2List.value = subGenre4List.toList()
-                5 -> _genre2List.value = subGenre5List.toList()
-                6 -> _genre2List.value = subGenre6List.toList()
+                0 -> _genre2List.value = subGenre0List
+                1 -> _genre2List.value = subGenre1List
+                2 -> _genre2List.value = subGenre2List
+                3 -> _genre2List.value = subGenre3List
+                4 -> _genre2List.value = subGenre4List
+                5 -> _genre2List.value = subGenre5List
+                6 -> _genre2List.value = subGenre6List
             }
             _editMode.value = CHANGE_MODE
             _titleText.value = "アーティスト編集"
@@ -116,7 +116,7 @@ class MyPageArtistAddViewModel(private val artistUseCase: ArtistUseCase) : ViewM
         }
     }
 
-    // 入力バリデート
+    // 送信ボタンバリデート
     private fun validate() {
         _isEnableSubmitButton.value = nameText.value != "" && gender.value != 0 &&
             length.value != 0 && voice.value != 0 &&
