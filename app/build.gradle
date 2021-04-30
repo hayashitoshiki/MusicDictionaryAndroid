@@ -8,7 +8,7 @@ apply plugin: 'org.jetbrains.dokka-android'
 dokka {
     outputFormat = 'gfm'
     includes = ['docs/module_package.md']
-    outputDirectory = "$buildDir/javadoc"
+    outputDirectory = "$projectDir/docs"
 }
 
 android {
