@@ -5,8 +5,8 @@ import com.example.musicdictionaryandroid.BaseTestUnit
 import com.example.musicdictionaryandroid.domain.model.entity.User
 import com.example.musicdictionaryandroid.domain.model.value.Result
 import com.example.musicdictionaryandroid.domain.usecase.UserUseCase
+import com.example.musicdictionaryandroid.ui.util.MessageUtil
 import com.example.musicdictionaryandroid.ui.util.Status
-import com.example.musicdictionaryandroid.ui.util.UserInfoChangeListUtil
 import io.mockk.coEvery
 import io.mockk.every
 import io.mockk.mockk
@@ -30,7 +30,7 @@ class SignUpViewModelTest : BaseTestUnit() {
 
     // mock
     private lateinit var viewModel: SignUpViewModel
-    private lateinit var userInfoChangeListUtil: UserInfoChangeListUtil
+    private lateinit var messageUtil: MessageUtil
 
     // data
     private val user = User("test@com.jp", "testSuccess", 1, 1, "2000/2/2", 1)
@@ -54,12 +54,12 @@ class SignUpViewModelTest : BaseTestUnit() {
             coEvery { it.createUser(successEmail, any(), any()) } returns flow { emit(successResult) }
             coEvery { it.createUser(failureEmail, any(), any()) } returns flow { emit(failureResult) }
         }
-        userInfoChangeListUtil = mockk<UserInfoChangeListUtil>().also {
+        messageUtil = mockk<MessageUtil>().also {
             every { it.getBirthday(any()) } returns "2000/02/02"
-            every { it.changeGender(user.gender) } returns "男"
-            every { it.changeArea(user.area) } returns "東京"
+            every { it.getGender(user.gender) } returns "男"
+            every { it.getArea(user.area) } returns "東京"
         }
-        viewModel = SignUpViewModel(userInfoChangeListUtil, userUseCase, testScope)
+        viewModel = SignUpViewModel(messageUtil, userUseCase, testScope)
         viewModel.isEnableSubmitButton.observeForever(observerBoolean)
         viewModel.passwordError1Text.observeForever(observerStringNullable)
         viewModel.passwordError2Text.observeForever(observerStringNullable)

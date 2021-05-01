@@ -4,8 +4,8 @@ import androidx.lifecycle.*
 import com.example.musicdictionaryandroid.domain.model.entity.User
 import com.example.musicdictionaryandroid.domain.model.value.Result
 import com.example.musicdictionaryandroid.domain.usecase.UserUseCase
+import com.example.musicdictionaryandroid.ui.util.MessageUtil
 import com.example.musicdictionaryandroid.ui.util.Status
-import com.example.musicdictionaryandroid.ui.util.UserInfoChangeListUtil
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.collect
@@ -16,7 +16,7 @@ import java.util.regex.Pattern
  * 新規登録画面_UIロジック
  */
 class SignUpViewModel(
-    private val userInfoChangeListUtil: UserInfoChangeListUtil,
+    private val messageUtil: MessageUtil,
     private val userUseCase: UserUseCase,
     private val externalScope: CoroutineScope,
 ) : ViewModel() {
@@ -173,7 +173,7 @@ class SignUpViewModel(
         val name = nameText.value!!
         val gender = genderInt.value!!
         val area = areaSelectedPosition.value!!
-        val birthday = userInfoChangeListUtil.getBirthday(birthdaySelectedPosition.value!!)
+        val birthday = messageUtil.getBirthday(birthdaySelectedPosition.value!!)
         val password = password1Text.value!!
         val user = User(email, name, gender, area, birthday, 0)
         userUseCase.createUser(email, password, user).collect {

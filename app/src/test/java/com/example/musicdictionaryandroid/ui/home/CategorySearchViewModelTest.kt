@@ -2,8 +2,8 @@ package com.example.musicdictionaryandroid.ui.home
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.example.musicdictionaryandroid.BaseTestUnit
-import junit.framework.Assert.assertEquals
 import org.junit.After
+import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test

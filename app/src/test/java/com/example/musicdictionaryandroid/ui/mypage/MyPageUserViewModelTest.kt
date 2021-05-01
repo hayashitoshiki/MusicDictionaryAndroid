@@ -4,7 +4,7 @@ import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.example.musicdictionaryandroid.BaseTestUnit
 import com.example.musicdictionaryandroid.domain.model.entity.User
 import com.example.musicdictionaryandroid.domain.usecase.UserUseCase
-import com.example.musicdictionaryandroid.ui.util.UserInfoChangeListUtil
+import com.example.musicdictionaryandroid.ui.util.MessageUtil
 import io.mockk.every
 import io.mockk.mockk
 import org.junit.After
@@ -25,7 +25,7 @@ class MyPageUserViewModelTest : BaseTestUnit() {
 
     // mock
     private lateinit var viewModel: MyPageUserViewModel
-    private lateinit var userInfoChangeListUtil: UserInfoChangeListUtil
+    private lateinit var messageUtil: MessageUtil
     private lateinit var userUseCase: UserUseCase
 
     // data
@@ -36,11 +36,11 @@ class MyPageUserViewModelTest : BaseTestUnit() {
         userUseCase = mockk<UserUseCase>().also {
             every { it.getUserByCache() } returns user
         }
-        userInfoChangeListUtil = mockk<UserInfoChangeListUtil>().also {
-            every { it.changeGender(user.gender) } returns "男"
-            every { it.changeArea(user.area) } returns "東京"
+        messageUtil = mockk<MessageUtil>().also {
+            every { it.getGender(user.gender) } returns "男"
+            every { it.getArea(user.area) } returns "東京"
         }
-        viewModel = MyPageUserViewModel(userUseCase, userInfoChangeListUtil)
+        viewModel = MyPageUserViewModel(userUseCase, messageUtil)
     }
 
     @After
@@ -66,8 +66,8 @@ class MyPageUserViewModelTest : BaseTestUnit() {
 
         assertEquals(user.email, resultEmail)
         assertEquals(user.name, resultName)
-        assertEquals(userInfoChangeListUtil.changeGender(user.gender), resultGender)
-        assertEquals(userInfoChangeListUtil.changeArea(user.area), resultArea)
+        assertEquals(messageUtil.getGender(user.gender), resultGender)
+        assertEquals(messageUtil.getArea(user.area), resultArea)
         assertEquals(user.birthday, resultBirthday)
         assertEquals(user.artist_count.toString(), resultFavorite)
     }

@@ -7,17 +7,17 @@ import com.example.musicdictionaryandroid.domain.model.entity.Artist
 import com.example.musicdictionaryandroid.domain.model.value.*
 import com.example.musicdictionaryandroid.domain.model.value.Result
 import com.example.musicdictionaryandroid.domain.usecase.ArtistUseCase
-import com.example.musicdictionaryandroid.domain.usecase.UserUseCase
+import com.example.musicdictionaryandroid.ui.util.MessageUtil
 import com.example.musicdictionaryandroid.ui.util.Status
 import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.mockk
-import junit.framework.Assert.assertEquals
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.resetMain
 import kotlinx.coroutines.test.setMain
 import org.junit.*
+import org.junit.Assert.assertEquals
 import org.junit.rules.TestRule
 
 /**
@@ -31,11 +31,16 @@ class MyPageArtistAddViewModelTest : BaseTestUnit() {
 
     // mock
     private lateinit var viewModel: MyPageArtistAddViewModel
-    private lateinit var userUseCase: UserUseCase
     private lateinit var artistUseCase: ArtistUseCase
+    private lateinit var messageUtil: MessageUtil
 
     // data
-    private val list0 = listOf("0")
+    private val addTitle = "アーティスト登録"
+    private val changeTitle = "アーティスト編集"
+    private val addButton = "追加"
+    private val changeButton = "変更"
+    private val mainList = listOf("0")
+    private val list0 = listOf("未選択")
     private val list1 = listOf("1")
     private val list2 = listOf("2")
     private val list3 = listOf("3")
@@ -55,17 +60,30 @@ class MyPageArtistAddViewModelTest : BaseTestUnit() {
             coEvery { it.addArtist(any()) } returns Result.Success(artist)
             coEvery { it.updateArtist(any()) } returns Result.Success(artist)
         }
-        userUseCase = mockk()
-        viewModel = MyPageArtistAddViewModel(artistUseCase)
+        messageUtil = mockk<MessageUtil>().also {
+            coEvery { it.getMainCategory() } returns mainList
+            coEvery { it.getSubCategory(0) } returns list0
+            coEvery { it.getSubCategory(1) } returns list1
+            coEvery { it.getSubCategory(2) } returns list2
+            coEvery { it.getSubCategory(3) } returns list3
+            coEvery { it.getSubCategory(4) } returns list4
+            coEvery { it.getSubCategory(5) } returns list5
+            coEvery { it.getSubCategory(6) } returns list6
+            coEvery { it.getArtistAddTitle() } returns addTitle
+            coEvery { it.getArtistChangeTitle() } returns changeTitle
+            coEvery { it.getAddButton() } returns addButton
+            coEvery { it.getChangeButton() } returns changeButton
+        }
+        initNew()
         initObserver()
     }
 
     private fun initNew() {
-        viewModel.init(list0, list1, list2, list3, list4, list5, list6, null)
+        viewModel = MyPageArtistAddViewModel(null, artistUseCase, messageUtil)
     }
 
     private fun initUpdate() {
-        viewModel.init(list0, list1, list2, list3, list4, list5, list6, artist)
+        viewModel = MyPageArtistAddViewModel(artist, artistUseCase, messageUtil)
     }
 
     private fun initObserver() {
@@ -116,8 +134,8 @@ class MyPageArtistAddViewModelTest : BaseTestUnit() {
         assertEquals(0, lyrics)
         assertEquals(0, genre1)
         assertEquals(0, genre2)
-        assertEquals("アーティスト登録", title)
-        assertEquals("追加", buttonName)
+        assertEquals(addTitle, title)
+        assertEquals(addButton, buttonName)
     }
 
     /**
@@ -145,8 +163,8 @@ class MyPageArtistAddViewModelTest : BaseTestUnit() {
         assertEquals(artist.lyrics.value, lyrics)
         assertEquals(artist.genre1.value, genre1)
         assertEquals(artist.genre2.value, genre2)
-        assertEquals("アーティスト編集", title)
-        assertEquals("変更", buttonName)
+        assertEquals(changeTitle, title)
+        assertEquals(changeButton, buttonName)
     }
 
     // endregion
@@ -232,11 +250,11 @@ class MyPageArtistAddViewModelTest : BaseTestUnit() {
      * 条件：アーティスト更新時の初期状態
      * 期待結果：送信ボタンが活性状態であること
      */
-    @ExperimentalCoroutinesApi
     @Test
     fun onSubmitValidateByInitUpdate() {
         initUpdate()
-        val result = viewModel.isEnableSubmitButton.value!!
+        initObserver()
+        val result = viewModel.isEnableSubmitButton.value
         assertEquals(true, result)
     }
 
@@ -246,7 +264,6 @@ class MyPageArtistAddViewModelTest : BaseTestUnit() {
      * 条件：アーティスト名のみ未入力
      * 期待結果：送信ボタンが非活性状態であること
      */
-    @ExperimentalCoroutinesApi
     @Test
     fun onSubmitValidateByNameNull() {
         viewModel.nameText.value = ""
@@ -254,7 +271,7 @@ class MyPageArtistAddViewModelTest : BaseTestUnit() {
         viewModel.length.value = 1
         viewModel.voice.value = 1
         viewModel.lyrics.value = 1
-        val result = viewModel.isEnableSubmitButton.value!!
+        val result = viewModel.isEnableSubmitButton.value
         assertEquals(false, result)
     }
 
@@ -318,7 +335,6 @@ class MyPageArtistAddViewModelTest : BaseTestUnit() {
      * 条件：歌詞情報のみ未入力
      * 期待結果：送信ボタンが非活性状態であること
      */
-    @ExperimentalCoroutinesApi
     @Test
     fun onSubmitValidateByLyricsNull() {
         viewModel.nameText.value = "test"

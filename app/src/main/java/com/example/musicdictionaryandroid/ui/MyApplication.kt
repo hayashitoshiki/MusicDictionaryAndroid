@@ -7,6 +7,7 @@ import com.example.musicdictionaryandroid.data.local.database.AppDatabase
 import com.example.musicdictionaryandroid.data.local.preferences.UserSharedPreferences
 import com.example.musicdictionaryandroid.data.local.preferences.UserSharedPreferencesImp
 import com.example.musicdictionaryandroid.data.repository.*
+import com.example.musicdictionaryandroid.domain.model.entity.Artist
 import com.example.musicdictionaryandroid.domain.usecase.ArtistUseCase
 import com.example.musicdictionaryandroid.domain.usecase.ArtistUseCaseImp
 import com.example.musicdictionaryandroid.domain.usecase.UserUseCase
@@ -22,8 +23,8 @@ import com.example.musicdictionaryandroid.ui.mypage.MyPageArtistAddViewModel
 import com.example.musicdictionaryandroid.ui.mypage.MyPageArtistViewModel
 import com.example.musicdictionaryandroid.ui.mypage.MyPageTopViewModel
 import com.example.musicdictionaryandroid.ui.mypage.MyPageUserViewModel
-import com.example.musicdictionaryandroid.ui.util.UserInfoChangeListUtil
-import com.example.musicdictionaryandroid.ui.util.UserInfoChangeListUtilImp
+import com.example.musicdictionaryandroid.ui.util.MessageUtil
+import com.example.musicdictionaryandroid.ui.util.MessageUtilImp
 import kotlinx.coroutines.MainScope
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.viewmodel.dsl.viewModel
@@ -71,7 +72,7 @@ class MyApplication : Application() {
 
         viewModel { MyPageTopViewModel(get()) }
         viewModel { MyPageUserViewModel(get(), get()) }
-        viewModel { MyPageArtistAddViewModel(get()) }
+        viewModel { (artist: Artist?) -> MyPageArtistAddViewModel(artist, get(), get()) }
         viewModel { MyPageArtistViewModel(get()) }
         viewModel { SignInViewModel(get(), applicationScope) }
         viewModel { SignUpViewModel(get(), get(), applicationScope) }
@@ -92,6 +93,6 @@ class MyApplication : Application() {
 
         factory<UserSharedPreferences> { UserSharedPreferencesImp(get()) }
 
-        single<UserInfoChangeListUtil> { UserInfoChangeListUtilImp }
+        single<MessageUtil> { MessageUtilImp }
     }
 }

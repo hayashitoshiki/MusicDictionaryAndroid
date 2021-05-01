@@ -4,14 +4,14 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.musicdictionaryandroid.domain.usecase.UserUseCase
-import com.example.musicdictionaryandroid.ui.util.UserInfoChangeListUtil
+import com.example.musicdictionaryandroid.ui.util.MessageUtil
 
 /**
  * ユーザー情報画面_UIロジック
  */
 class MyPageUserViewModel(
     userUseCase: UserUseCase,
-    userInfoChangeListUtil: UserInfoChangeListUtil
+    messageUtil: MessageUtil
 ) : ViewModel() {
 
     // ユーザ情報
@@ -32,8 +32,8 @@ class MyPageUserViewModel(
         val user = userUseCase.getUserByCache()
         _emailText.value = user.email
         _nameText.value = user.name
-        _genderText.value = userInfoChangeListUtil.changeGender(user.gender)
-        _areaText.value = userInfoChangeListUtil.changeArea(user.area)
+        _genderText.value = messageUtil.getGender(user.gender)
+        _areaText.value = messageUtil.getArea(user.area)
         _birthdayText.value = user.birthday
         _favoriteText.value = user.artist_count.toString()
     }

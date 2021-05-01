@@ -2,15 +2,15 @@ package com.example.musicdictionaryandroid.data.local.preferences
 
 import com.example.musicdictionaryandroid.data.local.preferences.PreferenceManager.remove
 import com.example.musicdictionaryandroid.domain.model.entity.User
-import com.example.musicdictionaryandroid.ui.util.UserInfoChangeListUtil
+import com.example.musicdictionaryandroid.ui.util.MessageUtil
 
-class UserSharedPreferencesImp(private val userInfoChangeListUtil: UserInfoChangeListUtil) : UserSharedPreferences {
+class UserSharedPreferencesImp(private val messageUtil: MessageUtil) : UserSharedPreferences {
 
     override fun setUser(user: User) {
         setEmail(user.email)
         setName(user.name)
         setGender(user.gender)
-        setBirthday(userInfoChangeListUtil.changeBirthdayString(user.birthday))
+        setBirthday(messageUtil.changeBirthdayString(user.birthday))
         setArea(user.area)
         setFavorite(user.artist_count)
     }
@@ -31,7 +31,7 @@ class UserSharedPreferencesImp(private val userInfoChangeListUtil: UserInfoChang
             getName(),
             getGender(),
             getArea(),
-            userInfoChangeListUtil.getBirthday(getBirthday()),
+            messageUtil.getBirthday(getBirthday()),
             getFavorite()
         )
     }

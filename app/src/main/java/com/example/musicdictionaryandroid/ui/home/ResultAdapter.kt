@@ -14,7 +14,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.musicdictionaryandroid.R
 import com.example.musicdictionaryandroid.databinding.ItemResultArtistBinding
 import com.example.musicdictionaryandroid.domain.model.value.ArtistSearchContents
-import com.example.musicdictionaryandroid.ui.util.UserInfoChangeListUtilImp
+import com.example.musicdictionaryandroid.ui.util.MessageUtilImp
 import com.example.musicdictionaryandroid.ui.util.transition.ResizeAnimation
 import com.github.mikephil.charting.charts.PieChart
 import com.github.mikephil.charting.data.PieData
@@ -95,33 +95,33 @@ class ResultAdapter(private val context: Context, private val artistList: List<A
                     }
                 }
                 if (conditions.gender != null && conditions.gender.value != 0) {
-                    holder.searchGenderTextView.text = UserInfoChangeListUtilImp.changeGender(conditions.gender.value)
+                    holder.searchGenderTextView.text = MessageUtilImp.getGender(conditions.gender.value)
                 } else {
                     holder.searchGenderTextView.visibility = View.GONE
                 }
                 if (conditions.genre1 != null && conditions.genre1.value != 0) {
-                    holder.searchGenre1TextView.text = UserInfoChangeListUtilImp.changeGenre1(conditions.genre1.value)
+                    holder.searchGenre1TextView.text = MessageUtilImp.getGenre1(conditions.genre1.value)
                 } else {
                     holder.searchGenre1TextView.visibility = View.GONE
                 }
                 if (conditions.genre1 != null && conditions.genre1.value != 0 && conditions.genre2 != null && conditions.genre2.value != 0) {
                     holder.searchGenre2TextView.text =
-                        UserInfoChangeListUtilImp.changeGenre2(conditions.genre1.value, conditions.genre2.value)
+                        MessageUtilImp.getGenre2(conditions.genre1.value, conditions.genre2.value)
                 } else {
                     holder.searchGenre2TextView.visibility = View.GONE
                 }
                 if (conditions.length != null && conditions.length.value != 0) {
-                    holder.searchLengthTextView.text = UserInfoChangeListUtilImp.changeLength(conditions.length.value)
+                    holder.searchLengthTextView.text = MessageUtilImp.getLength(conditions.length.value)
                 } else {
                     holder.searchLengthTextView.visibility = View.GONE
                 }
                 if (conditions.voice != null && conditions.voice.value != 0) {
-                    holder.searchVoiceTextView.text = UserInfoChangeListUtilImp.changeVoice(conditions.voice.value)
+                    holder.searchVoiceTextView.text = MessageUtilImp.getVoice(conditions.voice.value)
                 } else {
                     holder.searchVoiceTextView.visibility = View.GONE
                 }
                 if (conditions.lyrics != null && conditions.lyrics.value != 0) {
-                    holder.searchLyricTextView.text = UserInfoChangeListUtilImp.changeLyrics(conditions.lyrics.value)
+                    holder.searchLyricTextView.text = MessageUtilImp.getLyrics(conditions.lyrics.value)
                 } else {
                     holder.searchLyricTextView.visibility = View.GONE
                 }
@@ -138,7 +138,7 @@ class ResultAdapter(private val context: Context, private val artistList: List<A
                 // アーティスト名
                 holder.nameTextView.text = item.artist.name
                 // 性別
-                holder.genderTextView.text = UserInfoChangeListUtilImp.changeGender(item.artist.gender.value)
+                holder.genderTextView.text = MessageUtilImp.getGender(item.artist.gender.value)
                 if (item.artist.gender.value == 1) {
                     holder.genderTextView.setTextColor(Color.BLUE)
                 } else {
@@ -151,10 +151,10 @@ class ResultAdapter(private val context: Context, private val artistList: List<A
                 // 歌詞の言語
                 holder.lyricsRatingBar.rating = item.artist.lyrics.value.toFloat()
                 // ジャンル１
-                holder.genre1TextView.text = UserInfoChangeListUtilImp.changeGenre1(item.artist.genre1.value)
+                holder.genre1TextView.text = MessageUtilImp.getGenre1(item.artist.genre1.value)
                 // ジャンル２
                 holder.genre2TextView.text =
-                    UserInfoChangeListUtilImp.changeGenre2(item.artist.genre1.value, item.artist.genre2.value)
+                    MessageUtilImp.getGenre2(item.artist.genre1.value, item.artist.genre2.value)
                 // 詳細ボタン
                 val collapseAnimation = ResizeAnimation(holder.detailLayout, -originalHeight, originalHeight)
                 val expandAnimation = ResizeAnimation(holder.detailLayout, originalHeight, 0)

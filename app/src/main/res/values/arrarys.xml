@@ -27,6 +27,11 @@
         <item>ラテン</item>
     </string-array>
 
+    <!-- ジャンルなし -->
+    <string-array name="genre02_spinner_list">
+        <item>未選択</item>
+    </string-array>
+
     <!-- 音楽ジャンル(ポップス) -->
     <string-array name="genre12_spinner_list">
         <item>未選択</item>

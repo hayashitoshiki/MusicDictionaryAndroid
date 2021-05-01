@@ -23,7 +23,8 @@ import com.example.musicdictionaryandroid.databinding.FragmentMypageArtistAddBin
 import com.example.musicdictionaryandroid.domain.model.entity.Artist
 import com.example.musicdictionaryandroid.ui.util.Status
 import com.example.musicdictionaryandroid.ui.util.setSafeClickListener
-import org.koin.android.viewmodel.ext.android.viewModel
+import org.koin.android.ext.android.inject
+import org.koin.core.parameter.parametersOf
 
 /**
  * アーティスト情報登録・追加画面
@@ -32,7 +33,7 @@ class MyPageArtistAddFragment : Fragment() {
 
     private lateinit var binding: FragmentMypageArtistAddBinding
     private val args: MyPageArtistAddFragmentArgs by navArgs()
-    private val viewModel: MyPageArtistAddViewModel by viewModel()
+    private val viewModel: MyPageArtistAddViewModel by inject { parametersOf(args.data) }
 
     @SuppressLint("ClickableViewAccessibility")
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
@@ -74,17 +75,6 @@ class MyPageArtistAddFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        viewModel.init(
-            resources.getStringArray(R.array.genre1_spinner_list).toList(),
-            resources.getStringArray(R.array.genre12_spinner_list).toList(),
-            resources.getStringArray(R.array.genre22_spinner_list).toList(),
-            resources.getStringArray(R.array.genre32_spinner_list).toList(),
-            resources.getStringArray(R.array.genre42_spinner_list).toList(),
-            resources.getStringArray(R.array.genre52_spinner_list).toList(),
-            resources.getStringArray(R.array.genre62_spinner_list).toList(),
-            args.data
-        )
 
         viewModel.status.observe(viewLifecycleOwner, Observer { onStateChanged(it) })
         viewModel.genre1.observe(viewLifecycleOwner, Observer { viewModel.changeGenre1(it) })
