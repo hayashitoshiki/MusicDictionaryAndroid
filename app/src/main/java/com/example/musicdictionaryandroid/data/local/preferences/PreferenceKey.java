@@ -13,7 +13,10 @@ abstract class PreferenceKey {
         EMAIL,
 
         // 名前
-        NAME
+        NAME,
+
+        // 生年月日
+        BIRTHDAY
     }
 
     /**
@@ -25,9 +28,6 @@ abstract class PreferenceKey {
 
         // 地域
         AREA,
-
-        // 生年月日
-        BIRTHDAY,
 
         // 登録数
         FAVORITE

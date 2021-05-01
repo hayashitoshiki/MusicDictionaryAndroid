@@ -8,7 +8,7 @@ package com.example.musicdictionaryandroid.domain.model.entity
  * @property gender 性別
  * @property area 地域
  * @property birthday 生年月日
- * @property artist_count 登録済みアーティスト数
+ * @property artistCount 登録済みアーティスト数
  */
 data class User(
     val email: String,
@@ -16,5 +16,5 @@ data class User(
     val gender: Int,
     val area: Int,
     val birthday: String,
-    val artist_count: Int
+    val artistCount: Int
 ) : java.io.Serializable

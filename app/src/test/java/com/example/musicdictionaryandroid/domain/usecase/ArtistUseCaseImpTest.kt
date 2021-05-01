@@ -66,9 +66,8 @@ class ArtistUseCaseImpTest : BaseTestUnit() {
             coEvery { it.deleteAll() } returns Unit
             coEvery { it.updateArtist(any()) } returns Unit
             coEvery { it.updateAll(any()) } returns Unit
-            coEvery { it.findByName(any()) } returns artist
-            coEvery { it.getArtistAll() } returns artistList
-            coEvery { it.getArtistList() } returns artistListFlow
+            coEvery { it.getArtistByName(any()) } returns artist
+            coEvery { it.getArtistAll() } returns artistListFlow
         }
         localUserRepository = mockk<LocalUserRepository>().also {
             every { it.getEmail() } returns successEmail
@@ -335,7 +334,7 @@ class ArtistUseCaseImpTest : BaseTestUnit() {
     @Test
     fun getArtistList() {
         useCase.getArtistList()
-        coVerify(exactly = 1) { (localArtistRepository).getArtistList() }
+        coVerify(exactly = 1) { (localArtistRepository).getArtistAll() }
     }
 
     // endregion

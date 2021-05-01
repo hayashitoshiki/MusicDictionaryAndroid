@@ -1,19 +1,17 @@
 package com.example.musicdictionaryandroid.data.repository
 
+import com.example.musicdictionaryandroid.data.local.database.dao.ArtistDao
 import com.example.musicdictionaryandroid.data.local.database.entity.ArtistEntity
 import com.example.musicdictionaryandroid.domain.model.entity.Artist
 import com.example.musicdictionaryandroid.domain.model.value.*
-import com.example.musicdictionaryandroid.ui.MyApplication
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.withContext
 
-class LocalArtistRepositoryImp(private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO) :
+class LocalArtistRepositoryImp(private val dao: ArtistDao, private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO) :
     LocalArtistRepository {
-
-    private val dao = MyApplication.database.artistDao()
 
     // アーティスト登録
     override suspend fun addArtist(artist: Artist) = withContext(ioDispatcher) {
@@ -52,23 +50,15 @@ class LocalArtistRepositoryImp(private val ioDispatcher: CoroutineDispatcher = D
         dao.deleteAll()
     }
 
-    // アーティスト全取得
-    override suspend fun getArtistAll(): List<Artist> = withContext(ioDispatcher) {
-        val artists = dao.getAll()
-        return@withContext artists.map {
-            convertArtistFromArtistEntity(it)
-        }
-    }
-
     // アーティスト名一致取得
-    override suspend fun findByName(name: String): Artist = withContext(ioDispatcher) {
+    override suspend fun getArtistByName(name: String): Artist = withContext(ioDispatcher) {
         val artistEntity = dao.getArtistByName(name)
         return@withContext convertArtistFromArtistEntity(artistEntity)
     }
 
-    // アーティストリスト取得
-    override fun getArtistList(): Flow<List<Artist>> {
-        return dao.getArtistList().map { artistEntityList ->
+    // アーティスト全取得
+    override fun getArtistAll(): Flow<List<Artist>> {
+        return dao.getAll().map { artistEntityList ->
             artistEntityList.map { artistEntity ->
                 convertArtistFromArtistEntity(artistEntity)
             }

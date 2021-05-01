@@ -45,11 +45,6 @@ class UserUseCaseImp(
         }
     }
 
-    // ユーザー情報変更
-    override suspend fun changeUser(user: User, email: String): Result<String> {
-        return remoteUserRepository.changeUser(user, email)
-    }
-
     // ユーザー削除
     override fun delete(): Flow<Result<String>> {
         return remoteUserRepository.delete()

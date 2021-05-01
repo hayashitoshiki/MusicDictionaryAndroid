@@ -1,6 +1,7 @@
 package com.example.musicdictionaryandroid.data.repository
 
 import com.example.musicdictionaryandroid.data.remote.network.Provider
+import com.example.musicdictionaryandroid.data.remote.network.ProviderImp
 import com.example.musicdictionaryandroid.data.remote.network.dto.ArtistDto
 import com.example.musicdictionaryandroid.domain.model.entity.Artist
 import com.example.musicdictionaryandroid.domain.model.entity.ArtistContents
@@ -10,14 +11,17 @@ import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
-class RemoteArtistRepositoryImp(private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO) : RemoteArtistRepository {
+class RemoteArtistRepositoryImp(
+    private val provider: Provider = ProviderImp,
+    private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO
+) : RemoteArtistRepository {
 
     // region アーティスト検索
 
     // 指定した検索条件で検索した時のアーティストリストを返す
     override suspend fun getArtistsBy(artist: ArtistConditions): Result<List<ArtistContents>> = withContext(ioDispatcher) {
         val artistDto = convertArtistDtoFromArtistConditions(artist)
-        return@withContext runCatching { Provider.musicDictionaryApi().search(artistDto.getMapList()) }.fold(
+        return@withContext runCatching { provider.musicDictionaryApi().search(artistDto.getMapList()) }.fold(
             onSuccess = {
                 val artistList = it.artist.map { artistDto ->
                     convertArtistContentsFromArtistDto(artistDto)
@@ -30,7 +34,7 @@ class RemoteArtistRepositoryImp(private val ioDispatcher: CoroutineDispatcher = 
 
     // おすすめアーティストリストを返す
     override suspend fun getArtistsByRecommend(email: String): Result<List<ArtistContents>> = withContext(ioDispatcher) {
-        return@withContext runCatching { Provider.musicDictionaryApi().getRecommend(email) }.fold(
+        return@withContext runCatching { provider.musicDictionaryApi().getRecommend(email) }.fold(
             onSuccess = {
                 val artistList = it.artist.map { artistDto ->
                     convertArtistContentsFromArtistDto(artistDto)
@@ -43,7 +47,7 @@ class RemoteArtistRepositoryImp(private val ioDispatcher: CoroutineDispatcher = 
 
     // 急上昇アーティストリストを返す
     override suspend fun getArtistsBySoaring(): Result<List<ArtistContents>> = withContext(ioDispatcher) {
-        return@withContext runCatching { Provider.musicDictionaryApi().getSoaring() }.fold(
+        return@withContext runCatching { provider.musicDictionaryApi().getSoaring() }.fold(
             onSuccess = {
                 val artistList = it.artist.map { artistDto ->
                     convertArtistContentsFromArtistDto(artistDto)
@@ -56,10 +60,10 @@ class RemoteArtistRepositoryImp(private val ioDispatcher: CoroutineDispatcher = 
 
     // ユーザー登録したアーティスト取得
     override suspend fun getArtistsByEmail(email: String): Result<List<Artist>> = withContext(ioDispatcher) {
-        return@withContext runCatching { Provider.musicDictionaryApi().findByEmail(email) }.fold(
+        return@withContext runCatching { provider.musicDictionaryApi().findByEmail(email) }.fold(
             onSuccess = {
                 val artistList = it.artist.map { artistDto ->
-                    convertArtistFromArtistDto(artistDto)
+                    convertArtistArtistDto(artistDto)
                 }
                 Result.Success(artistList)
             },
@@ -75,9 +79,9 @@ class RemoteArtistRepositoryImp(private val ioDispatcher: CoroutineDispatcher = 
     // アーティスト登録
     override suspend fun addArtist(artist: Artist, email: String): Result<Artist> = withContext(ioDispatcher) {
         val artistDto = convertArtistDtoFromArtist(artist)
-        return@withContext runCatching { Provider.musicDictionaryApi().addArtist(artistDto.getMapList(), email) }.fold(
+        return@withContext runCatching { provider.musicDictionaryApi().addArtist(artistDto.getMapList(), email) }.fold(
             onSuccess = { response ->
-                val result = convertArtistFromArtistDto(response.artist)
+                val result = convertArtistArtistDto(response.artist)
                 Result.Success(result)
             },
             onFailure = { Result.Error(it) }
@@ -87,9 +91,9 @@ class RemoteArtistRepositoryImp(private val ioDispatcher: CoroutineDispatcher = 
     // アーティスト編集
     override suspend fun updateArtist(artist: Artist, email: String): Result<Artist> = withContext(ioDispatcher) {
         val artistDto = convertArtistDtoFromArtist(artist)
-        return@withContext runCatching { Provider.musicDictionaryApi().updateArtist(artistDto.getMapList(), email) }.fold(
+        return@withContext runCatching { provider.musicDictionaryApi().updateArtist(artistDto.getMapList(), email) }.fold(
             onSuccess = { response ->
-                val result = convertArtistFromArtistDto(response.artist)
+                val result = convertArtistArtistDto(response.artist)
                 Result.Success(result)
             },
             onFailure = { Result.Error(it) }
@@ -98,7 +102,7 @@ class RemoteArtistRepositoryImp(private val ioDispatcher: CoroutineDispatcher = 
 
     // アーティスト削除
     override suspend fun deleteArtist(name: String, email: String): Result<String> = withContext(ioDispatcher) {
-        return@withContext runCatching { Provider.musicDictionaryApi().deleteArtist(name, email) }.fold(
+        return@withContext runCatching { provider.musicDictionaryApi().deleteArtist(name, email) }.fold(
             onSuccess = { Result.Success(it.status.message) },
             onFailure = { Result.Error(it) }
         )
@@ -109,7 +113,7 @@ class RemoteArtistRepositoryImp(private val ioDispatcher: CoroutineDispatcher = 
     // region converter
 
     // アーティストDtoからアーティストモデルへ変換
-    private fun convertArtistFromArtistDto(artistFrom: ArtistDto): Artist {
+    private fun convertArtistArtistDto(artistFrom: ArtistDto): Artist {
         val name = artistFrom.name
         val gender = Gender.getEnumByValue(artistFrom.gender)
         val voice = Voice(artistFrom.voice)
@@ -122,7 +126,7 @@ class RemoteArtistRepositoryImp(private val ioDispatcher: CoroutineDispatcher = 
 
     // アーティストDtoからアーティス詳細情報モデルへ変換
     private fun convertArtistContentsFromArtistDto(artistDto: ArtistDto): ArtistContents {
-        val artist = convertArtistFromArtistDto(artistDto)
+        val artist = convertArtistArtistDto(artistDto)
         val thumb = artistDto.thumb
         val preview = artistDto.preview
         val generation1 = artistDto.generation1

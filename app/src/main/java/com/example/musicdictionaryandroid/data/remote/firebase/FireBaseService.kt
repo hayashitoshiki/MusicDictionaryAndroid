@@ -1,29 +1,9 @@
-package com.example.musicdictionaryandroid.data.repository
+package com.example.musicdictionaryandroid.data.remote.firebase
 
-import com.example.musicdictionaryandroid.domain.model.entity.User
 import com.example.musicdictionaryandroid.domain.model.value.Result
 import kotlinx.coroutines.flow.Flow
 
-/**
- * リモート保持ののユーザ情報に関するアクセスRepository
- */
-interface RemoteUserRepository {
-
-    /**
-     * 登録したユーザーの情報取得
-     *
-     * @param email ユーザーのEmail
-     * @return 登録したユーザー情報取得
-     */
-    suspend fun getUserByEmail(email: String): Result<User>
-
-    /**
-     * ユーザー登録
-     *
-     * @param user 登録数ユーザー情報
-     * @return 登録処理結果
-     */
-    suspend fun createUser(user: String): Result<String>
+interface FireBaseService {
 
     /**
      * ログイン状態チェック

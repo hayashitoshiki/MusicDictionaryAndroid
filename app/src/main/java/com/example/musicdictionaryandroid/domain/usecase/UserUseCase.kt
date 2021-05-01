@@ -26,15 +26,6 @@ interface UserUseCase {
     suspend fun createUser(email: String, password: String, user: User): Flow<Result<String>>
 
     /**
-     * ユーザー情報変更
-     *
-     * @param user 更新するユーザー情報
-     * @param email 更新したユーザのEmail
-     * @return 変更処理結果
-     */
-    suspend fun changeUser(user: User, email: String): Result<String>
-
-    /**
      * ログイン状態チェック
      *
      * @return ログイン状態

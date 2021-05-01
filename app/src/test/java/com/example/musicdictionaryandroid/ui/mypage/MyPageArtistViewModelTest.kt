@@ -37,7 +37,7 @@ class MyPageArtistViewModelTest : BaseTestUnit() {
     // data
     private val successArtist = Artist("success", Gender.MAN, Voice(0), Length(0), Lyrics(0), Genre1(0), Genre2(0))
     private val failureArtist = Artist("failure", Gender.MAN, Voice(0), Length(0), Lyrics(0), Genre1(0), Genre2(0))
-    private val successResult = Result.Success(listOf(successArtist))
+    private val successResult = Result.Success("success")
     private val failureResult = Result.Error(IllegalArgumentException(""))
 
     @ExperimentalCoroutinesApi
@@ -99,7 +99,7 @@ class MyPageArtistViewModelTest : BaseTestUnit() {
      */
     @Test
     fun isProgressBarByStatusSuccess() {
-        val status = Status.Success(listOf(successArtist))
+        val status = Status.Success("success")
         (viewModel.status as MutableLiveData).value = status
         val result = viewModel.isProgressBar.value
         assertEquals(false, result)

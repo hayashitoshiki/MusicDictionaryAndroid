@@ -91,7 +91,7 @@ class ArtistUseCaseImp(
     }
 
     // アーティスト削除
-    override suspend fun deleteArtist(name: String): Result<List<Artist>> {
+    override suspend fun deleteArtist(name: String): Result<String> {
         val email = localUserRepository.getEmail()
         return when (val result = remoteArtistRepository.deleteArtist(name, email)) {
             is Result.Success -> {
@@ -100,8 +100,7 @@ class ArtistUseCaseImp(
                     val size = localUserRepository.getFavorite()
                     localUserRepository.setFavorite(size - 1)
                 }.join()
-                val artist = localArtistRepository.getArtistAll()
-                Result.Success(artist)
+                Result.Success("Success")
             }
             is Result.Error -> result
         }
@@ -109,7 +108,7 @@ class ArtistUseCaseImp(
 
     // アーティストリスト取得
     override fun getArtistList(): Flow<List<Artist>> {
-        return localArtistRepository.getArtistList()
+        return localArtistRepository.getArtistAll()
     }
 
     //endregion

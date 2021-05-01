@@ -2,17 +2,16 @@ package com.example.musicdictionaryandroid.data.local.preferences
 
 import com.example.musicdictionaryandroid.data.local.preferences.PreferenceManager.remove
 import com.example.musicdictionaryandroid.domain.model.entity.User
-import com.example.musicdictionaryandroid.ui.util.MessageUtil
 
-class UserSharedPreferencesImp(private val messageUtil: MessageUtil) : UserSharedPreferences {
+class UserSharedPreferencesImp : UserSharedPreferences {
 
     override fun setUser(user: User) {
         setEmail(user.email)
         setName(user.name)
         setGender(user.gender)
-        setBirthday(messageUtil.changeBirthdayString(user.birthday))
+        setBirthday(user.birthday)
         setArea(user.area)
-        setFavorite(user.artist_count)
+        setFavorite(user.artistCount)
     }
 
     override fun setEmail(value: String) {
@@ -31,7 +30,7 @@ class UserSharedPreferencesImp(private val messageUtil: MessageUtil) : UserShare
             getName(),
             getGender(),
             getArea(),
-            messageUtil.getBirthday(getBirthday()),
+            getBirthday(),
             getFavorite()
         )
     }
@@ -55,12 +54,12 @@ class UserSharedPreferencesImp(private val messageUtil: MessageUtil) : UserShare
         return PreferenceManager.getInt(PreferenceKey.IntKey.AREA)
     }
 
-    override fun setBirthday(value: Int) {
-        PreferenceManager.setInt(PreferenceKey.IntKey.BIRTHDAY, value)
+    override fun setBirthday(value: String) {
+        PreferenceManager.setString(PreferenceKey.StringKey.BIRTHDAY, value)
     }
 
-    override fun getBirthday(): Int {
-        return PreferenceManager.getInt(PreferenceKey.IntKey.BIRTHDAY)
+    override fun getBirthday(): String {
+        return PreferenceManager.getString(PreferenceKey.StringKey.BIRTHDAY)
     }
 
     override fun setFavorite(value: Int) {
@@ -74,11 +73,10 @@ class UserSharedPreferencesImp(private val messageUtil: MessageUtil) : UserShare
     override fun removeAll() {
         remove(PreferenceKey.StringKey.EMAIL)
         remove(PreferenceKey.StringKey.NAME)
-        remove(PreferenceKey.IntKey.BIRTHDAY)
+        remove(PreferenceKey.StringKey.BIRTHDAY)
         remove(PreferenceKey.IntKey.AREA)
         remove(PreferenceKey.IntKey.GENDER)
         remove(PreferenceKey.IntKey.FAVORITE)
     }
-
 
 }

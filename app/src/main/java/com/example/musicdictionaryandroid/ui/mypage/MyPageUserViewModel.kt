@@ -35,6 +35,6 @@ class MyPageUserViewModel(
         _genderText.value = messageUtil.getGender(user.gender)
         _areaText.value = messageUtil.getArea(user.area)
         _birthdayText.value = user.birthday
-        _favoriteText.value = user.artist_count.toString()
+        _favoriteText.value = user.artistCount.toString()
     }
 }

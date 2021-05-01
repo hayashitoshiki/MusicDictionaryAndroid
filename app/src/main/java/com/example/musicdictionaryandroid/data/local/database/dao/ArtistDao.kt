@@ -25,11 +25,8 @@ interface ArtistDao {
     suspend fun deleteAll()
 
     @Query("SELECT * FROM artists")
-    suspend fun getAll(): Array<ArtistEntity>
-
-    @Query("SELECT * FROM artists")
-    fun getArtistList(): Flow<List<ArtistEntity>>
+    fun getAll(): Flow<List<ArtistEntity>>
 
     @Query("select * from artists where name = :name")
-    fun getArtistByName(name: String): ArtistEntity
+    suspend fun getArtistByName(name: String): ArtistEntity
 }

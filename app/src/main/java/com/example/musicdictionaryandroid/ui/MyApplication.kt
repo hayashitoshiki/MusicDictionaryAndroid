@@ -88,10 +88,10 @@ class MyApplication : Application() {
 
         factory<RemoteArtistRepository> { RemoteArtistRepositoryImp() }
         factory<RemoteUserRepository> { RemoteUserRepositoryImp() }
-        factory<LocalArtistRepository> { LocalArtistRepositoryImp() }
+        factory<LocalArtistRepository> { LocalArtistRepositoryImp(database.artistDao()) }
         factory<LocalUserRepository> { LocalUserRepositoryImp(get()) }
 
-        factory<UserSharedPreferences> { UserSharedPreferencesImp(get()) }
+        factory<UserSharedPreferences> { UserSharedPreferencesImp() }
 
         single<MessageUtil> { MessageUtilImp }
     }

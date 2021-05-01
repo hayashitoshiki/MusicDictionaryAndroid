@@ -17,8 +17,8 @@ class MyPageArtistViewModel(private val artistUseCase: ArtistUseCase) : ViewMode
     val artistList: LiveData<List<Artist>> = artistUseCase.getArtistList().asLiveData()
 
     // ステータス
-    private val _status = MutableLiveData<Status<List<Artist>>>(Status.Non)
-    val status: LiveData<Status<List<Artist>>> = _status
+    private val _status = MutableLiveData<Status<String>>(Status.Non)
+    val status: LiveData<Status<String>> = _status
 
     // Viewの表示制御
     private val _isProgressBar = MediatorLiveData<Boolean>()
@@ -32,7 +32,7 @@ class MyPageArtistViewModel(private val artistUseCase: ArtistUseCase) : ViewMode
     }
 
     // プログレスバーの表示制御
-    private fun changeProgressBar(status: Status<List<Artist>>) {
+    private fun changeProgressBar(status: Status<String>) {
         _isProgressBar.value = status is Status.Loading
     }
 

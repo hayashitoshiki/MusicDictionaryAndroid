@@ -50,9 +50,8 @@ class UserEntityUseCaseImpTest : BaseTestUnit() {
             coEvery { it.deleteAll() } returns Unit
             coEvery { it.updateArtist(any()) } returns Unit
             coEvery { it.updateAll(any()) } returns Unit
-            coEvery { it.findByName(any()) } returns artist
-            coEvery { it.getArtistAll() } returns artistList
-            coEvery { it.getArtistList() } returns artistListFlow
+            coEvery { it.getArtistByName(any()) } returns artist
+            coEvery { it.getArtistAll() } returns artistListFlow
         }
         remoteUserRepository = mockk<RemoteUserRepository>().also {
             every { it.signIn(any(), successEmail) } returns flow { emit(successResult) }
@@ -66,7 +65,6 @@ class UserEntityUseCaseImpTest : BaseTestUnit() {
             coEvery { it.getUserByEmail(failureEmail) } returns failureResult
             coEvery { it.createUser(successJson) } returns successResult
             coEvery { it.createUser(failureJson) } returns failureResult
-            coEvery { it.changeUser(any(), any()) } returns successResult
         }
         localUserRepository = mockk<LocalUserRepository>().also {
             every { it.setUser(any()) } returns Unit
@@ -77,7 +75,7 @@ class UserEntityUseCaseImpTest : BaseTestUnit() {
             every { it.getName() } returns "testAName"
             every { it.getGender() } returns 1
             every { it.getArea() } returns 1
-            every { it.getBirthday() } returns 1
+            every { it.getBirthday() } returns successUser.birthday
             every { it.removeAll() } returns Unit
         }
         useCase = UserUseCaseImp(
@@ -147,23 +145,6 @@ class UserEntityUseCaseImpTest : BaseTestUnit() {
             val result = useCase.createUser(failureEmail, failureEmail, successUser).first()
             coVerify(exactly = 0) { (remoteUserRepository).createUser(any()) }
             assertEquals(failureResult, result)
-        }
-    }
-
-    // endregion
-
-    // region ユーザ情報変更
-
-    /**
-     * ユーザ情報変更
-     * 条件：なし
-     * 結果：APIのユーザ情報変更のメソッドが呼ばれること
-     */
-    @Test
-    fun changeUser() {
-        runBlocking {
-            useCase.changeUser(successUser, "testA")
-            coVerify(exactly = 1) { (remoteUserRepository).changeUser(successUser, "testA") }
         }
     }
 

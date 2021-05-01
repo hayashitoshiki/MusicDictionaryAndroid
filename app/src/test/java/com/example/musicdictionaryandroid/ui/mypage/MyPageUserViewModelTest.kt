@@ -69,7 +69,7 @@ class MyPageUserViewModelTest : BaseTestUnit() {
         assertEquals(messageUtil.getGender(user.gender), resultGender)
         assertEquals(messageUtil.getArea(user.area), resultArea)
         assertEquals(user.birthday, resultBirthday)
-        assertEquals(user.artist_count.toString(), resultFavorite)
+        assertEquals(user.artistCount.toString(), resultFavorite)
     }
 
     // endregion

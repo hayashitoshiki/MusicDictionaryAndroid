@@ -82,14 +82,14 @@ interface UserSharedPreferences {
      *
      * @return 生年月日
      */
-    fun getBirthday(): Int
+    fun getBirthday(): String
 
     /**
      * 生年月日取得
      *
      * @param value 生年月日
      */
-    fun setBirthday(value: Int)
+    fun setBirthday(value: String)
 
     /**
      * 登録済みアーティスト件数取得

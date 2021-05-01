@@ -44,24 +44,17 @@ interface LocalArtistRepository {
     suspend fun updateAll(artists: List<Artist>)
 
     /**
-     * アーティスト取得
+     * 登録済みアーティスト取得
      *
      * @param name 取得したアーティスト名
      * @return 該当するアーティスト
      */
-    suspend fun findByName(name: String): Artist
+    suspend fun getArtistByName(name: String): Artist
 
     /**
-     * 全アーティスト取得
-     *
-     * @return ローカルDBに登録されている全てのアーティスト取得
-     */
-    suspend fun getArtistAll(): List<Artist>
-
-    /**
-     * アーティストリスト取得
+     * 全登録済みアーティス取得
      *
      * @return アーティストリスト
      */
-    fun getArtistList(): Flow<List<Artist>>
+    fun getArtistAll(): Flow<List<Artist>>
 }

@@ -75,7 +75,7 @@ interface ArtistUseCase {
      * @param name 削除したいアーティストの名前
      * @return 削除正常完了判定結果
      */
-    suspend fun deleteArtist(name: String): Result<List<Artist>>
+    suspend fun deleteArtist(name: String): Result<String>
 
     // アーティストリスト取得
     fun getArtistList(): Flow<List<Artist>>
