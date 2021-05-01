@@ -1,46 +1,82 @@
 # Module app
 音楽辞書アプリ for Android
 ### アーキテクチャ
-MVVM
+MVVM + Clean Architecture + DDD
 
 ## 大枠のパッケージ
-#### model
-画面描画以外(データの加工)に関するクラスの管理
+#### Data層
 
-#### ui
-画面描画に関するクラスの管理
+| パッケージ名|詳細|
+|:-----------|:------------|
+|Repository|ローカル or リモートへのCRUD定義|
+|Local　　  |ローカルデータへのアクセス定義|
+|Remote     |リモートデータへのCアクセス定義|
 
-# Package com.example.musicdictionaryandroid.model.dao
+主にデータベースやAPIへのデータのCRUDを行う。
+
+#### Domain層
+
+| パッケージ名|詳細|
+|:-----------|:------------|
+|UseCase  |ビジネスロジック定義|
+|Model　　|ドメインモデル定義|
+
+主に各機能の処理を行う。
+Data・Domain・Rresentationの全ての層でドメインモデルで定義された値を用いて処理を行う。
+
+#### UI(Presentation)層
+
+| パッケージ名|詳細|
+|:-----------|:------------|
+|Util|Presentation層内の共通処理定義|
+|その他|各タブの画面定義|
+
+各画面の仕様詳細を定義する。
+
+# Package com.example.musicdictionaryandroid.data.local.database
 DB管理
 
-# Package com.example.musicdictionaryandroid.model.entity
-Entity管理
+# Package com.example.musicdictionaryandroid.data.local.database.dao
+DBのクエリ関連
 
-# Package com.example.musicdictionaryandroid.model.net
-通信処理管理
+# Package com.example.musicdictionaryandroid.data.local.database.entity
+DBのテーブル関連
 
-# Package com.example.musicdictionaryandroid.model.repository
-CRUD管理
+# Package com.example.musicdictionaryandroid.data.remote.network
+ネットワーク関連
 
-# Package com.example.musicdictionaryandroid.domain.usecase
-ビジネスロジック管理
+# Package com.example.musicdictionaryandroid.data.remote.network.dto
+ネットワーク受け渡しオブジェクト関連
 
-# Package com.example.musicdictionaryandroid.model.util
-共通機能管理
+# Package com.example.musicdictionaryandroid.data.remote.network.service
+ネットワークアクセスURL関連
 
-# Package com.example.musicdictionaryandroid.ui.adapter
-カスタムアダプター管理
+# Package com.example.musicdictionaryandroid.data.repository
+Data層データ受け渡し関連
+
+# Package com.example.musicdictionaryandroid.domain.model.entity
+ドメインエンティティ関連
+
+# Package com.example.musicdictionaryandroid.domain.model.value
+値オブジェクト関連
+
+# Package com.example.musicdictionaryandroid.domain.model.usecase
+ビジネスロジック関連
 
 # Package com.example.musicdictionaryandroid.ui
+共通画面関連
 
 # Package com.example.musicdictionaryandroid.ui.home
-ホームタブ画面管理
+ホームタブ画面関連
 
 # Package com.example.musicdictionaryandroid.ui.mypage
-設定タブ画面管理
+設定タブ画面関連
 
 # Package com.example.musicdictionaryandroid.ui.login
-ログイン系画面管理
+ログイン系画面関連
 
-# Package com.example.musicdictionaryandroid.ui.transition
-アニメーション管理
+# Package com.example.musicdictionaryandroid.ui.util
+Presentation層共通処理関連
+
+# Package com.example.musicdictionaryandroid.ui.util.transition
+アニメーション関連

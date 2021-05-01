@@ -3,20 +3,20 @@ package com.example.musicdictionaryandroid.ui.home
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.musicdictionaryandroid.data.repository.PreferenceRepository
+import com.example.musicdictionaryandroid.data.repository.LocalUserRepository
 import com.example.musicdictionaryandroid.domain.model.value.ArtistConditions
 
 /**
  * HOME画面_UIロジック
- *
- * @property preferenceRepository
  */
 class HomeViewModel(
-    private val preferenceRepository: PreferenceRepository
+    private val localUserRepository: LocalUserRepository
 ) : ViewModel() {
 
+    // 入力項目
     val searchText = MutableLiveData("")
 
+    // ボタンバリデート
     private val _isEnableSearchBar = MutableLiveData(true)
     val isEnableSearchBar: LiveData<Boolean> = _isEnableSearchBar
     private val _isEnableCategoryButton = MutableLiveData(true)
@@ -30,39 +30,22 @@ class HomeViewModel(
     private val _isEnableSubmitButton = MutableLiveData(false)
     val isEnableSubmitButton: LiveData<Boolean> = _isEnableSubmitButton
 
-    /**
-     * タップ可能ボタンのバリデート
-     */
     init {
-        val count = preferenceRepository.getFavorite()
-
-        if (count == 0) {
-            _isEnableSearchBar.value = false
-        }
-        if (count < 3) {
-            _isEnableCategoryButton.value = false
-        }
-        if (count < 5) {
-            _isEnableDetailsButton.value = false
-        }
-        if (count < 7) {
-            _isEnableSoaringButton.value = false
-        }
-        if (count < 10) {
-            _isEnableRecommendButton.value = false
-        }
+        val count = localUserRepository.getFavorite()
+        _isEnableSearchBar.value = count != 0
+        _isEnableCategoryButton.value = count >= 3
+        _isEnableDetailsButton.value = count >= 5
+        _isEnableSoaringButton.value = count >= 7
+        _isEnableRecommendButton.value = count >= 10
     }
 
+    // アーティスト取得
     fun getArtist(): ArtistConditions {
         val name = searchText.value.toString()
         return ArtistConditions(name, null, null, null, null, null, null)
     }
 
-    /**
-     * 検索ボタン活性・非活性制御
-     *
-     * @param count 検索バーの入力文字数
-     */
+    // 検索ボタン活性・非活性制御
     fun changeSubmitButton(count: Int) {
         _isEnableSubmitButton.value = count != 0
     }

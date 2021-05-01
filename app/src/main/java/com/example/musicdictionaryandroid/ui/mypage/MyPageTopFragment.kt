@@ -2,7 +2,6 @@ package com.example.musicdictionaryandroid.ui.mypage
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,9 +12,9 @@ import androidx.lifecycle.Observer
 import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
 import com.example.musicdictionaryandroid.R
-import com.example.musicdictionaryandroid.data.util.Status
 import com.example.musicdictionaryandroid.databinding.FragmentMypageTopBinding
 import com.example.musicdictionaryandroid.ui.login.StartActivity
+import com.example.musicdictionaryandroid.ui.util.Status
 import org.koin.android.viewmodel.ext.android.viewModel
 
 /**
@@ -23,19 +22,11 @@ import org.koin.android.viewmodel.ext.android.viewModel
  */
 class MyPageTopFragment : Fragment() {
 
-    companion object {
-        const val TAG = "MyPageTopFragment"
-    }
-
     private val viewModel: MyPageTopViewModel by viewModel()
     private lateinit var binding: FragmentMypageTopBinding
     private var isFirst = true
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_mypage_top, container, false)
         binding.lifecycleOwner = viewLifecycleOwner
         binding.viewModel = viewModel
@@ -69,10 +60,15 @@ class MyPageTopFragment : Fragment() {
     // ステータス監視
     @Suppress("IMPLICIT_CAST_TO_ANY")
     private fun onStateChanged(state: Status<*>) = when (state) {
-        is Status.Loading -> { }
-        is Status.Success -> { activityFinish() }
-        is Status.Failure -> { Log.i(TAG, "Failure:${state.throwable}") }
-        is Status.Non -> { }
+        is Status.Loading -> {
+        }
+        is Status.Success -> {
+            activityFinish()
+        }
+        is Status.Failure -> {
+        }
+        is Status.Non -> {
+        }
     }
 
     // 終了

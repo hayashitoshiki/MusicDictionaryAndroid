@@ -1,11 +1,11 @@
 package com.example.musicdictionaryandroid.ui.home
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
-import androidx.lifecycle.Observer
-import com.example.musicdictionaryandroid.data.repository.PreferenceRepository
-import com.nhaarman.mockito_kotlin.mock
+import com.example.musicdictionaryandroid.BaseTestUnit
+import com.example.musicdictionaryandroid.data.repository.LocalUserRepository
 import io.mockk.every
 import io.mockk.mockk
+import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.rules.TestRule
@@ -13,152 +13,191 @@ import org.junit.rules.TestRule
 /**
  * ホーム画面
  */
-class HomeViewModelTest {
+class HomeViewModelTest : BaseTestUnit() {
 
     // LiveData用
     @get:Rule
     val rule: TestRule = InstantTaskExecutorRule()
 
+    // mock
+    private lateinit var viewModel: HomeViewModel
+    private lateinit var localUserRepository: LocalUserRepository
+
+    @Before
+    fun setUp() {
+        localUserRepository = mockk<LocalUserRepository>().also {
+            every { it.getFavorite() } returns 0
+        }
+        init()
+    }
+
+    // 初期化
+    private fun init() {
+        viewModel = HomeViewModel(localUserRepository)
+        initObserver()
+    }
+
+    // Observer設定
+    private fun initObserver() {
+        viewModel.isEnableSearchBar.observeForever(observerBoolean)
+        viewModel.isEnableCategoryButton.observeForever(observerBoolean)
+        viewModel.isEnableDetailsButton.observeForever(observerBoolean)
+        viewModel.isEnableSoaringButton.observeForever(observerBoolean)
+        viewModel.isEnableRecommendButton.observeForever(observerBoolean)
+        viewModel.isEnableSubmitButton.observeForever(observerBoolean)
+    }
+
+    // region 検索項目バリデート制御
+
     /**
      * アーティストの登録数によってバリデートが掛かるか
      *
-     * 条件　　：全パターンのバリデートを実施
-     * 期待結果：５つ全てのパターンでバリデートがかかることを確認
+     * 条件：登録しているアーティストが０件
+     * 結果：検索バーが非活性になること
      */
     @Test
-    fun checkValidate() {
-        // モック作成
-        val count0 = mockk<PreferenceRepository>().also {
+    fun checkValidateByArtist0() {
+        localUserRepository = mockk<LocalUserRepository>().also {
             every { it.getFavorite() } returns 0
         }
-        val count1 = mockk<PreferenceRepository>().also {
-            every { it.getFavorite() } returns 1
-        }
-        val count2 = mockk<PreferenceRepository>().also {
-            every { it.getFavorite() } returns 2
-        }
-        val count3 = mockk<PreferenceRepository>().also {
-            every { it.getFavorite() } returns 3
-        }
-        val count4 = mockk<PreferenceRepository>().also {
-            every { it.getFavorite() } returns 4
-        }
-        val count5 = mockk<PreferenceRepository>().also {
-            every { it.getFavorite() } returns 5
-        }
-        val count6 = mockk<PreferenceRepository>().also {
-            every { it.getFavorite() } returns 6
-        }
-        val count7 = mockk<PreferenceRepository>().also {
-            every { it.getFavorite() } returns 7
-        }
-        val count9 = mockk<PreferenceRepository>().also {
-            every { it.getFavorite() } returns 9
-        }
-        val count10 = mockk<PreferenceRepository>().also {
-            every { it.getFavorite() } returns 10
-        }
-        var viewModel = HomeViewModel(count0)
-        val observer = mock<Observer<Boolean>>()
-        viewModel.isEnableSearchBar.observeForever(observer)
-        viewModel.isEnableCategoryButton.observeForever(observer)
-        viewModel.isEnableDetailsButton.observeForever(observer)
-        viewModel.isEnableSoaringButton.observeForever(observer)
-        viewModel.isEnableRecommendButton.observeForever(observer)
-        viewModel.isEnableSubmitButton.observeForever(observer)
-
-        // テスト実施
-        // 検索バー非活性
-        viewModel = HomeViewModel(count0)
-        viewModel.isEnableSearchBar.observeForever(observer)
-        viewModel.isEnableCategoryButton.observeForever(observer)
-        viewModel.isEnableDetailsButton.observeForever(observer)
-        viewModel.isEnableSoaringButton.observeForever(observer)
-        viewModel.isEnableRecommendButton.observeForever(observer)
-        viewModel.isEnableSubmitButton.observeForever(observer)
+        init()
         assert(!viewModel.isEnableSubmitButton.value!!)
         assert(!viewModel.isEnableSearchBar.value!!)
-        // 検索バー活性
-        viewModel = HomeViewModel(count1)
-        viewModel.isEnableSearchBar.observeForever(observer)
-        viewModel.isEnableCategoryButton.observeForever(observer)
-        viewModel.isEnableDetailsButton.observeForever(observer)
-        viewModel.isEnableSoaringButton.observeForever(observer)
-        viewModel.isEnableRecommendButton.observeForever(observer)
-        viewModel.isEnableSubmitButton.observeForever(observer)
+    }
+
+    /**
+     * アーティストの登録数によってバリデートが掛かるか
+     *
+     * 条件：登録済みアーティストが１件以上
+     * 結果：検索バーが活性状態になること
+     */
+    @Test
+    fun checkValidateByArtist1() {
+        localUserRepository = mockk<LocalUserRepository>().also {
+            every { it.getFavorite() } returns 1
+        }
+        init()
         assert(!viewModel.isEnableSubmitButton.value!!)
         assert(viewModel.isEnableSearchBar.value!!)
-        // カテゴリボタン非活性
-        viewModel = HomeViewModel(count2)
-        viewModel.isEnableSearchBar.observeForever(observer)
-        viewModel.isEnableCategoryButton.observeForever(observer)
-        viewModel.isEnableDetailsButton.observeForever(observer)
-        viewModel.isEnableSoaringButton.observeForever(observer)
-        viewModel.isEnableRecommendButton.observeForever(observer)
-        viewModel.isEnableSubmitButton.observeForever(observer)
+    }
+
+    /**
+     * アーティストの登録数によってバリデートが掛かるか
+     *
+     * 条件：登録済みアーティストが２件以下
+     * 結果：カテゴリボタンが非活性状態になること
+     */
+    @Test
+    fun checkValidateByArtist2() {
+        localUserRepository = mockk<LocalUserRepository>().also {
+            every { it.getFavorite() } returns 2
+        }
+        init()
         assert(!viewModel.isEnableCategoryButton.value!!)
-        // カテゴリボタン活性
-        viewModel = HomeViewModel(count3)
-        viewModel.isEnableSearchBar.observeForever(observer)
-        viewModel.isEnableCategoryButton.observeForever(observer)
-        viewModel.isEnableDetailsButton.observeForever(observer)
-        viewModel.isEnableSoaringButton.observeForever(observer)
-        viewModel.isEnableRecommendButton.observeForever(observer)
-        viewModel.isEnableSubmitButton.observeForever(observer)
+    }
+
+    /**
+     * アーティストの登録数によってバリデートが掛かるか
+     *
+     * 条件：登録済みアーティストが３件以上
+     * 結果：カテゴリボタンが活性状態になること
+     */
+    @Test
+    fun checkValidateByArtist3() {
+        localUserRepository = mockk<LocalUserRepository>().also {
+            every { it.getFavorite() } returns 3
+        }
+        init()
         assert(viewModel.isEnableCategoryButton.value!!)
-        // 詳細検索ボタン非活性
-        viewModel = HomeViewModel(count4)
-        viewModel.isEnableSearchBar.observeForever(observer)
-        viewModel.isEnableCategoryButton.observeForever(observer)
-        viewModel.isEnableDetailsButton.observeForever(observer)
-        viewModel.isEnableSoaringButton.observeForever(observer)
-        viewModel.isEnableRecommendButton.observeForever(observer)
-        viewModel.isEnableSubmitButton.observeForever(observer)
+    }
+
+    /**
+     * アーティストの登録数によってバリデートが掛かるか
+     *
+     * 条件：登録済みアーティストが４件以下
+     * 結果：詳細検索ボタンが非活性状態になること
+     */
+    @Test
+    fun checkValidateByArtist4() {
+        localUserRepository = mockk<LocalUserRepository>().also {
+            every { it.getFavorite() } returns 4
+        }
+        init()
         assert(!viewModel.isEnableDetailsButton.value!!)
-        // 詳細検索ボタン活性
-        viewModel = HomeViewModel(count5)
-        viewModel.isEnableSearchBar.observeForever(observer)
-        viewModel.isEnableCategoryButton.observeForever(observer)
-        viewModel.isEnableDetailsButton.observeForever(observer)
-        viewModel.isEnableSoaringButton.observeForever(observer)
-        viewModel.isEnableRecommendButton.observeForever(observer)
-        viewModel.isEnableSubmitButton.observeForever(observer)
+    }
+
+    /**
+     * アーティストの登録数によってバリデートが掛かるか
+     *
+     * 条件：登録済みアーティストが５件以上
+     * 結果：詳細検索ボタンが活性状態になること
+     */
+    @Test
+    fun checkValidateByArtist5() {
+        localUserRepository = mockk<LocalUserRepository>().also {
+            every { it.getFavorite() } returns 5
+        }
+        init()
         assert(viewModel.isEnableDetailsButton.value!!)
-        // 急上昇ボタン非活性
-        viewModel = HomeViewModel(count6)
-        viewModel.isEnableSearchBar.observeForever(observer)
-        viewModel.isEnableCategoryButton.observeForever(observer)
-        viewModel.isEnableDetailsButton.observeForever(observer)
-        viewModel.isEnableSoaringButton.observeForever(observer)
-        viewModel.isEnableRecommendButton.observeForever(observer)
-        viewModel.isEnableSubmitButton.observeForever(observer)
+    }
+
+    /**
+     * アーティストの登録数によってバリデートが掛かるか
+     *
+     * 条件：登録済みアーティストが６件以下
+     * 結果：急上昇ボタンが非活性状態になること
+     */
+    @Test
+    fun checkValidateByArtist6() {
+        localUserRepository = mockk<LocalUserRepository>().also {
+            every { it.getFavorite() } returns 6
+        }
+        init()
         assert(!viewModel.isEnableSoaringButton.value!!)
-        // 急上昇ボタン活性
-        viewModel = HomeViewModel(count7)
-        viewModel.isEnableSearchBar.observeForever(observer)
-        viewModel.isEnableCategoryButton.observeForever(observer)
-        viewModel.isEnableDetailsButton.observeForever(observer)
-        viewModel.isEnableSoaringButton.observeForever(observer)
-        viewModel.isEnableRecommendButton.observeForever(observer)
-        viewModel.isEnableSubmitButton.observeForever(observer)
+    }
+
+    /**
+     * アーティストの登録数によってバリデートが掛かるか
+     *
+     * 条件：登録済みアーティストが７件以上
+     * 結果：急上昇ボタンが活性状態になること
+     */
+    @Test
+    fun checkValidateByArtist7() {
+        localUserRepository = mockk<LocalUserRepository>().also {
+            every { it.getFavorite() } returns 7
+        }
+        init()
         assert(viewModel.isEnableSoaringButton.value!!)
-        // おすすめボタン非活性
-        viewModel = HomeViewModel(count9)
-        viewModel.isEnableSearchBar.observeForever(observer)
-        viewModel.isEnableCategoryButton.observeForever(observer)
-        viewModel.isEnableDetailsButton.observeForever(observer)
-        viewModel.isEnableSoaringButton.observeForever(observer)
-        viewModel.isEnableRecommendButton.observeForever(observer)
-        viewModel.isEnableSubmitButton.observeForever(observer)
+    }
+
+    /**
+     * アーティストの登録数によってバリデートが掛かるか
+     *
+     * 条件：登録済みアーティストが９件以下
+     * 結果：おすすめボタンが非活性状態になること
+     */
+    @Test
+    fun checkValidateByArtist9() {
+        localUserRepository = mockk<LocalUserRepository>().also {
+            every { it.getFavorite() } returns 9
+        }
+        init()
         assert(!viewModel.isEnableRecommendButton.value!!)
-        // おすすめボタン活性
-        viewModel = HomeViewModel(count10)
-        viewModel.isEnableSearchBar.observeForever(observer)
-        viewModel.isEnableCategoryButton.observeForever(observer)
-        viewModel.isEnableDetailsButton.observeForever(observer)
-        viewModel.isEnableSoaringButton.observeForever(observer)
-        viewModel.isEnableRecommendButton.observeForever(observer)
-        viewModel.isEnableSubmitButton.observeForever(observer)
+    }
+
+    /**
+     * アーティストの登録数によってバリデートが掛かるか
+     *
+     * 条件：登録済みアーティストが１０件以上
+     * 結果：おすすめボタンが活性状態になること
+     */
+    @Test
+    fun checkValidateByArtist10() {
+        localUserRepository = mockk<LocalUserRepository>().also {
+            every { it.getFavorite() } returns 10
+        }
+        init()
         assert(viewModel.isEnableRecommendButton.value!!)
     }
 }

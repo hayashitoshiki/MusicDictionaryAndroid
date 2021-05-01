@@ -2,7 +2,6 @@ package com.example.musicdictionaryandroid.ui.login
 
 import android.content.Context
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,8 +10,8 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import com.example.musicdictionaryandroid.R
-import com.example.musicdictionaryandroid.data.util.Status
 import com.example.musicdictionaryandroid.databinding.FragmentSignInBinding
+import com.example.musicdictionaryandroid.ui.util.Status
 import org.koin.android.viewmodel.ext.android.viewModel
 
 /**
@@ -21,7 +20,6 @@ import org.koin.android.viewmodel.ext.android.viewModel
 class SignInFragment : Fragment() {
 
     companion object {
-        private const val TAG = "SignInFragment"
 
         @JvmStatic
         fun newInstance(): SignInFragment {
@@ -68,19 +66,15 @@ class SignInFragment : Fragment() {
 
     // ステータス監視
     @Suppress("IMPLICIT_CAST_TO_ANY")
-    private fun onStateChanged(state: Status<Boolean>) = when (state) {
+    private fun onStateChanged(state: Status<String>) = when (state) {
         is Status.Loading -> {
             (activity as StartActivity).loading()
-            viewModel.showProgressBer()
         }
         is Status.Success -> {
-            viewModel.hideProgressBer()
             (activity as StartActivity).endLoading()
             (activity as StartActivity).startApp()
         }
         is Status.Failure -> {
-            Log.i(TAG, "Failure:${state.throwable}")
-            viewModel.hideProgressBer()
             (activity as StartActivity).endLoading()
             (activity as StartActivity).showErrorEmailPassword()
         }

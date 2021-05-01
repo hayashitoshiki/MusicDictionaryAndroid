@@ -1,48 +1,52 @@
 package com.example.musicdictionaryandroid.ui.home
 
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
-import com.example.musicdictionaryandroid.data.util.Result
-import com.example.musicdictionaryandroid.data.util.Status
-import com.example.musicdictionaryandroid.domain.model.entity.Artist
-import com.example.musicdictionaryandroid.domain.model.entity.ArtistContents
-import com.example.musicdictionaryandroid.domain.model.value.*
+import androidx.lifecycle.*
+import com.example.musicdictionaryandroid.domain.model.value.ArtistConditions
+import com.example.musicdictionaryandroid.domain.model.value.ArtistSearchContents
+import com.example.musicdictionaryandroid.domain.model.value.Result
 import com.example.musicdictionaryandroid.domain.usecase.ArtistUseCase
-import com.example.musicdictionaryandroid.domain.usecase.UserUseCase
+import com.example.musicdictionaryandroid.ui.util.Status
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 
 /**
  * おすすめアーティスト検索結果画面_UIロジック
- *
- * @property userUseCase
- * @property artistUseCase
  */
-class ResultRecommendViewModel(
-    private val userUseCase: UserUseCase,
-    private val artistUseCase: ArtistUseCase
-) : ViewModel() {
+class ResultRecommendViewModel(private val artistUseCase: ArtistUseCase) : ViewModel() {
 
-    val status = MutableLiveData<Status<List<ArtistContents>>>()
+    // ステータス
+    private val _status = MutableLiveData<Status<List<ArtistSearchContents<*>>>>()
+    val status: LiveData<Status<List<ArtistSearchContents<*>>>> = _status
 
-    /**
-     * アーティスト検索
-     *
-     * @return おすすめアーティスト一覧
-     */
+
+    // Viewの表示制御
+    private val _isProgressBar = MediatorLiveData<Boolean>()
+    val isProgressBar: LiveData<Boolean> = _isProgressBar
+
+    init {
+        _isProgressBar.addSource(status, Observer { changeProgressBar(it) })
+    }
+
+    // プログレスバーの表示制御
+    private fun changeProgressBar(status: Status<List<ArtistSearchContents<*>>>) {
+        _isProgressBar.value = status is Status.Loading
+    }
+
+    // アーティスト検索
     fun getRecommend(): Job = viewModelScope.launch {
-        status.value = Status.Loading
+        _status.value = Status.Loading
         when (val result = artistUseCase.getArtistsByRecommend()) {
             is Result.Success -> {
-                val artist = Artist("おすすめ", Gender.MAN, Voice(0), Length(0), Lyrics(0), Genre1(0), Genre2(0))
-                val artistContents = ArtistContents(artist, null, null, 0, 0, 0, 0, 0, 0, 0, 0)
-                val arrayList = arrayListOf(artistContents)
-                arrayList.addAll(result.data)
-                status.postValue(Status.Success(arrayList))
+                val artist = ArtistConditions("おすすめ", null, null, null, null, null, null)
+                val conditions = ArtistSearchContents.Conditions(artist)
+                val arrayList = arrayListOf<ArtistSearchContents<*>>(conditions)
+                result.data.forEach { contents ->
+                    arrayList.add(ArtistSearchContents.Item(contents))
+                }
+                _status.postValue(Status.Success(arrayList))
             }
             is Result.Error -> {
-                status.postValue(Status.Failure(result.exception))
+                _status.postValue(Status.Failure(result.exception))
             }
         }
     }

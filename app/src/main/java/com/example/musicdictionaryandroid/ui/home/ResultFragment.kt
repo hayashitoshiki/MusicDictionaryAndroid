@@ -1,7 +1,6 @@
 package com.example.musicdictionaryandroid.ui.home
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,23 +11,16 @@ import androidx.lifecycle.Observer
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.example.musicdictionaryandroid.R
-import com.example.musicdictionaryandroid.data.util.Status
 import com.example.musicdictionaryandroid.databinding.FragmentResultBinding
-import com.example.musicdictionaryandroid.domain.model.entity.ArtistContents
 import com.example.musicdictionaryandroid.domain.model.value.ArtistConditions
-import com.example.musicdictionaryandroid.ui.adapter.DialogFragmentCallbackInterface
-import com.example.musicdictionaryandroid.ui.adapter.ResultAdapter
+import com.example.musicdictionaryandroid.domain.model.value.ArtistSearchContents
+import com.example.musicdictionaryandroid.ui.util.Status
 import org.koin.android.viewmodel.ext.android.viewModel
 
 /**
  * 検索結果画面
- *
  */
 class ResultFragment : Fragment(), DialogFragmentCallbackInterface {
-
-    companion object {
-        private const val TAG = "ResultFragment"
-    }
 
     private val args: ResultFragmentArgs by navArgs()
     private val viewModel: ResultViewModel by viewModel()
@@ -54,26 +46,20 @@ class ResultFragment : Fragment(), DialogFragmentCallbackInterface {
     }
 
     // ステータス監視
-    private fun onStateChanged(state: Status<List<ArtistContents>>) = when (state) {
+    private fun onStateChanged(state: Status<List<ArtistSearchContents<*>>>) = when (state) {
         is Status.Loading -> {
-            showProgressbar()
         }
         is Status.Success -> {
-            hideProgressbar()
-            hideNoDataView()
-            if (state.data.isEmpty()) showNoDataView()
-            else viewUpDate(state.data)
+            viewUpDate(state.data)
         }
         is Status.Failure -> {
-            Log.i(TAG, "Failure:${state.throwable}")
-            hideProgressbar()
         }
         is Status.Non -> {
         }
     }
 
     // データ反映
-    private fun viewUpDate(data: List<ArtistContents>) {
+    private fun viewUpDate(data: List<ArtistSearchContents<*>>) {
         val adapter = ResultAdapter(requireContext(), data)
         val layoutManager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
         val controller = AnimationUtils.loadLayoutAnimation(context, R.anim.layout_animation_fall_down)
@@ -88,26 +74,6 @@ class ResultFragment : Fragment(), DialogFragmentCallbackInterface {
             dialogFragment.setCallbackListener(this)
             dialogFragment.show(requireActivity().supportFragmentManager, null)
         }
-    }
-
-    // 一致データなし表示
-    private fun showNoDataView() {
-        binding.noDataText.visibility = View.VISIBLE
-    }
-
-    // 一致データなし非表示
-    private fun hideNoDataView() {
-        binding.noDataText.visibility = View.INVISIBLE
-    }
-
-    // プログレスバー表示
-    private fun showProgressbar() {
-        binding.progressBar.visibility = View.VISIBLE
-    }
-
-    // プログレスバー非表示
-    private fun hideProgressbar() {
-        binding.progressBar.visibility = View.GONE
     }
 
     override fun onSaveInstanceState(outState: Bundle) {

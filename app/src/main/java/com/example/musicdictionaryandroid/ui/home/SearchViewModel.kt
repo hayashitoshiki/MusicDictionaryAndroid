@@ -4,12 +4,11 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.musicdictionaryandroid.data.net.dto.ArtistsDto
+import com.example.musicdictionaryandroid.data.remote.network.dto.ArtistDto
 import com.example.musicdictionaryandroid.domain.model.value.*
 
 /**
  * 検索条件ダイアログUIロジック
- *
  */
 class SearchViewModel : ViewModel() {
 
@@ -23,6 +22,7 @@ class SearchViewModel : ViewModel() {
     private lateinit var subGenre5List: Array<String>
     private lateinit var subGenre6List: Array<String>
 
+    // 入力項目
     val nameText = MutableLiveData<String>()
     val genderValueInt = MutableLiveData(0)
     val lengthValueInt = MutableLiveData(0)
@@ -32,6 +32,8 @@ class SearchViewModel : ViewModel() {
     val genre2ValueList = MutableLiveData<Array<String>>()
     val genre1ValueInt = MutableLiveData(0)
     val genre2ValueInt = MutableLiveData(0)
+
+    // ボタンバリデート
     private val _isEnableSubmitButton = MediatorLiveData<Boolean>()
     val isEnableSubmitButton: LiveData<Boolean> = _isEnableSubmitButton
 
@@ -64,6 +66,7 @@ class SearchViewModel : ViewModel() {
         genre1ValueList.value = mainGenreList
     }
 
+    // アーティスト取得
     fun getArtist(): ArtistConditions {
         val name = nameText.value.toString()
         val gender = Gender.getEnumByValue(genderValueInt.value!!)
@@ -75,7 +78,8 @@ class SearchViewModel : ViewModel() {
         return ArtistConditions(name, gender, voice, length, lyrics, genre1, genre2)
     }
 
-    fun setArtist(artist: ArtistsDto) {
+    // アーティスト設定
+    fun setArtist(artist: ArtistDto) {
         when (artist.genre1) {
             0 -> genre2ValueList.value = subGenre0List
             1 -> genre2ValueList.value = subGenre1List

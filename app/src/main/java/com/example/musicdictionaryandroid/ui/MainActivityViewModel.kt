@@ -5,6 +5,9 @@ import androidx.lifecycle.viewModelScope
 import com.example.musicdictionaryandroid.domain.usecase.ArtistUseCase
 import kotlinx.coroutines.launch
 
+/**
+ * メイン画面_UIロジック
+ */
 class MainActivityViewModel(private val artistUseCase: ArtistUseCase) : ViewModel() {
 
     fun init() {

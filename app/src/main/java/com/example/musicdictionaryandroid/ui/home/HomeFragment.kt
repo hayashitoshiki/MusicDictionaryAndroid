@@ -2,7 +2,6 @@ package com.example.musicdictionaryandroid.ui.home
 
 import android.content.Context
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -15,15 +14,13 @@ import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
 import com.example.musicdictionaryandroid.R
 import com.example.musicdictionaryandroid.databinding.FragmentHomeBinding
-import com.example.musicdictionaryandroid.ui.adapter.setSafeClickListener
-import com.example.musicdictionaryandroid.ui.login.StartActivity
-import kotlin.coroutines.CoroutineContext
+import com.example.musicdictionaryandroid.ui.util.setSafeClickListener
 import kotlinx.coroutines.*
 import org.koin.android.viewmodel.ext.android.viewModel
+import kotlin.coroutines.CoroutineContext
 
 /**
  * HOME画面
- *
  */
 class HomeFragment : Fragment(), CoroutineScope {
 
@@ -35,11 +32,6 @@ class HomeFragment : Fragment(), CoroutineScope {
     private val job = SupervisorJob()
     override val coroutineContext: CoroutineContext = Dispatchers.Main + job
     private val viewModel: HomeViewModel by viewModel()
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        Log.d(StartActivity.TAG, "onCreate")
-    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_home, container, false)

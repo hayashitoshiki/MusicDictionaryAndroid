@@ -2,24 +2,20 @@ package com.example.musicdictionaryandroid.ui
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
-import com.example.musicdictionaryandroid.data.util.Status
 import com.example.musicdictionaryandroid.ui.login.StartActivity
+import com.example.musicdictionaryandroid.ui.util.Status
 import org.koin.android.viewmodel.ext.android.viewModel
 
+/**
+ * スプラッシュ画面
+ */
 class SplashActivity : AppCompatActivity() {
 
     private val viewModel: SplashViewModel by viewModel()
 
-    @Suppress("JAVA_CLASS_ON_COMPANION")
-    companion object {
-        val TAG = javaClass.name
-    }
-
     override fun onCreate(savedInstanceState: Bundle?) {
-        Log.d(TAG, "onCreate")
         super.onCreate(savedInstanceState)
         viewModel.status.observe(this, Observer { onStateChanged(it) })
         viewModel.firstCheck()
@@ -34,7 +30,8 @@ class SplashActivity : AppCompatActivity() {
                     "logout" -> login()
                 }
             }
-            is Status.Failure -> { Log.i(TAG, "Failure:${state.throwable}") }
+            is Status.Failure -> {
+            }
         }
     }
 

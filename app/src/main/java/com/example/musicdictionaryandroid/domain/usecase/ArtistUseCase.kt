@@ -1,9 +1,9 @@
 package com.example.musicdictionaryandroid.domain.usecase
 
-import com.example.musicdictionaryandroid.data.util.Result
 import com.example.musicdictionaryandroid.domain.model.entity.Artist
 import com.example.musicdictionaryandroid.domain.model.entity.ArtistContents
 import com.example.musicdictionaryandroid.domain.model.value.ArtistConditions
+import com.example.musicdictionaryandroid.domain.model.value.Result
 import kotlinx.coroutines.flow.Flow
 
 /**
@@ -75,7 +75,7 @@ interface ArtistUseCase {
      * @param name 削除したいアーティストの名前
      * @return 削除正常完了判定結果
      */
-    suspend fun deleteArtist(name: String): Result<List<Artist>>
+    suspend fun deleteArtist(name: String): Result<String>
 
     // アーティストリスト取得
     fun getArtistList(): Flow<List<Artist>>

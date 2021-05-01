@@ -1,14 +1,14 @@
 package com.example.musicdictionaryandroid.domain.usecase
 
-import com.example.musicdictionaryandroid.data.database.entity.CallBackData
-import com.example.musicdictionaryandroid.data.database.entity.User
-import com.example.musicdictionaryandroid.data.repository.ApiServerRepository
-import com.example.musicdictionaryandroid.data.repository.DataBaseRepository
-import com.example.musicdictionaryandroid.data.repository.PreferenceRepository
-import com.example.musicdictionaryandroid.data.util.Result
+import com.example.musicdictionaryandroid.BaseTestUnit
+import com.example.musicdictionaryandroid.data.repository.LocalArtistRepository
+import com.example.musicdictionaryandroid.data.repository.LocalUserRepository
+import com.example.musicdictionaryandroid.data.repository.RemoteArtistRepository
 import com.example.musicdictionaryandroid.domain.model.entity.Artist
 import com.example.musicdictionaryandroid.domain.model.entity.ArtistContents
+import com.example.musicdictionaryandroid.domain.model.entity.User
 import com.example.musicdictionaryandroid.domain.model.value.*
+import com.example.musicdictionaryandroid.domain.model.value.Result
 import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.every
@@ -17,8 +17,6 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.runBlocking
-import kotlinx.coroutines.test.TestCoroutineDispatcher
-import kotlinx.coroutines.test.TestCoroutineScope
 import kotlinx.coroutines.test.resetMain
 import kotlinx.coroutines.test.setMain
 import org.junit.After
@@ -26,18 +24,12 @@ import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
 
-class ArtistUseCaseImpTest {
-
-    @ExperimentalCoroutinesApi
-    private val testDispatcher = TestCoroutineDispatcher()
-
-    @ExperimentalCoroutinesApi
-    private val testScope = TestCoroutineScope(testDispatcher)
+class ArtistUseCaseImpTest : BaseTestUnit() {
 
     private lateinit var useCase: ArtistUseCaseImp
-    private lateinit var apiRepository: ApiServerRepository
-    private lateinit var dataBaseRepository: DataBaseRepository
-    private lateinit var preferenceRepository: PreferenceRepository
+    private lateinit var remoteArtistRepository: RemoteArtistRepository
+    private lateinit var localArtistRepository: LocalArtistRepository
+    private lateinit var localUserRepository: LocalUserRepository
 
     private val user = User("test@com.jp", "testA", 1, 1, "2000/2/2", 1)
     private val artist = Artist("test", Gender.MAN, Voice(0), Length(0), Lyrics(0), Genre1(0), Genre2(0))
@@ -55,7 +47,7 @@ class ArtistUseCaseImpTest {
     @Before
     fun setUp() {
         Dispatchers.setMain(testDispatcher)
-        apiRepository = mockk<ApiServerRepository>().also {
+        remoteArtistRepository = mockk<RemoteArtistRepository>().also {
             coEvery { it.getArtistsBy(any()) } returns Result.Success(artistContentsList)
             coEvery { it.getArtistsByRecommend(any()) } returns Result.Success(artistContentsList)
             coEvery { it.getArtistsBySoaring() } returns Result.Success(artistContentsList)
@@ -67,30 +59,38 @@ class ArtistUseCaseImpTest {
             coEvery { it.updateArtist(any(), failureEmail) } returns failureResult
             coEvery { it.deleteArtist(any(), successEmail) } returns successResult
             coEvery { it.deleteArtist(any(), failureEmail) } returns failureResult
-            coEvery { it.getUserByEmail(any()) } returns Result.Success(user)
-            coEvery { it.createUser(any()) } returns successResult
-            coEvery { it.changeUser(any(), any()) } returns Result.Success(CallBackData())
         }
-        dataBaseRepository = mockk<DataBaseRepository>().also {
+        localArtistRepository = mockk<LocalArtistRepository>().also {
             coEvery { it.addArtist(any()) } returns Unit
             coEvery { it.deleteArtist(any()) } returns Unit
             coEvery { it.deleteAll() } returns Unit
             coEvery { it.updateArtist(any()) } returns Unit
             coEvery { it.updateAll(any()) } returns Unit
-            coEvery { it.findByName(any()) } returns artist
-            coEvery { it.getArtistAll() } returns artistList
-            coEvery { it.getArtistList() } returns artistListFlow
+            coEvery { it.getArtistByName(any()) } returns artist
+            coEvery { it.getArtistAll() } returns artistListFlow
         }
-        preferenceRepository = mockk<PreferenceRepository>().also {
+        localUserRepository = mockk<LocalUserRepository>().also {
             every { it.getEmail() } returns successEmail
             every { it.setFavorite(any()) } returns Unit
             every { it.getFavorite() } returns 1
         }
-        useCase = ArtistUseCaseImp(apiRepository, dataBaseRepository, preferenceRepository, testScope, testDispatcher)
+        useCase = ArtistUseCaseImp(
+            remoteArtistRepository,
+            localArtistRepository,
+            localUserRepository,
+            testScope,
+            testDispatcher
+        )
     }
 
     private fun reLoad() {
-        useCase = ArtistUseCaseImp(apiRepository, dataBaseRepository, preferenceRepository, testScope, testDispatcher)
+        useCase = ArtistUseCaseImp(
+            remoteArtistRepository,
+            localArtistRepository,
+            localUserRepository,
+            testScope,
+            testDispatcher
+        )
     }
 
     @ExperimentalCoroutinesApi
@@ -108,33 +108,19 @@ class ArtistUseCaseImpTest {
      * ・アーティスト検索Repositoryが呼ばれること
      * ・戻り値がアーティスト検索Repositoryの戻り値と同じであること
      */
-
-    /**
-     * 検索条件に一致するアーティスト取得
-     * 条件：なし
-     * 結果：
-     * ・アーティスト検索Repositoryが呼ばれること
-     * ・戻り値がアーティスト検索Repositoryの戻り値と同じであること
-     */
     @Test
     fun getArtistsBy() {
         runBlocking {
             val result = useCase.getArtistsBy(artistConditions)
             assertEquals(Result.Success(artistContentsList), result)
-            coVerify(exactly = 1) { (apiRepository).getArtistsBy(artistConditions) }
+            coVerify(exactly = 1) { (remoteArtistRepository).getArtistsBy(artistConditions) }
         }
     }
 
     // endregion
 
     // region おすすめアーティスト検索
-    /**
-     * おすすめアーティスト取得
-     * 条件：なし
-     * 結果：
-     * ・おすすめアーティスト取得Repositoryが呼ばれること
-     * ・戻り値がおすすめアーティスト取得Repositoryの戻り値と同じであること
-     */
+
     /**
      * おすすめアーティスト取得
      * 条件：なし
@@ -147,7 +133,7 @@ class ArtistUseCaseImpTest {
         runBlocking {
             val result = useCase.getArtistsByRecommend()
             assertEquals(Result.Success(artistContentsList), result)
-            coVerify(exactly = 1) { (apiRepository).getArtistsByRecommend(any()) }
+            coVerify(exactly = 1) { (remoteArtistRepository).getArtistsByRecommend(any()) }
         }
     }
 
@@ -162,20 +148,12 @@ class ArtistUseCaseImpTest {
      * ・急上昇アーティスト取得Repositoryが呼ばれること
      * ・戻り値が急上昇アーティスト取得Repositoryの戻り値と同じであること
      */
-
-    /**
-     * 急上昇アーティスト取得
-     * 条件：なし
-     * 結果：
-     * ・急上昇アーティスト取得Repositoryが呼ばれること
-     * ・戻り値が急上昇アーティスト取得Repositoryの戻り値と同じであること
-     */
     @Test
     fun getArtistsBySoaring() {
         runBlocking {
             val result = useCase.getArtistsBySoaring()
             assertEquals(Result.Success(artistContentsList), result)
-            coVerify(exactly = 1) { (apiRepository).getArtistsBySoaring() }
+            coVerify(exactly = 1) { (remoteArtistRepository).getArtistsBySoaring() }
         }
     }
 
@@ -191,35 +169,16 @@ class ArtistUseCaseImpTest {
      * ・ローカルDBで保持しているデータが更新されること
      * ・登録しているアーティストの件数が更新されること
      */
-
-    /**
-     * 登録しているアーティスト取得
-     * 条件：通信取得成功時
-     * 結果：
-     * ・戻り値が取得したアーティストリストであること
-     * ・ローカルDBで保持しているデータが更新されること
-     * ・登録しているアーティストの件数が更新されること
-     */
     @Test
     fun getArtistsByEmailSuccess() {
         runBlocking {
             val result = useCase.getArtistsByEmail()
             assertEquals(Result.Success(artistList), result)
-            coVerify(exactly = 1) { (apiRepository).getArtistsByEmail(successEmail) }
-            coVerify(exactly = 1) { (dataBaseRepository).updateAll(artistList) }
-            coVerify(exactly = 1) { (preferenceRepository).setFavorite(artistList.size) }
+            coVerify(exactly = 1) { (remoteArtistRepository).getArtistsByEmail(successEmail) }
+            coVerify(exactly = 1) { (localArtistRepository).updateAll(artistList) }
+            coVerify(exactly = 1) { (localUserRepository).setFavorite(artistList.size) }
         }
     }
-
-    /**
-     * 登録しているアーティスト取得
-     * 条件：通信取得失敗時
-     * 結果：
-     * ・戻り値がローカルDBから取得したアーティストリストであること
-     * ・ローカルDBで保持しているデータが更新されないこと
-     * ・登録しているアーティストの件数が更新されないこと
-     * ・ローカルDBで保持している登録済みアーティストリストから取得すること
-     */
 
     /**
      * 登録しているアーティスト取得
@@ -233,15 +192,14 @@ class ArtistUseCaseImpTest {
     @Test
     fun getArtistsByEmailFailure() {
         runBlocking {
-            preferenceRepository = mockk<PreferenceRepository>().also {
+            localUserRepository = mockk<LocalUserRepository>().also {
                 every { it.getEmail() } returns failureEmail
             }
             reLoad()
             useCase.getArtistsByEmail()
-            coVerify(exactly = 1) { (apiRepository).getArtistsByEmail(failureEmail) }
-            coVerify(exactly = 0) { (dataBaseRepository).updateAll(artistList) }
-            coVerify(exactly = 0) { (preferenceRepository).setFavorite(artistList.size) }
-            coVerify(exactly = 1) { (dataBaseRepository).getArtistAll() }
+            coVerify(exactly = 1) { (remoteArtistRepository).getArtistsByEmail(failureEmail) }
+            coVerify(exactly = 0) { (localArtistRepository).updateAll(artistList) }
+            coVerify(exactly = 0) { (localUserRepository).setFavorite(artistList.size) }
         }
     }
 
@@ -256,30 +214,14 @@ class ArtistUseCaseImpTest {
      * ・APIに登録するアーティストを送信するメソッドが呼ばれること
      * ・ローカルDBに登録したを追加するメソッドが呼ばれること
      */
-
-    /**
-     * アーティスト登録
-     * 条件：通信取得成功時
-     * 結果：
-     * ・APIに登録するアーティストを送信するメソッドが呼ばれること
-     * ・ローカルDBに登録したを追加するメソッドが呼ばれること
-     */
     @Test
     fun addArtistSuccess() {
         runBlocking {
             useCase.addArtist(artist)
-            coVerify(exactly = 1) { (apiRepository).addArtist(artist, successEmail) }
-            coVerify(exactly = 1) { (dataBaseRepository).addArtist(artist) }
+            coVerify(exactly = 1) { (remoteArtistRepository).addArtist(artist, successEmail) }
+            coVerify(exactly = 1) { (localArtistRepository).addArtist(artist) }
         }
     }
-
-    /**
-     * アーティスト登録
-     * 条件：通信取得失敗時
-     * 結果：
-     * ・APIに登録するアーティストを送信するメソッドが呼ばれること
-     * ・ローカルDBに登録したを追加するメソッドが呼ばれること
-     */
 
     /**
      * アーティスト登録
@@ -291,14 +233,14 @@ class ArtistUseCaseImpTest {
     @Test
     fun addArtistFailure() {
         runBlocking {
-            preferenceRepository = mockk<PreferenceRepository>().also {
+            localUserRepository = mockk<LocalUserRepository>().also {
                 every { it.getEmail() } returns failureEmail
             }
             reLoad()
             val result = useCase.addArtist(artist)
             assertEquals(failureResult, result)
-            coVerify(exactly = 1) { (apiRepository).addArtist(artist, failureEmail) }
-            coVerify(exactly = 0) { (dataBaseRepository).addArtist(artist) }
+            coVerify(exactly = 1) { (remoteArtistRepository).addArtist(artist, failureEmail) }
+            coVerify(exactly = 0) { (localArtistRepository).addArtist(artist) }
         }
     }
 
@@ -313,30 +255,14 @@ class ArtistUseCaseImpTest {
      * ・APIに更新するアーティストを送信するメソッドが呼ばれること
      * ・ローカルDBに更新したアーティストを更新するメソッドが呼ばれること
      */
-
-    /**
-     * アーティスト更新
-     * 条件：通信取得成功時
-     * 結果：
-     * ・APIに更新するアーティストを送信するメソッドが呼ばれること
-     * ・ローカルDBに更新したアーティストを更新するメソッドが呼ばれること
-     */
     @Test
     fun updateArtistSuccess() {
         runBlocking {
             useCase.updateArtist(artist)
-            coVerify(exactly = 1) { (apiRepository).updateArtist(artist, successEmail) }
-            coVerify(exactly = 1) { (dataBaseRepository).updateArtist(artist) }
+            coVerify(exactly = 1) { (remoteArtistRepository).updateArtist(artist, successEmail) }
+            coVerify(exactly = 1) { (localArtistRepository).updateArtist(artist) }
         }
     }
-
-    /**
-     * アーティスト更新
-     * 条件：通信取得失敗時
-     * 結果：
-     * ・APIに更新するアーティストを送信するメソッドが呼ばれること
-     * ・ローカルDBに更新したアーティストを更新するメソッドが呼ばれること
-     */
 
     /**
      * アーティスト更新
@@ -348,25 +274,17 @@ class ArtistUseCaseImpTest {
     @Test
     fun updateArtistFailure() {
         runBlocking {
-            preferenceRepository = mockk<PreferenceRepository>().also {
+            localUserRepository = mockk<LocalUserRepository>().also {
                 every { it.getEmail() } returns failureEmail
             }
             reLoad()
             useCase.updateArtist(artist)
-            coVerify(exactly = 1) { (apiRepository).updateArtist(artist, failureEmail) }
-            coVerify(exactly = 0) { (dataBaseRepository).updateArtist(artist) }
+            coVerify(exactly = 1) { (remoteArtistRepository).updateArtist(artist, failureEmail) }
+            coVerify(exactly = 0) { (localArtistRepository).updateArtist(artist) }
         }
     }
 
     // endregion
-
-    /**
-     * アーティスト更新
-     * 条件：通信取得成功時
-     * 結果：
-     * ・APIに削除するアーティストを送信するメソッドが呼ばれること
-     * ・ローカルDBに削除したアーティストを削除するメソッドが呼ばれること
-     */
 
     /**
      * アーティスト更新
@@ -379,18 +297,10 @@ class ArtistUseCaseImpTest {
     fun deleteArtistSuccess() {
         runBlocking {
             useCase.deleteArtist(artist.name)
-            coVerify(exactly = 1) { (apiRepository).deleteArtist(artist.name, successEmail) }
-            coVerify(exactly = 1) { (dataBaseRepository).deleteArtist(artist.name) }
+            coVerify(exactly = 1) { (remoteArtistRepository).deleteArtist(artist.name, successEmail) }
+            coVerify(exactly = 1) { (localArtistRepository).deleteArtist(artist.name) }
         }
     }
-
-    /**
-     * アーティスト削除
-     * 条件：通信取得失敗時
-     * 結果：
-     * ・APIに削除するアーティストを送信するメソッドが呼ばれること
-     * ・ローカルDBに削除したアーティストを削除するメソッドが呼ばれること
-     */
 
     /**
      * アーティスト削除
@@ -402,13 +312,13 @@ class ArtistUseCaseImpTest {
     @Test
     fun deleteArtistFailure() {
         runBlocking {
-            preferenceRepository = mockk<PreferenceRepository>().also {
+            localUserRepository = mockk<LocalUserRepository>().also {
                 every { it.getEmail() } returns failureEmail
             }
             reLoad()
             useCase.deleteArtist(artist.name)
-            coVerify(exactly = 1) { (apiRepository).deleteArtist(artist.name, failureEmail) }
-            coVerify(exactly = 0) { (dataBaseRepository).deleteArtist(artist.name) }
+            coVerify(exactly = 1) { (remoteArtistRepository).deleteArtist(artist.name, failureEmail) }
+            coVerify(exactly = 0) { (localArtistRepository).deleteArtist(artist.name) }
         }
     }
 
@@ -421,16 +331,10 @@ class ArtistUseCaseImpTest {
      * 条件：なし
      * 結果：ローカルDBのアーティスト取得メソッドが呼ばれること
      */
-
-    /**
-     * アーティストリスト取得
-     * 条件：なし
-     * 結果：ローカルDBのアーティスト取得メソッドが呼ばれること
-     */
     @Test
     fun getArtistList() {
         useCase.getArtistList()
-        coVerify(exactly = 1) { (dataBaseRepository).getArtistList() }
+        coVerify(exactly = 1) { (localArtistRepository).getArtistAll() }
     }
 
     // endregion

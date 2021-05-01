@@ -61,6 +61,24 @@
     <string name="category_search_sort3">絞り込み項目３</string>
     <string name="category_search_sort4">絞り込み項目４</string>
 
+    <!-- カテゴリ数値文字列表記 -->
+    <string name="category_value_no_select">未選択</string>
+    <string name="category_value_length_1">曲が短い</string>
+    <string name="category_value_length_2">曲がやや短め</string>
+    <string name="category_value_length_3">中間</string>
+    <string name="category_value_length_4">曲がやや長め</string>
+    <string name="category_value_length_5">曲が長い</string>
+    <string name="category_value_voice_1">声が低い</string>
+    <string name="category_value_voice_2">やや声が低い</string>
+    <string name="category_value_voice_3">中間の声</string>
+    <string name="category_value_voice_4">やや声が高い</string>
+    <string name="category_value_voice_5">声が高い</string>
+    <string name="category_value_lyric_1">外国語が多い</string>
+    <string name="category_value_lyric_2">外国語がやや多い</string>
+    <string name="category_value_lyric_3">外国語と日本語が半々</string>
+    <string name="category_value_lyric_4">少し外国語がある</string>
+    <string name="category_value_lyric_5">日本語が多い</string>
+
     <!-- バリデート -->
     <string name="validate_home_button1">1件以上登録してください</string>
     <string name="validate_home_button2">3件以上登録してください</string>

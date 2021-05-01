@@ -8,7 +8,6 @@ import com.example.musicdictionaryandroid.domain.model.value.*
 
 /**
  * カテゴリ検索画面_UIロジック
- *
  */
 class CategorySearchViewModel : ViewModel() {
 
@@ -22,6 +21,7 @@ class CategorySearchViewModel : ViewModel() {
     private lateinit var subGenre5List: Array<String>
     private lateinit var subGenre6List: Array<String>
 
+    // 入力項目
     val genderValueInt = MutableLiveData(0)
     val lengthValueInt = MutableLiveData(0)
     val voiceValueInt = MutableLiveData(0)
@@ -30,6 +30,8 @@ class CategorySearchViewModel : ViewModel() {
     val genre2ValueList = MutableLiveData<Array<String>>()
     val genre1ValueInt = MutableLiveData(0)
     val genre2ValueInt = MutableLiveData(0)
+
+    // ボタンバリデート
     private val _isEnableSubmitButton = MediatorLiveData<Boolean>()
     val isEnableSubmitButton: LiveData<Boolean> = _isEnableSubmitButton
 
@@ -128,18 +130,5 @@ class CategorySearchViewModel : ViewModel() {
             5 -> genre2ValueList.postValue(subGenre5List)
             6 -> genre2ValueList.postValue(subGenre6List)
         }
-    }
-
-    // ジャンル２の変更
-    fun changeGenre2(index: Int) {
-        genre2ValueInt.value = index
-    }
-
-    fun onDestroy() {
-        _isEnableSubmitButton.removeSource(genderValueInt)
-        _isEnableSubmitButton.removeSource(lengthValueInt)
-        _isEnableSubmitButton.removeSource(voiceValueInt)
-        _isEnableSubmitButton.removeSource(lyricsValueInt)
-        _isEnableSubmitButton.removeSource(genre1ValueInt)
     }
 }

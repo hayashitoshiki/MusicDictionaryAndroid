@@ -8,7 +8,6 @@ import com.example.musicdictionaryandroid.domain.model.value.*
 
 /**
  * 詳細検索画面_UIロジック
- *
  */
 class DetailsSearchViewModel : ViewModel() {
 
@@ -107,6 +106,7 @@ class DetailsSearchViewModel : ViewModel() {
         genre1KeyList.value = genreKeyList
     }
 
+    // アーティスト取得
     fun getArtist(): ArtistConditions {
         val gender = Gender.getEnumByValue(genderValueInt.value!!)
         val length = Length(lengthValueInt.value!!)
@@ -162,12 +162,7 @@ class DetailsSearchViewModel : ViewModel() {
         }
     }
 
-    /**
-     * 絞り込みジャンル変更処理
-     *
-     * @param position 絞り込みジャンルの種類のインデックス
-     * @param index 絞り込みジャンルの中の値のインデックス
-     */
+    // 絞り込みジャンル変更処理
     fun changeGenreKey(position: Int, index: Int) {
         when (position) {
             1 -> changeGenreKey(genre1KeyList.value?.get(index), genre1ValueList, _isSortGenre1ValueList)
@@ -177,6 +172,7 @@ class DetailsSearchViewModel : ViewModel() {
         }
     }
 
+    // ジャンルのキー変更
     private fun changeGenreKey(
         categoryName: String?,
         KeySpinner: MutableLiveData<Array<String>>,
@@ -197,11 +193,7 @@ class DetailsSearchViewModel : ViewModel() {
         }
     }
 
-    /**
-     * 絞り込みジャンル追加ボタン処理
-     *
-     * @param position
-     */
+    // 絞り込みジャンル追加ボタン処理
     fun addSortList(position: Int) {
         when (position) {
             1 -> {
@@ -240,6 +232,7 @@ class DetailsSearchViewModel : ViewModel() {
         }
     }
 
+    // ジャンル１に表示するジャンルの絞り込み
     private fun listFilter(
         keyList: Array<String>?,
         position: Int?,
@@ -269,6 +262,7 @@ class DetailsSearchViewModel : ViewModel() {
         }
     }
 
+    // ジャンル削除
     private fun deleteGenre(
         buttonArea: MutableLiveData<Boolean>,
         newSortArea: MutableLiveData<Boolean>,
@@ -290,6 +284,7 @@ class DetailsSearchViewModel : ViewModel() {
         }
     }
 
+    // ジャンル変更
     private fun changeGenreValue(position: Int, button: MutableLiveData<Boolean>) {
         button.value = when (position) {
             0 -> false

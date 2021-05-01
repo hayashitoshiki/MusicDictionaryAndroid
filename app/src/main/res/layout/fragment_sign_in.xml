@@ -1,12 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:android="http://schemas.android.com/apk/res/android">
+
     <data>
-        <import type="android.view.View"/>
+
+        <import type="android.view.View" />
+
         <variable
             name="viewModel"
             type="com.example.musicdictionaryandroid.ui.login.SignInViewModel" />
     </data>
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -26,6 +30,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 style="@style/Custom.TextInput">
+
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/email_edit_text"
                     android:layout_width="match_parent"
@@ -33,7 +38,7 @@
                     android:hint="@string/validate_sign_email"
                     android:inputType="textEmailAddress"
                     android:text="@={viewModel.emailText}"
-                    app:error="@{viewModel.emailErrorText}"/>
+                    app:error="@{viewModel.emailErrorText}" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
@@ -41,6 +46,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 style="@style/Custom.TextInput">
+
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/password_edit_text"
                     android:layout_width="match_parent"
@@ -48,7 +54,7 @@
                     android:hint="@string/validate_sign_password1"
                     android:inputType="textPassword"
                     android:text="@={viewModel.passwordText}"
-                    app:error="@{viewModel.passwordErrorText}"/>
+                    app:error="@{viewModel.passwordErrorText}" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.button.MaterialButton
@@ -78,7 +84,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            android:visibility="@{viewModel.isProgressBer() ? View.VISIBLE : View.GONE}"/>
+            android:visibility="@{viewModel.isProgressBar ? View.VISIBLE : View.GONE}" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </layout>

@@ -1,8 +1,7 @@
 package com.example.musicdictionaryandroid.domain.usecase
 
-import com.example.musicdictionaryandroid.data.database.entity.CallBackData
-import com.example.musicdictionaryandroid.data.database.entity.User
-import com.example.musicdictionaryandroid.data.util.Result
+import com.example.musicdictionaryandroid.domain.model.entity.User
+import com.example.musicdictionaryandroid.domain.model.value.Result
 import kotlinx.coroutines.flow.Flow
 
 /**
@@ -25,15 +24,6 @@ interface UserUseCase {
      * @return 登録処理結果
      */
     suspend fun createUser(email: String, password: String, user: User): Flow<Result<String>>
-
-    /**
-     * ユーザー情報変更
-     *
-     * @param user 更新するユーザー情報
-     * @param email 更新したユーザのEmail
-     * @return 変更処理結果
-     */
-    suspend fun changeUser(user: User, email: String): Result<CallBackData?>
 
     /**
      * ログイン状態チェック

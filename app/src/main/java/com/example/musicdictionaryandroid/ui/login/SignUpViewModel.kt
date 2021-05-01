@@ -1,14 +1,11 @@
 package com.example.musicdictionaryandroid.ui.login
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MediatorLiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import com.example.musicdictionaryandroid.data.database.entity.User
-import com.example.musicdictionaryandroid.data.util.Result
-import com.example.musicdictionaryandroid.data.util.Status
-import com.example.musicdictionaryandroid.data.util.UserInfoChangeListUtil
+import androidx.lifecycle.*
+import com.example.musicdictionaryandroid.domain.model.entity.User
+import com.example.musicdictionaryandroid.domain.model.value.Result
 import com.example.musicdictionaryandroid.domain.usecase.UserUseCase
+import com.example.musicdictionaryandroid.ui.util.MessageUtil
+import com.example.musicdictionaryandroid.ui.util.Status
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.collect
@@ -17,20 +14,27 @@ import java.util.regex.Pattern
 
 /**
  * 新規登録画面_UIロジック
- *
- * @property userUseCase
  */
 class SignUpViewModel(
+    private val messageUtil: MessageUtil,
     private val userUseCase: UserUseCase,
-    private val externalScope: CoroutineScope
+    private val externalScope: CoroutineScope,
 ) : ViewModel() {
 
-    val status = MutableLiveData<Status<String?>>()
+    // ステータス
+    private val _status = MutableLiveData<Status<String?>>()
+    val status: LiveData<Status<String?>> = _status
 
+    // 入力項目
     val emailText = MutableLiveData<String>()
     val password1Text = MutableLiveData<String>()
     val password2Text = MutableLiveData<String>()
     val nameText = MutableLiveData<String>()
+    val genderInt = MutableLiveData(0)
+    val areaSelectedPosition = MutableLiveData(0)
+    val birthdaySelectedPosition = MutableLiveData(0)
+
+    // エラー制御
     private val _emailErrorText = MutableLiveData<String?>()
     val emailErrorText: LiveData<String?> = _emailErrorText
     private val _passwordError1Text = MutableLiveData<String?>()
@@ -39,17 +43,13 @@ class SignUpViewModel(
     val passwordError2Text: LiveData<String?> = _passwordError2Text
     private val _nameErrorText = MutableLiveData<String?>()
     val nameErrorText: LiveData<String?> = _nameErrorText
-    val genderInt = MutableLiveData(0)
-    val areaSelectedPosition = MutableLiveData(0)
-    val birthdaySelectedPosition = MutableLiveData(0)
+
+    // ボタン制御
     private val _isEnableSubmitButton = MediatorLiveData<Boolean>()
     val isEnableSubmitButton: LiveData<Boolean> = _isEnableSubmitButton
-    private val _isProgressBer = MutableLiveData(false)
-    val isProgressBer: LiveData<Boolean> = _isProgressBer
+    private val _isProgressBar = MediatorLiveData<Boolean>()
+    val isProgressBar: LiveData<Boolean> = _isProgressBar
 
-    /**
-     * バリデート処理
-     */
     init {
         _isEnableSubmitButton.addSource(emailText) { validateSubmit() }
         _isEnableSubmitButton.addSource(password1Text) { validateSubmit() }
@@ -58,13 +58,19 @@ class SignUpViewModel(
         _isEnableSubmitButton.addSource(genderInt) { validateSubmit() }
         _isEnableSubmitButton.addSource(areaSelectedPosition) { validateSubmit() }
         _isEnableSubmitButton.addSource(birthdaySelectedPosition) { validateSubmit() }
-        _isEnableSubmitButton.addSource(isProgressBer) { validateSubmit() }
+        _isEnableSubmitButton.addSource(isProgressBar) { validateSubmit() }
+        _isProgressBar.addSource(status, Observer { changeProgressBar(it) })
+    }
+
+    // プログレスバーの表示制御
+    private fun changeProgressBar(status: Status<*>) {
+        _isProgressBar.value = status is Status.Loading
     }
 
     // ボタンのバリデート
     private fun validateSubmit() {
         _isEnableSubmitButton.value =
-            validateEmail() && validatePassword() && validateName() && validateGender() && validateArea() && validateBirthday() && validateProgressBar()
+            validateEmail() && validatePassword() && validateName() && validateGender() && validateArea() && validateBirthday()
     }
 
     // email入力欄
@@ -107,11 +113,6 @@ class SignUpViewModel(
     // 年齢入力欄
     private fun validateBirthday(): Boolean {
         return birthdaySelectedPosition.value != null && birthdaySelectedPosition.value!! != 0
-    }
-
-    // progressBarバリデート
-    private fun validateProgressBar(): Boolean {
-        return _isProgressBer.value != null && !_isProgressBer.value!!
     }
 
     // メールアドレスエラー文言表示
@@ -165,17 +166,20 @@ class SignUpViewModel(
         }
     }
 
-    /**
-     * 新規作成
-     */
+    // 新規作成
     fun signUp(): Job = externalScope.launch {
-        status.postValue(Status.Loading)
-        val birthday = UserInfoChangeListUtil.getBirthday(birthdaySelectedPosition.value!!)
-        val user = User(emailText.value!!, nameText.value!!, genderInt.value!!, areaSelectedPosition.value!!, birthday, 0)
-        userUseCase.createUser(emailText.value!!, password1Text.value!!, user).collect {
+        _status.postValue(Status.Loading)
+        val email = emailText.value!!
+        val name = nameText.value!!
+        val gender = genderInt.value!!
+        val area = areaSelectedPosition.value!!
+        val birthday = messageUtil.getBirthday(birthdaySelectedPosition.value!!)
+        val password = password1Text.value!!
+        val user = User(email, name, gender, area, birthday, 0)
+        userUseCase.createUser(email, password, user).collect {
             when (it) {
-                is Result.Success -> status.postValue(Status.Success(it.data))
-                is Result.Error -> status.postValue(Status.Failure(it.exception))
+                is Result.Success -> _status.postValue(Status.Success(it.data))
+                is Result.Error -> _status.postValue(Status.Failure(it.exception))
             }
         }
     }
@@ -183,15 +187,5 @@ class SignUpViewModel(
     // genderの変更
     fun checkedChangeGender(checkedId: Int) {
         genderInt.value = checkedId
-    }
-
-    // プログレスバー表示
-    fun showProgressBer() {
-        _isProgressBer.value = true
-    }
-
-    // プログレスバー非表示
-    fun hideProgressBer() {
-        _isProgressBer.value = false
     }
 }
