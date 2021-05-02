@@ -25,6 +25,8 @@
 | [com.example.musicdictionaryandroid.ui.home.DetailsSearchViewModel](../com.example.musicdictionaryandroid.ui.home/-details-search-view-model/index.md) | 詳細検索画面_UIロジック |
 | [com.example.musicdictionaryandroid.ui.home.DialogFragmentCallbackInterface](../com.example.musicdictionaryandroid.ui.home/-dialog-fragment-callback-interface/index.md) | ダイアログ用コールバックリスナー |
 | [com.example.musicdictionaryandroid.ui.util.transition.FabTransform](../com.example.musicdictionaryandroid.ui.util.transition/-fab-transform/index.md) |  |
+| [com.example.musicdictionaryandroid.data.remote.firebase.FireBaseService](../com.example.musicdictionaryandroid.data.remote.firebase/-fire-base-service/index.md) |  |
+| [com.example.musicdictionaryandroid.data.remote.firebase.FireBaseServiceImp](../com.example.musicdictionaryandroid.data.remote.firebase/-fire-base-service-imp/index.md) |  |
 | [com.example.musicdictionaryandroid.domain.model.value.Gender](../com.example.musicdictionaryandroid.domain.model.value/-gender/index.md) | 性別情報 |
 | [com.example.musicdictionaryandroid.domain.model.value.Genre1](../com.example.musicdictionaryandroid.domain.model.value/-genre1/index.md) | ジャンル１ |
 | [com.example.musicdictionaryandroid.domain.model.value.Genre2](../com.example.musicdictionaryandroid.domain.model.value/-genre2/index.md) | ジャンル２ |
@@ -39,6 +41,8 @@
 | [com.example.musicdictionaryandroid.domain.model.value.Lyrics](../com.example.musicdictionaryandroid.domain.model.value/-lyrics/index.md) | 歌詞 |
 | [com.example.musicdictionaryandroid.ui.MainActivity](../com.example.musicdictionaryandroid.ui/-main-activity/index.md) | メイン画面 |
 | [com.example.musicdictionaryandroid.ui.MainActivityViewModel](../com.example.musicdictionaryandroid.ui/-main-activity-view-model/index.md) | メイン画面_UIロジック |
+| [com.example.musicdictionaryandroid.ui.util.MessageUtil](../com.example.musicdictionaryandroid.ui.util/-message-util/index.md) |  |
+| [com.example.musicdictionaryandroid.ui.util.MessageUtilImp](../com.example.musicdictionaryandroid.ui.util/-message-util-imp/index.md) | 各数値項目の変換 |
 | [com.example.musicdictionaryandroid.data.remote.network.service.MusicDictionaryService](../com.example.musicdictionaryandroid.data.remote.network.service/-music-dictionary-service/index.md) | MusicDictionaryApiの各URLの管理 |
 | [com.example.musicdictionaryandroid.ui.MyApplication](../com.example.musicdictionaryandroid.ui/-my-application/index.md) |  |
 | [com.example.musicdictionaryandroid.ui.mypage.MyPageArtistAddFragment](../com.example.musicdictionaryandroid.ui.mypage/-my-page-artist-add-fragment/index.md) | アーティスト情報登録・追加画面 |
@@ -50,7 +54,8 @@
 | [com.example.musicdictionaryandroid.ui.mypage.MyPageUserFragment](../com.example.musicdictionaryandroid.ui.mypage/-my-page-user-fragment/index.md) | ユーザー情報画面 |
 | [com.example.musicdictionaryandroid.ui.mypage.MyPageUserViewModel](../com.example.musicdictionaryandroid.ui.mypage/-my-page-user-view-model/index.md) | ユーザー情報画面_UIロジック |
 | [com.example.musicdictionaryandroid.data.local.preferences.PreferenceManager](../com.example.musicdictionaryandroid.data.local.preferences/-preference-manager/index.md) | Preference制御管理 |
-| [com.example.musicdictionaryandroid.data.remote.network.Provider](../com.example.musicdictionaryandroid.data.remote.network/-provider/index.md) | API接続先設定 |
+| [com.example.musicdictionaryandroid.data.remote.network.Provider](../com.example.musicdictionaryandroid.data.remote.network/-provider/index.md) |  |
+| [com.example.musicdictionaryandroid.data.remote.network.ProviderImp](../com.example.musicdictionaryandroid.data.remote.network/-provider-imp/index.md) | API接続先設定 |
 | [com.example.musicdictionaryandroid.data.repository.RemoteArtistRepository](../com.example.musicdictionaryandroid.data.repository/-remote-artist-repository/index.md) | リモート保持のアーティスト情報に関するアクセスRepository |
 | [com.example.musicdictionaryandroid.data.repository.RemoteArtistRepositoryImp](../com.example.musicdictionaryandroid.data.repository/-remote-artist-repository-imp/index.md) |  |
 | [com.example.musicdictionaryandroid.data.repository.RemoteUserRepository](../com.example.musicdictionaryandroid.data.repository/-remote-user-repository/index.md) | リモート保持ののユーザ情報に関するアクセスRepository |
@@ -80,8 +85,6 @@
 | [com.example.musicdictionaryandroid.data.remote.network.dto.StatusResponseDto](../com.example.musicdictionaryandroid.data.remote.network.dto/-status-response-dto/index.md) | ステータスコードのみのレスポンス |
 | [com.example.musicdictionaryandroid.domain.model.entity.User](../com.example.musicdictionaryandroid.domain.model.entity/-user/index.md) | ユーザー情報 |
 | [com.example.musicdictionaryandroid.data.remote.network.dto.UserDto](../com.example.musicdictionaryandroid.data.remote.network.dto/-user-dto/index.md) | ユーザー情報 |
-| [com.example.musicdictionaryandroid.ui.util.UserInfoChangeListUtil](../com.example.musicdictionaryandroid.ui.util/-user-info-change-list-util/index.md) |  |
-| [com.example.musicdictionaryandroid.ui.util.UserInfoChangeListUtilImp](../com.example.musicdictionaryandroid.ui.util/-user-info-change-list-util-imp/index.md) | 各数値項目の変換 |
 | [com.example.musicdictionaryandroid.data.remote.network.dto.UserResponseDto](../com.example.musicdictionaryandroid.data.remote.network.dto/-user-response-dto/index.md) | ユーザ情報のレスポンス |
 | [com.example.musicdictionaryandroid.data.local.preferences.UserSharedPreferences](../com.example.musicdictionaryandroid.data.local.preferences/-user-shared-preferences/index.md) | Preferenceへのユーザ情報格納 |
 | [com.example.musicdictionaryandroid.data.local.preferences.UserSharedPreferencesImp](../com.example.musicdictionaryandroid.data.local.preferences/-user-shared-preferences-imp/index.md) |  |

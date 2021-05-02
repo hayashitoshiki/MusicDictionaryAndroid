@@ -10,7 +10,7 @@
 
 | Name | Summary |
 |---|---|
-| [&lt;init&gt;](-init-.md) | `MyPageUserViewModel(userUseCase: `[`UserUseCase`](../../com.example.musicdictionaryandroid.domain.usecase/-user-use-case/index.md)`, userInfoChangeListUtil: `[`UserInfoChangeListUtil`](../../com.example.musicdictionaryandroid.ui.util/-user-info-change-list-util/index.md)`)`<br>ユーザー情報画面_UIロジック |
+| [&lt;init&gt;](-init-.md) | `MyPageUserViewModel(userUseCase: `[`UserUseCase`](../../com.example.musicdictionaryandroid.domain.usecase/-user-use-case/index.md)`, messageUtil: `[`MessageUtil`](../../com.example.musicdictionaryandroid.ui.util/-message-util/index.md)`)`<br>ユーザー情報画面_UIロジック |
 
 ### Properties
 

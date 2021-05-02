@@ -2,4 +2,4 @@
 
 # &lt;init&gt;
 
-`RemoteUserRepositoryImp(ioDispatcher: CoroutineDispatcher = Dispatchers.IO)`
+`RemoteUserRepositoryImp(provider: `[`Provider`](../../com.example.musicdictionaryandroid.data.remote.network/-provider/index.md)` = ProviderImp, firebaseService: `[`FireBaseService`](../../com.example.musicdictionaryandroid.data.remote.firebase/-fire-base-service/index.md)` = FireBaseServiceImp(), ioDispatcher: CoroutineDispatcher = Dispatchers.IO)`

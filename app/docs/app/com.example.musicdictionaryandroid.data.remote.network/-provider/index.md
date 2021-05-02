@@ -2,12 +2,16 @@
 
 # Provider
 
-`object Provider`
-
-API接続先設定
+`interface Provider`
 
 ### Functions
 
 | Name | Summary |
 |---|---|
-| [musicDictionaryApi](music-dictionary-api.md) | `fun musicDictionaryApi(): `[`MusicDictionaryService`](../../com.example.musicdictionaryandroid.data.remote.network.service/-music-dictionary-service/index.md)<br>MusicDictionaryApi |
+| [musicDictionaryApi](music-dictionary-api.md) | `abstract fun musicDictionaryApi(): `[`MusicDictionaryService`](../../com.example.musicdictionaryandroid.data.remote.network.service/-music-dictionary-service/index.md) |
+
+### Inheritors
+
+| Name | Summary |
+|---|---|
+| [ProviderImp](../-provider-imp/index.md) | `object ProviderImp : `[`Provider`](./index.md)<br>API接続先設定 |

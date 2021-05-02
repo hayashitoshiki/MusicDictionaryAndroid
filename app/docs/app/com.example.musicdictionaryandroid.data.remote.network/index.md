@@ -8,4 +8,5 @@
 
 | Name | Summary |
 |---|---|
-| [Provider](-provider/index.md) | `object Provider`<br>API接続先設定 |
+| [Provider](-provider/index.md) | `interface Provider` |
+| [ProviderImp](-provider-imp/index.md) | `object ProviderImp : `[`Provider`](-provider/index.md)<br>API接続先設定 |

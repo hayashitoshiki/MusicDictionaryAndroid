@@ -5,6 +5,7 @@ com.example.musicdictionaryandroid.data.local.database
 com.example.musicdictionaryandroid.data.local.database.dao
 com.example.musicdictionaryandroid.data.local.database.entity
 com.example.musicdictionaryandroid.data.local.preferences
+com.example.musicdictionaryandroid.data.remote.firebase
 com.example.musicdictionaryandroid.data.remote.network
 com.example.musicdictionaryandroid.data.remote.network.dto
 com.example.musicdictionaryandroid.data.remote.network.service

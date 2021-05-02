@@ -2,7 +2,7 @@
 
 # getBirthday
 
-`fun getBirthday(): `[`Int`](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html)
+`fun getBirthday(): `[`String`](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html)
 
 Overrides [LocalUserRepository.getBirthday](../-local-user-repository/get-birthday.md)
 

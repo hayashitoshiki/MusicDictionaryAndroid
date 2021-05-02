@@ -2,4 +2,4 @@
 
 # &lt;init&gt;
 
-`RemoteArtistRepositoryImp(ioDispatcher: CoroutineDispatcher = Dispatchers.IO)`
+`RemoteArtistRepositoryImp(provider: `[`Provider`](../../com.example.musicdictionaryandroid.data.remote.network/-provider/index.md)` = ProviderImp, ioDispatcher: CoroutineDispatcher = Dispatchers.IO)`

@@ -8,7 +8,7 @@
 
 | Name | Summary |
 |---|---|
-| [&lt;init&gt;](-init-.md) | `RemoteArtistRepositoryImp(ioDispatcher: CoroutineDispatcher = Dispatchers.IO)` |
+| [&lt;init&gt;](-init-.md) | `RemoteArtistRepositoryImp(provider: `[`Provider`](../../com.example.musicdictionaryandroid.data.remote.network/-provider/index.md)` = ProviderImp, ioDispatcher: CoroutineDispatcher = Dispatchers.IO)` |
 
 ### Functions
 

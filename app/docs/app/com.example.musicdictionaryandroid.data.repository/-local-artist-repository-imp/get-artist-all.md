@@ -2,12 +2,12 @@
 
 # getArtistAll
 
-`suspend fun getArtistAll(): `[`List`](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-list/index.html)`<`[`Artist`](../../com.example.musicdictionaryandroid.domain.model.entity/-artist/index.md)`>`
+`fun getArtistAll(): Flow<`[`List`](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-list/index.html)`<`[`Artist`](../../com.example.musicdictionaryandroid.domain.model.entity/-artist/index.md)`>>`
 
 Overrides [LocalArtistRepository.getArtistAll](../-local-artist-repository/get-artist-all.md)
 
-全アーティスト取得
+全登録済みアーティス取得
 
 **Return**
-ローカルDBに登録されている全てのアーティスト取得
+アーティストリスト
 

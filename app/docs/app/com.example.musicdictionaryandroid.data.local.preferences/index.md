@@ -2,6 +2,8 @@
 
 ## Package com.example.musicdictionaryandroid.data.local.preferences
 
+SharedPreferences関連
+
 ### Types
 
 | Name | Summary |

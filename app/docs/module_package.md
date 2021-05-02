@@ -10,7 +10,7 @@ MVVM + Clean Architecture + DDD
 |:-----------|:------------|
 |Repository|ローカル or リモートへのCRUD定義|
 |Local　　  |ローカルデータへのアクセス定義|
-|Remote     |リモートデータへのCアクセス定義|
+|Remote     |リモートデータへのアクセス定義|
 
 主にデータベースやAPIへのデータのCRUDを行う。
 
@@ -22,7 +22,7 @@ MVVM + Clean Architecture + DDD
 |Model　　|ドメインモデル定義|
 
 主に各機能の処理を行う。
-Data・Domain・Rresentationの全ての層でドメインモデルで定義された値を用いて処理を行う。
+Data・Domain・Presentationの全ての層でドメインモデルで定義された値を用いて処理を行う。
 
 #### UI(Presentation)層
 
@@ -57,10 +57,13 @@ Data層データ受け渡し関連
 # Package com.example.musicdictionaryandroid.domain.model.entity
 ドメインエンティティ関連
 
+# Package com.example.musicdictionaryandroid.data.local.preferences
+SharedPreferences関連
+
 # Package com.example.musicdictionaryandroid.domain.model.value
 値オブジェクト関連
 
-# Package com.example.musicdictionaryandroid.domain.model.usecase
+# Package com.example.musicdictionaryandroid.domain.usecase
 ビジネスロジック関連
 
 # Package com.example.musicdictionaryandroid.ui

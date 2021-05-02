@@ -2,7 +2,4 @@
 
 # musicDictionaryApi
 
-`fun musicDictionaryApi(): `[`MusicDictionaryService`](../../com.example.musicdictionaryandroid.data.remote.network.service/-music-dictionary-service/index.md)
-
-MusicDictionaryApi
-
+`abstract fun musicDictionaryApi(): `[`MusicDictionaryService`](../../com.example.musicdictionaryandroid.data.remote.network.service/-music-dictionary-service/index.md)

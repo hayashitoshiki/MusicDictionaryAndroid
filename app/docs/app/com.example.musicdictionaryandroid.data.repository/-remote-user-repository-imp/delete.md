@@ -2,7 +2,7 @@
 
 # delete
 
-`@ExperimentalCoroutinesApi fun delete(): Flow<`[`Result`](../../com.example.musicdictionaryandroid.domain.model.value/-result/index.md)`<`[`String`](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html)`>>`
+`fun delete(): Flow<`[`Result`](../../com.example.musicdictionaryandroid.domain.model.value/-result/index.md)`<`[`String`](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html)`>>`
 
 Overrides [RemoteUserRepository.delete](../-remote-user-repository/delete.md)
 

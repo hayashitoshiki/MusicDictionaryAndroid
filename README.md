@@ -51,4 +51,4 @@ MVVM
 https://github.com/hayashitoshiki/MusicDictionaryAndroid/tree/master/app/src/main
 
 ## ソースドキュメント
-https://github.com/hayashitoshiki/MusicDictionaryAndroid/blob/master/app/docs/javadoc/app/index.md
+https://github.com/hayashitoshiki/MusicDictionaryAndroid/blob/master/app/docs/app/index.md

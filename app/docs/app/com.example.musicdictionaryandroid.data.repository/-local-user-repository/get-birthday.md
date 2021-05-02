@@ -2,7 +2,7 @@
 
 # getBirthday
 
-`abstract fun getBirthday(): `[`Int`](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html)
+`abstract fun getBirthday(): `[`String`](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html)
 
 生年月日取得
 

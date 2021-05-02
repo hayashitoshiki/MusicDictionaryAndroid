@@ -2,4 +2,4 @@
 
 # &lt;init&gt;
 
-`UserSharedPreferencesImp(userInfoChangeListUtil: `[`UserInfoChangeListUtil`](../../com.example.musicdictionaryandroid.ui.util/-user-info-change-list-util/index.md)`)`
+`UserSharedPreferencesImp()`

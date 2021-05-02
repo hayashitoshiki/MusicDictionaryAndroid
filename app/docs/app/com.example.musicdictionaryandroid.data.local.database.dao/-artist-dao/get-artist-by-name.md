@@ -2,4 +2,4 @@
 
 # getArtistByName
 
-`abstract fun getArtistByName(name: `[`String`](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html)`): `[`ArtistEntity`](../../com.example.musicdictionaryandroid.data.local.database.entity/-artist-entity/index.md)
+`abstract suspend fun getArtistByName(name: `[`String`](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html)`): `[`ArtistEntity`](../../com.example.musicdictionaryandroid.data.local.database.entity/-artist-entity/index.md)

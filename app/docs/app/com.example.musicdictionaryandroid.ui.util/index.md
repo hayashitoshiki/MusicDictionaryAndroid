@@ -8,9 +8,9 @@ Presentation層共通処理関連
 
 | Name | Summary |
 |---|---|
+| [MessageUtil](-message-util/index.md) | `interface MessageUtil` |
+| [MessageUtilImp](-message-util-imp/index.md) | `object MessageUtilImp : `[`MessageUtil`](-message-util/index.md)<br>各数値項目の変換 |
 | [Status](-status/index.md) | `sealed class Status<out T>`<br>UIのステータス管理 |
-| [UserInfoChangeListUtil](-user-info-change-list-util/index.md) | `interface UserInfoChangeListUtil` |
-| [UserInfoChangeListUtilImp](-user-info-change-list-util-imp/index.md) | `object UserInfoChangeListUtilImp : `[`UserInfoChangeListUtil`](-user-info-change-list-util/index.md)<br>各数値項目の変換 |
 
 ### Functions
 

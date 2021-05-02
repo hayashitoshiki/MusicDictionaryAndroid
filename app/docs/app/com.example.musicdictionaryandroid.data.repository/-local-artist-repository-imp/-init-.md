@@ -2,4 +2,4 @@
 
 # &lt;init&gt;
 
-`LocalArtistRepositoryImp(ioDispatcher: CoroutineDispatcher = Dispatchers.IO)`
+`LocalArtistRepositoryImp(dao: `[`ArtistDao`](../../com.example.musicdictionaryandroid.data.local.database.dao/-artist-dao/index.md)`, ioDispatcher: CoroutineDispatcher = Dispatchers.IO)`

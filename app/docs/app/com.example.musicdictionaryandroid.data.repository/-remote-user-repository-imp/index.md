@@ -8,13 +8,12 @@
 
 | Name | Summary |
 |---|---|
-| [&lt;init&gt;](-init-.md) | `RemoteUserRepositoryImp(ioDispatcher: CoroutineDispatcher = Dispatchers.IO)` |
+| [&lt;init&gt;](-init-.md) | `RemoteUserRepositoryImp(provider: `[`Provider`](../../com.example.musicdictionaryandroid.data.remote.network/-provider/index.md)` = ProviderImp, firebaseService: `[`FireBaseService`](../../com.example.musicdictionaryandroid.data.remote.firebase/-fire-base-service/index.md)` = FireBaseServiceImp(), ioDispatcher: CoroutineDispatcher = Dispatchers.IO)` |
 
 ### Functions
 
 | Name | Summary |
 |---|---|
-| [changeUser](change-user.md) | `suspend fun changeUser(user: `[`User`](../../com.example.musicdictionaryandroid.domain.model.entity/-user/index.md)`, email: `[`String`](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html)`): `[`Result`](../../com.example.musicdictionaryandroid.domain.model.value/-result/index.md)`<`[`String`](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html)`>`<br>ユーザー情報変更 |
 | [createUser](create-user.md) | `suspend fun createUser(user: `[`String`](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html)`): `[`Result`](../../com.example.musicdictionaryandroid.domain.model.value/-result/index.md)`<`[`String`](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html)`>`<br>ユーザー登録 |
 | [delete](delete.md) | `fun delete(): Flow<`[`Result`](../../com.example.musicdictionaryandroid.domain.model.value/-result/index.md)`<`[`String`](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html)`>>`<br>アカウント削除 |
 | [firstCheck](first-check.md) | `fun firstCheck(): `[`Boolean`](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html)<br>ログイン状態チェック |

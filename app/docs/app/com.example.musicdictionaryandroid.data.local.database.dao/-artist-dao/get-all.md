@@ -2,4 +2,4 @@
 
 # getAll
 
-`abstract suspend fun getAll(): `[`Array`](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-array/index.html)`<`[`ArtistEntity`](../../com.example.musicdictionaryandroid.data.local.database.entity/-artist-entity/index.md)`>`
+`abstract fun getAll(): Flow<`[`List`](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-list/index.html)`<`[`ArtistEntity`](../../com.example.musicdictionaryandroid.data.local.database.entity/-artist-entity/index.md)`>>`

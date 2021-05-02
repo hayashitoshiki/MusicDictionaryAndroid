@@ -2,6 +2,8 @@
 
 ## Package com.example.musicdictionaryandroid.domain.usecase
 
+ビジネスロジック関連
+
 ### Types
 
 | Name | Summary |
