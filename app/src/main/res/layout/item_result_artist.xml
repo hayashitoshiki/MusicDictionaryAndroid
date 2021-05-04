@@ -29,10 +29,25 @@
             app:autoSizeMinTextSize="8dp"
             app:autoSizeTextType="uniform"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/bookmark"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.0" />
+
+        <ImageButton
+            android:id="@+id/bookmark"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:adjustViewBounds="true"
+            android:elevation="10dp"
+            android:scaleType="centerInside"
+            android:background="@color/transparent"
+            android:stateListAnimator="@drawable/button_state_list_anim_material"
+            android:src="@drawable/ic_star_gray_32"
+            android:contentDescription="@null"
+            app:layout_constraintTop_toTopOf="@+id/main_content"
+            app:layout_constraintEnd_toEndOf="parent" />
 
         <ImageView
             android:id="@+id/imageView"
@@ -40,6 +55,7 @@
             android:layout_height="144dp"
             android:layout_marginStart="8dp"
             android:layout_marginEnd="8dp"
+            android:contentDescription="@null"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/arthist" />
@@ -56,6 +72,7 @@
             android:background="@drawable/button_circle_selector"
             android:stateListAnimator="@drawable/button_state_list_anim_material"
             android:src="@mipmap/ic_button_music_play_32"
+            android:contentDescription="@null"
             app:layout_constraintBottom_toBottomOf="@+id/gender"
             app:layout_constraintEnd_toEndOf="parent" />
 

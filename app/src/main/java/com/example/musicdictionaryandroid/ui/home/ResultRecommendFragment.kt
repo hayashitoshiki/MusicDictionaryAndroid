@@ -6,7 +6,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.example.musicdictionaryandroid.R
 import com.example.musicdictionaryandroid.databinding.FragmentResultRecommendBinding
@@ -20,6 +19,7 @@ import org.koin.android.viewmodel.ext.android.viewModel
 class ResultRecommendFragment : Fragment() {
 
     private val viewModel: ResultRecommendViewModel by viewModel()
+    private val resultViewModel: ResultAdapterViewModel by viewModel()
     private lateinit var binding: FragmentResultRecommendBinding
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
@@ -30,7 +30,7 @@ class ResultRecommendFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel.status.observe(viewLifecycleOwner, Observer { onStateChanged(it) })
+        viewModel.status.observe(viewLifecycleOwner, { onStateChanged(it) })
         viewModel.getRecommend()
     }
 
@@ -50,7 +50,7 @@ class ResultRecommendFragment : Fragment() {
 
     // データ反映
     private fun viewUpDate(data: List<ArtistSearchContents<*>>) {
-        val adapter = ResultAdapter(requireContext(), data)
+        val adapter = ResultAdapter(resultViewModel, requireContext(), data)
         val layoutManager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
         binding.recyclerView.adapter = adapter
         binding.recyclerView.layoutManager = layoutManager

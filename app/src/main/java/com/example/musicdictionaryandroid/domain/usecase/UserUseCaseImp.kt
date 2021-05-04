@@ -1,6 +1,7 @@
 package com.example.musicdictionaryandroid.domain.usecase
 
 import com.example.musicdictionaryandroid.data.repository.LocalArtistRepository
+import com.example.musicdictionaryandroid.data.repository.LocalBookmarkArtistRepository
 import com.example.musicdictionaryandroid.data.repository.LocalUserRepository
 import com.example.musicdictionaryandroid.data.repository.RemoteUserRepository
 import com.example.musicdictionaryandroid.domain.model.entity.User
@@ -17,6 +18,7 @@ class UserUseCaseImp(
     private val remoteUserRepository: RemoteUserRepository,
     private val localUserRepository: LocalUserRepository,
     private val localArtistRepository: LocalArtistRepository,
+    private val localBookmarkArtistRepository: LocalBookmarkArtistRepository,
     private val externalScope: CoroutineScope,
     private val defaultDispatcher: CoroutineDispatcher = Dispatchers.Default
 ) : UserUseCase {
@@ -81,5 +83,6 @@ class UserUseCaseImp(
         remoteUserRepository.signOut()
         localUserRepository.removeAll()
         localArtistRepository.deleteAll()
+        localBookmarkArtistRepository.deleteAll()
     }
 }

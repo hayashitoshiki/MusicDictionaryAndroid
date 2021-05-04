@@ -9,7 +9,7 @@ import com.example.musicdictionaryandroid.ui.MyApplication
  */
 object MessageUtilImp : MessageUtil {
 
-    private val context: Context = MyApplication.shered.applicationContext
+    private val context: Context = MyApplication.shared.applicationContext
 
     // 絞り込みリスト
     private val mainGenreList: List<String>

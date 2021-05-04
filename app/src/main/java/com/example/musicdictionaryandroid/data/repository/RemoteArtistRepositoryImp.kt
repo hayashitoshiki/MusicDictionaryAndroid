@@ -2,7 +2,6 @@ package com.example.musicdictionaryandroid.data.repository
 
 import com.example.musicdictionaryandroid.data.remote.network.Provider
 import com.example.musicdictionaryandroid.data.remote.network.ProviderImp
-import com.example.musicdictionaryandroid.data.remote.network.dto.ArtistDto
 import com.example.musicdictionaryandroid.domain.model.entity.Artist
 import com.example.musicdictionaryandroid.domain.model.entity.ArtistContents
 import com.example.musicdictionaryandroid.domain.model.value.*
@@ -20,11 +19,11 @@ class RemoteArtistRepositoryImp(
 
     // 指定した検索条件で検索した時のアーティストリストを返す
     override suspend fun getArtistsBy(artist: ArtistConditions): Result<List<ArtistContents>> = withContext(ioDispatcher) {
-        val artistDto = convertArtistDtoFromArtistConditions(artist)
+        val artistDto = Converter.artistDtoFromArtistConditions(artist)
         return@withContext runCatching { provider.musicDictionaryApi().search(artistDto.getMapList()) }.fold(
             onSuccess = {
                 val artistList = it.artist.map { artistDto ->
-                    convertArtistContentsFromArtistDto(artistDto)
+                    Converter.artistContentsFromArtistDto(artistDto)
                 }
                 Result.Success(artistList)
             },
@@ -37,7 +36,7 @@ class RemoteArtistRepositoryImp(
         return@withContext runCatching { provider.musicDictionaryApi().getRecommend(email) }.fold(
             onSuccess = {
                 val artistList = it.artist.map { artistDto ->
-                    convertArtistContentsFromArtistDto(artistDto)
+                    Converter.artistContentsFromArtistDto(artistDto)
                 }
                 Result.Success(artistList)
             },
@@ -50,7 +49,7 @@ class RemoteArtistRepositoryImp(
         return@withContext runCatching { provider.musicDictionaryApi().getSoaring() }.fold(
             onSuccess = {
                 val artistList = it.artist.map { artistDto ->
-                    convertArtistContentsFromArtistDto(artistDto)
+                    Converter.artistContentsFromArtistDto(artistDto)
                 }
                 Result.Success(artistList)
             },
@@ -63,7 +62,7 @@ class RemoteArtistRepositoryImp(
         return@withContext runCatching { provider.musicDictionaryApi().findByEmail(email) }.fold(
             onSuccess = {
                 val artistList = it.artist.map { artistDto ->
-                    convertArtistArtistDto(artistDto)
+                    Converter.artistArtistDto(artistDto)
                 }
                 Result.Success(artistList)
             },
@@ -78,10 +77,10 @@ class RemoteArtistRepositoryImp(
 
     // アーティスト登録
     override suspend fun addArtist(artist: Artist, email: String): Result<Artist> = withContext(ioDispatcher) {
-        val artistDto = convertArtistDtoFromArtist(artist)
+        val artistDto = Converter.artistDtoFromArtist(artist)
         return@withContext runCatching { provider.musicDictionaryApi().addArtist(artistDto.getMapList(), email) }.fold(
             onSuccess = { response ->
-                val result = convertArtistArtistDto(response.artist)
+                val result = Converter.artistArtistDto(response.artist)
                 Result.Success(result)
             },
             onFailure = { Result.Error(it) }
@@ -90,10 +89,10 @@ class RemoteArtistRepositoryImp(
 
     // アーティスト編集
     override suspend fun updateArtist(artist: Artist, email: String): Result<Artist> = withContext(ioDispatcher) {
-        val artistDto = convertArtistDtoFromArtist(artist)
+        val artistDto = Converter.artistDtoFromArtist(artist)
         return@withContext runCatching { provider.musicDictionaryApi().updateArtist(artistDto.getMapList(), email) }.fold(
             onSuccess = { response ->
-                val result = convertArtistArtistDto(response.artist)
+                val result = Converter.artistArtistDto(response.artist)
                 Result.Success(result)
             },
             onFailure = { Result.Error(it) }
@@ -106,74 +105,6 @@ class RemoteArtistRepositoryImp(
             onSuccess = { Result.Success(it.status.message) },
             onFailure = { Result.Error(it) }
         )
-    }
-
-    // endregion
-
-    // region converter
-
-    // アーティストDtoからアーティストモデルへ変換
-    private fun convertArtistArtistDto(artistFrom: ArtistDto): Artist {
-        val name = artistFrom.name
-        val gender = Gender.getEnumByValue(artistFrom.gender)
-        val voice = Voice(artistFrom.voice)
-        val length = Length(artistFrom.length)
-        val lyrics = Lyrics(artistFrom.lyrics)
-        val genre1 = Genre1(artistFrom.genre1)
-        val genre2 = Genre2(artistFrom.genre2)
-        return Artist(name, gender, voice, length, lyrics, genre1, genre2)
-    }
-
-    // アーティストDtoからアーティス詳細情報モデルへ変換
-    private fun convertArtistContentsFromArtistDto(artistDto: ArtistDto): ArtistContents {
-        val artist = convertArtistArtistDto(artistDto)
-        val thumb = artistDto.thumb
-        val preview = artistDto.preview
-        val generation1 = artistDto.generation1
-        val generation2 = artistDto.generation2
-        val generation3 = artistDto.generation3
-        val generation4 = artistDto.generation4
-        val generation5 = artistDto.generation5
-        val generation6 = artistDto.generation6
-        val userMan = artistDto.user_man
-        val userWoman = artistDto.user_woman
-        return ArtistContents(
-            artist,
-            thumb,
-            preview,
-            generation1,
-            generation2,
-            generation3,
-            generation4,
-            generation5,
-            generation6,
-            userMan,
-            userWoman
-        )
-    }
-
-    // アーティストモデルからアーティストDtoへ変換
-    private fun convertArtistDtoFromArtist(artist: Artist): ArtistDto {
-        val name = artist.name
-        val gender = artist.gender.value
-        val voice = artist.voice.value
-        val length = artist.length.value
-        val lyrics = artist.lyrics.value
-        val genre1 = artist.genre1.value
-        val genre2 = artist.genre2.value
-        return ArtistDto(name, gender, voice, length, lyrics, genre1, genre2)
-    }
-
-    // アーティスト検索条件からアーティストDtoへ変換
-    private fun convertArtistDtoFromArtistConditions(artist: ArtistConditions): ArtistDto {
-        val name = artist.name ?: ""
-        val gender = artist.gender?.value ?: 0
-        val voice = artist.voice?.value ?: 0
-        val length = artist.length?.value ?: 0
-        val lyrics = artist.lyrics?.value ?: 0
-        val genre1 = artist.genre1?.value ?: 0
-        val genre2 = artist.genre2?.value ?: 0
-        return ArtistDto(name, gender, voice, length, lyrics, genre1, genre2)
     }
 
     // endregion

@@ -12,17 +12,11 @@ import com.example.musicdictionaryandroid.domain.usecase.ArtistUseCase
 import com.example.musicdictionaryandroid.domain.usecase.ArtistUseCaseImp
 import com.example.musicdictionaryandroid.domain.usecase.UserUseCase
 import com.example.musicdictionaryandroid.domain.usecase.UserUseCaseImp
-import com.example.musicdictionaryandroid.ui.home.HomeViewModel
-import com.example.musicdictionaryandroid.ui.home.ResultRecommendViewModel
-import com.example.musicdictionaryandroid.ui.home.ResultSoaringViewModel
-import com.example.musicdictionaryandroid.ui.home.ResultViewModel
+import com.example.musicdictionaryandroid.ui.home.*
 import com.example.musicdictionaryandroid.ui.login.SignInViewModel
 import com.example.musicdictionaryandroid.ui.login.SignUpViewModel
 import com.example.musicdictionaryandroid.ui.login.StartViewModel
-import com.example.musicdictionaryandroid.ui.mypage.MyPageArtistAddViewModel
-import com.example.musicdictionaryandroid.ui.mypage.MyPageArtistViewModel
-import com.example.musicdictionaryandroid.ui.mypage.MyPageTopViewModel
-import com.example.musicdictionaryandroid.ui.mypage.MyPageUserViewModel
+import com.example.musicdictionaryandroid.ui.mypage.*
 import com.example.musicdictionaryandroid.ui.util.MessageUtil
 import com.example.musicdictionaryandroid.ui.util.MessageUtilImp
 import kotlinx.coroutines.MainScope
@@ -36,7 +30,7 @@ class MyApplication : Application() {
 
     companion object {
         lateinit var database: AppDatabase
-        lateinit var shered: MyApplication
+        lateinit var shared: MyApplication
 
         @Suppress("JAVA_CLASS_ON_COMPANION")
         val TAG = javaClass.name
@@ -46,7 +40,7 @@ class MyApplication : Application() {
     private val applicationScope = MainScope()
 
     init {
-        shered = this
+        shared = this
     }
 
     override fun onCreate() {
@@ -74,21 +68,24 @@ class MyApplication : Application() {
         viewModel { MyPageUserViewModel(get(), get()) }
         viewModel { (artist: Artist?) -> MyPageArtistAddViewModel(artist, get(), get()) }
         viewModel { MyPageArtistViewModel(get()) }
+        viewModel { BookmarkArtistListViewModel(get()) }
         viewModel { SignInViewModel(get(), applicationScope) }
         viewModel { SignUpViewModel(get(), get(), applicationScope) }
         viewModel { ResultViewModel(get()) }
+        viewModel { ResultAdapterViewModel(get()) }
         viewModel { ResultRecommendViewModel(get()) }
         viewModel { ResultSoaringViewModel(get()) }
         viewModel { HomeViewModel(get()) }
         viewModel { StartViewModel(get()) }
         viewModel { SplashViewModel(get()) }
 
-        factory<ArtistUseCase> { ArtistUseCaseImp(get(), get(), get(), applicationScope) }
-        factory<UserUseCase> { UserUseCaseImp(get(), get(), get(), applicationScope) }
+        factory<ArtistUseCase> { ArtistUseCaseImp(get(), get(), get(), get(), applicationScope) }
+        factory<UserUseCase> { UserUseCaseImp(get(), get(), get(), get(), applicationScope) }
 
         factory<RemoteArtistRepository> { RemoteArtistRepositoryImp() }
         factory<RemoteUserRepository> { RemoteUserRepositoryImp() }
         factory<LocalArtistRepository> { LocalArtistRepositoryImp(database.artistDao()) }
+        factory<LocalBookmarkArtistRepository> { LocalBookmarkArtistRepositoryImp(database.bookmarkArtistDao()) }
         factory<LocalUserRepository> { LocalUserRepositoryImp(get()) }
 
         factory<UserSharedPreferences> { UserSharedPreferencesImp() }

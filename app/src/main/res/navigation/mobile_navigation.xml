@@ -80,6 +80,9 @@
         <action
             android:id="@+id/action_navigation_mypage_to_navigation_mypage_userinfo"
             app:destination="@id/navigation_mypage_user" />
+        <action
+            android:id="@+id/action_navigation_mypage_to_bookmark_artist_list"
+            app:destination="@id/bookmark_artist_list" />
     </fragment>
 
     <fragment
@@ -108,6 +111,11 @@
         android:name="com.example.musicdictionaryandroid.ui.mypage.MyPageUserFragment"
         android:label="MyPageUserInfoFragment"
         tools:layout="@layout/fragment_mypage_user" />
+    <fragment
+        android:id="@+id/bookmark_artist_list"
+        android:name="com.example.musicdictionaryandroid.ui.mypage.BookmarkArtistListFragment"
+        android:label="BookmarkArtistListFragment"
+        tools:layout="@layout/fragment_bookmark_artist_list" />
 
 
 </navigation>

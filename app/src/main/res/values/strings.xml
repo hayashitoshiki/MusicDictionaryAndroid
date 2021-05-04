@@ -14,6 +14,7 @@
     <string name="title_mypage_home">設定</string>
     <string name="title_mypage_user">アカウント情報</string>
     <string name="title_mypage_artist_list">アーティスト一覧</string>
+    <string name="title_mypage_bookmark_artist_list">ブックマーク一覧</string>
     <string name="title_mypage_artist_add">アーティスト登録</string>
     <string name="title_mypage_artist_change">アーティスト編集</string>
 

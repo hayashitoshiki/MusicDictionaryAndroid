@@ -26,7 +26,11 @@ import com.squareup.picasso.Picasso
 /**
  * アーティスト検索結果画面のリサイクルビュー
  */
-class ResultAdapter(private val context: Context, private val artistList: List<ArtistSearchContents<*>>) :
+class ResultAdapter(
+    private val viewModel: ResultAdapterViewModel,
+    private val context: Context,
+    private val artistList: List<ArtistSearchContents<*>>
+) :
     RecyclerView.Adapter<ResultAdapter.ViewHolder>() {
 
     private var holdButton: ImageButton? = null
@@ -46,6 +50,7 @@ class ResultAdapter(private val context: Context, private val artistList: List<A
         val genre1TextView: TextView = v.genre1
         val genre2TextView: TextView = v.genre2
         val imageView: ImageView = v.imageView
+        val bookmark: ImageView = v.bookmark
         val playButton: ImageButton = v.play
         val webView: WebView = v.webview
         val titleLayout: ConstraintLayout = v.titleContext
@@ -137,6 +142,27 @@ class ResultAdapter(private val context: Context, private val artistList: List<A
 
                 // アーティスト名
                 holder.nameTextView.text = item.artist.name
+                // お気に入りボタン
+                holder.bookmark.also { bookmark ->
+                    when (item.bookmarkFlg) {
+                        true -> bookmark.setImageResource(R.drawable.ic_star_yellow_32)
+                        false -> bookmark.setImageResource(R.drawable.ic_star_gray_32)
+                    }
+                    bookmark.setOnClickListener {
+                        when (item.bookmarkFlg) {
+                            true -> {
+                                item.bookmarkFlg = false
+                                bookmark.setImageResource(R.drawable.ic_star_gray_32)
+                                viewModel.setUnBookMark(item)
+                            }
+                            false -> {
+                                item.bookmarkFlg = true
+                                bookmark.setImageResource(R.drawable.ic_star_yellow_32)
+                                viewModel.setBookMark(item)
+                            }
+                        }
+                    }
+                }
                 // 性別
                 holder.genderTextView.text = MessageUtilImp.getGender(item.artist.gender.value)
                 if (item.artist.gender.value == 1) {
@@ -169,7 +195,7 @@ class ResultAdapter(private val context: Context, private val artistList: List<A
                     if (holder.detailLayout.visibility == View.VISIBLE) {
                         holder.detailLayout.startAnimation(collapseAnimation)
                         Handler().postDelayed(
-                            Runnable {
+                            {
                                 holder.pieChart.visibility = View.GONE
                                 holder.genderChart.visibility = View.GONE
                                 holder.detailLayout.visibility = View.GONE
@@ -275,14 +301,14 @@ class ResultAdapter(private val context: Context, private val artistList: List<A
                         holder.detailLayout.visibility = View.VISIBLE
                         holder.detailLayout.startAnimation(expandAnimation)
                         Handler().postDelayed(
-                            Runnable {
+                            {
                                 holder.pieChart.startAnimation(anim1)
                                 holder.pieChart.visibility = View.VISIBLE
                             },
                             150
                         )
                         Handler().postDelayed(
-                            Runnable {
+                            {
                                 holder.genderChart.startAnimation(anim2)
                                 holder.genderChart.visibility = View.VISIBLE
                             },
@@ -299,12 +325,11 @@ class ResultAdapter(private val context: Context, private val artistList: List<A
                             if (holdButton != holder.playButton) {
                                 holdButton?.setImageResource(R.mipmap.ic_button_music_play_32)
                                 holder.playButton.setImageResource(R.mipmap.ic_button_music_pause_32)
-                                holder.webView.settings.javaScriptEnabled = true
                                 holder.webView.settings.domStorageEnabled = true
                                 holder.webView.loadUrl(item.preview)
                                 holdButton = holder.playButton
                                 Handler().postDelayed(
-                                    Runnable {
+                                    {
                                         if (holdButton == holder.playButton) {
                                             holdButton?.setImageResource(R.mipmap.ic_button_music_play_32)
                                         }

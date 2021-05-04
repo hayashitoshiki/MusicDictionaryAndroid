@@ -7,7 +7,6 @@ import android.view.ViewGroup
 import android.view.animation.AnimationUtils
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.example.musicdictionaryandroid.R
@@ -24,6 +23,7 @@ class ResultFragment : Fragment(), DialogFragmentCallbackInterface {
 
     private val args: ResultFragmentArgs by navArgs()
     private val viewModel: ResultViewModel by viewModel()
+    private val resultViewModel: ResultAdapterViewModel by viewModel()
     private lateinit var binding: FragmentResultBinding
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
@@ -35,7 +35,7 @@ class ResultFragment : Fragment(), DialogFragmentCallbackInterface {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel.status.observe(viewLifecycleOwner, Observer { onStateChanged(it) })
+        viewModel.status.observe(viewLifecycleOwner, { onStateChanged(it) })
 
         if (savedInstanceState != null) {
             val artist = savedInstanceState.getSerializable("artistSave") as ArtistConditions
@@ -60,7 +60,7 @@ class ResultFragment : Fragment(), DialogFragmentCallbackInterface {
 
     // データ反映
     private fun viewUpDate(data: List<ArtistSearchContents<*>>) {
-        val adapter = ResultAdapter(requireContext(), data)
+        val adapter = ResultAdapter(resultViewModel, requireContext(), data)
         val layoutManager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
         val controller = AnimationUtils.loadLayoutAnimation(context, R.anim.layout_animation_fall_down)
         binding.recyclerView.layoutAnimation = controller

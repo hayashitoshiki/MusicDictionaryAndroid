@@ -4,7 +4,6 @@ import com.example.musicdictionaryandroid.data.remote.firebase.FireBaseService
 import com.example.musicdictionaryandroid.data.remote.firebase.FireBaseServiceImp
 import com.example.musicdictionaryandroid.data.remote.network.Provider
 import com.example.musicdictionaryandroid.data.remote.network.ProviderImp
-import com.example.musicdictionaryandroid.data.remote.network.dto.UserDto
 import com.example.musicdictionaryandroid.domain.model.entity.User
 import com.example.musicdictionaryandroid.domain.model.value.Result
 import kotlinx.coroutines.CoroutineDispatcher
@@ -23,7 +22,7 @@ class RemoteUserRepositoryImp(
     // ユーザー取得
     override suspend fun getUserByEmail(email: String): Result<User> = withContext(ioDispatcher) {
         return@withContext runCatching { provider.musicDictionaryApi().getUserByEmail(email) }.fold(
-            onSuccess = { Result.Success(convertUserFromUserDto(it.user)) },
+            onSuccess = { Result.Success(Converter.userFromUserDto(it.user)) },
             onFailure = { Result.Error(it) }
         )
     }
@@ -59,18 +58,5 @@ class RemoteUserRepositoryImp(
 
     // endregion
 
-    // region converter
 
-    // ユーザDtoからユーザモデルへ変換
-    private fun convertUserFromUserDto(userDto: UserDto): User {
-        val email = userDto.email
-        val name = userDto.name
-        val gender = userDto.gender
-        val area = userDto.area
-        val birthday = userDto.birthday
-        val artistCount = userDto.artist_count
-        return User(email, name, gender, area, birthday, artistCount)
-    }
-
-    // endregion
 }
