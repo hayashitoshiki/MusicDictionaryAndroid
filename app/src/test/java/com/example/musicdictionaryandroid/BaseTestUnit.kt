@@ -1,6 +1,7 @@
 package com.example.musicdictionaryandroid
 
 import androidx.lifecycle.Observer
+import com.example.musicdictionaryandroid.domain.model.value.ArtistSearchContents
 import com.nhaarman.mockito_kotlin.mock
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.TestCoroutineDispatcher
@@ -27,6 +28,7 @@ abstract class BaseTestUnit {
     protected val observerInt = mock<Observer<Int>>()
     protected val observerString = mock<Observer<String>>()
     protected val observerStringNullable = mock<Observer<String?>>()
+    protected val observerArtistSearchContents = mock<Observer<List<ArtistSearchContents<*>>>>()
 
     // endregion
 }
