@@ -8,7 +8,6 @@ import android.view.ViewGroup
 import android.view.animation.AnimationUtils
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
 import com.example.musicdictionaryandroid.R
@@ -41,7 +40,7 @@ class MyPageTopFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel.authStatus.observe(viewLifecycleOwner, Observer { onStateChanged(it) })
+        viewModel.authStatus.observe(viewLifecycleOwner, { onStateChanged(it) })
 
         // アーティスト一覧ボタン
         binding.artistListButton.setOnClickListener {
@@ -52,6 +51,10 @@ class MyPageTopFragment : Fragment() {
         binding.userinfoButton.setOnClickListener {
             val extras = FragmentNavigatorExtras(it to "end_user_info_view_transition")
             findNavController().navigate(R.id.action_navigation_mypage_to_navigation_mypage_userinfo, null, null, extras)
+        }
+        // ブックマークアーティスト一覧ボタン
+        binding.bookmarkArtistListButton.setOnClickListener {
+            findNavController().navigate(R.id.action_navigation_mypage_to_bookmark_artist_list, null, null, null)
         }
         // ログアウトボタン
         binding.logout.setOnClickListener { viewModel.signOut() }

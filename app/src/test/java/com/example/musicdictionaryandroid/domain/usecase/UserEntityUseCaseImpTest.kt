@@ -2,6 +2,7 @@ package com.example.musicdictionaryandroid.domain.usecase
 
 import com.example.musicdictionaryandroid.BaseTestUnit
 import com.example.musicdictionaryandroid.data.repository.LocalArtistRepository
+import com.example.musicdictionaryandroid.data.repository.LocalBookmarkArtistRepository
 import com.example.musicdictionaryandroid.data.repository.LocalUserRepository
 import com.example.musicdictionaryandroid.data.repository.RemoteUserRepository
 import com.example.musicdictionaryandroid.domain.model.entity.Artist
@@ -22,6 +23,7 @@ import org.junit.Test
 class UserEntityUseCaseImpTest : BaseTestUnit() {
 
     private lateinit var useCase: UserUseCaseImp
+    private lateinit var localBookmarkArtistRepository: LocalBookmarkArtistRepository
     private lateinit var localArtistRepository: LocalArtistRepository
     private lateinit var localUserRepository: LocalUserRepository
     private lateinit var remoteUserRepository: RemoteUserRepository
@@ -44,6 +46,9 @@ class UserEntityUseCaseImpTest : BaseTestUnit() {
     @ExperimentalCoroutinesApi
     @Before
     fun setUp() {
+        localBookmarkArtistRepository = mockk<LocalBookmarkArtistRepository>().also {
+            coEvery { it.deleteAll() } returns Unit
+        }
         localArtistRepository = mockk<LocalArtistRepository>().also {
             coEvery { it.addArtist(any()) } returns Unit
             coEvery { it.deleteArtist(any()) } returns Unit
@@ -79,7 +84,11 @@ class UserEntityUseCaseImpTest : BaseTestUnit() {
             every { it.removeAll() } returns Unit
         }
         useCase = UserUseCaseImp(
-            remoteUserRepository, localUserRepository, localArtistRepository, testScope,
+            remoteUserRepository,
+            localUserRepository,
+            localArtistRepository,
+            localBookmarkArtistRepository,
+            testScope,
             testDispatcher
         )
     }
@@ -246,6 +255,7 @@ class UserEntityUseCaseImpTest : BaseTestUnit() {
             coVerify(exactly = 1) { (remoteUserRepository).signOut() }
             coVerify(exactly = 1) { (localUserRepository).removeAll() }
             coVerify(exactly = 1) { (localArtistRepository).deleteAll() }
+            coVerify(exactly = 1) { (localBookmarkArtistRepository).deleteAll() }
         }
     }
 

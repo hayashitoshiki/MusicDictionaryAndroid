@@ -1,57 +1,44 @@
-package com.example.musicdictionaryandroid.ui.home
+package com.example.musicdictionaryandroid.ui.mypage
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.AnimationUtils
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.example.musicdictionaryandroid.R
-import com.example.musicdictionaryandroid.databinding.FragmentResultSoaringBinding
+import com.example.musicdictionaryandroid.databinding.FragmentBookmarkArtistListBinding
 import com.example.musicdictionaryandroid.domain.model.value.ArtistSearchContents
-import com.example.musicdictionaryandroid.ui.util.Status
+import com.example.musicdictionaryandroid.ui.home.ResultAdapter
+import com.example.musicdictionaryandroid.ui.home.ResultAdapterViewModel
 import org.koin.android.viewmodel.ext.android.viewModel
 
-/**
- * 急上昇アーティスト一覧画面
- */
-class ResultSoaringFragment : Fragment() {
+class BookmarkArtistListFragment : Fragment() {
 
-    private val viewModel: ResultSoaringViewModel by viewModel()
+    private val viewModel: BookmarkArtistListViewModel by viewModel()
     private val resultViewModel: ResultAdapterViewModel by viewModel()
-    private lateinit var binding: FragmentResultSoaringBinding
+    private lateinit var binding: FragmentBookmarkArtistListBinding
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
-        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_result_soaring, container, false)
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_bookmark_artist_list, container, false)
+        binding.lifecycleOwner = viewLifecycleOwner
         binding.viewModel = viewModel
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel.status.observe(viewLifecycleOwner, { onStateChanged(it) })
-        viewModel.getSoaring()
-    }
-
-    // ステータス監視
-    @Suppress("IMPLICIT_CAST_TO_ANY")
-    private fun onStateChanged(state: Status<List<ArtistSearchContents<*>>>) = when (state) {
-        is Status.Loading -> {
-        }
-        is Status.Success -> {
-            viewUpDate(state.data)
-        }
-        is Status.Failure -> {
-        }
-        is Status.Non -> {
-        }
+        viewModel.bookmarkArtistList.observe(viewLifecycleOwner, { viewUpDate(it) })
     }
 
     // データ反映
     private fun viewUpDate(data: List<ArtistSearchContents<*>>) {
         val adapter = ResultAdapter(viewLifecycleOwner, resultViewModel, requireContext(), data)
-        val layoutManager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
+        val layoutManager = StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.VERTICAL)
+        val controller = AnimationUtils.loadLayoutAnimation(context, R.anim.layout_animation_fall_down)
+        binding.recyclerView.layoutAnimation = controller
         binding.recyclerView.adapter = adapter
         binding.recyclerView.layoutManager = layoutManager
     }

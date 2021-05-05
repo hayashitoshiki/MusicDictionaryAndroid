@@ -137,4 +137,12 @@ interface MessageUtil {
     fun getChangeButton(): String
 
     // endregion
+
+    /**
+     * String.xmlから任意の文字列取得
+     *
+     * @param resId R.stringの任意のID
+     * @return 指定された文字列
+     */
+    fun getString(resId: Int): String
 }

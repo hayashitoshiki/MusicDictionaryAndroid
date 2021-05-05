@@ -14,6 +14,7 @@
     <string name="title_mypage_home">設定</string>
     <string name="title_mypage_user">アカウント情報</string>
     <string name="title_mypage_artist_list">アーティスト一覧</string>
+    <string name="title_mypage_bookmark_artist_list">ブックマーク一覧</string>
     <string name="title_mypage_artist_add">アーティスト登録</string>
     <string name="title_mypage_artist_change">アーティスト編集</string>
 
@@ -89,6 +90,30 @@
     <string name="validate_sign_password2">パスワード再入力（最低６文字）</string>
     <string name="validate_sign_email">メールアドレス（最低６文字）</string>
     <string name="validate_sign_name">名前（最低６文字）</string>
+
+    <!-- 円グラフタイトル -->
+    <string name="pie_title_generation">年齢層</string>
+    <string name="pie_title_gender">男女比率</string>
+    <!-- 円グラフ要素 -->
+    <string name="pie_value_gender_man">男性</string>
+    <string name="pie_value_gender_woman">女性</string>
+    <string name="pie_value_generation_over10">10代</string>
+    <string name="pie_value_generation_over20">20代</string>
+    <string name="pie_value_generation_over30">30代</string>
+    <string name="pie_value_generation_over40">40代</string>
+    <string name="pie_value_generation_over50">50代</string>
+    <string name="pie_value_generation_over60">60代</string>
+
+    <!-- 検索条件ラベル -->
+    <string name="search_label_title">検索条件</string>
+    <string name="search_label_name">検索ワード：</string>
+    <string name="search_label_gender">性別：</string>
+    <string name="search_label_voice">声の高さ：</string>
+    <string name="search_label_length">曲の長さ：</string>
+    <string name="search_label_lyrics">歌詞：</string>
+    <string name="search_label_genre1">ジャンル１：</string>
+    <string name="search_label_genre2">ジャンル２：</string>
+
 
     <!-- 成功文言 -->
     <string name="success_login">同期しました</string>

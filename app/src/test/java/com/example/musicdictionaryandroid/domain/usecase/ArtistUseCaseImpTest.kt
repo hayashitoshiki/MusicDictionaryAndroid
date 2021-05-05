@@ -2,6 +2,7 @@ package com.example.musicdictionaryandroid.domain.usecase
 
 import com.example.musicdictionaryandroid.BaseTestUnit
 import com.example.musicdictionaryandroid.data.repository.LocalArtistRepository
+import com.example.musicdictionaryandroid.data.repository.LocalBookmarkArtistRepository
 import com.example.musicdictionaryandroid.data.repository.LocalUserRepository
 import com.example.musicdictionaryandroid.data.repository.RemoteArtistRepository
 import com.example.musicdictionaryandroid.domain.model.entity.Artist
@@ -15,6 +16,7 @@ import io.mockk.every
 import io.mockk.mockk
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.test.resetMain
@@ -29,6 +31,7 @@ class ArtistUseCaseImpTest : BaseTestUnit() {
     private lateinit var useCase: ArtistUseCaseImp
     private lateinit var remoteArtistRepository: RemoteArtistRepository
     private lateinit var localArtistRepository: LocalArtistRepository
+    private lateinit var localBookmarkArtistRepository: LocalBookmarkArtistRepository
     private lateinit var localUserRepository: LocalUserRepository
 
     private val user = User("test@com.jp", "testA", 1, 1, "2000/2/2", 1)
@@ -39,6 +42,7 @@ class ArtistUseCaseImpTest : BaseTestUnit() {
     private val artistList = listOf(artist, artist)
     private val artistListFlow = flow { emit(listOf(artist)) }
     private val successResult = Result.Success("Success")
+    private val artistContentsListFlow = flow { emit(artistContentsList) }
     private val failureResult = Result.Error(IllegalArgumentException(""))
     private val successEmail = "success"
     private val failureEmail = "Failure"
@@ -47,6 +51,12 @@ class ArtistUseCaseImpTest : BaseTestUnit() {
     @Before
     fun setUp() {
         Dispatchers.setMain(testDispatcher)
+        localBookmarkArtistRepository = mockk<LocalBookmarkArtistRepository>().also {
+            coEvery { it.addArtist(any()) } returns Unit
+            coEvery { it.deleteArtist(any()) } returns Unit
+            coEvery { it.isArtistByName(any()) } returns false
+            coEvery { it.getArtistAll() } returns artistContentsListFlow
+        }
         remoteArtistRepository = mockk<RemoteArtistRepository>().also {
             coEvery { it.getArtistsBy(any()) } returns Result.Success(artistContentsList)
             coEvery { it.getArtistsByRecommend(any()) } returns Result.Success(artistContentsList)
@@ -78,6 +88,7 @@ class ArtistUseCaseImpTest : BaseTestUnit() {
             remoteArtistRepository,
             localArtistRepository,
             localUserRepository,
+            localBookmarkArtistRepository,
             testScope,
             testDispatcher
         )
@@ -88,6 +99,7 @@ class ArtistUseCaseImpTest : BaseTestUnit() {
             remoteArtistRepository,
             localArtistRepository,
             localUserRepository,
+            localBookmarkArtistRepository,
             testScope,
             testDispatcher
         )
@@ -335,6 +347,61 @@ class ArtistUseCaseImpTest : BaseTestUnit() {
     fun getArtistList() {
         useCase.getArtistList()
         coVerify(exactly = 1) { (localArtistRepository).getArtistAll() }
+    }
+
+    // endregion
+
+    // region ブックマーク登録
+
+    /**
+     * ブックマーク登録
+     * 条件：なし
+     * 結果：ローカルDBのブックマークアーティスト登録メソッドが呼ばれること
+     */
+    @Test
+    fun setBookmarkArtist() {
+        runBlocking {
+            useCase.setBookmarkArtist(artistContents)
+            coVerify(exactly = 1) { (localBookmarkArtistRepository).addArtist(artistContents) }
+        }
+    }
+
+    // endregion
+
+    // region ブックマーク登録解除
+
+    /**
+     * ブックマーク登録解除
+     * 条件：なし
+     * 結果：ローカルDBのブックマークアーティスト削除メソッドが呼ばれること
+     */
+    @Test
+    fun deleteBookmarkArtist() {
+        runBlocking {
+            useCase.deleteBookmarkArtist(artistContents)
+            coVerify(exactly = 1) { (localBookmarkArtistRepository).deleteArtist(artistContents.artist.name) }
+        }
+    }
+
+    // endregion
+
+    // region ブックマークリスト取得
+
+    /**
+     * ブックマークリスト取得
+     * 条件：なし
+     * 結果：ローカルDBのブックマークアーティストリスト取得メソッドが呼ばれること
+     * ・取得した内容がそのままドメインモデル形式に変換されて返ること
+     */
+    @Test
+    fun getBookArkArtistAll() {
+        runBlocking {
+            val result = useCase.getBookArkArtistAll().first()
+            coVerify(exactly = 1) { (localBookmarkArtistRepository).getArtistAll() }
+            result.forEachIndexed { index, item ->
+                assertEquals(artistContentsList[index], item.value)
+            }
+        }
     }
 
     // endregion

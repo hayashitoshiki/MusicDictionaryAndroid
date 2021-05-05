@@ -1,7 +1,6 @@
 package com.example.musicdictionaryandroid.data.repository
 
 import com.example.musicdictionaryandroid.data.local.database.dao.ArtistDao
-import com.example.musicdictionaryandroid.data.local.database.entity.ArtistEntity
 import com.example.musicdictionaryandroid.domain.model.entity.Artist
 import com.example.musicdictionaryandroid.domain.model.value.*
 import kotlinx.coroutines.CoroutineDispatcher
@@ -15,7 +14,7 @@ class LocalArtistRepositoryImp(private val dao: ArtistDao, private val ioDispatc
 
     // アーティスト登録
     override suspend fun addArtist(artist: Artist) = withContext(ioDispatcher) {
-        val artistEntity = convertArtistEntityFromArtist(artist)
+        val artistEntity = Converter.artistEntityFromArtist(artist)
         dao.insert(artistEntity)
     }
 
@@ -35,7 +34,7 @@ class LocalArtistRepositoryImp(private val dao: ArtistDao, private val ioDispatc
     override suspend fun updateAll(artists: List<Artist>) = withContext(ioDispatcher) {
         dao.deleteAll()
         artists.forEach { artist ->
-            val artistEntity = convertArtistEntityFromArtist(artist)
+            val artistEntity = Converter.artistEntityFromArtist(artist)
             dao.insert(artistEntity)
         }
     }
@@ -53,39 +52,16 @@ class LocalArtistRepositoryImp(private val dao: ArtistDao, private val ioDispatc
     // アーティスト名一致取得
     override suspend fun getArtistByName(name: String): Artist = withContext(ioDispatcher) {
         val artistEntity = dao.getArtistByName(name)
-        return@withContext convertArtistFromArtistEntity(artistEntity)
+        return@withContext Converter.artistFromArtistEntity(artistEntity)
     }
 
     // アーティスト全取得
     override fun getArtistAll(): Flow<List<Artist>> {
         return dao.getAll().map { artistEntityList ->
             artistEntityList.map { artistEntity ->
-                convertArtistFromArtistEntity(artistEntity)
+                Converter.artistFromArtistEntity(artistEntity)
             }
         }
     }
 
-    // アーティストテーブルからアーティストモデルべ変換
-    private fun convertArtistFromArtistEntity(artistEntity: ArtistEntity): Artist {
-        val name = artistEntity.name
-        val gender = Gender.getEnumByValue(artistEntity.gender)
-        val voice = Voice(artistEntity.voice)
-        val length = Length(artistEntity.length)
-        val lyrics = Lyrics(artistEntity.lyrics)
-        val genre1 = Genre1(artistEntity.genre1)
-        val genre2 = Genre2(artistEntity.genre2)
-        return Artist(name, gender, voice, length, lyrics, genre1, genre2)
-    }
-
-    // アーティストモデルからアーティストテーブルへ変換
-    private fun convertArtistEntityFromArtist(artist: Artist): ArtistEntity {
-        val name = artist.name
-        val gender = artist.gender.value
-        val voice = artist.voice.value
-        val length = artist.length.value
-        val lyrics = artist.lyrics.value
-        val genre1 = artist.genre1.value
-        val genre2 = artist.genre2.value
-        return ArtistEntity(null, name, gender, voice, length, lyrics, genre1, genre2)
-    }
 }

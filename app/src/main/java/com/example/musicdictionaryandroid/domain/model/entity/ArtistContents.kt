@@ -14,5 +14,6 @@ data class ArtistContents(
     val generation5: Int,
     val generation6: Int,
     val user_man: Int,
-    val user_woman: Int
+    val user_woman: Int,
+    var bookmarkFlg: Boolean = false
 )

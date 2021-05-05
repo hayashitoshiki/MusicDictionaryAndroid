@@ -2,6 +2,7 @@ package com.example.musicdictionaryandroid.ui.home
 
 import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,8 +12,8 @@ import androidx.fragment.app.DialogFragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.example.musicdictionaryandroid.R
-import com.example.musicdictionaryandroid.data.remote.network.dto.ArtistDto
 import com.example.musicdictionaryandroid.databinding.DialogSearchBinding
+import com.example.musicdictionaryandroid.domain.model.value.ArtistConditions
 import com.example.musicdictionaryandroid.ui.util.setSafeClickListener
 
 /**
@@ -37,7 +38,7 @@ class SearchDialogFragment : DialogFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        Log.d("TAG", "ダイアログ表示")
         viewModel.init(
             resources.getStringArray(R.array.genre1_spinner_list),
             resources.getStringArray(R.array.genre12_spinner_list),
@@ -48,12 +49,11 @@ class SearchDialogFragment : DialogFragment() {
             resources.getStringArray(R.array.genre62_spinner_list)
         )
         arguments?.let {
-            val artist = it.getSerializable("artist") as ArtistDto
+            val artist = it.getSerializable("artist") as ArtistConditions
             viewModel.setArtist(artist)
         }
 
         viewModel.genre1ValueInt.observe(viewLifecycleOwner, Observer { viewModel.changeGenre1(it) })
-        viewModel.genre2ValueInt.observe(viewLifecycleOwner, Observer { viewModel.changeGenre2(it) })
         dialog!!.window!!.setBackgroundDrawableResource(R.color.transparent)
 
         // editTextフォーカス制御
