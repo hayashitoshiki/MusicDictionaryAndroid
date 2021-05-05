@@ -45,12 +45,32 @@ class ArtistUseCaseImp(
     // おすすめアーティスト検索
     override suspend fun getArtistsByRecommend(): Result<List<ArtistContents>> {
         val email = localUserRepository.getEmail()
-        return remoteArtistRepository.getArtistsByRecommend(email)
+        return when (val list = remoteArtistRepository.getArtistsByRecommend(email)) {
+            is Result.Success -> {
+                list.data.map { artistContents ->
+                    val artistName = artistContents.artist.name
+                    val isBookmark = localBookmarkArtistRepository.isArtistByName(artistName)
+                    artistContents.bookmarkFlg = isBookmark
+                }
+                list
+            }
+            is Result.Error -> list
+        }
     }
 
     // 急上昇アーティスト取得
     override suspend fun getArtistsBySoaring(): Result<List<ArtistContents>> {
-        return remoteArtistRepository.getArtistsBySoaring()
+        return when (val list = remoteArtistRepository.getArtistsBySoaring()) {
+            is Result.Success -> {
+                list.data.map { artistContents ->
+                    val artistName = artistContents.artist.name
+                    val isBookmark = localBookmarkArtistRepository.isArtistByName(artistName)
+                    artistContents.bookmarkFlg = isBookmark
+                }
+                list
+            }
+            is Result.Error -> list
+        }
     }
 
     //endregion

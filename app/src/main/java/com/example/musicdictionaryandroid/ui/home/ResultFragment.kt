@@ -37,6 +37,23 @@ class ResultFragment : Fragment(), DialogFragmentCallbackInterface {
         super.onViewCreated(view, savedInstanceState)
         viewModel.status.observe(viewLifecycleOwner, { onStateChanged(it) })
 
+//        binding.recyclerView.run {
+//            layoutAnimation = AnimationUtils.loadLayoutAnimation(context, R.anim.layout_animation_fall_down)
+//            layoutManager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
+//            val resultAdapter = ResultAdapter(viewLifecycleOwner, resultViewModel, requireContext(), listOf()).also {
+//                userListAdapter = it
+//            }
+//            resultAdapter.setOnItemClickListener {
+//                val dialogFragment = SearchDialogFragment()
+//                val bundle = Bundle()
+//                bundle.putSerializable("artist", args.data)
+//                dialogFragment.arguments = bundle
+//                dialogFragment.setCallbackListener(this@ResultFragment)
+//                dialogFragment.show(requireActivity().supportFragmentManager, null)
+//            }
+//            adapter = resultAdapter
+//        }
+
         if (savedInstanceState != null) {
             val artist = savedInstanceState.getSerializable("artistSave") as ArtistConditions
             viewModel.getArtists(artist)
@@ -45,7 +62,8 @@ class ResultFragment : Fragment(), DialogFragmentCallbackInterface {
         }
     }
 
-    // ステータス監視
+    private lateinit var userListAdapter: ResultAdapter    // ステータス監視
+
     private fun onStateChanged(state: Status<List<ArtistSearchContents<*>>>) = when (state) {
         is Status.Loading -> {
         }
@@ -60,7 +78,8 @@ class ResultFragment : Fragment(), DialogFragmentCallbackInterface {
 
     // データ反映
     private fun viewUpDate(data: List<ArtistSearchContents<*>>) {
-        val adapter = ResultAdapter(resultViewModel, requireContext(), data)
+
+        val adapter = ResultAdapter(viewLifecycleOwner, resultViewModel, requireContext(), data)
         val layoutManager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
         val controller = AnimationUtils.loadLayoutAnimation(context, R.anim.layout_animation_fall_down)
         binding.recyclerView.layoutAnimation = controller

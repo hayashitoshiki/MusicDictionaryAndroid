@@ -50,7 +50,7 @@ class ResultSoaringFragment : Fragment() {
 
     // データ反映
     private fun viewUpDate(data: List<ArtistSearchContents<*>>) {
-        val adapter = ResultAdapter(resultViewModel, requireContext(), data)
+        val adapter = ResultAdapter(viewLifecycleOwner, resultViewModel, requireContext(), data)
         val layoutManager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
         binding.recyclerView.adapter = adapter
         binding.recyclerView.layoutManager = layoutManager

@@ -4,7 +4,6 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.musicdictionaryandroid.data.remote.network.dto.ArtistDto
 import com.example.musicdictionaryandroid.domain.model.value.*
 
 /**
@@ -79,23 +78,37 @@ class SearchViewModel : ViewModel() {
     }
 
     // アーティスト設定
-    fun setArtist(artist: ArtistDto) {
-        when (artist.genre1) {
-            0 -> genre2ValueList.value = subGenre0List
-            1 -> genre2ValueList.value = subGenre1List
-            2 -> genre2ValueList.value = subGenre2List
-            3 -> genre2ValueList.value = subGenre3List
-            4 -> genre2ValueList.value = subGenre4List
-            5 -> genre2ValueList.value = subGenre5List
-            6 -> genre2ValueList.value = subGenre6List
+    fun setArtist(artist: ArtistConditions) {
+        artist.name?.let {
+            nameText.value = it
         }
-        nameText.value = artist.name
-        genderValueInt.value = artist.gender
-        lengthValueInt.value = artist.length
-        voiceValueInt.value = artist.voice
-        lyricsValueInt.value = artist.lyrics
-        genre1ValueInt.value = artist.genre1
-        genre2ValueInt.value = artist.genre2
+        artist.gender?.let {
+            genderValueInt.value = it.value
+        }
+        artist.length?.let {
+            lengthValueInt.value = it.value
+        }
+        artist.voice?.let {
+            voiceValueInt.value = it.value
+        }
+        artist.lyrics?.let {
+            lyricsValueInt.value = it.value
+        }
+        artist.genre1?.let {
+            genre1ValueInt.value = it.value
+            when (it.value) {
+                0 -> genre2ValueList.value = subGenre0List
+                1 -> genre2ValueList.value = subGenre1List
+                2 -> genre2ValueList.value = subGenre2List
+                3 -> genre2ValueList.value = subGenre3List
+                4 -> genre2ValueList.value = subGenre4List
+                5 -> genre2ValueList.value = subGenre5List
+                6 -> genre2ValueList.value = subGenre6List
+            }
+        }
+        artist.genre2?.let {
+            genre2ValueInt.value = it.value
+        }
     }
 
     // genderの変更
@@ -136,7 +149,6 @@ class SearchViewModel : ViewModel() {
 
     // ジャンル１の変更
     fun changeGenre1(index: Int) {
-        genre1ValueInt.value = index
         genre2ValueInt.value = 0
         when (index) {
             0 -> genre2ValueList.postValue(subGenre0List)
@@ -147,11 +159,6 @@ class SearchViewModel : ViewModel() {
             5 -> genre2ValueList.postValue(subGenre5List)
             6 -> genre2ValueList.postValue(subGenre6List)
         }
-    }
-
-    // ジャンル２の変更
-    fun changeGenre2(index: Int) {
-        genre2ValueInt.value = index
     }
 
     // バリデーションチェック

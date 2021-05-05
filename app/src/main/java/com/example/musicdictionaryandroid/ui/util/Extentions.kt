@@ -2,7 +2,9 @@ package com.example.musicdictionaryandroid.ui.util
 
 import android.os.Handler
 import android.view.View
+import android.webkit.WebView
 import android.widget.CompoundButton
+import androidx.databinding.BindingAdapter
 
 private const val CLICKABLE_DELAY_TIME = 100L
 
@@ -42,4 +44,9 @@ fun <T : CompoundButton> T.setSafeCheckListener(listener: (it: T, isChecked: Boo
 
         listener.invoke(view as T, isChecked)
     }
+}
+
+@BindingAdapter("loadUrl")
+fun WebView.setUrl(url: String?) {
+    this.loadUrl(url)
 }

@@ -1,6 +1,7 @@
 package com.example.musicdictionaryandroid.ui.util
 
 import android.content.Context
+import androidx.annotation.StringRes
 import com.example.musicdictionaryandroid.R
 import com.example.musicdictionaryandroid.ui.MyApplication
 
@@ -165,4 +166,9 @@ object MessageUtilImp : MessageUtil {
     }
 
     // endregion
+
+    // String.xmlから任意の文字列取得
+    override fun getString(@StringRes resId: Int): String {
+        return context.resources.getString(resId)
+    }
 }

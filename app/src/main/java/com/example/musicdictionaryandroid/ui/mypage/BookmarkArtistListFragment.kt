@@ -35,7 +35,7 @@ class BookmarkArtistListFragment : Fragment() {
 
     // データ反映
     private fun viewUpDate(data: List<ArtistSearchContents<*>>) {
-        val adapter = ResultAdapter(resultViewModel, requireContext(), data)
+        val adapter = ResultAdapter(viewLifecycleOwner, resultViewModel, requireContext(), data)
         val layoutManager = StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.VERTICAL)
         val controller = AnimationUtils.loadLayoutAnimation(context, R.anim.layout_animation_fall_down)
         binding.recyclerView.layoutAnimation = controller

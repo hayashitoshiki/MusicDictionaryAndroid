@@ -64,12 +64,24 @@ class CategorySearchViewModel : ViewModel() {
     }
 
     fun getArtist(): ArtistConditions {
-        val gender = Gender.getEnumByValue(genderValueInt.value!!)
-        val length = Length(lengthValueInt.value!!)
-        val voice = Voice(voiceValueInt.value!!)
-        val lyrics = Lyrics(lyricsValueInt.value!!)
-        val genre1 = Genre1(genre1ValueInt.value!!)
-        val genre2 = Genre2(genre2ValueInt.value!!)
+        val gender = if (genderValueInt.value != null && genderValueInt.value != 0) {
+            Gender.getEnumByValue(genderValueInt.value!!)
+        } else null
+        val length = if (lengthValueInt.value != null && lengthValueInt.value != 0) {
+            Length(lengthValueInt.value!!)
+        } else null
+        val voice = if (voiceValueInt.value != null && voiceValueInt.value != 0) {
+            Voice(voiceValueInt.value!!)
+        } else null
+        val lyrics = if (lyricsValueInt.value != null && lyricsValueInt.value != 0) {
+            Lyrics(lyricsValueInt.value!!)
+        } else null
+        val genre1 = if (genre1ValueInt.value != null && genre1ValueInt.value != 0) {
+            Genre1(genre1ValueInt.value!!)
+        } else null
+        val genre2 = if (genre2ValueInt.value != null && genre2ValueInt.value != 0) {
+            Genre2(genre2ValueInt.value!!)
+        } else null
         return ArtistConditions(null, gender, voice, length, lyrics, genre1, genre2)
     }
 
