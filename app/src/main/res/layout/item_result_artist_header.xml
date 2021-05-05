@@ -8,11 +8,11 @@
 
         <variable
             name="state"
-            type="com.example.musicdictionaryandroid.ui.home.ResultAdapterState" />
+            type="com.example.musicdictionaryandroid.ui.home.ResultAdapterHeaderState" />
 
         <variable
             name="item"
-            type="com.example.musicdictionaryandroid.domain.model.value.ArtistSearchContents.Conditions" />
+            type="com.example.musicdictionaryandroid.domain.model.value.ArtistConditions" />
 
     </data>
 
@@ -41,7 +41,7 @@
                 android:layout_marginEnd="8dp"
                 android:layout_marginBottom="8dp"
                 android:gravity="center"
-                android:text="@{state.getTitleText(item)}"
+                android:text="@{state.getTitleText(item.name)}"
                 android:textColor="#FFFFFF"
                 android:textStyle="bold"
                 android:textSize="@dimen/result_header"
@@ -67,8 +67,8 @@
                     android:paddingStart="8dp"
                     android:paddingEnd="8dp"
                     android:background="@drawable/round_primary_dark_button"
-                    android:visibility="@{state.isName(item) ? View.VISIBLE : View.GONE }"
-                    android:text="@{item.value.name}" />
+                    android:visibility="@{state.isName(item.name) ? View.VISIBLE : View.GONE }"
+                    android:text="@{item.name}" />
 
                 <TextView
                     android:id="@+id/title_gender"
@@ -81,8 +81,8 @@
                     android:paddingStart="8dp"
                     android:paddingEnd="8dp"
                     android:background="@drawable/round_primary_dark_button"
-                    android:visibility="@{state.isGender(item) ? View.VISIBLE : View.GONE }"
-                    android:text="@{state.getGenderTextByHeader(item)}" />
+                    android:visibility="@{state.isGender(item.gender) ? View.VISIBLE : View.GONE }"
+                    android:text="@{state.getGenderText(item.gender)}" />
 
                 <TextView
                     android:id="@+id/title_genre1"
@@ -95,8 +95,8 @@
                     android:paddingStart="8dp"
                     android:paddingEnd="8dp"
                     android:background="@drawable/round_primary_dark_button"
-                    android:visibility="@{state.isGenre1(item) ? View.VISIBLE : View.GONE }"
-                    android:text="@{state.getGenre1Text(item)}" />
+                    android:visibility="@{state.isGenre1(item.genre1) ? View.VISIBLE : View.GONE }"
+                    android:text="@{state.getGenre1Text(item.genre1)}" />
 
                 <TextView
                     android:id="@+id/title_genre2"
@@ -109,8 +109,8 @@
                     android:paddingStart="8dp"
                     android:paddingEnd="8dp"
                     android:background="@drawable/round_primary_dark_button"
-                    android:visibility="@{state.isGenre2(item) ? View.VISIBLE : View.GONE }"
-                    android:text="@{state.getGenre2Text(item)}" />
+                    android:visibility="@{state.isGenre2(item.genre2) ? View.VISIBLE : View.GONE }"
+                    android:text="@{state.getGenre2Text(item.genre1, item.genre2)}" />
 
                 <TextView
                     android:id="@+id/title_lyric"
@@ -123,8 +123,8 @@
                     android:paddingStart="8dp"
                     android:paddingEnd="8dp"
                     android:background="@drawable/round_primary_dark_button"
-                    android:visibility="@{state.isLyric(item) ? View.VISIBLE : View.GONE }"
-                    android:text="@{state.getLyricsText(item)}" />
+                    android:visibility="@{state.isLyric(item.lyrics) ? View.VISIBLE : View.GONE }"
+                    android:text="@{state.getLyricsText(item.lyrics)}" />
 
                 <TextView
                     android:id="@+id/title_voice"
@@ -137,8 +137,8 @@
                     android:paddingStart="8dp"
                     android:paddingEnd="8dp"
                     android:background="@drawable/round_primary_dark_button"
-                    android:visibility="@{state.isVoice(item) ? View.VISIBLE : View.GONE }"
-                    android:text="@{state.getVoiceText(item)}" />
+                    android:visibility="@{state.isVoice(item.voice) ? View.VISIBLE : View.GONE }"
+                    android:text="@{state.getVoiceText(item.voice)}" />
 
                 <TextView
                     android:id="@+id/title_length"
@@ -151,8 +151,8 @@
                     android:paddingStart="8dp"
                     android:paddingEnd="8dp"
                     android:background="@drawable/round_primary_dark_button"
-                    android:visibility="@{state.isLength(item) ? View.VISIBLE : View.GONE }"
-                    android:text="@{state.getLengthText(item)}" />
+                    android:visibility="@{state.isLength(item.length) ? View.VISIBLE : View.GONE }"
+                    android:text="@{state.getLengthText(item.length)}" />
             </com.google.android.flexbox.FlexboxLayout>
 
             <Button
@@ -165,7 +165,7 @@
                 android:textSize="@dimen/result_search"
                 android:textColor="@android:color/white"
                 android:background="@drawable/accent_button_selector"
-                android:visibility="@{state.isSubmitButton(item) ? View.VISIBLE : View.GONE }"
+                android:visibility="@{state.isSubmitButton(item.name) ? View.VISIBLE : View.GONE }"
                 app:layout_constraintTop_toBottomOf="@+id/title_main_container"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"

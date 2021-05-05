@@ -9,11 +9,11 @@
 
         <variable
             name="state"
-            type="com.example.musicdictionaryandroid.ui.home.ResultAdapterState" />
+            type="com.example.musicdictionaryandroid.ui.home.ResultAdapterBodyState" />
 
         <variable
             name="item"
-            type="com.example.musicdictionaryandroid.domain.model.value.ArtistSearchContents.Item" />
+            type="com.example.musicdictionaryandroid.domain.model.entity.ArtistContents" />
 
         <variable
             name="viewModel"
@@ -41,7 +41,7 @@
                 android:layout_marginTop="8dp"
                 android:layout_marginStart="8dp"
                 android:layout_marginEnd="8dp"
-                android:text="@{item.value.artist.name}"
+                android:text="@{item.artist.name}"
                 android:textColor="#FFFFFF"
                 android:textStyle="bold"
                 app:autoSizeMaxTextSize="75dp"
@@ -75,7 +75,7 @@
                 android:layout_marginStart="8dp"
                 android:layout_marginEnd="8dp"
                 android:contentDescription="@null"
-                android:visibility="@{state.isThumb(item) ? View.VISIBLE : View.GONE }"
+                android:visibility="@{state.isThumb(item.thumb) ? View.VISIBLE : View.GONE }"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/arthist" />
@@ -93,7 +93,7 @@
                 android:stateListAnimator="@drawable/button_state_list_anim_material"
                 android:src="@mipmap/ic_button_music_play_32"
                 android:contentDescription="@null"
-                android:visibility="@{state.isPlay(item) ? View.VISIBLE : View.GONE }"
+                android:visibility="@{state.isPreview(item.preview) ? View.VISIBLE : View.GONE }"
                 app:imageResource="@{state.playbackButtonImage}"
                 app:layout_constraintBottom_toBottomOf="@+id/gender"
                 app:layout_constraintEnd_toEndOf="parent" />
@@ -104,8 +104,8 @@
                 android:layout_height="wrap_content"
                 android:textAlignment="center"
                 android:textSize="14sp"
-                android:text="@{state.getGenderText(item)}"
-                android:textColor="@{state.getGenderColor(item)}"
+                android:text="@{state.getGenderText(item.artist.gender)}"
+                android:textColor="@{state.getGenderColor(item.artist.gender)}"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/imageView" />
 
@@ -124,7 +124,7 @@
                     android:layout_weight="1"
                     android:lines="1"
                     android:ellipsize="end"
-                    android:text="@{state.getGenre1Text(item)}"
+                    android:text="@{state.getGenre1Text(item.artist.genre1)}"
                     android:textAlignment="center"
                     android:textColor="#FFFFFF"
                     app:autoSizeMaxTextSize="75dp"
@@ -139,7 +139,7 @@
                     android:layout_weight="1"
                     android:lines="1"
                     android:ellipsize="end"
-                    android:text="@{state.getGenre2Text(item)}"
+                    android:text="@{state.getGenre2Text(item.artist.genre1, item.artist.genre2)}"
                     android:textAlignment="center"
                     android:textColor="#FFFFFF"
                     app:autoSizeMaxTextSize="75dp"
@@ -178,7 +178,7 @@
                 android:isIndicator="true"
                 android:numStars="5"
                 android:progressTint="#393e7a"
-                android:rating="@{item.value.artist.lyrics.value}"
+                android:rating="@{item.artist.lyrics.value}"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/lyric1" />
@@ -224,7 +224,7 @@
                 android:isIndicator="true"
                 android:numStars="5"
                 android:progressTint="#393e7a"
-                android:rating="@{item.value.artist.voice.value}"
+                android:rating="@{item.artist.voice.value}"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/voice" />
@@ -270,7 +270,7 @@
                 android:isIndicator="true"
                 android:numStars="5"
                 android:progressTint="#393e7a"
-                android:rating="@{item.value.artist.length.value}"
+                android:rating="@{item.artist.length.value}"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/lenght" />

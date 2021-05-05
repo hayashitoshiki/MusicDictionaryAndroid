@@ -1,11 +1,10 @@
 package com.example.musicdictionaryandroid.ui.home
 
-import android.os.Handler
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.musicdictionaryandroid.data.repository.LocalBookmarkArtistRepository
 import com.example.musicdictionaryandroid.domain.model.entity.ArtistContents
-import com.example.musicdictionaryandroid.domain.model.value.ArtistSearchContents
+import com.example.musicdictionaryandroid.domain.usecase.ArtistUseCase
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 /**
@@ -13,38 +12,44 @@ import kotlinx.coroutines.launch
  * ItemごとではなくAdapterに対して１つで管理
  *
  */
-class ResultAdapterViewModel(private val localBookmarkArtistRepository: LocalBookmarkArtistRepository) : ViewModel() {
+class ResultAdapterViewModel(private val artistUseCase: ArtistUseCase) : ViewModel() {
+
+    companion object {
+        // 再生時間
+        const val PLAY_BACK_TIME = 30500L
+    }
+
+    // 現在再生している楽曲
+    private var holdState: ResultAdapterBodyState? = null
+
+    // 再生処理
+    fun onClickPlayBack(state: ResultAdapterBodyState, artistContents: ArtistContents) {
+        if (!artistContents.preview.isNullOrEmpty()) {
+            if (holdState == state) {
+                state.stopPlayback()
+                holdState = null
+            } else {
+                holdState?.stopPlayback()
+                state.startPlayback(artistContents.preview)
+                holdState = state
+                viewModelScope.launch {
+                    delay(PLAY_BACK_TIME)
+                    if (holdState == state) {
+                        state.stopPlayback()
+                        holdState = null
+                    }
+                }
+            }
+        }
+    }
 
     // ブックマーク切り替え
     fun setBookMark(artistContents: ArtistContents) = viewModelScope.launch {
         when (artistContents.bookmarkFlg) {
             // 登録
-            true -> localBookmarkArtistRepository.addArtist(artistContents)
+            true -> artistUseCase.setBookmarkArtist(artistContents)
             // 解除
-            false -> localBookmarkArtistRepository.deleteArtist(artistContents.artist.name)
-        }
-    }
-
-    // 現在再生している音楽
-    private var holdState: ResultAdapterState? = null
-
-    // 再生処理
-    fun onClickPlayBack(state: ResultAdapterState, item: ArtistSearchContents.Item) {
-        if (!item.value.preview.isNullOrEmpty()) {
-            if (holdState != state) {
-                holdState?.stopPlayback()
-                state.startPlayback(item.value.preview)
-                holdState = state
-                Handler().postDelayed({
-                    if (holdState == state) {
-                        state.stopPlayback()
-                        holdState = null
-                    }
-                }, 30500)
-            } else {
-                state.stopPlayback()
-                holdState = null
-            }
+            false -> artistUseCase.deleteBookmarkArtist(artistContents)
         }
     }
 

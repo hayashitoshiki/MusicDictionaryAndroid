@@ -16,6 +16,7 @@ import com.example.musicdictionaryandroid.databinding.ItemResultArtistHeaderBind
 import com.example.musicdictionaryandroid.domain.model.entity.ArtistContents
 import com.example.musicdictionaryandroid.domain.model.value.ArtistSearchContents
 import com.example.musicdictionaryandroid.domain.model.value.Gender
+import com.example.musicdictionaryandroid.ui.util.MessageUtilImp
 import com.example.musicdictionaryandroid.ui.util.transition.ResizeAnimation
 import com.github.mikephil.charting.data.PieData
 import com.github.mikephil.charting.data.PieDataSet
@@ -78,12 +79,12 @@ class ResultAdapter(
             is ArtistSearchContents.Item -> {
                 (holder.binding as ItemResultArtistBinding).also { binding ->
                     // 初期化
-                    val state = ResultAdapterState()
-                    binding.item = item
+                    val state = ResultAdapterBodyState(MessageUtilImp)
+                    binding.item = item.value
                     binding.viewModel = viewModel
                     binding.lifecycleOwner = viewLifecycleOwner
                     binding.state = state
-                    state.setBookmarkFlg(item.value.bookmarkFlg!!)
+                    state.setBookmarkFlg(item.value.bookmarkFlg)
 
                     // サムネイル
                     if (!item.value.thumb.isNullOrEmpty()) {
@@ -116,13 +117,13 @@ class ResultAdapter(
                     }
                     // お気に入りボタン
                     binding.bookmark.setOnClickListener {
-                        item.value.bookmarkFlg = !item.value.bookmarkFlg!!
-                        state.setBookmarkFlg(item.value.bookmarkFlg!!)
+                        item.value.bookmarkFlg = !item.value.bookmarkFlg
+                        state.setBookmarkFlg(item.value.bookmarkFlg)
                         viewModel.setBookMark(item.value)
                     }
                     // 再生ボタン
                     binding.play.setOnClickListener {
-                        viewModel.onClickPlayBack(state, item)
+                        viewModel.onClickPlayBack(state, item.value)
                     }
                     // 詳細ボタン
                     val collapseAnimation = ResizeAnimation(binding.detailsProfile, -originalHeight, originalHeight)
@@ -135,7 +136,9 @@ class ResultAdapter(
                             true -> {
                                 binding.detailsProfile.startAnimation(collapseAnimation)
                                 Handler().postDelayed({
-                                    state.closeDetailsLayout()
+                                    state.setIsDetailsProfile(false)
+                                    state.setIsGenerationPieChart(false)
+                                    state.setIsGenderPieChart(false)
                                 }, 300)
                             }
                             false -> {
@@ -156,8 +159,8 @@ class ResultAdapter(
             }
             is ArtistSearchContents.Conditions -> {
                 (holder.binding as ItemResultArtistHeaderBinding).also { binding ->
-                    binding.item = item
-                    binding.state = ResultAdapterState()
+                    binding.item = item.value
+                    binding.state = ResultAdapterHeaderState(MessageUtilImp)
                     // 検索ボタン
                     binding.searchButton.setOnClickListener { view ->
                         listener.onClick(view)
