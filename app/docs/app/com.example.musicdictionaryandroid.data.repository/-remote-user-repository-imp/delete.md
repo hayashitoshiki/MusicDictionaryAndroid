@@ -1,8 +1,8 @@
-[app](../../index.md) / [com.example.musicdictionaryandroid.data.repository](../index.md) / [RemoteUserRepositoryImp](index.md) / [delete](./delete.md)
+[app](../../index.md) / [com.example.data.repository](../index.md) / [RemoteUserRepositoryImp](index.md) / [delete](./delete.md)
 
 # delete
 
-`fun delete(): Flow<`[`Result`](../../com.example.musicdictionaryandroid.domain.model.value/-result/index.md)`<`[`String`](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html)`>>`
+`fun delete(): Flow<`[`Result`](../../com.example.domain.model.value/-result/index.md)`<`[`String`](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html)`>>`
 
 Overrides [RemoteUserRepository.delete](../-remote-user-repository/delete.md)
 

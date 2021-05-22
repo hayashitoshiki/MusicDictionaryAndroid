@@ -2,7 +2,7 @@
 
 # &lt;init&gt;
 
-`ResultAdapter(context: `[`Context`](https://developer.android.com/reference/android/content/Context.html)`, artistList: `[`List`](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-list/index.html)`<`[`ArtistSearchContents`](../../com.example.musicdictionaryandroid.domain.model.value/-artist-search-contents/index.md)`<*>>)`
+`ResultAdapter(context: `[`Context`](https://developer.android.com/reference/android/content/Context.html)`, artistList: `[`List`](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-list/index.html)`<`[`ArtistSearchContents`](../../com.example.domain.model.value/-artist-search-contents/index.md)`<*>>)`
 
 アーティスト検索結果画面のリサイクルビュー
 

@@ -1,4 +1,4 @@
-[app](../../index.md) / [com.example.musicdictionaryandroid.domain.model.entity](../index.md) / [User](index.md) / [artistCount](./artist-count.md)
+[app](../../index.md) / [com.example.domain.model.entity](../index.md) / [User](index.md) / [artistCount](./artist-count.md)
 
 # artistCount
 

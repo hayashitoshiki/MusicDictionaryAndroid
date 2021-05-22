@@ -1,4 +1,4 @@
-[app](../../index.md) / [com.example.musicdictionaryandroid.data.repository](../index.md) / [LocalUserRepositoryImp](index.md) / [setArea](./set-area.md)
+[app](../../index.md) / [com.example.data.repository](../index.md) / [LocalUserRepositoryImp](index.md) / [setArea](./set-area.md)
 
 # setArea
 

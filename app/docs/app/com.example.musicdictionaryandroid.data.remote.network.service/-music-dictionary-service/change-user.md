@@ -2,4 +2,4 @@
 
 # changeUser
 
-`@GET("user/update.json") abstract suspend fun changeUser(@Query("user") user: `[`User`](../../com.example.musicdictionaryandroid.domain.model.entity/-user/index.md)`, @Query("email") email: `[`String`](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html)`): `[`StatusResponseDto`](../../com.example.musicdictionaryandroid.data.remote.network.dto/-status-response-dto/index.md)
+`@GET("user/update.json") abstract suspend fun changeUser(@Query("user") user: `[`User`](../../com.example.domain.model.entity/-user/index.md)`, @Query("email") email: `[`String`](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html)`): `[`StatusResponseDto`](../../com.example.musicdictionaryandroid.data.remote.network.dto/-status-response-dto/index.md)

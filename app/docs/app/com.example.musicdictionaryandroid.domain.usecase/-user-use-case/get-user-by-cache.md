@@ -2,7 +2,7 @@
 
 # getUserByCache
 
-`abstract fun getUserByCache(): `[`User`](../../com.example.musicdictionaryandroid.domain.model.entity/-user/index.md)
+`abstract fun getUserByCache(): `[`User`](../../com.example.domain.model.entity/-user/index.md)
 
 キャッシュから登録したユーザーの情報取得
 

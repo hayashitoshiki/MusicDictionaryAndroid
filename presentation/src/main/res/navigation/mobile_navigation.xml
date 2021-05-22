@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@+id/navigation_home">
+
+    <fragment
+        android:id="@+id/navigation_home"
+        android:name="com.example.presentation.home.HomeFragment"
+        android:label="@string/title_navigation_home"
+        tools:layout="@layout/fragment_home">
+        <action
+            android:id="@+id/action_navigation_home_to_navigation_result"
+            app:destination="@id/navigation_result" />
+        <action
+            android:id="@+id/action_navigation_home_to_category_search"
+            app:destination="@id/categorySearchFragment" />
+        <action
+            android:id="@+id/action_navigation_home_to_navigation_details_search"
+            app:destination="@id/navigation_details_search" />
+        <action
+            android:id="@+id/action_navigation_home_to_navigation_result_soaring"
+            app:destination="@id/navigation_result_soaring" />
+        <action
+            android:id="@+id/action_navigation_home_to_navigation_result_recommend"
+            app:destination="@id/navigation_result_recommend" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/categorySearchFragment"
+        android:name="com.example.presentation.home.CategorySearchFragment"
+        android:label="CategorySearchFragment"
+        tools:layout="@layout/fragment_category_search">
+        <action
+            android:id="@+id/action_category_search_to_navigation_result"
+            app:destination="@id/navigation_result" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_details_search"
+        android:name="com.example.presentation.home.DetailsSearchFragment"
+        android:label="DetailsSearchFragmen"
+        tools:layout="@layout/fragment_details_search">
+        <action
+            android:id="@+id/action_navigation_details_search_to_navigation_result"
+            app:destination="@id/navigation_result" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_result"
+        android:name="com.example.presentation.home.ResultFragment"
+        android:label="ResultFragment"
+        tools:layout="@layout/fragment_result">
+        <argument
+            android:name="data"
+            app:argType="com.example.domain.model.value.ArtistConditions" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_result_recommend"
+        android:name="com.example.presentation.home.ResultRecommendFragment"
+        android:label="ResultRecommendFragment"
+        tools:layout="@layout/fragment_result_recommend" />
+
+    <fragment
+        android:id="@+id/navigation_result_soaring"
+        android:name="com.example.presentation.home.ResultSoaringFragment"
+        android:label="ResultSoaringFragment"
+        tools:layout="@layout/fragment_result_soaring" />
+
+    <fragment
+        android:id="@+id/navigation_mypage"
+        android:name="com.example.presentation.mypage.MyPageTopFragment"
+        android:label="@string/title_navigation_mypage"
+        tools:layout="@layout/fragment_mypage_top">
+        <action
+            android:id="@+id/action_navigation_mypage_to_my_page_artist"
+            app:destination="@id/navigation_mypage_artist" />
+        <action
+            android:id="@+id/action_navigation_mypage_to_navigation_mypage_userinfo"
+            app:destination="@id/navigation_mypage_user" />
+        <action
+            android:id="@+id/action_navigation_mypage_to_bookmark_artist_list"
+            app:destination="@id/bookmark_artist_list" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_mypage_artist"
+        android:name="com.example.presentation.mypage.MyPageArtistFragment"
+        android:label="MyPageArtistFragment"
+        tools:layout="@layout/fragment_mypage_artist_list">
+        <action
+            android:id="@+id/action_navigation_mypage_artist_to_myPageArtistAddFragment"
+            app:destination="@id/navigation_mypage_artist_add" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_mypage_artist_add"
+        android:name="com.example.presentation.mypage.MyPageArtistAddFragment"
+        android:label="MyPageArtistAddFragment"
+        tools:layout="@layout/fragment_mypage_artist_add">
+        <argument
+            android:name="data"
+            app:argType="com.example.domain.model.entity.Artist"
+            app:nullable="true" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_mypage_user"
+        android:name="com.example.presentation.mypage.MyPageUserFragment"
+        android:label="MyPageUserInfoFragment"
+        tools:layout="@layout/fragment_mypage_user" />
+    <fragment
+        android:id="@+id/bookmark_artist_list"
+        android:name="com.example.presentation.mypage.BookmarkArtistListFragment"
+        android:label="BookmarkArtistListFragment"
+        tools:layout="@layout/fragment_bookmark_artist_list" />
+
+
+</navigation>

@@ -2,4 +2,4 @@
 
 # database
 
-`lateinit var database: `[`AppDatabase`](../../com.example.musicdictionaryandroid.data.local.database/-app-database/index.md)
+`lateinit var database: `[`AppDatabase`](../../com.example.musicdictionaryandroid.database/-app-database/index.md)

@@ -1,4 +1,4 @@
-[app](../../index.md) / [com.example.musicdictionaryandroid.domain.model.value](../index.md) / [Gender](index.md) / [WOMAN](./-w-o-m-a-n.md)
+[app](../../index.md) / [com.example.domain.model.value](../index.md) / [Gender](index.md) / [WOMAN](./-w-o-m-a-n.md)
 
 # WOMAN
 

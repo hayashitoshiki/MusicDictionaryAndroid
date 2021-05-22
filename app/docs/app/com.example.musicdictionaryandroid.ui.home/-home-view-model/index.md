@@ -10,7 +10,7 @@ HOME画面_UIロジック
 
 | Name | Summary |
 |---|---|
-| [&lt;init&gt;](-init-.md) | `HomeViewModel(localUserRepository: `[`LocalUserRepository`](../../com.example.musicdictionaryandroid.data.repository/-local-user-repository/index.md)`)`<br>HOME画面_UIロジック |
+| [&lt;init&gt;](-init-.md) | `HomeViewModel(localUserRepository: `[`LocalUserRepository`](../../com.example.data.repository/-local-user-repository/index.md)`)`<br>HOME画面_UIロジック |
 
 ### Properties
 
@@ -29,4 +29,4 @@ HOME画面_UIロジック
 | Name | Summary |
 |---|---|
 | [changeSubmitButton](change-submit-button.md) | `fun changeSubmitButton(count: `[`Int`](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html)`): `[`Unit`](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html) |
-| [getArtist](get-artist.md) | `fun getArtist(): `[`ArtistConditions`](../../com.example.musicdictionaryandroid.domain.model.value/-artist-conditions/index.md) |
+| [getArtist](get-artist.md) | `fun getArtist(): `[`ArtistConditions`](../../com.example.domain.model.value/-artist-conditions/index.md) |

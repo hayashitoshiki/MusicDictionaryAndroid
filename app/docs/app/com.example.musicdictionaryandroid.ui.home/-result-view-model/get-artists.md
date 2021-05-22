@@ -2,4 +2,4 @@
 
 # getArtists
 
-`fun getArtists(artist: `[`ArtistConditions`](../../com.example.musicdictionaryandroid.domain.model.value/-artist-conditions/index.md)`): Job`
+`fun getArtists(artist: `[`ArtistConditions`](../../com.example.domain.model.value/-artist-conditions/index.md)`): Job`

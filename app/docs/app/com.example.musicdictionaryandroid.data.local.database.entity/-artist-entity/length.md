@@ -1,4 +1,4 @@
-[app](../../index.md) / [com.example.musicdictionaryandroid.data.local.database.entity](../index.md) / [ArtistEntity](index.md) / [length](./length.md)
+[app](../../index.md) / [com.example.musicdictionaryandroid.database.entity](../index.md) / [ArtistEntity](index.md) / [length](./length.md)
 
 # length
 

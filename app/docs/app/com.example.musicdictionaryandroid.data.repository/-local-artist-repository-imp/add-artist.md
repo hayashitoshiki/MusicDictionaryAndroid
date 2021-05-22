@@ -1,8 +1,8 @@
-[app](../../index.md) / [com.example.musicdictionaryandroid.data.repository](../index.md) / [LocalArtistRepositoryImp](index.md) / [addArtist](./add-artist.md)
+[app](../../index.md) / [com.example.data.repository](../index.md) / [LocalArtistRepositoryImp](index.md) / [addArtist](./add-artist.md)
 
 # addArtist
 
-`suspend fun addArtist(artist: `[`Artist`](../../com.example.musicdictionaryandroid.domain.model.entity/-artist/index.md)`): <ERROR CLASS>`
+`suspend fun addArtist(artist: `[`Artist`](../../com.example.domain.model.entity/-artist/index.md)`): <ERROR CLASS>`
 
 Overrides [LocalArtistRepository.addArtist](../-local-artist-repository/add-artist.md)
 

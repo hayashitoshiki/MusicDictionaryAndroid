@@ -1,6 +1,6 @@
-[app](../index.md) / [com.example.musicdictionaryandroid.data.local.database](./index.md)
+[app](../index.md) / [com.example.musicdictionaryandroid.database](./index.md)
 
-## Package com.example.musicdictionaryandroid.data.local.database
+## Package com.example.musicdictionaryandroid.database
 
 DB管理
 

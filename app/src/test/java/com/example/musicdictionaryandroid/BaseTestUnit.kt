@@ -1,7 +1,7 @@
 package com.example.musicdictionaryandroid
 
 import androidx.lifecycle.Observer
-import com.example.musicdictionaryandroid.domain.model.value.ArtistSearchContents
+import com.example.domain.model.value.ArtistSearchContents
 import com.nhaarman.mockito_kotlin.mock
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.TestCoroutineDispatcher

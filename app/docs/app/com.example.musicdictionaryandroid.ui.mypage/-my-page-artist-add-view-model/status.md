@@ -2,4 +2,4 @@
 
 # status
 
-`val status: LiveData<`[`Status`](../../com.example.musicdictionaryandroid.ui.util/-status/index.md)`<`[`Artist`](../../com.example.musicdictionaryandroid.domain.model.entity/-artist/index.md)`>>`
+`val status: LiveData<`[`Status`](../../com.example.musicdictionaryandroid.ui.util/-status/index.md)`<`[`Artist`](../../com.example.domain.model.entity/-artist/index.md)`>>`

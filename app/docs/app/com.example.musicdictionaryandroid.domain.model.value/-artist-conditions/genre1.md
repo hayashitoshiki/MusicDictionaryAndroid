@@ -1,4 +1,4 @@
-[app](../../index.md) / [com.example.musicdictionaryandroid.domain.model.value](../index.md) / [ArtistConditions](index.md) / [genre1](./genre1.md)
+[app](../../index.md) / [com.example.domain.model.value](../index.md) / [ArtistConditions](index.md) / [genre1](./genre1.md)
 
 # genre1
 

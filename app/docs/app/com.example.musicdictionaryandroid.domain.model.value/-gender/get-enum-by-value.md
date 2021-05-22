@@ -1,4 +1,4 @@
-[app](../../index.md) / [com.example.musicdictionaryandroid.domain.model.value](../index.md) / [Gender](index.md) / [getEnumByValue](./get-enum-by-value.md)
+[app](../../index.md) / [com.example.domain.model.value](../index.md) / [Gender](index.md) / [getEnumByValue](./get-enum-by-value.md)
 
 # getEnumByValue
 

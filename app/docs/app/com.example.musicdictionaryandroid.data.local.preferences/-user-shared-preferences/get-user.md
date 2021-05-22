@@ -2,7 +2,7 @@
 
 # getUser
 
-`abstract fun getUser(): `[`User`](../../com.example.musicdictionaryandroid.domain.model.entity/-user/index.md)
+`abstract fun getUser(): `[`User`](../../com.example.domain.model.entity/-user/index.md)
 
 ユーザ情報取得
 

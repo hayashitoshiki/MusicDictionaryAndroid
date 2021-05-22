@@ -2,4 +2,4 @@
 
 # status
 
-`val status: LiveData<`[`Status`](../../com.example.musicdictionaryandroid.ui.util/-status/index.md)`<`[`List`](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-list/index.html)`<`[`ArtistSearchContents`](../../com.example.musicdictionaryandroid.domain.model.value/-artist-search-contents/index.md)`<*>>>>`
+`val status: LiveData<`[`Status`](../../com.example.musicdictionaryandroid.ui.util/-status/index.md)`<`[`List`](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-list/index.html)`<`[`ArtistSearchContents`](../../com.example.domain.model.value/-artist-search-contents/index.md)`<*>>>>`

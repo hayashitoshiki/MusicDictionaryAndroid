@@ -2,7 +2,7 @@
 
 # setUser
 
-`fun setUser(user: `[`User`](../../com.example.musicdictionaryandroid.domain.model.entity/-user/index.md)`): `[`Unit`](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html)
+`fun setUser(user: `[`User`](../../com.example.domain.model.entity/-user/index.md)`): `[`Unit`](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html)
 
 Overrides [UserSharedPreferences.setUser](../-user-shared-preferences/set-user.md)
 

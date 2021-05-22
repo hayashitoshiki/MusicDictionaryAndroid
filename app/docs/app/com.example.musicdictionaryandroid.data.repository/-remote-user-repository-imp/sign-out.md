@@ -1,4 +1,4 @@
-[app](../../index.md) / [com.example.musicdictionaryandroid.data.repository](../index.md) / [RemoteUserRepositoryImp](index.md) / [signOut](./sign-out.md)
+[app](../../index.md) / [com.example.data.repository](../index.md) / [RemoteUserRepositoryImp](index.md) / [signOut](./sign-out.md)
 
 # signOut
 
