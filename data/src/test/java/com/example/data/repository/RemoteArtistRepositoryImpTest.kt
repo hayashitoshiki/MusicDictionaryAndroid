@@ -1,9 +1,9 @@
 package com.example.data.repository
 
-import com.example.musicdictionaryandroid.BaseTestUnit
-import com.example.data.local.remote.network.Provider
-import com.example.musicdictionaryandroid.data.remote.network.dto.*
-import com.example.data.local.remote.network.service.MusicDictionaryService
+import com.example.data.BaseTestUnit
+import com.example.data.remote.network.Provider
+import com.example.data.remote.network.dto.*
+import com.example.data.remote.network.service.MusicDictionaryService
 import com.example.domain.model.entity.Artist
 import com.example.domain.model.entity.ArtistContents
 import com.example.domain.model.value.*
@@ -20,8 +20,8 @@ class RemoteArtistRepositoryImpTest : BaseTestUnit() {
 
     // mock
     private lateinit var repository: RemoteArtistRepositoryImp
-    private lateinit var provider: com.example.data.local.remote.network.Provider
-    private lateinit var musicDictionaryApi: com.example.data.local.remote.network.service.MusicDictionaryService
+    private lateinit var provider: Provider
+    private lateinit var musicDictionaryApi: MusicDictionaryService
 
     // data
     private val successArtistConditions = ArtistConditions("success", null, null, null, null, null, null)
@@ -29,12 +29,11 @@ class RemoteArtistRepositoryImpTest : BaseTestUnit() {
     private val successArtistDto = convertArtistDtoFromArtistConditions(successArtistConditions).getMapList()
     private val artist = Artist("artist1", Gender.MAN, Voice(1), Length(1), Lyrics(1), Genre1(1), Genre2(1))
     private val artistDto = convertArtistDtoFromArtist(artist)
-    private val statusDto = com.example.data.local.remote.network.dto.StatusDto(200, "Success")
-    private val statusResponseDto = com.example.data.local.remote.network.dto.StatusResponseDto(statusDto)
+    private val statusDto = StatusDto(200, "Success")
+    private val statusResponseDto = StatusResponseDto(statusDto)
     private val artistContentsDtoList = listOf(artistDto)
-    private val successArtistResponseDto = com.example.data.local.remote.network.dto.ArtistResponseDto(statusDto, artistDto)
-    private val successArtistsResponseDto =
-        com.example.data.local.remote.network.dto.ArtistsResponseDto(statusDto, artistContentsDtoList)
+    private val successArtistResponseDto = ArtistResponseDto(statusDto, artistDto)
+    private val successArtistsResponseDto = ArtistsResponseDto(statusDto, artistContentsDtoList)
     private val artistContents = convertArtistContentsFromArtistDto(artistDto)
     private val artistContentsList = listOf(artistContents)
     private val successEmail = "success"
@@ -46,7 +45,7 @@ class RemoteArtistRepositoryImpTest : BaseTestUnit() {
 
     @Before
     fun setUp() {
-        musicDictionaryApi = mockk<com.example.data.local.remote.network.service.MusicDictionaryService>().also {
+        musicDictionaryApi = mockk<MusicDictionaryService>().also {
             coEvery { it.search(successArtistDto) } returns successArtistsResponseDto
             coEvery { it.getRecommend(successEmail) } returns successArtistsResponseDto
             coEvery { it.getSoaring() } returns successArtistsResponseDto
@@ -55,7 +54,7 @@ class RemoteArtistRepositoryImpTest : BaseTestUnit() {
             coEvery { it.updateArtist(any(), successEmail) } returns successArtistResponseDto
             coEvery { it.deleteArtist(any(), successEmail) } returns statusResponseDto
         }
-        provider = mockk<com.example.data.local.remote.network.Provider>().also {
+        provider = mockk<Provider>().also {
             every { it.musicDictionaryApi() } returns musicDictionaryApi
         }
         repository = RemoteArtistRepositoryImp(provider, testDispatcher)
@@ -63,7 +62,7 @@ class RemoteArtistRepositoryImpTest : BaseTestUnit() {
 
 
     // アーティストDtoからアーティストモデルへ変換
-    private fun convertArtistFromArtistDto(artistFrom: com.example.data.local.remote.network.dto.ArtistDto): Artist {
+    private fun convertArtistFromArtistDto(artistFrom: ArtistDto): Artist {
         val name = artistFrom.name
         val gender = Gender.getEnumByValue(artistFrom.gender)
         val voice = Voice(artistFrom.voice)
@@ -75,7 +74,7 @@ class RemoteArtistRepositoryImpTest : BaseTestUnit() {
     }
 
     // アーティストDtoからアーティス詳細情報モデルへ変換
-    private fun convertArtistContentsFromArtistDto(artistDto: com.example.data.local.remote.network.dto.ArtistDto): ArtistContents {
+    private fun convertArtistContentsFromArtistDto(artistDto: ArtistDto): ArtistContents {
         val artist = convertArtistFromArtistDto(artistDto)
         val thumb = artistDto.thumb
         val preview = artistDto.preview
@@ -103,7 +102,7 @@ class RemoteArtistRepositoryImpTest : BaseTestUnit() {
     }
 
     // アーティストモデルからアーティストDtoへ変換
-    private fun convertArtistDtoFromArtist(artist: Artist): com.example.data.local.remote.network.dto.ArtistDto {
+    private fun convertArtistDtoFromArtist(artist: Artist): ArtistDto {
         val name = artist.name
         val gender = artist.gender.value
         val voice = artist.voice.value
@@ -111,11 +110,11 @@ class RemoteArtistRepositoryImpTest : BaseTestUnit() {
         val lyrics = artist.lyrics.value
         val genre1 = artist.genre1.value
         val genre2 = artist.genre2.value
-        return com.example.data.local.remote.network.dto.ArtistDto(name, gender, voice, length, lyrics, genre1, genre2)
+        return ArtistDto(name, gender, voice, length, lyrics, genre1, genre2)
     }
 
     // アーティスト検索条件からアーティストDtoへ変換
-    private fun convertArtistDtoFromArtistConditions(artist: ArtistConditions): com.example.data.local.remote.network.dto.ArtistDto {
+    private fun convertArtistDtoFromArtistConditions(artist: ArtistConditions): ArtistDto {
         val name = artist.name ?: ""
         val gender = artist.gender?.value ?: 0
         val voice = artist.voice?.value ?: 0
@@ -123,7 +122,7 @@ class RemoteArtistRepositoryImpTest : BaseTestUnit() {
         val lyrics = artist.lyrics?.value ?: 0
         val genre1 = artist.genre1?.value ?: 0
         val genre2 = artist.genre2?.value ?: 0
-        return com.example.data.local.remote.network.dto.ArtistDto(name, gender, voice, length, lyrics, genre1, genre2)
+        return ArtistDto(name, gender, voice, length, lyrics, genre1, genre2)
     }
 
 
@@ -219,8 +218,8 @@ class RemoteArtistRepositoryImpTest : BaseTestUnit() {
      */
     @Test
     fun getArtistBySoaringByFailure() {
-        musicDictionaryApi = mockk<com.example.data.local.remote.network.service.MusicDictionaryService>()
-        provider = mockk<com.example.data.local.remote.network.Provider>().also {
+        musicDictionaryApi = mockk<MusicDictionaryService>()
+        provider = mockk<Provider>().also {
             every { it.musicDictionaryApi() } returns musicDictionaryApi
         }
         repository = RemoteArtistRepositoryImp(provider, testDispatcher)

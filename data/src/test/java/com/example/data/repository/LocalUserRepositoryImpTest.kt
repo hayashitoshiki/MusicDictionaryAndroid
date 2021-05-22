@@ -1,6 +1,6 @@
 package com.example.data.repository
 
-import com.example.musicdictionaryandroid.BaseTestUnit
+import com.example.data.BaseTestUnit
 import com.example.data.local.preferences.UserSharedPreferences
 import com.example.domain.model.entity.User
 import io.mockk.every
@@ -15,14 +15,14 @@ class LocalUserRepositoryImpTest : BaseTestUnit() {
 
     // mock
     private lateinit var repository: LocalUserRepositoryImp
-    private lateinit var userSharedPreferences: com.example.data.local.preferences.UserSharedPreferences
+    private lateinit var userSharedPreferences: UserSharedPreferences
 
     // data
     private val successEmailUser = User("success@cc.ne.jp", "successEmailUser", 1, 1, "", 1)
 
     @Before
     fun setUp() {
-        userSharedPreferences = mockk<com.example.data.local.preferences.UserSharedPreferences>().also {
+        userSharedPreferences = mockk<UserSharedPreferences>().also {
             every { it.getUser() } returns successEmailUser
             every { it.setUser(any()) } returns Unit
             every { it.getEmail() } returns successEmailUser.email

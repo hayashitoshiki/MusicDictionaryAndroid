@@ -1,8 +1,7 @@
 package com.example.presentation.home
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
-import com.example.musicdictionaryandroid.BaseTestUnit
-import com.example.domain.repository.LocalUserRepository
+import com.example.presentation.BaseTestUnit
 import io.mockk.every
 import io.mockk.mockk
 import org.junit.Before

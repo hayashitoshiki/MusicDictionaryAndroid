@@ -1,10 +1,9 @@
 package com.example.presentation.mypage
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
-import com.example.musicdictionaryandroid.BaseTestUnit
 import com.example.domain.model.entity.User
-import com.example.domain.usecase.UserUseCase
-import com.example.musicdictionaryandroid.ui.util.MessageUtil
+import com.example.presentation.BaseTestUnit
+import com.example.presentation.util.MessageUtil
 import io.mockk.every
 import io.mockk.mockk
 import org.junit.After

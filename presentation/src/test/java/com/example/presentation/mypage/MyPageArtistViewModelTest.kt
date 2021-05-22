@@ -2,11 +2,10 @@ package com.example.presentation.mypage
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.MutableLiveData
-import com.example.musicdictionaryandroid.BaseTestUnit
 import com.example.domain.model.entity.Artist
 import com.example.domain.model.value.*
-import com.example.domain.usecase.ArtistUseCase
-import com.example.musicdictionaryandroid.ui.util.Status
+import com.example.presentation.BaseTestUnit
+import com.example.presentation.util.Status
 import io.mockk.coEvery
 import io.mockk.mockk
 import kotlinx.coroutines.Dispatchers

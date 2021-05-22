@@ -1,7 +1,7 @@
 package com.example.presentation.home
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
-import com.example.musicdictionaryandroid.BaseTestUnit
+import com.example.presentation.BaseTestUnit
 import org.junit.Assert.assertArrayEquals
 import org.junit.Assert.assertEquals
 import org.junit.Before

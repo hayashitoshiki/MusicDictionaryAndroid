@@ -1,6 +1,6 @@
 package com.example.domain.usecase
 
-import com.example.musicdictionaryandroid.BaseTestUnit
+import com.example.domain.BaseTestUnit
 import com.example.domain.repository.LocalArtistRepository
 import com.example.domain.repository.LocalBookmarkArtistRepository
 import com.example.domain.repository.LocalUserRepository
@@ -11,6 +11,7 @@ import com.example.domain.model.value.*
 import com.squareup.moshi.Moshi
 import io.mockk.*
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.runBlocking
 import org.junit.After
@@ -20,11 +21,11 @@ import org.junit.Test
 
 class UserEntityUseCaseImpTest : BaseTestUnit() {
 
-    private lateinit var useCase: com.example.domain.usecase.UserUseCaseImp
-    private lateinit var localBookmarkArtistRepository: com.example.domain.repository.LocalBookmarkArtistRepository
-    private lateinit var localArtistRepository: com.example.domain.repository.LocalArtistRepository
-    private lateinit var localUserRepository: com.example.domain.repository.LocalUserRepository
-    private lateinit var remoteUserRepository: com.example.domain.repository.RemoteUserRepository
+    private lateinit var useCase: UserUseCaseImp
+    private lateinit var localBookmarkArtistRepository: LocalBookmarkArtistRepository
+    private lateinit var localArtistRepository: LocalArtistRepository
+    private lateinit var localUserRepository: LocalUserRepository
+    private lateinit var remoteUserRepository: RemoteUserRepository
 
     private val successUser = User("test@com.jp", "testSuccess", 1, 1, "2000/2/2", 1)
     private val failureUser = User("test@com.jp", "testFailure", 1, 1, "2000/2/2", 1)
@@ -44,10 +45,10 @@ class UserEntityUseCaseImpTest : BaseTestUnit() {
     @ExperimentalCoroutinesApi
     @Before
     fun setUp() {
-        localBookmarkArtistRepository = mockk<com.example.domain.repository.LocalBookmarkArtistRepository>().also {
+        localBookmarkArtistRepository = mockk<LocalBookmarkArtistRepository>().also {
             coEvery { it.deleteAll() } returns Unit
         }
-        localArtistRepository = mockk<com.example.domain.repository.LocalArtistRepository>().also {
+        localArtistRepository = mockk<LocalArtistRepository>().also {
             coEvery { it.addArtist(any()) } returns Unit
             coEvery { it.deleteArtist(any()) } returns Unit
             coEvery { it.deleteAll() } returns Unit
@@ -56,7 +57,7 @@ class UserEntityUseCaseImpTest : BaseTestUnit() {
             coEvery { it.getArtistByName(any()) } returns artist
             coEvery { it.getArtistAll() } returns artistListFlow
         }
-        remoteUserRepository = mockk<com.example.domain.repository.RemoteUserRepository>().also {
+        remoteUserRepository = mockk<RemoteUserRepository>().also {
             every { it.signIn(any(), successEmail) } returns flow { emit(successResult) }
             every { it.signIn(any(), failureEmail) } returns flow { emit(failureResult) }
             every { it.signOut() } returns Unit
@@ -69,7 +70,7 @@ class UserEntityUseCaseImpTest : BaseTestUnit() {
             coEvery { it.createUser(successJson) } returns successResult
             coEvery { it.createUser(failureJson) } returns failureResult
         }
-        localUserRepository = mockk<com.example.domain.repository.LocalUserRepository>().also {
+        localUserRepository = mockk<LocalUserRepository>().also {
             every { it.setUser(any()) } returns Unit
             every { it.getUser() } returns successUser
             every { it.setFavorite(any()) } returns Unit
@@ -81,7 +82,7 @@ class UserEntityUseCaseImpTest : BaseTestUnit() {
             every { it.getBirthday() } returns successUser.birthday
             every { it.removeAll() } returns Unit
         }
-        useCase = com.example.domain.usecase.UserUseCaseImp(
+        useCase = UserUseCaseImp(
             remoteUserRepository,
             localUserRepository,
             localArtistRepository,

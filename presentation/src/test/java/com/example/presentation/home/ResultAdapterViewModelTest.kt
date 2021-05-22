@@ -1,11 +1,10 @@
 package com.example.presentation.home
 
-import com.example.musicdictionaryandroid.BaseTestUnit
 import com.example.domain.model.entity.Artist
 import com.example.domain.model.entity.ArtistContents
 import com.example.domain.model.value.*
-import com.example.domain.usecase.ArtistUseCase
-import com.example.musicdictionaryandroid.ui.util.MessageUtil
+import com.example.presentation.BaseTestUnit
+import com.example.presentation.util.MessageUtil
 import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.mockk

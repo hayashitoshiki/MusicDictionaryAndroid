@@ -1,9 +1,9 @@
 package com.example.presentation.login
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
-import com.example.musicdictionaryandroid.BaseTestUnit
-import com.example.domain.usecase.UserUseCase
-import com.example.musicdictionaryandroid.ui.util.Status
+import com.example.domain.model.value.Result
+import com.example.presentation.BaseTestUnit
+import com.example.presentation.util.Status
 import io.mockk.coEvery
 import io.mockk.mockk
 import kotlinx.coroutines.Dispatchers
@@ -25,7 +25,7 @@ import org.junit.rules.TestRule
 class SignInViewModelTest : BaseTestUnit() {
 
     // mock
-    private lateinit var viewModel: com.example.presentation.login.SignInViewModel
+    private lateinit var viewModel: SignInViewModel
 
     // data
     private val successEmail = "successEmail"

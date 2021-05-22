@@ -1,6 +1,6 @@
 package com.example.data.repository
 
-import com.example.musicdictionaryandroid.BaseTestUnit
+import com.example.data.BaseTestUnit
 import com.example.data.local.database.dao.BookmarkArtistDao
 import com.example.domain.model.entity.Artist
 import com.example.domain.model.entity.ArtistContents
@@ -9,6 +9,7 @@ import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.mockk
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.runBlocking
 import org.junit.After
@@ -20,7 +21,7 @@ class LocalBookmarkArtistRepositoryImpTest : BaseTestUnit() {
 
     // mock
     private lateinit var repository: LocalBookmarkArtistRepositoryImp
-    private lateinit var bookmarkArtistDao: com.example.data.local.database.dao.BookmarkArtistDao
+    private lateinit var bookmarkArtistDao: BookmarkArtistDao
 
     // data
     private val artist = Artist("test", Gender.MAN, Voice(0), Length(0), Lyrics(0), Genre1(0), Genre2(0))
@@ -35,7 +36,7 @@ class LocalBookmarkArtistRepositoryImpTest : BaseTestUnit() {
     @ExperimentalCoroutinesApi
     @Before
     fun setUp() {
-        bookmarkArtistDao = mockk<com.example.data.local.database.dao.BookmarkArtistDao>().also {
+        bookmarkArtistDao = mockk<BookmarkArtistDao>().also {
             coEvery { it.insert(any()) } returns Unit
             coEvery { it.deleteByName(any()) } returns Unit
             coEvery { it.deleteAll() } returns Unit

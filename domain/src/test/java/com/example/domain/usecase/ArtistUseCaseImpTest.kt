@@ -1,6 +1,6 @@
 package com.example.domain.usecase
 
-import com.example.musicdictionaryandroid.BaseTestUnit
+import com.example.domain.BaseTestUnit
 import com.example.domain.repository.LocalArtistRepository
 import com.example.domain.repository.LocalBookmarkArtistRepository
 import com.example.domain.repository.LocalUserRepository
@@ -15,6 +15,7 @@ import io.mockk.every
 import io.mockk.mockk
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.test.resetMain
@@ -26,11 +27,11 @@ import org.junit.Test
 
 class ArtistUseCaseImpTest : BaseTestUnit() {
 
-    private lateinit var useCase: com.example.domain.usecase.ArtistUseCaseImp
-    private lateinit var remoteArtistRepository: com.example.domain.repository.RemoteArtistRepository
-    private lateinit var localArtistRepository: com.example.domain.repository.LocalArtistRepository
-    private lateinit var localBookmarkArtistRepository: com.example.domain.repository.LocalBookmarkArtistRepository
-    private lateinit var localUserRepository: com.example.domain.repository.LocalUserRepository
+    private lateinit var useCase: ArtistUseCaseImp
+    private lateinit var remoteArtistRepository: RemoteArtistRepository
+    private lateinit var localArtistRepository: LocalArtistRepository
+    private lateinit var localBookmarkArtistRepository: LocalBookmarkArtistRepository
+    private lateinit var localUserRepository: LocalUserRepository
 
     private val user = User("test@com.jp", "testA", 1, 1, "2000/2/2", 1)
     private val artist = Artist("test", Gender.MAN, Voice(0), Length(0), Lyrics(0), Genre1(0), Genre2(0))
@@ -49,13 +50,13 @@ class ArtistUseCaseImpTest : BaseTestUnit() {
     @Before
     fun setUp() {
         Dispatchers.setMain(testDispatcher)
-        localBookmarkArtistRepository = mockk<com.example.domain.repository.LocalBookmarkArtistRepository>().also {
+        localBookmarkArtistRepository = mockk<LocalBookmarkArtistRepository>().also {
             coEvery { it.addArtist(any()) } returns Unit
             coEvery { it.deleteArtist(any()) } returns Unit
             coEvery { it.isArtistByName(any()) } returns false
             coEvery { it.getArtistAll() } returns artistContentsListFlow
         }
-        remoteArtistRepository = mockk<com.example.domain.repository.RemoteArtistRepository>().also {
+        remoteArtistRepository = mockk<RemoteArtistRepository>().also {
             coEvery { it.getArtistsBy(any()) } returns Result.Success(artistContentsList)
             coEvery { it.getArtistsByRecommend(any()) } returns Result.Success(artistContentsList)
             coEvery { it.getArtistsBySoaring() } returns Result.Success(artistContentsList)
@@ -68,7 +69,7 @@ class ArtistUseCaseImpTest : BaseTestUnit() {
             coEvery { it.deleteArtist(any(), successEmail) } returns successResult
             coEvery { it.deleteArtist(any(), failureEmail) } returns failureResult
         }
-        localArtistRepository = mockk<com.example.domain.repository.LocalArtistRepository>().also {
+        localArtistRepository = mockk<LocalArtistRepository>().also {
             coEvery { it.addArtist(any()) } returns Unit
             coEvery { it.deleteArtist(any()) } returns Unit
             coEvery { it.deleteAll() } returns Unit
@@ -77,12 +78,12 @@ class ArtistUseCaseImpTest : BaseTestUnit() {
             coEvery { it.getArtistByName(any()) } returns artist
             coEvery { it.getArtistAll() } returns artistListFlow
         }
-        localUserRepository = mockk<com.example.domain.repository.LocalUserRepository>().also {
+        localUserRepository = mockk<LocalUserRepository>().also {
             every { it.getEmail() } returns successEmail
             every { it.setFavorite(any()) } returns Unit
             every { it.getFavorite() } returns 1
         }
-        useCase = com.example.domain.usecase.ArtistUseCaseImp(
+        useCase = ArtistUseCaseImp(
             remoteArtistRepository,
             localArtistRepository,
             localUserRepository,
@@ -93,7 +94,7 @@ class ArtistUseCaseImpTest : BaseTestUnit() {
     }
 
     private fun reLoad() {
-        useCase = com.example.domain.usecase.ArtistUseCaseImp(
+        useCase = ArtistUseCaseImp(
             remoteArtistRepository,
             localArtistRepository,
             localUserRepository,
@@ -202,7 +203,7 @@ class ArtistUseCaseImpTest : BaseTestUnit() {
     @Test
     fun getArtistsByEmailFailure() {
         runBlocking {
-            localUserRepository = mockk<com.example.domain.repository.LocalUserRepository>().also {
+            localUserRepository = mockk<LocalUserRepository>().also {
                 every { it.getEmail() } returns failureEmail
             }
             reLoad()
@@ -243,7 +244,7 @@ class ArtistUseCaseImpTest : BaseTestUnit() {
     @Test
     fun addArtistFailure() {
         runBlocking {
-            localUserRepository = mockk<com.example.domain.repository.LocalUserRepository>().also {
+            localUserRepository = mockk<LocalUserRepository>().also {
                 every { it.getEmail() } returns failureEmail
             }
             reLoad()
@@ -284,7 +285,7 @@ class ArtistUseCaseImpTest : BaseTestUnit() {
     @Test
     fun updateArtistFailure() {
         runBlocking {
-            localUserRepository = mockk<com.example.domain.repository.LocalUserRepository>().also {
+            localUserRepository = mockk<LocalUserRepository>().also {
                 every { it.getEmail() } returns failureEmail
             }
             reLoad()
@@ -322,7 +323,7 @@ class ArtistUseCaseImpTest : BaseTestUnit() {
     @Test
     fun deleteArtistFailure() {
         runBlocking {
-            localUserRepository = mockk<com.example.domain.repository.LocalUserRepository>().also {
+            localUserRepository = mockk<LocalUserRepository>().also {
                 every { it.getEmail() } returns failureEmail
             }
             reLoad()

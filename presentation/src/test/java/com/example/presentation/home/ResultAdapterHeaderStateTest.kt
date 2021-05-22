@@ -1,8 +1,8 @@
 package com.example.presentation.home
 
-import com.example.musicdictionaryandroid.R
 import com.example.domain.model.value.*
-import com.example.musicdictionaryandroid.ui.util.MessageUtil
+import com.example.presentation.R
+import com.example.presentation.util.MessageUtil
 import io.mockk.every
 import io.mockk.mockk
 import org.junit.After

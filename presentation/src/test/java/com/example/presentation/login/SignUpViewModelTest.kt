@@ -1,11 +1,11 @@
 package com.example.presentation.login
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
-import com.example.musicdictionaryandroid.BaseTestUnit
+import com.example.domain.model.value.Result
 import com.example.domain.model.entity.User
-import com.example.domain.usecase.UserUseCase
-import com.example.musicdictionaryandroid.ui.util.MessageUtil
-import com.example.musicdictionaryandroid.ui.util.Status
+import com.example.presentation.BaseTestUnit
+import com.example.presentation.util.MessageUtil
+import com.example.presentation.util.Status
 import io.mockk.coEvery
 import io.mockk.every
 import io.mockk.mockk

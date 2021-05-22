@@ -1,11 +1,10 @@
 package com.example.presentation.mypage
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
-import com.example.musicdictionaryandroid.BaseTestUnit
 import com.example.domain.model.entity.Artist
 import com.example.domain.model.entity.ArtistContents
 import com.example.domain.model.value.*
-import com.example.domain.usecase.ArtistUseCase
+import com.example.presentation.BaseTestUnit
 import io.mockk.every
 import io.mockk.mockk
 import kotlinx.coroutines.Dispatchers

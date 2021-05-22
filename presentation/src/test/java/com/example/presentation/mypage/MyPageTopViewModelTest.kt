@@ -1,8 +1,7 @@
 package com.example.presentation.mypage
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
-import com.example.musicdictionaryandroid.BaseTestUnit
-import com.example.domain.usecase.UserUseCase
+import com.example.presentation.BaseTestUnit
 import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.mockk

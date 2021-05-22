@@ -1,19 +1,21 @@
 package com.example.data.repository
 
-import com.example.musicdictionaryandroid.BaseTestUnit
-import com.example.data.local.remote.firebase.FireBaseService
-import com.example.data.local.remote.network.Provider
-import com.example.data.local.remote.network.dto.StatusDto
-import com.example.data.local.remote.network.dto.StatusResponseDto
-import com.example.data.local.remote.network.dto.UserDto
-import com.example.data.local.remote.network.dto.UserResponseDto
-import com.example.data.local.remote.network.service.MusicDictionaryService
+import com.example.data.BaseTestUnit
+import com.example.data.remote.firebase.FireBaseService
+import com.example.data.remote.network.Provider
+import com.example.data.remote.network.dto.StatusDto
+import com.example.data.remote.network.dto.StatusResponseDto
+import com.example.data.remote.network.dto.UserDto
+import com.example.data.remote.network.dto.UserResponseDto
+import com.example.data.remote.network.service.MusicDictionaryService
+import com.example.domain.model.value.Result
 import com.example.domain.model.entity.User
 import com.squareup.moshi.Moshi
 import io.mockk.coEvery
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.runBlocking
 import org.junit.After
@@ -25,38 +27,38 @@ class RemoteUserRepositoryImpTest : BaseTestUnit() {
 
     // mock
     private lateinit var repository: RemoteUserRepositoryImp
-    private lateinit var provider: com.example.data.local.remote.network.Provider
-    private lateinit var fireBaseService: com.example.data.local.remote.firebase.FireBaseService
-    private lateinit var musicDictionaryApi: com.example.data.local.remote.network.service.MusicDictionaryService
+    private lateinit var provider: Provider
+    private lateinit var fireBaseService: FireBaseService
+    private lateinit var musicDictionaryApi: MusicDictionaryService
 
     // data
     private val successEmail = "success"
     private val successPassword = "successPassword"
-    private val successUserDto = com.example.data.local.remote.network.dto.UserDto(successEmail, "TestA", 1, 1, "", 1)
+    private val successUserDto = UserDto(successEmail, "TestA", 1, 1, "", 1)
     private val successUser = convertUserFromUserDto(successUserDto)
     private val failureEmail = "failure"
     private val successUserJson: String = Moshi.Builder().build().adapter(User::class.java).toJson(successUser)
-    private val statusDto = com.example.data.local.remote.network.dto.StatusDto(200, "Success")
-    private val statusResponseDto = com.example.data.local.remote.network.dto.StatusResponseDto(statusDto)
-    private val userResponseDto = com.example.data.local.remote.network.dto.UserResponseDto(statusDto, successUserDto)
+    private val statusDto = StatusDto(200, "Success")
+    private val statusResponseDto = StatusResponseDto(statusDto)
+    private val userResponseDto = UserResponseDto(statusDto, successUserDto)
     private val successUserResult = Result.Success(successUser)
     private val successResult = Result.Success("Success")
     private val successFlow = flow { emit(successResult) }
 
     @Before
     fun setUp() {
-        musicDictionaryApi = mockk<com.example.data.local.remote.network.service.MusicDictionaryService>().also {
+        musicDictionaryApi = mockk<MusicDictionaryService>().also {
             coEvery { it.getUserByEmail(successEmail) } returns userResponseDto
             coEvery { it.createUser(successUserJson) } returns statusResponseDto
         }
-        fireBaseService = mockk<com.example.data.local.remote.firebase.FireBaseService>().also {
+        fireBaseService = mockk<FireBaseService>().also {
             coEvery { it.firstCheck() } returns true
             coEvery { it.signIn(any(), any()) } returns successFlow
             coEvery { it.signUp(any(), any()) } returns successFlow
             coEvery { it.signOut() } returns Unit
             coEvery { it.delete() } returns successFlow
         }
-        provider = mockk<com.example.data.local.remote.network.Provider>().also {
+        provider = mockk<Provider>().also {
             every { it.musicDictionaryApi() } returns musicDictionaryApi
         }
         repository = RemoteUserRepositoryImp(provider, fireBaseService, testDispatcher)
@@ -222,7 +224,7 @@ class RemoteUserRepositoryImpTest : BaseTestUnit() {
     // region converter
 
     // ユーザDtoからユーザモデルへ変換
-    private fun convertUserFromUserDto(userDto: com.example.data.local.remote.network.dto.UserDto): User {
+    private fun convertUserFromUserDto(userDto: UserDto): User {
         val email = userDto.email
         val name = userDto.name
         val gender = userDto.gender

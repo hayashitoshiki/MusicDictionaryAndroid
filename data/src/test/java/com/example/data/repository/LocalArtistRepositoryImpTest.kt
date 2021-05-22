@@ -1,6 +1,6 @@
 package com.example.data.repository
 
-import com.example.musicdictionaryandroid.BaseTestUnit
+import com.example.data.BaseTestUnit
 import com.example.data.local.database.dao.ArtistDao
 import com.example.data.local.database.entity.ArtistEntity
 import com.example.domain.model.entity.Artist
@@ -10,6 +10,7 @@ import io.mockk.coVerify
 import io.mockk.mockk
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.test.resetMain
@@ -23,7 +24,7 @@ class LocalArtistRepositoryImpTest : BaseTestUnit() {
 
     // mock
     private lateinit var repository: LocalArtistRepositoryImp
-    private lateinit var artistDao: com.example.data.local.database.dao.ArtistDao
+    private lateinit var artistDao: ArtistDao
 
     // data
     private val artist = Artist("TestA", Gender.MAN, Voice(1), Length(1), Lyrics(1), Genre1(1), Genre2(1))
@@ -37,7 +38,7 @@ class LocalArtistRepositoryImpTest : BaseTestUnit() {
     @Before
     fun setUp() {
         Dispatchers.setMain(testDispatcher)
-        artistDao = mockk<com.example.data.local.database.dao.ArtistDao>().also {
+        artistDao = mockk<ArtistDao>().also {
             coEvery { it.insert(any()) } returns Unit
             coEvery { it.update(any(), any(), any(), any(), any(), any(), any()) } returns Unit
             coEvery { it.deleteByName(any()) } returns Unit
@@ -49,7 +50,7 @@ class LocalArtistRepositoryImpTest : BaseTestUnit() {
     }
 
     // アーティストモデルからアーティストテーブルへ変換
-    private fun convertArtistEntityFromArtist(artist: Artist): com.example.data.local.database.entity.ArtistEntity {
+    private fun convertArtistEntityFromArtist(artist: Artist): ArtistEntity {
         val name = artist.name
         val gender = artist.gender.value
         val voice = artist.voice.value
@@ -57,7 +58,7 @@ class LocalArtistRepositoryImpTest : BaseTestUnit() {
         val lyrics = artist.lyrics.value
         val genre1 = artist.genre1.value
         val genre2 = artist.genre2.value
-        return com.example.data.local.database.entity.ArtistEntity(
+        return ArtistEntity(
             null,
             name,
             gender,
@@ -70,7 +71,7 @@ class LocalArtistRepositoryImpTest : BaseTestUnit() {
     }
 
     // アーティストテーブルからアーティストモデルべ変換
-    private fun convertArtistFromArtistEntity(artistEntity: com.example.data.local.database.entity.ArtistEntity): Artist {
+    private fun convertArtistFromArtistEntity(artistEntity: ArtistEntity): Artist {
         val name = artistEntity.name
         val gender = Gender.getEnumByValue(artistEntity.gender)
         val voice = Voice(artistEntity.voice)
