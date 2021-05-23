@@ -1,4 +1,4 @@
-[app](../../index.md) / [com.example.musicdictionaryandroid.data.repository](../index.md) / [LocalUserRepository](index.md) / [setFavorite](./set-favorite.md)
+[app](../../index.md) / [com.example.data.repository](../index.md) / [LocalUserRepository](index.md) / [setFavorite](./set-favorite.md)
 
 # setFavorite
 

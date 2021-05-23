@@ -1,8 +1,8 @@
-[app](../../index.md) / [com.example.musicdictionaryandroid.data.repository](../index.md) / [RemoteArtistRepositoryImp](index.md) / [addArtist](./add-artist.md)
+[app](../../index.md) / [com.example.data.repository](../index.md) / [RemoteArtistRepositoryImp](index.md) / [addArtist](./add-artist.md)
 
 # addArtist
 
-`suspend fun addArtist(artist: `[`Artist`](../../com.example.musicdictionaryandroid.domain.model.entity/-artist/index.md)`, email: `[`String`](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html)`): `[`Result`](../../com.example.musicdictionaryandroid.domain.model.value/-result/index.md)`<`[`Artist`](../../com.example.musicdictionaryandroid.domain.model.entity/-artist/index.md)`>`
+`suspend fun addArtist(artist: `[`Artist`](../../com.example.domain.model.entity/-artist/index.md)`, email: `[`String`](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html)`): `[`Result`](../../com.example.domain.model.value/-result/index.md)`<`[`Artist`](../../com.example.domain.model.entity/-artist/index.md)`>`
 
 Overrides [RemoteArtistRepository.addArtist](../-remote-artist-repository/add-artist.md)
 

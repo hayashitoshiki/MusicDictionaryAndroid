@@ -1,6 +1,6 @@
-[app](../index.md) / [com.example.musicdictionaryandroid.data.local.database.entity](./index.md)
+[app](../index.md) / [com.example.musicdictionaryandroid.database.entity](./index.md)
 
-## Package com.example.musicdictionaryandroid.data.local.database.entity
+## Package com.example.musicdictionaryandroid.database.entity
 
 DBのテーブル関連
 

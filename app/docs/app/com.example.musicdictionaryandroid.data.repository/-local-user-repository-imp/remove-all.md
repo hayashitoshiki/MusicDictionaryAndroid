@@ -1,4 +1,4 @@
-[app](../../index.md) / [com.example.musicdictionaryandroid.data.repository](../index.md) / [LocalUserRepositoryImp](index.md) / [removeAll](./remove-all.md)
+[app](../../index.md) / [com.example.data.repository](../index.md) / [LocalUserRepositoryImp](index.md) / [removeAll](./remove-all.md)
 
 # removeAll
 

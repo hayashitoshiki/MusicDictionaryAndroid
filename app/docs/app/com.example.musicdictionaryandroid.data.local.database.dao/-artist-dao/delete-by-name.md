@@ -1,4 +1,4 @@
-[app](../../index.md) / [com.example.musicdictionaryandroid.data.local.database.dao](../index.md) / [ArtistDao](index.md) / [deleteByName](./delete-by-name.md)
+[app](../../index.md) / [com.example.data.local.database.dao](../index.md) / [ArtistDao](index.md) / [deleteByName](./delete-by-name.md)
 
 # deleteByName
 

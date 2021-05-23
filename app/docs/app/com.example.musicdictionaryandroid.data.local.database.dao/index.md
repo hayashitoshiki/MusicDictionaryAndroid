@@ -1,6 +1,6 @@
-[app](../index.md) / [com.example.musicdictionaryandroid.data.local.database.dao](./index.md)
+[app](../index.md) / [com.example.data.local.database.dao](./index.md)
 
-## Package com.example.musicdictionaryandroid.data.local.database.dao
+## Package com.example.data.local.database.dao
 
 DBのクエリ関連
 

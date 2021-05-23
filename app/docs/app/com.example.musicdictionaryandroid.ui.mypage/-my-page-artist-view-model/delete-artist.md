@@ -2,4 +2,4 @@
 
 # deleteArtist
 
-`fun deleteArtist(artist: `[`Artist`](../../com.example.musicdictionaryandroid.domain.model.entity/-artist/index.md)`): Job`
+`fun deleteArtist(artist: `[`Artist`](../../com.example.domain.model.entity/-artist/index.md)`): Job`

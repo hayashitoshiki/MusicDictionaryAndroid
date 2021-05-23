@@ -10,7 +10,7 @@
 
 | Name | Summary |
 |---|---|
-| [callBackMethod](call-back-method.md) | `abstract fun callBackMethod(data: `[`ArtistConditions`](../../com.example.musicdictionaryandroid.domain.model.value/-artist-conditions/index.md)`): `[`Unit`](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html) |
+| [callBackMethod](call-back-method.md) | `abstract fun callBackMethod(data: `[`ArtistConditions`](../../com.example.domain.model.value/-artist-conditions/index.md)`): `[`Unit`](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html) |
 
 ### Inheritors
 

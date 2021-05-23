@@ -1,4 +1,4 @@
-[app](../../index.md) / [com.example.musicdictionaryandroid.domain.model.value](../index.md) / [Voice](index.md) / [value](./value.md)
+[app](../../index.md) / [com.example.domain.model.value](../index.md) / [Voice](index.md) / [value](./value.md)
 
 # value
 

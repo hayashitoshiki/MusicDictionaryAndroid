@@ -1,6 +1,6 @@
-[app](../index.md) / [com.example.musicdictionaryandroid.domain.model.entity](./index.md)
+[app](../index.md) / [com.example.domain.model.entity](./index.md)
 
-## Package com.example.musicdictionaryandroid.domain.model.entity
+## Package com.example.domain.model.entity
 
 ドメインエンティティ関連
 

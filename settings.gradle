@@ -1,2 +1,5 @@
 include ':app'
 rootProject.name = "MusicDictionaryAndroid"
+include ':domain'
+include ':data'
+include ':presentation'

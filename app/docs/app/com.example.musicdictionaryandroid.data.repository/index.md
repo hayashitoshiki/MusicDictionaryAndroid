@@ -1,6 +1,6 @@
-[app](../index.md) / [com.example.musicdictionaryandroid.data.repository](./index.md)
+[app](../index.md) / [com.example.data.repository](./index.md)
 
-## Package com.example.musicdictionaryandroid.data.repository
+## Package com.example.data.repository
 
 Data層データ受け渡し関連
 

@@ -33,13 +33,13 @@ Data・Domain・Presentationの全ての層でドメインモデルで定義さ�
 
 各画面の仕様詳細を定義する。
 
-# Package com.example.musicdictionaryandroid.data.local.database
+# Package com.example.musicdictionaryandroid.database
 DB管理
 
-# Package com.example.musicdictionaryandroid.data.local.database.dao
+# Package com.example.data.local.database.dao
 DBのクエリ関連
 
-# Package com.example.musicdictionaryandroid.data.local.database.entity
+# Package com.example.musicdictionaryandroid.database.entity
 DBのテーブル関連
 
 # Package com.example.musicdictionaryandroid.data.remote.network
@@ -51,16 +51,16 @@ DBのテーブル関連
 # Package com.example.musicdictionaryandroid.data.remote.network.service
 ネットワークアクセスURL関連
 
-# Package com.example.musicdictionaryandroid.data.repository
+# Package com.example.data.repository
 Data層データ受け渡し関連
 
-# Package com.example.musicdictionaryandroid.domain.model.entity
+# Package com.example.domain.model.entity
 ドメインエンティティ関連
 
 # Package com.example.musicdictionaryandroid.data.local.preferences
 SharedPreferences関連
 
-# Package com.example.musicdictionaryandroid.domain.model.value
+# Package com.example.domain.model.value
 値オブジェクト関連
 
 # Package com.example.musicdictionaryandroid.domain.usecase

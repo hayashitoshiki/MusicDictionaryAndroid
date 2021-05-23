@@ -1,8 +1,8 @@
-[app](../../index.md) / [com.example.musicdictionaryandroid.data.repository](../index.md) / [LocalArtistRepository](index.md) / [updateArtist](./update-artist.md)
+[app](../../index.md) / [com.example.data.repository](../index.md) / [LocalArtistRepository](index.md) / [updateArtist](./update-artist.md)
 
 # updateArtist
 
-`abstract suspend fun updateArtist(artist: `[`Artist`](../../com.example.musicdictionaryandroid.domain.model.entity/-artist/index.md)`): `[`Unit`](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html)
+`abstract suspend fun updateArtist(artist: `[`Artist`](../../com.example.domain.model.entity/-artist/index.md)`): `[`Unit`](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html)
 
 アーティスト更新
 

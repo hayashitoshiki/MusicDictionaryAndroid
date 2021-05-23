@@ -1,0 +1,660 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <data>
+        <import type="android.view.View"/>
+        <variable
+            name="viewModel"
+            type="com.example.presentation.home.DetailsSearchViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:id="@+id/detail_search_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:transitionName="end_detail_view_transition"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            android:background="@drawable/home_button"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ScrollView
+                android:layout_width="match_parent"
+                android:layout_height="480dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical" >
+
+                    <TextView
+                        android:id="@+id/textView2"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:text="@string/title_home_detail"
+                        android:textAlignment="center"
+                        android:textColor="@color/text_color_light_primary"
+                        android:textSize="@dimen/category_header"
+                        android:textStyle="bold" />
+
+
+                    <TextView
+                        android:id="@+id/textView3"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="16dp"
+                        android:text="@string/category_title_gender"
+                        android:textAlignment="center"
+                        android:textColor="@color/text_color_light_primary"
+                        android:textSize="@dimen/category_title"
+                        android:textStyle="bold" />
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="4dp"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_marginEnd="4dp"
+                            android:text="@string/category_gender_men"
+                            android:textColor="@color/text_color_light_secondary"
+                            android:textSize="@dimen/category_value" />
+
+                        <RadioGroup
+                            android:id="@+id/gender_group"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:orientation="horizontal">
+
+                            <RadioButton
+                                android:id="@+id/gender1"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:checked="@{viewModel.genderValueInt == 1}"
+                                android:onClick="@{() -> viewModel.checkedChangeGender(1)}" />
+
+                            <RadioButton
+                                android:id="@+id/gender2"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:checked="@{viewModel.genderValueInt == 2}"
+                                android:onClick="@{() -> viewModel.checkedChangeGender(2)}" />
+                        </RadioGroup>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_marginStart="4dp"
+                            android:text="@string/category_gender_women"
+                            android:textColor="@color/text_color_light_secondary"
+                            android:textSize="@dimen/category_value" />
+                    </LinearLayout>
+
+                    <TextView
+                        android:id="@+id/lenghtTextView"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:text="@string/category_title_length"
+                        android:textAlignment="center"
+                        android:textColor="@color/text_color_light_primary"
+                        android:textSize="@dimen/category_title"
+                        android:textStyle="bold" />
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="4dp"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="4dp"
+                            android:gravity="center"
+                            android:text="@string/category_length_short"
+                            android:textColor="@color/text_color_light_secondary"
+                            android:textSize="@dimen/category_value" />
+
+                        <RadioGroup
+                            android:id="@+id/lenght_group"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:orientation="horizontal">
+
+                            <RadioButton
+                                android:id="@+id/lenght1"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:checked="@{viewModel.lengthValueInt == 1}"
+                                android:onClick="@{() -> viewModel.checkedChangeLength(1)}" />
+
+                            <RadioButton
+                                android:id="@+id/lenght2"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:checked="@{viewModel.lengthValueInt == 2}"
+                                android:onClick="@{() -> viewModel.checkedChangeLength(2)}" />
+
+                            <RadioButton
+                                android:id="@+id/lenght3"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:checked="@{viewModel.lengthValueInt == 3}"
+                                android:onClick="@{() -> viewModel.checkedChangeLength(3)}" />
+
+                            <RadioButton
+                                android:id="@+id/lenght4"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:checked="@{viewModel.lengthValueInt == 4}"
+                                android:onClick="@{() -> viewModel.checkedChangeLength(4)}" />
+
+                            <RadioButton
+                                android:id="@+id/lenght5"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:checked="@{viewModel.lengthValueInt == 5}"
+                                android:onClick="@{() -> viewModel.checkedChangeLength(5)}" />
+                        </RadioGroup>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_marginStart="4dp"
+                            android:text="@string/category_length_long"
+                            android:textColor="@color/text_color_light_secondary"
+                            android:textSize="@dimen/category_value" />
+                    </LinearLayout>
+
+                    <TextView
+                        android:id="@+id/textView10"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:text="@string/category_title_voice"
+                        android:textAlignment="center"
+                        android:textColor="@color/text_color_light_primary"
+                        android:textSize="@dimen/category_title"
+                        android:textStyle="bold" />
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="4dp"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_marginEnd="4dp"
+                            android:text="@string/category_voice_low"
+                            android:textColor="@color/text_color_light_secondary"
+                            android:textSize="@dimen/category_value" />
+
+                        <RadioGroup
+                            android:id="@+id/voice_group"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:checkedButton="@+id/yellow_button"
+                            android:gravity="center"
+                            android:orientation="horizontal">
+
+                            <RadioButton
+                                android:id="@+id/voice1"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:checked="@{viewModel.voiceValueInt == 1}"
+                                android:onClick="@{() -> viewModel.checkedChangeVoice(1)}" />
+
+                            <RadioButton
+                                android:id="@+id/voice2"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:checked="@{viewModel.voiceValueInt == 2}"
+                                android:onClick="@{() -> viewModel.checkedChangeVoice(2)}" />
+
+                            <RadioButton
+                                android:id="@+id/voice3"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:checked="@{viewModel.voiceValueInt == 3}"
+                                android:onClick="@{() -> viewModel.checkedChangeVoice(3)}" />
+
+                            <RadioButton
+                                android:id="@+id/voice4"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:checked="@{viewModel.voiceValueInt == 4}"
+                                android:onClick="@{() -> viewModel.checkedChangeVoice(4)}" />
+
+                            <RadioButton
+                                android:id="@+id/voice5"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:checked="@{viewModel.voiceValueInt == 5}"
+                                android:onClick="@{() -> viewModel.checkedChangeVoice(5)}" />
+                        </RadioGroup>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_marginStart="4dp"
+                            android:text="@string/category_voice_height"
+                            android:textColor="@color/text_color_light_secondary"
+                            android:textSize="@dimen/category_value" />
+                    </LinearLayout>
+
+                    <TextView
+                        android:id="@+id/textView7"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:text="@string/category_title_lyric"
+                        android:textAlignment="center"
+                        android:textColor="@color/text_color_light_primary"
+                        android:textSize="@dimen/category_title"
+                        android:textStyle="bold" />
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="4dp"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_marginEnd="4dp"
+                            android:text="@string/category_lyric_english"
+                            android:textColor="@color/text_color_light_secondary"
+                            android:textSize="@dimen/category_value" />
+
+                        <RadioGroup
+                            android:id="@+id/lyric_group"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:orientation="horizontal">
+
+                            <RadioButton
+                                android:id="@+id/lyric1"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:checked="@{viewModel.lyricsValueInt == 1}"
+                                android:onClick="@{() -> viewModel.checkedChangeLyric(1)}" />
+
+                            <RadioButton
+                                android:id="@+id/lyric2"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:checked="@{viewModel.lyricsValueInt == 2}"
+                                android:onClick="@{() -> viewModel.checkedChangeLyric(2)}" />
+
+                            <RadioButton
+                                android:id="@+id/lyric3"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:checked="@{viewModel.lyricsValueInt == 3}"
+                                android:onClick="@{() -> viewModel.checkedChangeLyric(3)}" />
+
+                            <RadioButton
+                                android:id="@+id/lyric4"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:checked="@{viewModel.lyricsValueInt == 4}"
+                                android:onClick="@{() -> viewModel.checkedChangeLyric(4)}" />
+
+                            <RadioButton
+                                android:id="@+id/lyric5"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:checked="@{viewModel.lyricsValueInt == 5}"
+                                android:onClick="@{() -> viewModel.checkedChangeLyric(5)}" />
+                        </RadioGroup>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_marginStart="4dp"
+                            android:text="@string/category_lyric_japanese"
+                            android:textColor="@color/text_color_light_secondary"
+                            android:textSize="@dimen/category_value" />
+                    </LinearLayout>
+
+                    <TextView
+                        android:textSize="@dimen/category_title"
+                        android:text="@string/category_search_sort1"
+                        android:textColor="@color/text_color_light_primary"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"/>
+
+                    <LinearLayout
+                        android:id="@+id/sort_container_1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_marginTop="4dp">
+
+                        <Spinner
+                            android:id="@+id/sort_genre1_key"
+                            android:layout_width="120dp"
+                            android:layout_height="wrap_content"
+                            android:entries="@{viewModel.genre1KeyList}"
+                            android:selectedItemPosition="@={viewModel.genre1KeyInt}"
+                            android:visibility="@{viewModel.isSortGenre1Key ? View.VISIBLE : View.GONE}"
+                            />
+
+                        <TextView
+                            android:id="@+id/sort_genre1_key_label"
+                            android:textColor="@color/text_color_light_secondary"
+                            android:textSize="@dimen/category_value"
+                            android:layout_width="120dp"
+                            android:layout_height="wrap_content"
+                            android:text="@{viewModel.genre1KeyList[viewModel.genre1KeyInt]}"
+                            android:visibility="@{viewModel.isSortGenre1Label ? View.VISIBLE : View.GONE}"
+                            />
+
+
+                        <Spinner
+                            android:id="@+id/sort_genre1_value"
+                            android:layout_width="120dp"
+                            android:layout_height="wrap_content"
+                            android:entries="@{viewModel.genre1ValueList}"
+                            android:selectedItemPosition="@={viewModel.genre1ValueInt}"
+                            android:visibility="@{viewModel.isSortGenre1ValueList ? View.VISIBLE : View.GONE}" />
+
+                        <LinearLayout
+                            android:id="@+id/genre_button_area1"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:visibility="@{viewModel.isGenreButtonArea1 ? View.VISIBLE : View.GONE}">
+
+                            <Button
+                                android:id="@+id/add_genre2_button"
+                                android:text="＋"
+                                android:onClick="@{() -> viewModel.addSortList(1)}"
+                                android:visibility="@{viewModel.isGenreAddButton1 ? View.VISIBLE : View.GONE}"
+                                android:textColor="@color/text_color_light_primary"
+                                android:textSize="@dimen/category_title"
+                                android:background="@drawable/round_primary_dark_button"
+                                android:layout_width="32dp"
+                                android:layout_height="32dp"
+                                android:stateListAnimator="@drawable/button_state_list_anim_material"
+                                android:elevation="6dp"/>
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/sort_container_2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:visibility="@{viewModel.isSortContainer2 ? View.VISIBLE : View.GONE}">
+
+                        <TextView
+                            android:textSize="@dimen/category_title"
+                            android:text="@string/category_search_sort2"
+                            android:textColor="@color/text_color_light_primary"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="8dp"/>
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:layout_marginTop="4dp">
+
+                            <Spinner
+                                android:id="@+id/sort_genre2_key"
+                                android:layout_width="120dp"
+                                android:layout_height="wrap_content"
+                                android:entries="@{viewModel.genre2KeyList}"
+                                android:selectedItemPosition="@={viewModel.genre2KeyInt}"
+                                android:visibility="@{viewModel.isSortGenre2Key ? View.VISIBLE : View.GONE}"
+                                />
+
+                            <TextView
+                                android:id="@+id/sort_genre2_key_label"
+                                android:textColor="@color/text_color_light_secondary"
+                                android:textSize="@dimen/category_value"
+                                android:layout_width="120dp"
+                                android:layout_height="wrap_content"
+                                android:text="@{viewModel.genre2KeyList[viewModel.genre2KeyInt]}"
+                                android:visibility="@{viewModel.isSortGenre2Label ? View.VISIBLE : View.GONE}"
+                                />
+
+                            <Spinner
+                                android:id="@+id/sort_genre2_value"
+                                android:layout_width="120dp"
+                                android:layout_height="wrap_content"
+                                android:entries="@{viewModel.genre2ValueList}"
+                                android:selectedItemPosition="@={viewModel.genre2ValueInt}"
+                                android:visibility="@{viewModel.isSortGenre2ValueList ? View.VISIBLE : View.GONE}"/>
+
+                            <LinearLayout
+                                android:id="@+id/genre_button_area2"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:visibility="@{viewModel.isGenreButtonArea2 ? View.VISIBLE : View.GONE}">
+
+                                <Button
+                                    android:id="@+id/add_genre3_button"
+                                    android:text="＋"
+                                    android:onClick="@{() -> viewModel.addSortList(2)}"
+                                    android:visibility="@{viewModel.isGenreAddButton2 ? View.VISIBLE : View.GONE}"
+                                    android:textColor="@color/text_color_light_primary"
+                                    android:textSize="@dimen/category_title"
+                                    android:background="@drawable/round_primary_dark_button"
+                                    android:layout_width="32dp"
+                                    android:layout_height="32dp"
+                                    android:layout_marginEnd="8dp"
+                                    android:stateListAnimator="@drawable/button_state_list_anim_material"
+                                    android:elevation="6dp" />
+
+                                <Button
+                                    android:id="@+id/delete_genre2_button"
+                                    android:text="ー"
+                                    android:onClick="@{() -> viewModel.deleteSortButton(2)}"
+                                    android:textColor="@color/text_color_light_primary"
+                                    android:textSize="@dimen/category_title"
+                                    android:background="@drawable/round_primary_dark_button"
+                                    android:layout_width="32dp"
+                                    android:layout_height="32dp"
+                                    android:stateListAnimator="@drawable/button_state_list_anim_material"
+                                    android:elevation="6dp"/>
+
+                            </LinearLayout>
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/sort_container_3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:visibility="@{viewModel.isSortContainer3 ? View.VISIBLE : View.GONE}">
+
+                        <TextView
+                            android:textSize="@dimen/category_title"
+                            android:text="@string/category_search_sort3"
+                            android:textColor="@color/text_color_light_primary"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="8dp"/>
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:layout_marginTop="4dp">
+
+                            <Spinner
+                                android:id="@+id/sort_genre3_key"
+                                android:layout_width="120dp"
+                                android:layout_height="wrap_content"
+                                android:entries="@{viewModel.genre3KeyList}"
+                                android:selectedItemPosition="@={viewModel.genre3KeyInt}"
+                                android:visibility="@{viewModel.isSortGenre3Key ? View.VISIBLE : View.GONE}"
+                                />
+
+                            <TextView
+                                android:id="@+id/sort_genre3_key_label"
+                                android:textColor="@color/text_color_light_secondary"
+                                android:textSize="@dimen/category_value"
+                                android:layout_width="120dp"
+                                android:layout_height="wrap_content"
+                                android:text="@{viewModel.genre3KeyList[viewModel.genre3KeyInt]}"
+                                android:visibility="@{viewModel.isSortGenre3Label ? View.VISIBLE : View.GONE}"
+                                />
+
+                            <Spinner
+                                android:id="@+id/sort_genre3_value"
+                                android:layout_width="120dp"
+                                android:layout_height="wrap_content"
+                                android:entries="@{viewModel.genre3ValueList}"
+                                android:selectedItemPosition="@={viewModel.genre3ValueInt}"
+                                android:visibility="@{viewModel.isSortGenre3ValueList ? View.VISIBLE : View.GONE}"/>
+
+                            <LinearLayout
+                                android:id="@+id/genre_button_area3"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:visibility="@{viewModel.isGenreButtonArea3 ? View.VISIBLE : View.GONE}">
+
+                                <Button
+                                    android:id="@+id/add_genre4_button"
+                                    android:text="＋"
+                                    android:onClick="@{() -> viewModel.addSortList(3)}"
+                                    android:visibility="@{viewModel.isGenreAddButton3 ? View.VISIBLE : View.GONE}"
+                                    android:textColor="@color/text_color_light_primary"
+                                    android:textSize="@dimen/category_title"
+                                    android:background="@drawable/round_primary_dark_button"
+                                    android:layout_width="32dp"
+                                    android:layout_height="32dp"
+                                    android:layout_marginEnd="8dp"
+                                    android:stateListAnimator="@drawable/button_state_list_anim_material"
+                                    android:elevation="6dp"/>
+
+                                <Button
+                                    android:id="@+id/delete_genre3_button"
+                                    android:text="ー"
+                                    android:onClick="@{() -> viewModel.deleteSortButton(3)}"
+                                    android:textColor="@color/text_color_light_primary"
+                                    android:textSize="@dimen/category_title"
+                                    android:background="@drawable/round_primary_dark_button"
+                                    android:layout_width="32dp"
+                                    android:layout_height="32dp"
+                                    android:stateListAnimator="@drawable/button_state_list_anim_material"
+                                    android:elevation="6dp"/>
+                            </LinearLayout>
+
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/sort_container_4"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:visibility="@{viewModel.isSortContainer4 ? View.VISIBLE : View.GONE}">
+
+                        <TextView
+                            android:textSize="@dimen/category_title"
+                            android:text="@string/category_search_sort4"
+                            android:textColor="@color/text_color_light_primary"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="8dp"/>
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:layout_marginTop="4dp" >
+
+                            <Spinner
+                                android:id="@+id/sort_genre4_key"
+                                android:layout_width="120dp"
+                                android:layout_height="wrap_content"
+                                android:entries="@{viewModel.genre4KeyList}"
+                                android:selectedItemPosition="@={viewModel.genre4KeyInt}"
+                                />
+
+                            <Spinner
+                                android:id="@+id/sort_genre4_value"
+                                android:layout_width="120dp"
+                                android:layout_height="wrap_content"
+                                android:entries="@{viewModel.genre4ValueList}"
+                                android:selectedItemPosition="@={viewModel.genre4ValueInt}"
+                                android:visibility="@{viewModel.isSortGenre4ValueList ? View.VISIBLE : View.GONE}"/>
+
+                            <Button
+                                android:id="@+id/delete_genre4_button"
+                                android:text="ー"
+                                android:onClick="@{() -> viewModel.deleteSortButton(4)}"
+                                android:textColor="@color/text_color_light_primary"
+                                android:textSize="@dimen/category_title"
+                                android:background="@drawable/round_primary_dark_button"
+                                android:layout_width="32dp"
+                                android:layout_height="32dp"
+                                android:stateListAnimator="@drawable/button_state_list_anim_material"
+                                android:elevation="6dp"/>
+
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <Button
+                        android:id="@+id/submit"
+                        android:layout_width="160dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginTop="16dp"
+                        android:layout_marginEnd="8dp"
+                        android:layout_marginBottom="16dp"
+                        android:background="@drawable/accent_button_selector"
+                        android:stateListAnimator="@drawable/button_state_list_anim_material"
+                        android:elevation="6dp"
+                        android:text="@string/submit_search"
+                        android:textColor="@color/text_color_light_primary"
+                        android:textSize="@dimen/category_title"
+                        android:textStyle="bold" />
+                </LinearLayout>
+            </ScrollView>
+
+
+        </LinearLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

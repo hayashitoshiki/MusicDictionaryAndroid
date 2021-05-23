@@ -2,4 +2,4 @@
 
 # getArtist
 
-`fun getArtist(): `[`ArtistConditions`](../../com.example.musicdictionaryandroid.domain.model.value/-artist-conditions/index.md)
+`fun getArtist(): `[`ArtistConditions`](../../com.example.domain.model.value/-artist-conditions/index.md)

@@ -1,4 +1,4 @@
-[app](../../index.md) / [com.example.musicdictionaryandroid.domain.model.entity](../index.md) / [User](index.md) / [&lt;init&gt;](./-init-.md)
+[app](../../index.md) / [com.example.domain.model.entity](../index.md) / [User](index.md) / [&lt;init&gt;](./-init-.md)
 
 # &lt;init&gt;
 

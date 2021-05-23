@@ -2,7 +2,7 @@
 
 # getUserByCache
 
-`fun getUserByCache(): `[`User`](../../com.example.musicdictionaryandroid.domain.model.entity/-user/index.md)
+`fun getUserByCache(): `[`User`](../../com.example.domain.model.entity/-user/index.md)
 
 Overrides [UserUseCase.getUserByCache](../-user-use-case/get-user-by-cache.md)
 

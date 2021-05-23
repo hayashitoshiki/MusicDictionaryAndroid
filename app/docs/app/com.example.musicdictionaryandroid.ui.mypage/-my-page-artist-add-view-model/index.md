@@ -10,7 +10,7 @@
 
 | Name | Summary |
 |---|---|
-| [&lt;init&gt;](-init-.md) | `MyPageArtistAddViewModel(artist: `[`Artist`](../../com.example.musicdictionaryandroid.domain.model.entity/-artist/index.md)`?, artistUseCase: `[`ArtistUseCase`](../../com.example.musicdictionaryandroid.domain.usecase/-artist-use-case/index.md)`, messageUtil: `[`MessageUtil`](../../com.example.musicdictionaryandroid.ui.util/-message-util/index.md)`)`<br>アーティスト情報登録・追加画面_UIロジック |
+| [&lt;init&gt;](-init-.md) | `MyPageArtistAddViewModel(artist: `[`Artist`](../../com.example.domain.model.entity/-artist/index.md)`?, artistUseCase: `[`ArtistUseCase`](../../com.example.musicdictionaryandroid.domain.usecase/-artist-use-case/index.md)`, messageUtil: `[`MessageUtil`](../../com.example.musicdictionaryandroid.ui.util/-message-util/index.md)`)`<br>アーティスト情報登録・追加画面_UIロジック |
 
 ### Properties
 
@@ -27,7 +27,7 @@
 | [length](length.md) | `val length: MutableLiveData<`[`Int`](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html)`>` |
 | [lyrics](lyrics.md) | `val lyrics: MutableLiveData<`[`Int`](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html)`>` |
 | [nameText](name-text.md) | `val nameText: MutableLiveData<`[`String`](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html)`>` |
-| [status](status.md) | `val status: LiveData<`[`Status`](../../com.example.musicdictionaryandroid.ui.util/-status/index.md)`<`[`Artist`](../../com.example.musicdictionaryandroid.domain.model.entity/-artist/index.md)`>>` |
+| [status](status.md) | `val status: LiveData<`[`Status`](../../com.example.musicdictionaryandroid.ui.util/-status/index.md)`<`[`Artist`](../../com.example.domain.model.entity/-artist/index.md)`>>` |
 | [submitText](submit-text.md) | `val submitText: LiveData<`[`String`](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html)`>` |
 | [titleText](title-text.md) | `val titleText: LiveData<`[`String`](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html)`>` |
 | [voice](voice.md) | `val voice: MutableLiveData<`[`Int`](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html)`>` |

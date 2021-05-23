@@ -2,7 +2,7 @@
 
 # delete
 
-`@ExperimentalCoroutinesApi fun delete(): Flow<`[`Result`](../../com.example.musicdictionaryandroid.domain.model.value/-result/index.md)`<`[`String`](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html)`>>`
+`@ExperimentalCoroutinesApi fun delete(): Flow<`[`Result`](../../com.example.domain.model.value/-result/index.md)`<`[`String`](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html)`>>`
 
 Overrides [FireBaseService.delete](../-fire-base-service/delete.md)
 

@@ -1,4 +1,4 @@
-[app](../../index.md) / [com.example.musicdictionaryandroid.data.repository](../index.md) / [LocalUserRepositoryImp](index.md) / [getEmail](./get-email.md)
+[app](../../index.md) / [com.example.data.repository](../index.md) / [LocalUserRepositoryImp](index.md) / [getEmail](./get-email.md)
 
 # getEmail
 

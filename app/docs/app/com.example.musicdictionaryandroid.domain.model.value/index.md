@@ -1,6 +1,6 @@
-[app](../index.md) / [com.example.musicdictionaryandroid.domain.model.value](./index.md)
+[app](../index.md) / [com.example.domain.model.value](./index.md)
 
-## Package com.example.musicdictionaryandroid.domain.model.value
+## Package com.example.domain.model.value
 
 値オブジェクト関連
 

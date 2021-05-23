@@ -1,5 +1,5 @@
-[app](../../index.md) / [com.example.musicdictionaryandroid.data.local.database](../index.md) / [AppDatabase](index.md) / [artistDao](./artist-dao.md)
+[app](../../index.md) / [com.example.musicdictionaryandroid.database](../index.md) / [AppDatabase](index.md) / [artistDao](./artist-dao.md)
 
 # artistDao
 
-`abstract fun artistDao(): `[`ArtistDao`](../../com.example.musicdictionaryandroid.data.local.database.dao/-artist-dao/index.md)
+`abstract fun artistDao(): `[`ArtistDao`](../../com.example.data.local.database.dao/-artist-dao/index.md)

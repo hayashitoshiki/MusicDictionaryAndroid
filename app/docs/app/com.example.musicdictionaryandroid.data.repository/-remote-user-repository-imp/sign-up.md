@@ -1,8 +1,8 @@
-[app](../../index.md) / [com.example.musicdictionaryandroid.data.repository](../index.md) / [RemoteUserRepositoryImp](index.md) / [signUp](./sign-up.md)
+[app](../../index.md) / [com.example.data.repository](../index.md) / [RemoteUserRepositoryImp](index.md) / [signUp](./sign-up.md)
 
 # signUp
 
-`fun signUp(email: `[`String`](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html)`, password: `[`String`](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html)`): Flow<`[`Result`](../../com.example.musicdictionaryandroid.domain.model.value/-result/index.md)`<`[`String`](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html)`>>`
+`fun signUp(email: `[`String`](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html)`, password: `[`String`](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html)`): Flow<`[`Result`](../../com.example.domain.model.value/-result/index.md)`<`[`String`](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html)`>>`
 
 Overrides [RemoteUserRepository.signUp](../-remote-user-repository/sign-up.md)
 

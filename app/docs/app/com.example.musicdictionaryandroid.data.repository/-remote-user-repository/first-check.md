@@ -1,4 +1,4 @@
-[app](../../index.md) / [com.example.musicdictionaryandroid.data.repository](../index.md) / [RemoteUserRepository](index.md) / [firstCheck](./first-check.md)
+[app](../../index.md) / [com.example.data.repository](../index.md) / [RemoteUserRepository](index.md) / [firstCheck](./first-check.md)
 
 # firstCheck
 

@@ -41,17 +41,17 @@ Data・Domain・Presentationの全ての層でドメインモデルで定義さ�
 
 | Name | Summary |
 |---|---|
-| [com.example.musicdictionaryandroid.data.local.database](com.example.musicdictionaryandroid.data.local.database/index.md) | DB管理 |
-| [com.example.musicdictionaryandroid.data.local.database.dao](com.example.musicdictionaryandroid.data.local.database.dao/index.md) | DBのクエリ関連 |
-| [com.example.musicdictionaryandroid.data.local.database.entity](com.example.musicdictionaryandroid.data.local.database.entity/index.md) | DBのテーブル関連 |
+| [com.example.musicdictionaryandroid.database](com.example.musicdictionaryandroid.database/index.md) | DB管理 |
+| [com.example.data.local.database.dao](com.example.data.local.database.dao/index.md) | DBのクエリ関連 |
+| [com.example.musicdictionaryandroid.database.entity](com.example.musicdictionaryandroid.database.entity/index.md) | DBのテーブル関連 |
 | [com.example.musicdictionaryandroid.data.local.preferences](com.example.musicdictionaryandroid.data.local.preferences/index.md) | SharedPreferences関連 |
 | [com.example.musicdictionaryandroid.data.remote.firebase](com.example.musicdictionaryandroid.data.remote.firebase/index.md) |  |
 | [com.example.musicdictionaryandroid.data.remote.network](com.example.musicdictionaryandroid.data.remote.network/index.md) | ネットワーク関連 |
 | [com.example.musicdictionaryandroid.data.remote.network.dto](com.example.musicdictionaryandroid.data.remote.network.dto/index.md) | ネットワーク受け渡しオブジェクト関連 |
 | [com.example.musicdictionaryandroid.data.remote.network.service](com.example.musicdictionaryandroid.data.remote.network.service/index.md) | ネットワークアクセスURL関連 |
-| [com.example.musicdictionaryandroid.data.repository](com.example.musicdictionaryandroid.data.repository/index.md) | Data層データ受け渡し関連 |
-| [com.example.musicdictionaryandroid.domain.model.entity](com.example.musicdictionaryandroid.domain.model.entity/index.md) | ドメインエンティティ関連 |
-| [com.example.musicdictionaryandroid.domain.model.value](com.example.musicdictionaryandroid.domain.model.value/index.md) | 値オブジェクト関連 |
+| [com.example.data.repository](com.example.data.repository/index.md) | Data層データ受け渡し関連 |
+| [com.example.domain.model.entity](com.example.domain.model.entity/index.md) | ドメインエンティティ関連 |
+| [com.example.domain.model.value](com.example.domain.model.value/index.md) | 値オブジェクト関連 |
 | [com.example.musicdictionaryandroid.domain.usecase](com.example.musicdictionaryandroid.domain.usecase/index.md) | ビジネスロジック関連 |
 | [com.example.musicdictionaryandroid.ui](com.example.musicdictionaryandroid.ui/index.md) | 共通画面関連 |
 | [com.example.musicdictionaryandroid.ui.home](com.example.musicdictionaryandroid.ui.home/index.md) | ホームタブ画面関連 |

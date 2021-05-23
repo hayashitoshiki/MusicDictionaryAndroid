@@ -2,4 +2,4 @@
 
 # &lt;init&gt;
 
-`ArtistUseCaseImp(remoteArtistRepository: `[`RemoteArtistRepository`](../../com.example.musicdictionaryandroid.data.repository/-remote-artist-repository/index.md)`, localArtistRepository: `[`LocalArtistRepository`](../../com.example.musicdictionaryandroid.data.repository/-local-artist-repository/index.md)`, localUserRepository: `[`LocalUserRepository`](../../com.example.musicdictionaryandroid.data.repository/-local-user-repository/index.md)`, externalScope: CoroutineScope, defaultDispatcher: CoroutineDispatcher = Dispatchers.Default)`
+`ArtistUseCaseImp(remoteArtistRepository: `[`RemoteArtistRepository`](../../com.example.data.repository/-remote-artist-repository/index.md)`, localArtistRepository: `[`LocalArtistRepository`](../../com.example.data.repository/-local-artist-repository/index.md)`, localUserRepository: `[`LocalUserRepository`](../../com.example.data.repository/-local-user-repository/index.md)`, externalScope: CoroutineScope, defaultDispatcher: CoroutineDispatcher = Dispatchers.Default)`

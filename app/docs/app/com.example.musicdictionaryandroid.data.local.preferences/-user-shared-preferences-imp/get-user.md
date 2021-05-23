@@ -2,7 +2,7 @@
 
 # getUser
 
-`fun getUser(): `[`User`](../../com.example.musicdictionaryandroid.domain.model.entity/-user/index.md)
+`fun getUser(): `[`User`](../../com.example.domain.model.entity/-user/index.md)
 
 Overrides [UserSharedPreferences.getUser](../-user-shared-preferences/get-user.md)
 

@@ -1,8 +1,8 @@
-[app](../../index.md) / [com.example.musicdictionaryandroid.data.repository](../index.md) / [LocalUserRepositoryImp](index.md) / [getUser](./get-user.md)
+[app](../../index.md) / [com.example.data.repository](../index.md) / [LocalUserRepositoryImp](index.md) / [getUser](./get-user.md)
 
 # getUser
 
-`fun getUser(): `[`User`](../../com.example.musicdictionaryandroid.domain.model.entity/-user/index.md)
+`fun getUser(): `[`User`](../../com.example.domain.model.entity/-user/index.md)
 
 Overrides [LocalUserRepository.getUser](../-local-user-repository/get-user.md)
 

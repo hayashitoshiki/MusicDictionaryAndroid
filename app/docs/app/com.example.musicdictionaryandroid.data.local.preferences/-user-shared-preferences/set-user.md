@@ -2,7 +2,7 @@
 
 # setUser
 
-`abstract fun setUser(user: `[`User`](../../com.example.musicdictionaryandroid.domain.model.entity/-user/index.md)`): `[`Unit`](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html)
+`abstract fun setUser(user: `[`User`](../../com.example.domain.model.entity/-user/index.md)`): `[`Unit`](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html)
 
 ユーザ情報設定
 

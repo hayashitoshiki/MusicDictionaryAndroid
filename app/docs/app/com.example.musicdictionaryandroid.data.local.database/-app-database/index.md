@@ -1,4 +1,4 @@
-[app](../../index.md) / [com.example.musicdictionaryandroid.data.local.database](../index.md) / [AppDatabase](./index.md)
+[app](../../index.md) / [com.example.musicdictionaryandroid.database](../index.md) / [AppDatabase](./index.md)
 
 # AppDatabase
 
@@ -16,4 +16,4 @@ DB定義
 
 | Name | Summary |
 |---|---|
-| [artistDao](artist-dao.md) | `abstract fun artistDao(): `[`ArtistDao`](../../com.example.musicdictionaryandroid.data.local.database.dao/-artist-dao/index.md) |
+| [artistDao](artist-dao.md) | `abstract fun artistDao(): `[`ArtistDao`](../../com.example.data.local.database.dao/-artist-dao/index.md) |
