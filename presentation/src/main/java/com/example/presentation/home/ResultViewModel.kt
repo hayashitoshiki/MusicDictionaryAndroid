@@ -1,9 +1,9 @@
 package com.example.presentation.home
 
 import androidx.lifecycle.*
-import com.example.domain.model.value.Result
 import com.example.domain.model.value.ArtistConditions
 import com.example.domain.model.value.ArtistSearchContents
+import com.example.domain.model.value.Result
 import com.example.domain.usecase.ArtistUseCase
 import com.example.presentation.util.Status
 import kotlinx.coroutines.Job
@@ -27,8 +27,8 @@ class ResultViewModel(
     val isNoDataText: LiveData<Boolean> = _isNoDataText
 
     init {
-        _isProgressBar.addSource(status, Observer { changeProgressBar(it) })
-        _isNoDataText.addSource(status, Observer { changeNoDataText(it) })
+        _isProgressBar.addSource(status) { changeProgressBar(it) }
+        _isNoDataText.addSource(status) { changeNoDataText(it) }
     }
 
     // プログレスバーの表示制御

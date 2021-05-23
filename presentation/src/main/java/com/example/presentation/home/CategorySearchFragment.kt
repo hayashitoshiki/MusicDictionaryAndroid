@@ -7,19 +7,14 @@ import android.view.ViewGroup
 import android.view.animation.AnimationUtils
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
-import androidx.transition.ChangeBounds
-import androidx.transition.ChangeClipBounds
-import androidx.transition.ChangeTransform
-import androidx.transition.TransitionSet
 import com.example.presentation.R
 import com.example.presentation.databinding.FragmentCategorySearchBinding
 import com.example.presentation.util.transition.FabTransform
 import com.example.presentation.util.transition.HOME_CATEGORY_BUTTON
-import kotlinx.coroutines.*
 import kotlin.coroutines.CoroutineContext
+import kotlinx.coroutines.*
 
 /**
  * カテゴリ検索画面
@@ -54,10 +49,10 @@ class CategorySearchFragment : Fragment(), CoroutineScope {
         sharedElementEnterTransition = trans
         sharedElementReturnTransition = trans
 
-        if (com.example.presentation.home.CategorySearchFragment.Companion.state == 1) {
+        if (state == 1) {
             val anim = AnimationUtils.loadAnimation(requireContext(), R.anim.slide_in_bottom)
             binding.categoryCard.startAnimation(anim)
-            com.example.presentation.home.CategorySearchFragment.Companion.state = 0
+            state = 0
         }
         return binding.root
     }
@@ -73,7 +68,7 @@ class CategorySearchFragment : Fragment(), CoroutineScope {
             resources.getStringArray(R.array.genre52_spinner_list),
             resources.getStringArray(R.array.genre62_spinner_list)
         )
-        viewModel.genre1ValueInt.observe(viewLifecycleOwner, Observer { viewModel.changeGenre1(it) })
+        viewModel.genre1ValueInt.observe(viewLifecycleOwner, { viewModel.changeGenre1(it) })
 
         // 検索ボタン
         binding.submit.setOnClickListener {
@@ -85,7 +80,7 @@ class CategorySearchFragment : Fragment(), CoroutineScope {
                 val artist = viewModel.getArtist()
                 val action = CategorySearchFragmentDirections.actionCategorySearchToNavigationResult(artist)
                 findNavController().navigate(action)
-                com.example.presentation.home.CategorySearchFragment.Companion.state = 1
+                state = 1
             }
         }
     }

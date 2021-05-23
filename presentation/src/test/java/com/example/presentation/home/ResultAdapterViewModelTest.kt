@@ -4,11 +4,11 @@ import com.example.domain.model.entity.Artist
 import com.example.domain.model.entity.ArtistContents
 import com.example.domain.model.value.*
 import com.example.presentation.BaseTestUnit
-import com.example.presentation.util.MessageUtil
 import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.mockk
 import io.mockk.verify
+import java.lang.reflect.Field
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.resetMain
@@ -16,7 +16,6 @@ import kotlinx.coroutines.test.setMain
 import org.junit.After
 import org.junit.Before
 import org.junit.Test
-import java.lang.reflect.Field
 
 class ResultAdapterViewModelTest : BaseTestUnit() {
 
@@ -27,8 +26,6 @@ class ResultAdapterViewModelTest : BaseTestUnit() {
     private lateinit var resultAdapterBodyState2: ResultAdapterBodyState
 
     // data
-    private val messageUtil = mockk<MessageUtil>()
-
     private val artist = Artist("artist", Gender.MAN, Voice(1), Length(1), Lyrics(1), Genre1(1), Genre2(1))
     private val artistContentsBookmarkFalse = ArtistContents(artist, null, "aaa", 1, 2, 3, 4, 5, 6, 1, 1, false)
     private val artistContentsBookmarkTrue = ArtistContents(artist, null, "bbb", 1, 2, 3, 4, 5, 6, 1, 1, true)
@@ -88,7 +85,6 @@ class ResultAdapterViewModelTest : BaseTestUnit() {
         verify(exactly = 1) { (resultAdapterBodyState1).stopPlayback() }
         verify(exactly = 0) { (resultAdapterBodyState1).startPlayback(any()) }
     }
-
 
     /**
      * 再生処理

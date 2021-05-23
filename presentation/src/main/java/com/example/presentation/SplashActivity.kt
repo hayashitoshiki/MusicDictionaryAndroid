@@ -3,7 +3,6 @@ package com.example.presentation
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.Observer
 import com.example.presentation.login.StartActivity
 import com.example.presentation.util.Status
 import org.koin.android.viewmodel.ext.android.viewModel
@@ -17,7 +16,7 @@ class SplashActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        viewModel.status.observe(this, Observer { onStateChanged(it) })
+        viewModel.status.observe(this, { onStateChanged(it) })
         viewModel.firstCheck()
     }
 

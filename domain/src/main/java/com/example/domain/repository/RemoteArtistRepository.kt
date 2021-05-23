@@ -1,9 +1,9 @@
 package com.example.domain.repository
 
-import com.example.domain.model.value.Result
 import com.example.domain.model.entity.Artist
 import com.example.domain.model.entity.ArtistContents
 import com.example.domain.model.value.ArtistConditions
+import com.example.domain.model.value.Result
 
 /**
  * リモート保持のアーティスト情報に関するアクセスRepository

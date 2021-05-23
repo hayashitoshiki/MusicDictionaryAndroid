@@ -52,5 +52,4 @@ class ResultAdapterViewModel(private val artistUseCase: ArtistUseCase) : ViewMod
             false -> artistUseCase.deleteBookmarkArtist(artistContents)
         }
     }
-
 }

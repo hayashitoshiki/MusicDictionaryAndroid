@@ -1,7 +1,6 @@
 package com.example.domain
 
 import androidx.lifecycle.Observer
-import com.example.domain.model.value.ArtistSearchContents
 import com.nhaarman.mockito_kotlin.mock
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.TestCoroutineDispatcher
@@ -22,13 +21,7 @@ abstract class BaseTestUnit {
     // endregion
 
     // region observer関連
-
-    protected val observerStringList = mock<Observer<List<String>>>()
     protected val observerBoolean = mock<Observer<Boolean>>()
-    protected val observerInt = mock<Observer<Int>>()
-    protected val observerString = mock<Observer<String>>()
-    protected val observerStringNullable = mock<Observer<String?>>()
-    protected val observerArtistSearchContents = mock<Observer<List<ArtistSearchContents<*>>>>()
 
     // endregion
 }

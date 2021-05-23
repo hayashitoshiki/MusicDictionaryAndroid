@@ -62,8 +62,6 @@ class ResultFragment : Fragment(), DialogFragmentCallbackInterface {
         }
     }
 
-    private lateinit var userListAdapter: ResultAdapter    // ステータス監視
-
     private fun onStateChanged(state: Status<List<ArtistSearchContents<*>>>) = when (state) {
         is Status.Loading -> {
         }

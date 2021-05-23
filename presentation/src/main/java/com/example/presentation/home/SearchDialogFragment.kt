@@ -9,7 +9,6 @@ import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.DialogFragment
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.example.domain.model.value.ArtistConditions
 import com.example.presentation.R
@@ -53,7 +52,7 @@ class SearchDialogFragment : DialogFragment() {
             viewModel.setArtist(artist)
         }
 
-        viewModel.genre1ValueInt.observe(viewLifecycleOwner, Observer { viewModel.changeGenre1(it) })
+        viewModel.genre1ValueInt.observe(viewLifecycleOwner, { viewModel.changeGenre1(it) })
         dialog!!.window!!.setBackgroundDrawableResource(R.color.transparent)
 
         // editTextフォーカス制御

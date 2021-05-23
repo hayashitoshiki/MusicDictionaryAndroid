@@ -1,7 +1,7 @@
 package com.example.musicdictionaryandroid.preferences
 
-import com.example.musicdictionaryandroid.preferences.PreferenceManager.remove
 import com.example.domain.model.entity.User
+import com.example.musicdictionaryandroid.preferences.PreferenceManager.remove
 
 class UserSharedPreferencesImp : com.example.data.local.preferences.UserSharedPreferences {
 
@@ -36,7 +36,6 @@ class UserSharedPreferencesImp : com.example.data.local.preferences.UserSharedPr
     }
 
     override fun getName(): String = PreferenceManager.getString(PreferenceKey.StringKey.NAME)
-
 
     override fun setGender(value: Int) {
         PreferenceManager.setInt(PreferenceKey.IntKey.GENDER, value)
@@ -78,5 +77,4 @@ class UserSharedPreferencesImp : com.example.data.local.preferences.UserSharedPr
         remove(PreferenceKey.IntKey.GENDER)
         remove(PreferenceKey.IntKey.FAVORITE)
     }
-
 }

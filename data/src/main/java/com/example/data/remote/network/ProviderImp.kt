@@ -1,17 +1,17 @@
 package com.example.data.remote.network
 
-import com.example.data.remote.network.service.MusicDictionaryService
 import com.example.data.BuildConfig
+import com.example.data.remote.network.service.MusicDictionaryService
+import java.util.concurrent.TimeUnit
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
-import java.util.concurrent.TimeUnit
 
 /**
  * API接続先設定
  */
-object ProviderImp : com.example.data.remote.network.Provider {
+object ProviderImp : Provider {
 
     // ネットワークタイムアウト
     private const val defaultTimeout = 5L

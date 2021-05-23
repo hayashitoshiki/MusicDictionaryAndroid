@@ -3,14 +3,14 @@ package com.example.presentation.home
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.domain.repository.LocalUserRepository
 import com.example.domain.model.value.ArtistConditions
+import com.example.domain.repository.LocalUserRepository
 
 /**
  * HOME画面_UIロジック
  */
 class HomeViewModel(
-    private val localUserRepository: LocalUserRepository
+    localUserRepository: LocalUserRepository
 ) : ViewModel() {
 
     // 入力項目

@@ -27,7 +27,7 @@ class BookmarkArtistListViewModelTest : BaseTestUnit() {
 
     // mock
     private lateinit var artistUseCase: com.example.domain.usecase.ArtistUseCase
-    private lateinit var viewModel: com.example.presentation.mypage.BookmarkArtistListViewModel
+    private lateinit var viewModel: BookmarkArtistListViewModel
 
     // data
     private val artist = Artist("test", Gender.MAN, Voice(0), Length(0), Lyrics(0), Genre1(0), Genre2(0))
@@ -43,7 +43,7 @@ class BookmarkArtistListViewModelTest : BaseTestUnit() {
         artistUseCase = mockk<com.example.domain.usecase.ArtistUseCase>().also {
             every { it.getBookArkArtistAll() } returns artistSearchContentsListFlow
         }
-        viewModel = com.example.presentation.mypage.BookmarkArtistListViewModel(artistUseCase)
+        viewModel = BookmarkArtistListViewModel(artistUseCase)
         viewModel.bookmarkArtistList.observeForever(observerArtistSearchContents)
     }
 

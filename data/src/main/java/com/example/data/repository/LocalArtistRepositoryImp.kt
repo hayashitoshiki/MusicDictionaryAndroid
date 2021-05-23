@@ -63,5 +63,4 @@ class LocalArtistRepositoryImp(private val dao: ArtistDao, private val ioDispatc
             }
         }
     }
-
 }

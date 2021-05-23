@@ -15,7 +15,6 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.example.domain.model.entity.Artist
@@ -77,8 +76,8 @@ class MyPageArtistAddFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewModel.status.observe(viewLifecycleOwner, Observer { onStateChanged(it) })
-        viewModel.genre1.observe(viewLifecycleOwner, Observer { viewModel.changeGenre1(it) })
+        viewModel.status.observe(viewLifecycleOwner, { onStateChanged(it) })
+        viewModel.genre1.observe(viewLifecycleOwner, { viewModel.changeGenre1(it) })
 
         // 送信ボタン
         binding.submit.setSafeClickListener {
@@ -96,7 +95,6 @@ class MyPageArtistAddFragment : Fragment() {
             binding.root.requestFocus()
             v?.onTouchEvent(event) ?: true
         }
-
     }
 
     // ステータス監視

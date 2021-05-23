@@ -1,15 +1,12 @@
 package com.example.domain.usecase
 
-import com.example.domain.model.value.Result
 import com.example.domain.model.entity.User
+import com.example.domain.model.value.Result
 import com.example.domain.repository.LocalArtistRepository
 import com.example.domain.repository.LocalBookmarkArtistRepository
 import com.example.domain.repository.LocalUserRepository
 import com.example.domain.repository.RemoteUserRepository
 import com.squareup.moshi.Moshi
-import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.flow
@@ -18,9 +15,7 @@ class UserUseCaseImp(
     private val remoteUserRepository: RemoteUserRepository,
     private val localUserRepository: LocalUserRepository,
     private val localArtistRepository: LocalArtistRepository,
-    private val localBookmarkArtistRepository: LocalBookmarkArtistRepository,
-    private val externalScope: CoroutineScope,
-    private val defaultDispatcher: CoroutineDispatcher = Dispatchers.Default
+    private val localBookmarkArtistRepository: LocalBookmarkArtistRepository
 ) : UserUseCase {
 
     // ユーザー情報取得

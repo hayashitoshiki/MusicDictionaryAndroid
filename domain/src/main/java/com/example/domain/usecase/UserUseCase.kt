@@ -1,7 +1,7 @@
 package com.example.domain.usecase
 
-import com.example.domain.model.value.Result
 import com.example.domain.model.entity.User
+import com.example.domain.model.value.Result
 import kotlinx.coroutines.flow.Flow
 
 /**

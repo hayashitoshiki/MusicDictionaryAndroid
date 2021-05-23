@@ -4,11 +4,11 @@ import androidx.lifecycle.*
 import com.example.domain.model.value.Result
 import com.example.domain.usecase.UserUseCase
 import com.example.presentation.util.Status
+import java.util.regex.Pattern
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
-import java.util.regex.Pattern
 
 /**
  * ログイン画面_UIロジック
@@ -40,7 +40,7 @@ class SignInViewModel(
         _isEnableSubmitButton.addSource(emailText) { validateSubmit() }
         _isEnableSubmitButton.addSource(passwordText) { validateSubmit() }
         _isEnableSubmitButton.addSource(isProgressBar) { validateSubmit() }
-        _isProgressBar.addSource(_status, Observer { changeProgressBar(it) })
+        _isProgressBar.addSource(_status) { changeProgressBar(it) }
     }
 
     // プログレスバーの表示制御

@@ -8,7 +8,6 @@ import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import com.example.presentation.R
 import com.example.presentation.databinding.FragmentSignInBinding
 import com.example.presentation.util.Status
@@ -39,7 +38,7 @@ class SignInFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel.status.observe(viewLifecycleOwner, Observer { onStateChanged(it) })
+        viewModel.status.observe(viewLifecycleOwner, { onStateChanged(it) })
 
         // ログインボタン
         binding.signInButton.setOnClickListener { viewModel.signIn() }

@@ -1,16 +1,16 @@
 package com.example.presentation.login
 
 import androidx.lifecycle.*
-import com.example.domain.model.value.Result
 import com.example.domain.model.entity.User
+import com.example.domain.model.value.Result
 import com.example.domain.usecase.UserUseCase
 import com.example.presentation.util.MessageUtil
 import com.example.presentation.util.Status
+import java.util.regex.Pattern
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
-import java.util.regex.Pattern
 
 /**
  * 新規登録画面_UIロジック
@@ -59,7 +59,7 @@ class SignUpViewModel(
         _isEnableSubmitButton.addSource(areaSelectedPosition) { validateSubmit() }
         _isEnableSubmitButton.addSource(birthdaySelectedPosition) { validateSubmit() }
         _isEnableSubmitButton.addSource(isProgressBar) { validateSubmit() }
-        _isProgressBar.addSource(status, Observer { changeProgressBar(it) })
+        _isProgressBar.addSource(status) { changeProgressBar(it) }
     }
 
     // プログレスバーの表示制御

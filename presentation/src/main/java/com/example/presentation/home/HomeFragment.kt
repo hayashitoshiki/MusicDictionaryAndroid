@@ -9,15 +9,13 @@ import android.view.animation.AnimationUtils
 import android.view.inputmethod.InputMethodManager
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
-import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
 import com.example.presentation.R
 import com.example.presentation.databinding.FragmentHomeBinding
 import com.example.presentation.util.setSafeClickListener
+import kotlin.coroutines.CoroutineContext
 import kotlinx.coroutines.*
 import org.koin.android.viewmodel.ext.android.viewModel
-import kotlin.coroutines.CoroutineContext
 
 /**
  * HOME画面
@@ -48,7 +46,7 @@ class HomeFragment : Fragment(), CoroutineScope {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel.searchText.observe(viewLifecycleOwner, Observer { viewModel.changeSubmitButton(it.length) })
+        viewModel.searchText.observe(viewLifecycleOwner, { viewModel.changeSubmitButton(it.length) })
         val anim1 = AnimationUtils.loadAnimation(requireContext(), R.anim.fade_out)
 
         // カテゴリボタン

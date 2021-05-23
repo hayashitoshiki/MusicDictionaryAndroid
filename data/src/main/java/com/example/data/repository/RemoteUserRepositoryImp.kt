@@ -1,11 +1,11 @@
 package com.example.data.repository
 
 import com.example.data.remote.firebase.FireBaseService
+import com.example.data.remote.firebase.FireBaseServiceImp
 import com.example.data.remote.network.Provider
 import com.example.data.remote.network.ProviderImp
-import com.example.data.remote.firebase.FireBaseServiceImp
-import com.example.domain.model.value.Result
 import com.example.domain.model.entity.User
+import com.example.domain.model.value.Result
 import com.example.domain.repository.RemoteUserRepository
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
@@ -58,6 +58,4 @@ class RemoteUserRepositoryImp(
     override fun delete(): Flow<Result<String>> = firebaseService.delete()
 
     // endregion
-
-
 }

@@ -25,7 +25,7 @@ class AnimUtils {
                     listener
                 )
             if (!mListeners.containsKey(listener)) {
-                mListeners.put(listener, wrapper)
+                mListeners[listener] = wrapper
                 mAnimator.addListener(wrapper)
             }
         }
@@ -117,7 +117,7 @@ class AnimUtils {
         }
     }
 
-    private class AnimatorListenerWrapper internal constructor(
+    private class AnimatorListenerWrapper constructor(
         private val mAnimator: Animator,
         private val mListener: Animator.AnimatorListener
     ) :

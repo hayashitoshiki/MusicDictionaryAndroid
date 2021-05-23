@@ -70,7 +70,6 @@ class RemoteArtistRepositoryImp(
         )
     }
 
-
     // endregion
 
     // region アーティスト編集

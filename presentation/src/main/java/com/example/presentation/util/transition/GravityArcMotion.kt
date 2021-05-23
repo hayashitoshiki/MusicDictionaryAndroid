@@ -4,6 +4,9 @@ import android.content.Context
 import android.graphics.Path
 import android.transition.ArcMotion
 import android.util.AttributeSet
+import kotlin.math.abs
+import kotlin.math.sqrt
+import kotlin.math.tan
 
 class GravityArcMotion : ArcMotion {
     private var mMinimumHorizontalAngle = 0f
@@ -99,9 +102,9 @@ class GravityArcMotion : ArcMotion {
         var ey: Float
         if (startY == endY) {
             ex = (startX + endX) / 2
-            ey = startY + mMinimumHorizontalTangent * Math.abs(endX - startX) / 2
+            ey = startY + mMinimumHorizontalTangent * abs(endX - startX) / 2
         } else if (startX == endX) {
-            ex = startX + mMinimumVerticalTangent * Math.abs(endY - startY) / 2
+            ex = startX + mMinimumVerticalTangent * abs(endY - startY) / 2
             ey = (startY + endY) / 2
         } else {
             val deltaX = endX - startX
@@ -109,8 +112,7 @@ class GravityArcMotion : ArcMotion {
             /**
              * This is the only change to ArcMotion
              */
-            val deltaY: Float
-            deltaY = if (endY < startY) {
+            val deltaY: Float = if (endY < startY) {
                 startY - endY // Y is inverted compared to diagram above.
             } else {
                 endY - startY
@@ -129,7 +131,7 @@ class GravityArcMotion : ArcMotion {
             // Distance squared between end point and mid point is (1/2 hypotenuse)^2
             val midDist2 = h2 * 0.25f
             val minimumArcDist2: Float
-            if (Math.abs(deltaX) < Math.abs(deltaY)) {
+            if (abs(deltaX) < abs(deltaY)) {
                 // Similar triangles bfa and bde mean that (ab/fb = eb/bd)
                 // Therefore, eb = ab * bd / fb
                 // ab = hypotenuse
@@ -164,7 +166,7 @@ class GravityArcMotion : ArcMotion {
             }
             if (newArcDistance2 != 0f) {
                 val ratio2 = newArcDistance2 / arcDist2
-                val ratio = Math.sqrt(ratio2.toDouble()).toFloat()
+                val ratio = sqrt(ratio2.toDouble()).toFloat()
                 ex = dx + ratio * (ex - dx)
                 ey = dy + ratio * (ey - dy)
             }
@@ -178,14 +180,14 @@ class GravityArcMotion : ArcMotion {
     }
 
     companion object {
-        private const val DEFAULT_MIN_ANGLE_DEGREES = 0f
+//        private const val DEFAULT_MIN_ANGLE_DEGREES = 0f
         private const val DEFAULT_MAX_ANGLE_DEGREES = 70f
         private val DEFAULT_MAX_TANGENT =
-            Math.tan(Math.toRadians(DEFAULT_MAX_ANGLE_DEGREES / 2.toDouble())).toFloat()
+            tan(Math.toRadians(DEFAULT_MAX_ANGLE_DEGREES / 2.toDouble())).toFloat()
 
         private fun toTangent(arcInDegrees: Float): Float {
             require(!(arcInDegrees < 0 || arcInDegrees > 90)) { "Arc must be between 0 and 90 degrees" }
-            return Math.tan(Math.toRadians(arcInDegrees / 2.toDouble())).toFloat()
+            return tan(Math.toRadians(arcInDegrees / 2.toDouble())).toFloat()
         }
     }
 }

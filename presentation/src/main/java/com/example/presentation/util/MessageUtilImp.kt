@@ -12,31 +12,17 @@ class MessageUtilImp(private val context: Context) : MessageUtil {
 //    private val context: Context = MyApplication.shared.applicationContext
 
     // 絞り込みリスト
-    private val mainGenreList: List<String>
-    private val subGenre0List: List<String>
-    private val subGenre1List: List<String>
-    private val subGenre2List: List<String>
-    private val subGenre3List: List<String>
-    private val subGenre4List: List<String>
-    private val subGenre5List: List<String>
-    private val subGenre6List: List<String>
-    private val generationList: List<String>
-    private val genderList: List<String>
-    private val areaList: List<String>
-
-    init {
-        mainGenreList = context.resources.getStringArray(R.array.genre1_spinner_list).toList()
-        subGenre0List = context.resources.getStringArray(R.array.genre02_spinner_list).toList()
-        subGenre1List = context.resources.getStringArray(R.array.genre12_spinner_list).toList()
-        subGenre2List = context.resources.getStringArray(R.array.genre22_spinner_list).toList()
-        subGenre3List = context.resources.getStringArray(R.array.genre32_spinner_list).toList()
-        subGenre4List = context.resources.getStringArray(R.array.genre42_spinner_list).toList()
-        subGenre5List = context.resources.getStringArray(R.array.genre52_spinner_list).toList()
-        subGenre6List = context.resources.getStringArray(R.array.genre62_spinner_list).toList()
-        generationList = context.resources.getStringArray(R.array.birthday_spinner_list).toList()
-        genderList = context.resources.getStringArray(R.array.gender_spinner_list).toList()
-        areaList = context.resources.getStringArray(R.array.area_spinner_list).toList()
-    }
+    private val mainGenreList: List<String> = context.resources.getStringArray(R.array.genre1_spinner_list).toList()
+    private val subGenre0List: List<String> = context.resources.getStringArray(R.array.genre02_spinner_list).toList()
+    private val subGenre1List: List<String> = context.resources.getStringArray(R.array.genre12_spinner_list).toList()
+    private val subGenre2List: List<String> = context.resources.getStringArray(R.array.genre22_spinner_list).toList()
+    private val subGenre3List: List<String> = context.resources.getStringArray(R.array.genre32_spinner_list).toList()
+    private val subGenre4List: List<String> = context.resources.getStringArray(R.array.genre42_spinner_list).toList()
+    private val subGenre5List: List<String> = context.resources.getStringArray(R.array.genre52_spinner_list).toList()
+    private val subGenre6List: List<String> = context.resources.getStringArray(R.array.genre62_spinner_list).toList()
+    private val generationList: List<String> = context.resources.getStringArray(R.array.birthday_spinner_list).toList()
+    private val genderList: List<String> = context.resources.getStringArray(R.array.gender_spinner_list).toList()
+    private val areaList: List<String> = context.resources.getStringArray(R.array.area_spinner_list).toList()
 
     // 性別文字列取得
     override fun getGender(code: Int): String {

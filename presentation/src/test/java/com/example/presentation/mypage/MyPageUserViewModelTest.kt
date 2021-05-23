@@ -23,7 +23,7 @@ class MyPageUserViewModelTest : BaseTestUnit() {
     val rule: TestRule = InstantTaskExecutorRule()
 
     // mock
-    private lateinit var viewModel: com.example.presentation.mypage.MyPageUserViewModel
+    private lateinit var viewModel: MyPageUserViewModel
     private lateinit var messageUtil: MessageUtil
     private lateinit var userUseCase: com.example.domain.usecase.UserUseCase
 
@@ -39,7 +39,7 @@ class MyPageUserViewModelTest : BaseTestUnit() {
             every { it.getGender(user.gender) } returns "男"
             every { it.getArea(user.area) } returns "東京"
         }
-        viewModel = com.example.presentation.mypage.MyPageUserViewModel(userUseCase, messageUtil)
+        viewModel = MyPageUserViewModel(userUseCase, messageUtil)
     }
 
     @After

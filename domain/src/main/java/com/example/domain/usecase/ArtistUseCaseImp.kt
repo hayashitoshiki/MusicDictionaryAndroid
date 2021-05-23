@@ -1,17 +1,15 @@
 package com.example.domain.usecase
 
-import com.example.domain.model.value.Result
 import com.example.domain.model.entity.Artist
 import com.example.domain.model.entity.ArtistContents
 import com.example.domain.model.value.ArtistConditions
 import com.example.domain.model.value.ArtistSearchContents
+import com.example.domain.model.value.Result
 import com.example.domain.repository.LocalArtistRepository
 import com.example.domain.repository.LocalBookmarkArtistRepository
 import com.example.domain.repository.LocalUserRepository
 import com.example.domain.repository.RemoteArtistRepository
-import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
@@ -21,8 +19,7 @@ class ArtistUseCaseImp(
     private val localArtistRepository: LocalArtistRepository,
     private val localUserRepository: LocalUserRepository,
     private val localBookmarkArtistRepository: LocalBookmarkArtistRepository,
-    private val externalScope: CoroutineScope,
-    private val defaultDispatcher: CoroutineDispatcher = Dispatchers.Default
+    private val externalScope: CoroutineScope
 ) : ArtistUseCase {
 
     // region ホームタブ

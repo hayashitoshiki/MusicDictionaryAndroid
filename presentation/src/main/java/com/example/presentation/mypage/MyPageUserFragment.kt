@@ -15,7 +15,6 @@ import com.example.presentation.R
 import com.example.presentation.databinding.FragmentMypageUserBinding
 import com.example.presentation.util.MessageUtilImp
 import org.koin.android.ext.android.inject
-import org.koin.android.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
 
 /**

@@ -9,13 +9,11 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.ArrayAdapter
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import com.example.presentation.R
 import com.example.presentation.databinding.FragmentSignUpBinding
 import com.example.presentation.util.MessageUtilImp
 import com.example.presentation.util.Status
 import org.koin.android.ext.android.inject
-import org.koin.android.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
 
 /**
@@ -46,7 +44,7 @@ class SignUpFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel.status.observe(viewLifecycleOwner, Observer { onStateChanged(it) })
+        viewModel.status.observe(viewLifecycleOwner, { onStateChanged(it) })
 
         // spinner 設定
         binding.areaSpinner.let { spinner ->

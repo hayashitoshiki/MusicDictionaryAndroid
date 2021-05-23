@@ -30,4 +30,3 @@ data class BookmarkArtistEntity(
     @ColumnInfo(name = "user_woman")
     val userWoman: Int
 ) : java.io.Serializable
-

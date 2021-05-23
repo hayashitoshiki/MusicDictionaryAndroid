@@ -135,23 +135,32 @@ class ResultAdapter(
                         when (state.isDetailsProfile.value) {
                             true -> {
                                 binding.detailsProfile.startAnimation(collapseAnimation)
-                                Handler().postDelayed({
-                                    state.setIsDetailsProfile(false)
-                                    state.setIsGenerationPieChart(false)
-                                    state.setIsGenderPieChart(false)
-                                }, 300)
+                                Handler().postDelayed(
+                                    {
+                                        state.setIsDetailsProfile(false)
+                                        state.setIsGenerationPieChart(false)
+                                        state.setIsGenderPieChart(false)
+                                    },
+                                    300
+                                )
                             }
                             false -> {
                                 state.setIsDetailsProfile(true)
                                 binding.detailsProfile.startAnimation(expandAnimation)
-                                Handler().postDelayed({
-                                    state.setIsGenerationPieChart(true)
-                                    binding.generationPieChart.startAnimation(anim1)
-                                }, 150)
-                                Handler().postDelayed({
-                                    state.setIsGenderPieChart(true)
-                                    binding.genderPieChart.startAnimation(anim2)
-                                }, 300)
+                                Handler().postDelayed(
+                                    {
+                                        state.setIsGenerationPieChart(true)
+                                        binding.generationPieChart.startAnimation(anim1)
+                                    },
+                                    150
+                                )
+                                Handler().postDelayed(
+                                    {
+                                        state.setIsGenderPieChart(true)
+                                        binding.genderPieChart.startAnimation(anim2)
+                                    },
+                                    300
+                                )
                             }
                         }
                     }

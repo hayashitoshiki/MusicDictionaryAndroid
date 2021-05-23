@@ -1,9 +1,9 @@
 package com.example.presentation.home
 
 import androidx.lifecycle.*
-import com.example.domain.model.value.Result
 import com.example.domain.model.value.ArtistConditions
 import com.example.domain.model.value.ArtistSearchContents
+import com.example.domain.model.value.Result
 import com.example.domain.usecase.ArtistUseCase
 import com.example.presentation.util.Status
 import kotlinx.coroutines.Job
@@ -24,7 +24,7 @@ class ResultSoaringViewModel(
     val isProgressBar: LiveData<Boolean> = _isProgressBar
 
     init {
-        _isProgressBar.addSource(status, Observer { changeProgressBar(it) })
+        _isProgressBar.addSource(status) { changeProgressBar(it) }
     }
 
     // プログレスバーの表示制御

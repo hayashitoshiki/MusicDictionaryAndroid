@@ -72,7 +72,7 @@ class MyPageArtistAddViewModel(
         _isEnableSubmitButton.addSource(lyrics) { validate() }
         _isEnableSubmitButton.addSource(genre1) { validate() }
         _isEnableSubmitButton.addSource(genre2) { validate() }
-        _isProgressBar.addSource(status, Observer { changeProgressBar(it) })
+        _isProgressBar.addSource(status) { changeProgressBar(it) }
 
         // カテゴリリスト取得
         this.mainGenreList = messageUtil.getMainCategory()

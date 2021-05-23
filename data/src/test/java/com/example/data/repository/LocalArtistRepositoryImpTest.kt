@@ -122,7 +122,6 @@ class LocalArtistRepositoryImpTest : BaseTestUnit() {
             repository.deleteArtist(artist.name)
             coVerify(exactly = 1) { (artistDao).deleteByName(artist.name) }
         }
-
     }
 
     // endregion
@@ -171,7 +170,6 @@ class LocalArtistRepositoryImpTest : BaseTestUnit() {
                 artistEntity.genre2
             )
         }
-
     }
 
     // endregion

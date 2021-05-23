@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
-import androidx.lifecycle.Observer
 import com.example.presentation.R
 import com.example.presentation.databinding.ActivityStartBinding
 import com.example.presentation.util.Status
@@ -16,7 +15,6 @@ import org.koin.android.viewmodel.ext.android.viewModel
  */
 class StartActivity : AppCompatActivity() {
 
-
     private val viewModel: StartViewModel by viewModel()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -25,7 +23,7 @@ class StartActivity : AppCompatActivity() {
         binding.viewModel = viewModel
         binding.lifecycleOwner = this
 
-        viewModel.status.observe(this, Observer { onStateChanged(it) })
+        viewModel.status.observe(this, { onStateChanged(it) })
         viewModel.firstCheck()
 
         val signInView = SignInFragment.newInstance()

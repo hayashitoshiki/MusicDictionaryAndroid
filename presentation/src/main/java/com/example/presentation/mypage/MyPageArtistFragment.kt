@@ -12,7 +12,6 @@ import android.view.animation.AnimationUtils
 import android.widget.AdapterView
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
 import com.example.domain.model.entity.Artist
@@ -48,7 +47,7 @@ class MyPageArtistFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel.artistList.observe(viewLifecycleOwner, Observer { viewUpDate(it) })
+        viewModel.artistList.observe(viewLifecycleOwner, { viewUpDate(it) })
 
         // アーティスト追加ボタン
         binding.artistAddButton.setOnClickListener {

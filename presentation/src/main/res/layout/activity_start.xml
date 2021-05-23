@@ -57,7 +57,7 @@
                     android:button="@null"
                     android:checked="true"
                     android:gravity="center"
-                    android:enabled="@{viewModel.isEnableRadioButton}"></RadioButton>
+                    android:enabled="@{viewModel.isEnableRadioButton}" />
 
                 <RadioButton
                     android:text="@string/title_sign_up"
@@ -72,7 +72,7 @@
                     android:layout_weight="1"
                     android:button="@null"
                     android:gravity="center"
-                    android:enabled="@{viewModel.isEnableRadioButton}"></RadioButton>
+                    android:enabled="@{viewModel.isEnableRadioButton}" />
             </RadioGroup>
 
             <FrameLayout

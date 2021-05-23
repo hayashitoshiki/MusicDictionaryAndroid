@@ -1,13 +1,13 @@
 package com.example.domain.usecase
 
 import com.example.domain.BaseTestUnit
+import com.example.domain.model.entity.Artist
+import com.example.domain.model.entity.User
+import com.example.domain.model.value.*
 import com.example.domain.repository.LocalArtistRepository
 import com.example.domain.repository.LocalBookmarkArtistRepository
 import com.example.domain.repository.LocalUserRepository
 import com.example.domain.repository.RemoteUserRepository
-import com.example.domain.model.entity.Artist
-import com.example.domain.model.entity.User
-import com.example.domain.model.value.*
 import com.squareup.moshi.Moshi
 import io.mockk.*
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -34,7 +34,6 @@ class UserEntityUseCaseImpTest : BaseTestUnit() {
 
     private val successJson: String = Moshi.Builder().build().adapter(User::class.java).toJson(successUser)
     private val failureJson: String = Moshi.Builder().build().adapter(User::class.java).toJson(failureUser)
-    private val artistList = listOf(artist)
     private val artistListFlow = flow { emit(listOf(artist)) }
     private val failureResult = Result.Error(IllegalArgumentException(""))
     private val successEmail = "success"

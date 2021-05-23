@@ -3,9 +3,7 @@ package com.example.musicdictionaryandroid
 import android.app.Application
 import android.util.Log
 import androidx.room.Room
-import com.example.musicdictionaryandroid.database.AppDatabase
 import com.example.data.local.preferences.UserSharedPreferences
-import com.example.musicdictionaryandroid.preferences.UserSharedPreferencesImp
 import com.example.data.repository.*
 import com.example.domain.model.entity.Artist
 import com.example.domain.repository.LocalBookmarkArtistRepository
@@ -14,12 +12,14 @@ import com.example.domain.usecase.ArtistUseCase
 import com.example.domain.usecase.ArtistUseCaseImp
 import com.example.domain.usecase.UserUseCase
 import com.example.domain.usecase.UserUseCaseImp
+import com.example.musicdictionaryandroid.database.AppDatabase
+import com.example.musicdictionaryandroid.preferences.UserSharedPreferencesImp
 import com.example.presentation.MainActivityViewModel
+import com.example.presentation.SplashViewModel
+import com.example.presentation.home.*
 import com.example.presentation.login.SignInViewModel
 import com.example.presentation.login.SignUpViewModel
 import com.example.presentation.login.StartViewModel
-import com.example.presentation.SplashViewModel
-import com.example.presentation.home.*
 import com.example.presentation.mypage.*
 import com.example.presentation.util.MessageUtil
 import kotlinx.coroutines.MainScope
@@ -36,7 +36,7 @@ class MyApplication : Application() {
         lateinit var shared: MyApplication
 
         @Suppress("JAVA_CLASS_ON_COMPANION")
-        val TAG = javaClass.name
+        private val TAG = javaClass.name
     }
 
     // Global Scope
@@ -83,7 +83,7 @@ class MyApplication : Application() {
         viewModel { SplashViewModel(get()) }
 
         factory<ArtistUseCase> { ArtistUseCaseImp(get(), get(), get(), get(), applicationScope) }
-        factory<UserUseCase> { UserUseCaseImp(get(), get(), get(), get(), applicationScope)}
+        factory<UserUseCase> { UserUseCaseImp(get(), get(), get(), get()) }
 
         factory<com.example.domain.repository.RemoteArtistRepository> { RemoteArtistRepositoryImp() }
         factory<com.example.domain.repository.RemoteUserRepository> { RemoteUserRepositoryImp() }
@@ -92,7 +92,5 @@ class MyApplication : Application() {
         factory<LocalUserRepository> { LocalUserRepositoryImp(get()) }
 
         factory<UserSharedPreferences> { UserSharedPreferencesImp() }
-
-//        single<MessageUtil> { MessageUtilImp }
     }
 }

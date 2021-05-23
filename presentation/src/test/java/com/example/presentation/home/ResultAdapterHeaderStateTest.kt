@@ -12,8 +12,7 @@ import org.junit.Test
 
 class ResultAdapterHeaderStateTest {
 
-
-    /// mock
+    // / mock
     private lateinit var resultAdapterHeaderState: ResultAdapterHeaderState
 
     // data
@@ -602,7 +601,6 @@ class ResultAdapterHeaderStateTest {
     }
 
     // endregion
-
 
     // region 検索したジャンル２（文字列）取得
 

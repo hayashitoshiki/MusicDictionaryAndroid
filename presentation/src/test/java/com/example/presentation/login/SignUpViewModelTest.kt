@@ -1,8 +1,9 @@
 package com.example.presentation.login
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
-import com.example.domain.model.value.Result
 import com.example.domain.model.entity.User
+import com.example.domain.model.value.Result
+import com.example.domain.usecase.UserUseCase
 import com.example.presentation.BaseTestUnit
 import com.example.presentation.util.MessageUtil
 import com.example.presentation.util.Status
@@ -28,7 +29,7 @@ import org.junit.rules.TestRule
 class SignUpViewModelTest : BaseTestUnit() {
 
     // mock
-    private lateinit var viewModel: com.example.presentation.login.SignUpViewModel
+    private lateinit var viewModel: SignUpViewModel
     private lateinit var messageUtil: MessageUtil
 
     // data
@@ -49,7 +50,7 @@ class SignUpViewModelTest : BaseTestUnit() {
     @Before
     fun before() {
         Dispatchers.setMain(testDispatcher)
-        val userUseCase = mockk<com.example.domain.usecase.UserUseCase>().also() {
+        val userUseCase = mockk<UserUseCase>().also {
             coEvery { it.createUser(successEmail, any(), any()) } returns flow { emit(successResult) }
             coEvery { it.createUser(failureEmail, any(), any()) } returns flow { emit(failureResult) }
         }
@@ -58,7 +59,7 @@ class SignUpViewModelTest : BaseTestUnit() {
             every { it.getGender(user.gender) } returns "男"
             every { it.getArea(user.area) } returns "東京"
         }
-        viewModel = com.example.presentation.login.SignUpViewModel(messageUtil, userUseCase, testScope)
+        viewModel = SignUpViewModel(messageUtil, userUseCase, testScope)
         viewModel.isEnableSubmitButton.observeForever(observerBoolean)
         viewModel.passwordError1Text.observeForever(observerStringNullable)
         viewModel.passwordError2Text.observeForever(observerStringNullable)
@@ -478,7 +479,6 @@ class SignUpViewModelTest : BaseTestUnit() {
     }
 
     // endregion
-
 
     // region 新規作成処理
 

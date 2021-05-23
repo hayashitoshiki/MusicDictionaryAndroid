@@ -2,6 +2,7 @@ package com.example.presentation.login
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.example.domain.model.value.Result
+import com.example.domain.usecase.UserUseCase
 import com.example.presentation.BaseTestUnit
 import com.example.presentation.util.Status
 import io.mockk.coEvery
@@ -44,11 +45,11 @@ class SignInViewModelTest : BaseTestUnit() {
     @Before
     fun before() {
         Dispatchers.setMain(testDispatcher)
-        val userUseCase = mockk<com.example.domain.usecase.UserUseCase>().also() {
+        val userUseCase = mockk<UserUseCase>().also {
             coEvery { it.signIn(successEmail, any()) } returns flow { emit(successResult) }
             coEvery { it.signIn(failureEmail, any()) } returns flow { emit(failureResult) }
         }
-        viewModel = com.example.presentation.login.SignInViewModel(userUseCase, testScope)
+        viewModel = SignInViewModel(userUseCase, testScope)
         viewModel.isEnableSubmitButton.observeForever(observerBoolean)
     }
 

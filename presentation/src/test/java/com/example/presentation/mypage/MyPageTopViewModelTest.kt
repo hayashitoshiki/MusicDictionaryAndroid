@@ -25,7 +25,7 @@ class MyPageTopViewModelTest : BaseTestUnit() {
     val rule: TestRule = InstantTaskExecutorRule()
 
     // mock
-    private lateinit var viewModel: com.example.presentation.mypage.MyPageTopViewModel
+    private lateinit var viewModel: MyPageTopViewModel
     private lateinit var userUseCase: com.example.domain.usecase.UserUseCase
 
     @ExperimentalCoroutinesApi
@@ -35,7 +35,7 @@ class MyPageTopViewModelTest : BaseTestUnit() {
         userUseCase = mockk<com.example.domain.usecase.UserUseCase>().also {
             coEvery { it.signOut() } returns Unit
         }
-        viewModel = com.example.presentation.mypage.MyPageTopViewModel(userUseCase)
+        viewModel = MyPageTopViewModel(userUseCase)
     }
 
     @ExperimentalCoroutinesApi

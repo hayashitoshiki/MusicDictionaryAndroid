@@ -59,7 +59,6 @@ class ResultAdapterBodyState(private val messageUtil: MessageUtil) {
         _playBackUrl.value = "about:blank"
     }
 
-
     // 詳細画面表示・非表示
     fun setIsDetailsProfile(bool: Boolean) {
         _isDetailsProfile.value = bool

@@ -1,8 +1,8 @@
 package com.example.presentation.mypage
 
 import androidx.lifecycle.*
-import com.example.domain.model.value.Result
 import com.example.domain.model.entity.Artist
+import com.example.domain.model.value.Result
 import com.example.domain.usecase.ArtistUseCase
 import com.example.presentation.util.Status
 import kotlinx.coroutines.Job
@@ -27,8 +27,8 @@ class MyPageArtistViewModel(private val artistUseCase: ArtistUseCase) : ViewMode
     val isNoDataText: LiveData<Boolean> = _isNoDataText
 
     init {
-        _isProgressBar.addSource(status, Observer { changeProgressBar(it) })
-        _isNoDataText.addSource(artistList, Observer { changeNoDataText(it) })
+        _isProgressBar.addSource(status) { changeProgressBar(it) }
+        _isNoDataText.addSource(artistList) { changeNoDataText(it) }
     }
 
     // プログレスバーの表示制御

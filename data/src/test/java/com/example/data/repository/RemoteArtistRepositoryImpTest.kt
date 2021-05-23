@@ -60,7 +60,6 @@ class RemoteArtistRepositoryImpTest : BaseTestUnit() {
         repository = RemoteArtistRepositoryImp(provider, testDispatcher)
     }
 
-
     // アーティストDtoからアーティストモデルへ変換
     private fun convertArtistFromArtistDto(artistFrom: ArtistDto): Artist {
         val name = artistFrom.name
@@ -124,7 +123,6 @@ class RemoteArtistRepositoryImpTest : BaseTestUnit() {
         val genre2 = artist.genre2?.value ?: 0
         return ArtistDto(name, gender, voice, length, lyrics, genre1, genre2)
     }
-
 
     @After
     fun tearDown() {
@@ -218,7 +216,7 @@ class RemoteArtistRepositoryImpTest : BaseTestUnit() {
      */
     @Test
     fun getArtistBySoaringByFailure() {
-        musicDictionaryApi = mockk<MusicDictionaryService>()
+        musicDictionaryApi = mockk()
         provider = mockk<Provider>().also {
             every { it.musicDictionaryApi() } returns musicDictionaryApi
         }

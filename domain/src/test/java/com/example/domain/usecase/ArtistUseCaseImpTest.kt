@@ -1,14 +1,13 @@
 package com.example.domain.usecase
 
 import com.example.domain.BaseTestUnit
+import com.example.domain.model.entity.Artist
+import com.example.domain.model.entity.ArtistContents
+import com.example.domain.model.value.*
 import com.example.domain.repository.LocalArtistRepository
 import com.example.domain.repository.LocalBookmarkArtistRepository
 import com.example.domain.repository.LocalUserRepository
 import com.example.domain.repository.RemoteArtistRepository
-import com.example.domain.model.entity.Artist
-import com.example.domain.model.entity.ArtistContents
-import com.example.domain.model.entity.User
-import com.example.domain.model.value.*
 import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.every
@@ -33,7 +32,6 @@ class ArtistUseCaseImpTest : BaseTestUnit() {
     private lateinit var localBookmarkArtistRepository: LocalBookmarkArtistRepository
     private lateinit var localUserRepository: LocalUserRepository
 
-    private val user = User("test@com.jp", "testA", 1, 1, "2000/2/2", 1)
     private val artist = Artist("test", Gender.MAN, Voice(0), Length(0), Lyrics(0), Genre1(0), Genre2(0))
     private val artistConditions = ArtistConditions("test", null, null, null, null, null, null)
     private val artistContents = ArtistContents(artist, null, null, 0, 0, 0, 0, 0, 0, 0, 0)

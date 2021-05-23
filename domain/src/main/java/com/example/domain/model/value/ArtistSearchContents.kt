@@ -12,4 +12,3 @@ sealed class ArtistSearchContents<out R> {
     // アーティスト情報
     data class Item(val value: ArtistContents) : ArtistSearchContents<ArtistContents>()
 }
-

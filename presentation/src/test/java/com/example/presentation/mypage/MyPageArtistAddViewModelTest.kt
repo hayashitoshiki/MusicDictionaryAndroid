@@ -2,9 +2,9 @@ package com.example.presentation.mypage
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.MutableLiveData
-import com.example.domain.model.value.Result
 import com.example.domain.model.entity.Artist
 import com.example.domain.model.value.*
+import com.example.domain.model.value.Result
 import com.example.domain.usecase.ArtistUseCase
 import com.example.presentation.BaseTestUnit
 import com.example.presentation.util.MessageUtil
@@ -182,7 +182,7 @@ class MyPageArtistAddViewModelTest : BaseTestUnit() {
         val status = Status.Non
         (viewModel.status as MutableLiveData).value = status
         val result = viewModel.isProgressBar.value
-        Assert.assertEquals(false, result)
+        assertEquals(false, result)
     }
 
     /**
@@ -196,7 +196,7 @@ class MyPageArtistAddViewModelTest : BaseTestUnit() {
         val status = Status.Loading
         (viewModel.status as MutableLiveData).value = status
         val result = viewModel.isProgressBar.value
-        Assert.assertEquals(true, result)
+        assertEquals(true, result)
     }
 
     /**
@@ -210,7 +210,7 @@ class MyPageArtistAddViewModelTest : BaseTestUnit() {
         val status = Status.Success(artist)
         (viewModel.status as MutableLiveData).value = status
         val result = viewModel.isProgressBar.value
-        Assert.assertEquals(false, result)
+        assertEquals(false, result)
     }
 
     /**
@@ -224,10 +224,9 @@ class MyPageArtistAddViewModelTest : BaseTestUnit() {
         val status = Status.Failure(IllegalArgumentException(""))
         (viewModel.status as MutableLiveData).value = status
         val result = viewModel.isProgressBar.value
-        Assert.assertEquals(false, result)
+        assertEquals(false, result)
     }
     // endregion
-
 
     // region 送信ボタンバリデート
 

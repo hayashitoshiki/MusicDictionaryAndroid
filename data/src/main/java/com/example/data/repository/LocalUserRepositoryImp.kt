@@ -41,5 +41,4 @@ class LocalUserRepositoryImp(private val userSharedPreferences: UserSharedPrefer
     override fun removeAll() {
         userSharedPreferences.removeAll()
     }
-
 }

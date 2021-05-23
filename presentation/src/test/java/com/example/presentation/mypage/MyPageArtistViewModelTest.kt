@@ -30,10 +30,11 @@ class MyPageArtistViewModelTest : BaseTestUnit() {
     val rule: TestRule = InstantTaskExecutorRule()
 
     // mock
-    private lateinit var viewModel: com.example.presentation.mypage.MyPageArtistViewModel
+    private lateinit var viewModel: MyPageArtistViewModel
     private lateinit var artistUseCase: com.example.domain.usecase.ArtistUseCase
 
     // data
+    private val artistEmptyList = listOf<Artist>()
     private val successArtist = Artist("success", Gender.MAN, Voice(0), Length(0), Lyrics(0), Genre1(0), Genre2(0))
     private val failureArtist = Artist("failure", Gender.MAN, Voice(0), Length(0), Lyrics(0), Genre1(0), Genre2(0))
     private val successResult = Result.Success("success")
@@ -49,7 +50,7 @@ class MyPageArtistViewModelTest : BaseTestUnit() {
             coEvery { it.deleteArtist(failureArtist.name) } returns failureResult
             coEvery { it.getArtistList() } returns flow { emit(listOf(successArtist)) }
         }
-        viewModel = com.example.presentation.mypage.MyPageArtistViewModel(artistUseCase)
+        viewModel = MyPageArtistViewModel(artistUseCase)
         viewModel.isProgressBar.observeForever(observerBoolean)
         viewModel.isNoDataText.observeForever(observerBoolean)
     }
@@ -130,9 +131,9 @@ class MyPageArtistViewModelTest : BaseTestUnit() {
     @Test
     fun isNoDataTextByNothingList() {
         artistUseCase = mockk<com.example.domain.usecase.ArtistUseCase>().also {
-            coEvery { it.getArtistList() } returns flow { emit(listOf<Artist>()) }
+            coEvery { it.getArtistList() } returns flow { emit(artistEmptyList) }
         }
-        viewModel = com.example.presentation.mypage.MyPageArtistViewModel(artistUseCase)
+        viewModel = MyPageArtistViewModel(artistUseCase)
         viewModel.isNoDataText.observeForever(observerBoolean)
         val result = viewModel.isNoDataText.value
         assertEquals(true, result)

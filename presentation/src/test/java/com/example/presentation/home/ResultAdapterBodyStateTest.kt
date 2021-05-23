@@ -2,10 +2,10 @@ package com.example.presentation.home
 
 import android.graphics.Color
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
-import com.example.presentation.BaseTestUnit
 import com.example.domain.model.value.Gender
 import com.example.domain.model.value.Genre1
 import com.example.domain.model.value.Genre2
+import com.example.presentation.BaseTestUnit
 import com.example.presentation.R
 import com.example.presentation.util.MessageUtil
 import io.mockk.every
@@ -23,7 +23,7 @@ class ResultAdapterBodyStateTest : BaseTestUnit() {
     @get:Rule
     val rule: TestRule = InstantTaskExecutorRule()
 
-    /// mock
+    // / mock
     private lateinit var resultAdapterBodyState: ResultAdapterBodyState
 
     // data

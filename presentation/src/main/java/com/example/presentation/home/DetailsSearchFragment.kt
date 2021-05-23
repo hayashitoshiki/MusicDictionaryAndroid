@@ -1,25 +1,20 @@
 package com.example.presentation.home
 
 import android.os.Bundle
-import android.transition.ChangeBounds
-import android.transition.ChangeClipBounds
-import android.transition.ChangeTransform
-import android.transition.TransitionSet
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.animation.AnimationUtils
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.example.presentation.R
 import com.example.presentation.databinding.FragmentDetailsSearchBinding
 import com.example.presentation.util.transition.FabTransform
 import com.example.presentation.util.transition.HOME_DETAILS_BUTTON
-import kotlinx.coroutines.*
 import kotlin.coroutines.CoroutineContext
+import kotlinx.coroutines.*
 
 /**
  * 詳細検索画面
@@ -72,13 +67,13 @@ class DetailsSearchFragment : Fragment(), CoroutineScope {
             resources.getStringArray(R.array.birthday_spinner_list)
         )
 
-        viewModel.genre1KeyInt.observe(viewLifecycleOwner, Observer { viewModel.changeGenreKey(1, it) })
-        viewModel.genre2KeyInt.observe(viewLifecycleOwner, Observer { viewModel.changeGenreKey(2, it) })
-        viewModel.genre3KeyInt.observe(viewLifecycleOwner, Observer { viewModel.changeGenreKey(3, it) })
-        viewModel.genre4KeyInt.observe(viewLifecycleOwner, Observer { viewModel.changeGenreKey(4, it) })
-        viewModel.genre1ValueInt.observe(viewLifecycleOwner, Observer { viewModel.changeGenreValue(1, it) })
-        viewModel.genre2ValueInt.observe(viewLifecycleOwner, Observer { viewModel.changeGenreValue(2, it) })
-        viewModel.genre3ValueInt.observe(viewLifecycleOwner, Observer { viewModel.changeGenreValue(3, it) })
+        viewModel.genre1KeyInt.observe(viewLifecycleOwner, { viewModel.changeGenreKey(1, it) })
+        viewModel.genre2KeyInt.observe(viewLifecycleOwner, { viewModel.changeGenreKey(2, it) })
+        viewModel.genre3KeyInt.observe(viewLifecycleOwner, { viewModel.changeGenreKey(3, it) })
+        viewModel.genre4KeyInt.observe(viewLifecycleOwner, { viewModel.changeGenreKey(4, it) })
+        viewModel.genre1ValueInt.observe(viewLifecycleOwner, { viewModel.changeGenreValue(1, it) })
+        viewModel.genre2ValueInt.observe(viewLifecycleOwner, { viewModel.changeGenreValue(2, it) })
+        viewModel.genre3ValueInt.observe(viewLifecycleOwner, { viewModel.changeGenreValue(3, it) })
 
         // 検索結果画面へ遷移
         binding.submit.setOnClickListener {
