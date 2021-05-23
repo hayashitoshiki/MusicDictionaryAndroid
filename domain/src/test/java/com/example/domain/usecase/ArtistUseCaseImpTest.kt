@@ -86,8 +86,7 @@ class ArtistUseCaseImpTest : BaseTestUnit() {
             localArtistRepository,
             localUserRepository,
             localBookmarkArtistRepository,
-            testScope,
-            testDispatcher
+            testScope
         )
     }
 
@@ -97,8 +96,7 @@ class ArtistUseCaseImpTest : BaseTestUnit() {
             localArtistRepository,
             localUserRepository,
             localBookmarkArtistRepository,
-            testScope,
-            testDispatcher
+            testScope
         )
     }
 

@@ -85,9 +85,7 @@ class UserEntityUseCaseImpTest : BaseTestUnit() {
             remoteUserRepository,
             localUserRepository,
             localArtistRepository,
-            localBookmarkArtistRepository,
-            testScope,
-            testDispatcher
+            localBookmarkArtistRepository
         )
     }
 
