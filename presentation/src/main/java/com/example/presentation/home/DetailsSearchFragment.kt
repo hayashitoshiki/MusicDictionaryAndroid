@@ -42,11 +42,6 @@ class DetailsSearchFragment : Fragment(), CoroutineScope {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val transition = TransitionSet().apply {
-            addTransition(ChangeBounds())
-            addTransition(ChangeTransform())
-            addTransition(ChangeClipBounds())
-        }
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_details_search, container, false)
         binding.lifecycleOwner = viewLifecycleOwner
         binding.viewModel = viewModel
@@ -57,7 +52,7 @@ class DetailsSearchFragment : Fragment(), CoroutineScope {
             HOME_DETAILS_BUTTON
         )
         sharedElementEnterTransition = trans
-        sharedElementReturnTransition = transition
+        sharedElementReturnTransition = trans
         if (state == 1) {
             val anim = AnimationUtils.loadAnimation(requireContext(), R.anim.slide_in_bottom)
             binding.detailSearchView.startAnimation(anim)

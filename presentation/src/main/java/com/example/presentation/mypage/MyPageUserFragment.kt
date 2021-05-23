@@ -13,14 +13,17 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import com.example.presentation.R
 import com.example.presentation.databinding.FragmentMypageUserBinding
+import com.example.presentation.util.MessageUtilImp
+import org.koin.android.ext.android.inject
 import org.koin.android.viewmodel.ext.android.viewModel
+import org.koin.core.parameter.parametersOf
 
 /**
  * ユーザー情報画面
  */
 class MyPageUserFragment : Fragment() {
 
-    private val viewModel: MyPageUserViewModel by viewModel()
+    private val viewModel: MyPageUserViewModel by inject { parametersOf(MessageUtilImp(requireContext())) }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         val root: FragmentMypageUserBinding =

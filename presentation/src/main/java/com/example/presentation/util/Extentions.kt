@@ -47,6 +47,8 @@ fun <T : CompoundButton> T.setSafeCheckListener(listener: (it: T, isChecked: Boo
 }
 
 @BindingAdapter("loadUrl")
-fun WebView.setUrl(url: String) {
-    this.loadUrl(url)
+fun WebView.setUrl(url: String?) {
+    url?.let {
+        this.loadUrl(url)
+    }
 }

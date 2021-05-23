@@ -54,14 +54,12 @@ class HomeFragment : Fragment(), CoroutineScope {
         // カテゴリボタン
         binding.categoryButton.setOnClickListener {
             state = 1
-            val extras = FragmentNavigatorExtras(it to "end_category_view_transition")
-            findNavController().navigate(R.id.action_navigation_home_to_category_search, null, null, extras)
+            findNavController().navigate(R.id.action_navigation_home_to_category_search, null, null, null)
         }
         // 詳細検索ボタン
         binding.detailButton.setOnClickListener {
             state = 1
-            val extras = FragmentNavigatorExtras(it to "end_detail_view_transition")
-            findNavController().navigate(R.id.action_navigation_home_to_navigation_details_search, null, null, extras)
+            findNavController().navigate(R.id.action_navigation_home_to_navigation_details_search, null, null, null)
         }
         // 急上昇ボタン
         binding.soaringButton.setSafeClickListener {

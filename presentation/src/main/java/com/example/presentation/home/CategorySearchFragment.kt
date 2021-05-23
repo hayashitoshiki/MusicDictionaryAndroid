@@ -46,18 +46,13 @@ class CategorySearchFragment : Fragment(), CoroutineScope {
         binding.lifecycleOwner = viewLifecycleOwner
         binding.viewModel = viewModel
 
-        val transition = TransitionSet().apply {
-            addTransition(ChangeBounds())
-            addTransition(ChangeTransform())
-            addTransition(ChangeClipBounds())
-        }
         val trans = FabTransform(
             resources.getColor(R.color.bg_color_primary, null),
             R.drawable.round_primary_dark_button,
             HOME_CATEGORY_BUTTON
         )
         sharedElementEnterTransition = trans
-        sharedElementReturnTransition = transition
+        sharedElementReturnTransition = trans
 
         if (com.example.presentation.home.CategorySearchFragment.Companion.state == 1) {
             val anim = AnimationUtils.loadAnimation(requireContext(), R.anim.slide_in_bottom)
