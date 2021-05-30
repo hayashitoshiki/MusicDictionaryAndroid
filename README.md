@@ -15,16 +15,23 @@ MVVM
 
 ## 主な使用技術
 ###  ネイティブ(ライブラリ)
-* Koin
-* Retrofit
-* OkHttp
-* Gson
-* Coroutine
-* ktLint
-* Firebase
-* Room
-* LiveData
-* DataBinding
+* DI
+  * Koin
+* 通信
+  * Retrofit
+  * OkHttp
+  * Kotlin Serialization
+* 非同期
+  * Coroutine
+* DataBase
+  * Room
+* UI
+  * LiveData
+  * DataBinding
+* フォーマッター
+  * ktLint
+* その他
+  * Firebase
 
 ### バックエンド
 * Ruby  
