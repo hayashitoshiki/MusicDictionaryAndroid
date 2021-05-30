@@ -1,5 +1,7 @@
 package com.example.data.remote.network.dto
 
+import kotlinx.serialization.Serializable
+
 /**
  *  ユーザー情報
  *
@@ -10,6 +12,7 @@ package com.example.data.remote.network.dto
  * @property birthday 生年月日
  * @property artist_count 登録済みアーティスト数
  */
+@Serializable
 data class UserDto(
     val email: String,
     val name: String,

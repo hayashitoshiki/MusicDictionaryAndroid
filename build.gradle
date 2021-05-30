@@ -9,6 +9,7 @@ buildscript {
     dependencies {
         classpath 'com.android.tools.build:gradle:4.2.1'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+        classpath "org.jetbrains.kotlin:kotlin-serialization:$kotlin_version"
         //Realm
         classpath "io.realm:realm-gradle-plugin:4.2.0"
         // safe-args
@@ -25,6 +26,7 @@ allprojects {
     repositories {
         google()
         jcenter()
+        maven { url "https://kotlin.bintray.com/kotlinx" }
         maven { url 'https://jitpack.io' }
     }
 }
@@ -121,10 +123,6 @@ subprojects { // 配下のモジュール全てに適用される
         implementation "org.koin:koin-android:$koin_version"
         implementation "org.koin:koin-android-scope:$koin_version"
         implementation "org.koin:koin-android-viewmodel:$koin_version"
-        // Moshi
-        def moshi_version = "1.8.0"
-        implementation "com.squareup.moshi:moshi-kotlin:$moshi_version"
-        implementation "com.squareup.moshi:moshi-adapters:$moshi_version"
         // Room
         def room_version = "2.3.0"
         implementation "androidx.room:room-runtime:$room_version"

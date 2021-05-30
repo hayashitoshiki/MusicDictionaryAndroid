@@ -2,6 +2,10 @@ package com.example.data.remote.network
 
 import com.example.data.BuildConfig
 import com.example.data.remote.network.service.MusicDictionaryService
+import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
+import kotlinx.serialization.ExperimentalSerializationApi
+import kotlinx.serialization.json.Json
+import okhttp3.MediaType.Companion.toMediaType
 import java.util.concurrent.TimeUnit
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -35,12 +39,16 @@ object ProviderImp : Provider {
     /**
      * MusicDictionaryApi
      */
+    @ExperimentalSerializationApi
     override fun musicDictionaryApi(): MusicDictionaryService {
-
+        val contentType = "application/json".toMediaType()
         val retrofit = Retrofit.Builder()
             .baseUrl(BuildConfig.webServer)
             .client(build())
-            .addConverterFactory(MoshiConverterFactory.create())
+            .addConverterFactory(Json{
+                isLenient = true
+                ignoreUnknownKeys = true
+            }.asConverterFactory(contentType))
             .build()
         return retrofit.create(MusicDictionaryService::class.java)
     }

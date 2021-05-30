@@ -204,5 +204,16 @@ object Converter {
         return User(email, name, gender, area, birthday, artistCount)
     }
 
+    // ユーザDtoからユーザモデルへ変換
+    fun userDtoFromUser(user: User): UserDto {
+        val email = user.email
+        val name = user.name
+        val gender = user.gender
+        val area = user.area
+        val birthday = user.birthday
+        val artistCount = user.artistCount
+        return UserDto(email, name, gender, area, birthday, artistCount)
+    }
+
     // endregion
 }
