@@ -11,6 +11,8 @@ import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.withContext
+import kotlinx.serialization.encodeToString
+import kotlinx.serialization.json.Json
 
 class RemoteUserRepositoryImp(
     private val provider: Provider = ProviderImp,
@@ -29,8 +31,10 @@ class RemoteUserRepositoryImp(
     }
 
     // ユーザー登録
-    override suspend fun createUser(user: String): Result<String> = withContext(ioDispatcher) {
-        return@withContext runCatching { provider.musicDictionaryApi().createUser(user) }.fold(
+    override suspend fun createUser(user: User): Result<String> = withContext(ioDispatcher) {
+        val userDto = Converter.userDtoFromUser(user)
+        val userString = Json.encodeToString(userDto)
+        return@withContext runCatching { provider.musicDictionaryApi().createUser(userString) }.fold(
             onSuccess = { Result.Success(it.status.message) },
             onFailure = { Result.Error(it) }
         )

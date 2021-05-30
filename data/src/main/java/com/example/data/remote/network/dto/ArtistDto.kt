@@ -1,5 +1,7 @@
 package com.example.data.remote.network.dto
 
+import kotlinx.serialization.Serializable
+
 /**
  * アーティスト情報
  *
@@ -11,6 +13,7 @@ package com.example.data.remote.network.dto
  * @property genre1 ジャンル１
  * @property genre2 ジャンル２
  */
+@Serializable
 data class ArtistDto(
     var name: String = "",
     var gender: Int = 0,

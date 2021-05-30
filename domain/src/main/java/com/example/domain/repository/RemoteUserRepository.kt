@@ -23,7 +23,7 @@ interface RemoteUserRepository {
      * @param user 登録数ユーザー情報
      * @return 登録処理結果
      */
-    suspend fun createUser(user: String): Result<String>
+    suspend fun createUser(user: User): Result<String>
 
     /**
      * ログイン状態チェック

@@ -18,6 +18,8 @@ import io.mockk.verify
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.runBlocking
+import kotlinx.serialization.encodeToString
+import kotlinx.serialization.json.Json
 import org.junit.After
 import org.junit.Assert.assertEquals
 import org.junit.Before
@@ -37,7 +39,9 @@ class RemoteUserRepositoryImpTest : BaseTestUnit() {
     private val successUserDto = UserDto(successEmail, "TestA", 1, 1, "", 1)
     private val successUser = convertUserFromUserDto(successUserDto)
     private val failureEmail = "failure"
-    private val successUserJson: String = Moshi.Builder().build().adapter(User::class.java).toJson(successUser)
+    private val failureUserDto = UserDto(failureEmail, "TestA", 1, 1, "", 1)
+    private val failureUser = convertUserFromUserDto(failureUserDto)
+    private val successUserJson: String = Json.encodeToString(successUserDto)
     private val statusDto = StatusDto(200, "Success")
     private val statusResponseDto = StatusResponseDto(statusDto)
     private val userResponseDto = UserResponseDto(statusDto, successUserDto)
@@ -111,7 +115,7 @@ class RemoteUserRepositoryImpTest : BaseTestUnit() {
     @Test
     fun createUserBySuccess() {
         runBlocking {
-            val result = repository.createUser(successUserJson)
+            val result = repository.createUser(successUser)
             assertEquals(successResult, result)
         }
     }
@@ -125,7 +129,7 @@ class RemoteUserRepositoryImpTest : BaseTestUnit() {
     @Test
     fun createUserByFailure() {
         runBlocking {
-            val result = repository.createUser(failureEmail) is Result.Error
+            val result = repository.createUser(failureUser) is Result.Error
             assertEquals(true, result)
         }
     }

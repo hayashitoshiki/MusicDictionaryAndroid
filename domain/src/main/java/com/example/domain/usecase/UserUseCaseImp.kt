@@ -6,7 +6,6 @@ import com.example.domain.repository.LocalArtistRepository
 import com.example.domain.repository.LocalBookmarkArtistRepository
 import com.example.domain.repository.LocalUserRepository
 import com.example.domain.repository.RemoteUserRepository
-import com.squareup.moshi.Moshi
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.flow
@@ -28,8 +27,7 @@ class UserUseCaseImp(
         remoteUserRepository.signUp(email, password).collect { firebaseResult ->
             when (firebaseResult) {
                 is Result.Success -> {
-                    val json: String = Moshi.Builder().build().adapter(User::class.java).toJson(user)
-                    when (val apiResult = remoteUserRepository.createUser(json)) {
+                    when (val apiResult = remoteUserRepository.createUser(user)) {
                         is Result.Success -> {
                             localUserRepository.setUser(user)
                             emit(firebaseResult)

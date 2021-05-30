@@ -8,7 +8,6 @@ import com.example.domain.repository.LocalArtistRepository
 import com.example.domain.repository.LocalBookmarkArtistRepository
 import com.example.domain.repository.LocalUserRepository
 import com.example.domain.repository.RemoteUserRepository
-import com.squareup.moshi.Moshi
 import io.mockk.*
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.first
@@ -32,9 +31,7 @@ class UserEntityUseCaseImpTest : BaseTestUnit() {
 
     private val artist = Artist("test", Gender.MAN, Voice(0), Length(0), Lyrics(0), Genre1(0), Genre2(0))
 
-    private val successJson: String = Moshi.Builder().build().adapter(User::class.java).toJson(successUser)
-    private val failureJson: String = Moshi.Builder().build().adapter(User::class.java).toJson(failureUser)
-    private val artistListFlow = flow { emit(listOf(artist)) }
+     private val artistListFlow = flow { emit(listOf(artist)) }
     private val failureResult = Result.Error(IllegalArgumentException(""))
     private val successEmail = "success"
     private val failureEmail = "Failure"
@@ -66,8 +63,8 @@ class UserEntityUseCaseImpTest : BaseTestUnit() {
             every { it.delete() } returns flow { emit(successResult) }
             coEvery { it.getUserByEmail(successEmail) } returns createSuccessResult
             coEvery { it.getUserByEmail(failureEmail) } returns failureResult
-            coEvery { it.createUser(successJson) } returns successResult
-            coEvery { it.createUser(failureJson) } returns failureResult
+            coEvery { it.createUser(successUser) } returns successResult
+            coEvery { it.createUser(failureUser) } returns failureResult
         }
         localUserRepository = mockk<LocalUserRepository>().also {
             every { it.setUser(any()) } returns Unit
@@ -120,7 +117,7 @@ class UserEntityUseCaseImpTest : BaseTestUnit() {
     fun createUserSuccess() {
         runBlocking {
             val result = useCase.createUser(successEmail, successEmail, successUser).first()
-            coVerify(exactly = 1) { (remoteUserRepository).createUser(successJson) }
+            coVerify(exactly = 1) { (remoteUserRepository).createUser(successUser) }
             assertEquals(successResult, result)
         }
     }
@@ -134,7 +131,7 @@ class UserEntityUseCaseImpTest : BaseTestUnit() {
     fun createUserApiError() {
         runBlocking {
             val result = useCase.createUser(successEmail, successEmail, failureUser).first()
-            coVerify(exactly = 1) { (remoteUserRepository).createUser(failureJson) }
+            coVerify(exactly = 1) { (remoteUserRepository).createUser(failureUser) }
             assertEquals(failureResult, result)
         }
     }
