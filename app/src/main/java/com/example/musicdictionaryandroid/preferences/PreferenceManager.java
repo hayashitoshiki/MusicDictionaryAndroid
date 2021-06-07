@@ -1,17 +1,19 @@
 package com.example.musicdictionaryandroid.preferences;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.SharedPreferences;
-
-import com.example.musicdictionaryandroid.MyApplication;
 
 /**
  * Preference制御管理
  */
 public class PreferenceManager {
 
-    private static Context getContext() {
-        return MyApplication.shared.getApplicationContext();
+    @SuppressLint("StaticFieldLeak")
+    private static Context context;
+
+    public PreferenceManager(Context context) {
+        PreferenceManager.context = context;
     }
 
     /**
@@ -20,8 +22,8 @@ public class PreferenceManager {
      * @param key   キー
      * @param value 格納する値
      */
-    protected static void setString(PreferenceKey.StringKey key, String value) {
-        SharedPreferences preferences = getContext().getSharedPreferences("musicDictionary", Context.MODE_PRIVATE);
+    protected void setString(PreferenceKey.StringKey key, String value) {
+        SharedPreferences preferences = context.getSharedPreferences("musicDictionary", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = preferences.edit();
         editor.putString(key.name(), value);
         editor.apply();
@@ -33,9 +35,9 @@ public class PreferenceManager {
      * @param key キー
      * @return キーに紐づくString型オブジェクト
      */
-    protected static String getString(PreferenceKey.StringKey key) {
+    protected String getString(PreferenceKey.StringKey key) {
         String defaultValue = "";
-        SharedPreferences preferences = getContext().getSharedPreferences("musicDictionary", Context.MODE_PRIVATE);
+        SharedPreferences preferences = context.getSharedPreferences("musicDictionary", Context.MODE_PRIVATE);
         return preferences.getString(key.name(), defaultValue);
     }
 
@@ -45,8 +47,8 @@ public class PreferenceManager {
      * @param key   　キー
      * @param value 格納する値
      */
-    protected static void setInt(PreferenceKey.IntKey key, int value) {
-        SharedPreferences preferences = getContext().getSharedPreferences("musicDictionary", Context.MODE_PRIVATE);
+    protected void setInt(PreferenceKey.IntKey key, int value) {
+        SharedPreferences preferences = context.getSharedPreferences("musicDictionary", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = preferences.edit();
         editor.putInt(key.name(), value);
         editor.apply();
@@ -58,9 +60,9 @@ public class PreferenceManager {
      * @param key 　キー
      * @return キーに紐づくint型オブジェクト
      */
-    protected static int getInt(PreferenceKey.IntKey key) {
+    protected int getInt(PreferenceKey.IntKey key) {
         int defaultValue = 0;
-        SharedPreferences preferences = getContext().getSharedPreferences("musicDictionary", Context.MODE_PRIVATE);
+        SharedPreferences preferences = context.getSharedPreferences("musicDictionary", Context.MODE_PRIVATE);
         return preferences.getInt(key.name(), defaultValue);
     }
 
@@ -69,8 +71,8 @@ public class PreferenceManager {
      *
      * @param key 削除するString型のキー
      */
-    protected static void remove(PreferenceKey.StringKey key) {
-        SharedPreferences preferences = getContext().getSharedPreferences("musicDictionary", Context.MODE_PRIVATE);
+    protected void remove(PreferenceKey.StringKey key) {
+        SharedPreferences preferences = context.getSharedPreferences("musicDictionary", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = preferences.edit();
         editor.remove(key.name());
         editor.apply();
@@ -81,8 +83,8 @@ public class PreferenceManager {
      *
      * @param key 削除するint型のキー
      */
-    protected static void remove(PreferenceKey.IntKey key) {
-        SharedPreferences preferences = getContext().getSharedPreferences("musicDictionary", Context.MODE_PRIVATE);
+    protected void remove(PreferenceKey.IntKey key) {
+        SharedPreferences preferences = context.getSharedPreferences("musicDictionary", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = preferences.edit();
         editor.remove(key.name());
         editor.apply();
