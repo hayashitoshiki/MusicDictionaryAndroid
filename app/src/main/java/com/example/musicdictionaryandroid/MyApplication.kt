@@ -13,6 +13,7 @@ import com.example.domain.usecase.ArtistUseCaseImp
 import com.example.domain.usecase.UserUseCase
 import com.example.domain.usecase.UserUseCaseImp
 import com.example.musicdictionaryandroid.database.AppDatabase
+import com.example.musicdictionaryandroid.preferences.PreferenceManager
 import com.example.musicdictionaryandroid.preferences.UserSharedPreferencesImp
 import com.example.presentation.MainActivityViewModel
 import com.example.presentation.SplashViewModel
@@ -91,6 +92,8 @@ class MyApplication : Application() {
         factory<LocalBookmarkArtistRepository> { LocalBookmarkArtistRepositoryImp(database.bookmarkArtistDao()) }
         factory<LocalUserRepository> { LocalUserRepositoryImp(get()) }
 
-        factory<UserSharedPreferences> { UserSharedPreferencesImp() }
+        factory<UserSharedPreferences> { UserSharedPreferencesImp(get()) }
+
+        single { PreferenceManager(applicationContext) }
     }
 }

@@ -1,9 +1,9 @@
 package com.example.musicdictionaryandroid.preferences
 
+import com.example.data.local.preferences.UserSharedPreferences
 import com.example.domain.model.entity.User
-import com.example.musicdictionaryandroid.preferences.PreferenceManager.remove
 
-class UserSharedPreferencesImp : com.example.data.local.preferences.UserSharedPreferences {
+class UserSharedPreferencesImp(private val preferenceManager: PreferenceManager) : UserSharedPreferences {
 
     override fun setUser(user: User) {
         setEmail(user.email)
@@ -15,13 +15,13 @@ class UserSharedPreferencesImp : com.example.data.local.preferences.UserSharedPr
     }
 
     override fun setEmail(value: String) {
-        PreferenceManager.setString(PreferenceKey.StringKey.EMAIL, value)
+        preferenceManager.setString(PreferenceKey.StringKey.EMAIL, value)
     }
 
-    override fun getEmail(): String = PreferenceManager.getString(PreferenceKey.StringKey.EMAIL)
+    override fun getEmail(): String = preferenceManager.getString(PreferenceKey.StringKey.EMAIL)
 
     override fun setName(value: String) {
-        PreferenceManager.setString(PreferenceKey.StringKey.NAME, value)
+        preferenceManager.setString(PreferenceKey.StringKey.NAME, value)
     }
 
     override fun getUser(): User {
@@ -35,46 +35,46 @@ class UserSharedPreferencesImp : com.example.data.local.preferences.UserSharedPr
         )
     }
 
-    override fun getName(): String = PreferenceManager.getString(PreferenceKey.StringKey.NAME)
+    override fun getName(): String = preferenceManager.getString(PreferenceKey.StringKey.NAME)
 
     override fun setGender(value: Int) {
-        PreferenceManager.setInt(PreferenceKey.IntKey.GENDER, value)
+        preferenceManager.setInt(PreferenceKey.IntKey.GENDER, value)
     }
 
     override fun getGender(): Int {
-        return PreferenceManager.getInt(PreferenceKey.IntKey.GENDER)
+        return preferenceManager.getInt(PreferenceKey.IntKey.GENDER)
     }
 
     override fun setArea(value: Int) {
-        PreferenceManager.setInt(PreferenceKey.IntKey.AREA, value)
+        preferenceManager.setInt(PreferenceKey.IntKey.AREA, value)
     }
 
     override fun getArea(): Int {
-        return PreferenceManager.getInt(PreferenceKey.IntKey.AREA)
+        return preferenceManager.getInt(PreferenceKey.IntKey.AREA)
     }
 
     override fun setBirthday(value: String) {
-        PreferenceManager.setString(PreferenceKey.StringKey.BIRTHDAY, value)
+        preferenceManager.setString(PreferenceKey.StringKey.BIRTHDAY, value)
     }
 
     override fun getBirthday(): String {
-        return PreferenceManager.getString(PreferenceKey.StringKey.BIRTHDAY)
+        return preferenceManager.getString(PreferenceKey.StringKey.BIRTHDAY)
     }
 
     override fun setFavorite(value: Int) {
-        PreferenceManager.setInt(PreferenceKey.IntKey.FAVORITE, value)
+        preferenceManager.setInt(PreferenceKey.IntKey.FAVORITE, value)
     }
 
     override fun getFavorite(): Int {
-        return PreferenceManager.getInt(PreferenceKey.IntKey.FAVORITE)
+        return preferenceManager.getInt(PreferenceKey.IntKey.FAVORITE)
     }
 
     override fun removeAll() {
-        remove(PreferenceKey.StringKey.EMAIL)
-        remove(PreferenceKey.StringKey.NAME)
-        remove(PreferenceKey.StringKey.BIRTHDAY)
-        remove(PreferenceKey.IntKey.AREA)
-        remove(PreferenceKey.IntKey.GENDER)
-        remove(PreferenceKey.IntKey.FAVORITE)
+        preferenceManager.remove(PreferenceKey.StringKey.EMAIL)
+        preferenceManager.remove(PreferenceKey.StringKey.NAME)
+        preferenceManager.remove(PreferenceKey.StringKey.BIRTHDAY)
+        preferenceManager.remove(PreferenceKey.IntKey.AREA)
+        preferenceManager.remove(PreferenceKey.IntKey.GENDER)
+        preferenceManager.remove(PreferenceKey.IntKey.FAVORITE)
     }
 }
