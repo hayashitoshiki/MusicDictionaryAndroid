@@ -28,6 +28,7 @@ MVVM
 * UI
   * LiveData
   * DataBinding
+  * groupie
 * フォーマッター
   * ktLint
 * その他
