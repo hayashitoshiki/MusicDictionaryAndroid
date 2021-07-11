@@ -17,14 +17,17 @@ import org.junit.Rule
 import org.junit.Test
 import org.junit.rules.TestRule
 
-class ResultAdapterBodyStateTest : BaseTestUnit() {
+/**
+ * アーティスト検索結果コンテンツ部分の詳細仕様
+ */
+class ResultArtistBodyStateTest : BaseTestUnit() {
 
     // LiveData用
     @get:Rule
     val rule: TestRule = InstantTaskExecutorRule()
 
     // / mock
-    private lateinit var resultAdapterBodyState: ResultAdapterBodyState
+    private lateinit var resultArtistBodyState: ResultArtistBodyState
 
     // data
 
@@ -41,14 +44,14 @@ class ResultAdapterBodyStateTest : BaseTestUnit() {
             every { it.getGenre2(1, 2) } returns "アニソン"
             every { it.getGenre2(2, 1) } returns "パンク"
         }
-        resultAdapterBodyState = ResultAdapterBodyState(messageUtil)
-        resultAdapterBodyState.playbackButtonImage.observeForever(observerInt)
-        resultAdapterBodyState.playBackUrl.observeForever(observerString)
-        resultAdapterBodyState.detailButtonText.observeForever(observerString)
-        resultAdapterBodyState.isDetailsProfile.observeForever(observerBoolean)
-        resultAdapterBodyState.isGenderPieChart.observeForever(observerBoolean)
-        resultAdapterBodyState.isGenerationPieChart.observeForever(observerBoolean)
-        resultAdapterBodyState.bookmarkButtonImage.observeForever(observerInt)
+        resultArtistBodyState = ResultArtistBodyState(messageUtil)
+        resultArtistBodyState.playbackButtonImage.observeForever(observerInt)
+        resultArtistBodyState.playBackUrl.observeForever(observerString)
+        resultArtistBodyState.detailButtonText.observeForever(observerString)
+        resultArtistBodyState.isDetailsProfile.observeForever(observerBoolean)
+        resultArtistBodyState.isGenderPieChart.observeForever(observerBoolean)
+        resultArtistBodyState.isGenerationPieChart.observeForever(observerBoolean)
+        resultArtistBodyState.bookmarkButtonImage.observeForever(observerInt)
     }
 
     @After
@@ -65,7 +68,7 @@ class ResultAdapterBodyStateTest : BaseTestUnit() {
      */
     @Test
     fun isThumbByNull() {
-        val result = resultAdapterBodyState.isThumb(null)
+        val result = resultArtistBodyState.isThumb(null)
         assertEquals(false, result)
     }
 
@@ -77,7 +80,7 @@ class ResultAdapterBodyStateTest : BaseTestUnit() {
      */
     @Test
     fun isThumbByEmpty() {
-        val result = resultAdapterBodyState.isThumb("")
+        val result = resultArtistBodyState.isThumb("")
         assertEquals(false, result)
     }
 
@@ -89,7 +92,7 @@ class ResultAdapterBodyStateTest : BaseTestUnit() {
      */
     @Test
     fun isThumbByNotEmpty() {
-        val result = resultAdapterBodyState.isThumb("test")
+        val result = resultArtistBodyState.isThumb("test")
         assertEquals(true, result)
     }
 
@@ -105,7 +108,7 @@ class ResultAdapterBodyStateTest : BaseTestUnit() {
      */
     @Test
     fun isPreviewByNull() {
-        val result = resultAdapterBodyState.isPreview(null)
+        val result = resultArtistBodyState.isPreview(null)
         assertEquals(false, result)
     }
 
@@ -117,7 +120,7 @@ class ResultAdapterBodyStateTest : BaseTestUnit() {
      */
     @Test
     fun isPreviewByEmpty() {
-        val result = resultAdapterBodyState.isPreview("")
+        val result = resultArtistBodyState.isPreview("")
         assertEquals(false, result)
     }
 
@@ -129,7 +132,7 @@ class ResultAdapterBodyStateTest : BaseTestUnit() {
      */
     @Test
     fun isPreviewByNotEmpty() {
-        val result = resultAdapterBodyState.isPreview("test")
+        val result = resultArtistBodyState.isPreview("test")
         assertEquals(true, result)
     }
 
@@ -147,9 +150,9 @@ class ResultAdapterBodyStateTest : BaseTestUnit() {
      */
     @Test
     fun startPlayback() {
-        resultAdapterBodyState.startPlayback("test")
-        val buttonResult = resultAdapterBodyState.playbackButtonImage.value
-        val urlResult = resultAdapterBodyState.playBackUrl.value
+        resultArtistBodyState.startPlayback("test")
+        val buttonResult = resultArtistBodyState.playbackButtonImage.value
+        val urlResult = resultArtistBodyState.playBackUrl.value
         assertEquals(R.mipmap.ic_button_music_pause_32, buttonResult)
         assertEquals("test", urlResult)
     }
@@ -168,9 +171,9 @@ class ResultAdapterBodyStateTest : BaseTestUnit() {
      */
     @Test
     fun stopPlayback() {
-        resultAdapterBodyState.stopPlayback()
-        val buttonResult = resultAdapterBodyState.playbackButtonImage.value
-        val urlResult = resultAdapterBodyState.playBackUrl.value
+        resultArtistBodyState.stopPlayback()
+        val buttonResult = resultArtistBodyState.playbackButtonImage.value
+        val urlResult = resultArtistBodyState.playBackUrl.value
         assertEquals(R.mipmap.ic_button_music_play_32, buttonResult)
         assertEquals("about:blank", urlResult)
     }
@@ -189,9 +192,9 @@ class ResultAdapterBodyStateTest : BaseTestUnit() {
      */
     @Test
     fun setIsDetailsProfileByTrue() {
-        resultAdapterBodyState.setIsDetailsProfile(true)
-        val buttonResult = resultAdapterBodyState.detailButtonText.value
-        val layoutResult = resultAdapterBodyState.isDetailsProfile.value
+        resultArtistBodyState.setIsDetailsProfile(true)
+        val buttonResult = resultArtistBodyState.detailButtonText.value
+        val layoutResult = resultArtistBodyState.isDetailsProfile.value
         assertEquals("▲", buttonResult)
         assertEquals(true, layoutResult)
     }
@@ -206,9 +209,9 @@ class ResultAdapterBodyStateTest : BaseTestUnit() {
      */
     @Test
     fun setIsDetailsProfileByFalse() {
-        resultAdapterBodyState.setIsDetailsProfile(false)
-        val buttonResult = resultAdapterBodyState.detailButtonText.value
-        val layoutResult = resultAdapterBodyState.isDetailsProfile.value
+        resultArtistBodyState.setIsDetailsProfile(false)
+        val buttonResult = resultArtistBodyState.detailButtonText.value
+        val layoutResult = resultArtistBodyState.isDetailsProfile.value
         assertEquals("▼", buttonResult)
         assertEquals(false, layoutResult)
     }
@@ -225,8 +228,8 @@ class ResultAdapterBodyStateTest : BaseTestUnit() {
      */
     @Test
     fun setIsGenerationPieChartByTrue() {
-        resultAdapterBodyState.setIsGenerationPieChart(true)
-        val result = resultAdapterBodyState.isGenerationPieChart.value
+        resultArtistBodyState.setIsGenerationPieChart(true)
+        val result = resultArtistBodyState.isGenerationPieChart.value
         assertEquals(true, result)
     }
 
@@ -238,8 +241,8 @@ class ResultAdapterBodyStateTest : BaseTestUnit() {
      */
     @Test
     fun setIsGenerationPieChartByFalse() {
-        resultAdapterBodyState.setIsGenerationPieChart(false)
-        val result = resultAdapterBodyState.isGenerationPieChart.value
+        resultArtistBodyState.setIsGenerationPieChart(false)
+        val result = resultArtistBodyState.isGenerationPieChart.value
         assertEquals(false, result)
     }
 
@@ -255,8 +258,8 @@ class ResultAdapterBodyStateTest : BaseTestUnit() {
      */
     @Test
     fun setIsGenderPieChartByTrue() {
-        resultAdapterBodyState.setIsGenderPieChart(true)
-        val result = resultAdapterBodyState.isGenderPieChart.value
+        resultArtistBodyState.setIsGenderPieChart(true)
+        val result = resultArtistBodyState.isGenderPieChart.value
         assertEquals(true, result)
     }
 
@@ -268,8 +271,8 @@ class ResultAdapterBodyStateTest : BaseTestUnit() {
      */
     @Test
     fun setIsGenderPieChartByFalse() {
-        resultAdapterBodyState.setIsGenderPieChart(false)
-        val result = resultAdapterBodyState.isGenderPieChart.value
+        resultArtistBodyState.setIsGenderPieChart(false)
+        val result = resultArtistBodyState.isGenderPieChart.value
         assertEquals(false, result)
     }
 
@@ -285,8 +288,8 @@ class ResultAdapterBodyStateTest : BaseTestUnit() {
      */
     @Test
     fun setBookmarkFlgByTrue() {
-        resultAdapterBodyState.setBookmarkFlg(true)
-        val result = resultAdapterBodyState.bookmarkButtonImage.value
+        resultArtistBodyState.setBookmarkFlg(true)
+        val result = resultArtistBodyState.bookmarkButtonImage.value
         assertEquals(R.drawable.ic_star_yellow_32, result)
     }
 
@@ -298,8 +301,8 @@ class ResultAdapterBodyStateTest : BaseTestUnit() {
      */
     @Test
     fun setBookmarkFlgByFalse() {
-        resultAdapterBodyState.setBookmarkFlg(false)
-        val result = resultAdapterBodyState.bookmarkButtonImage.value
+        resultArtistBodyState.setBookmarkFlg(false)
+        val result = resultArtistBodyState.bookmarkButtonImage.value
         assertEquals(R.drawable.ic_star_gray_32, result)
     }
 
@@ -315,7 +318,7 @@ class ResultAdapterBodyStateTest : BaseTestUnit() {
      */
     @Test
     fun getGenderTextByMan() {
-        val result = resultAdapterBodyState.getGenderText(Gender.MAN)
+        val result = resultArtistBodyState.getGenderText(Gender.MAN)
         assertEquals("男性", result)
     }
 
@@ -327,7 +330,7 @@ class ResultAdapterBodyStateTest : BaseTestUnit() {
      */
     @Test
     fun getGenderTextByWoman() {
-        val result = resultAdapterBodyState.getGenderText(Gender.WOMAN)
+        val result = resultArtistBodyState.getGenderText(Gender.WOMAN)
         assertEquals("女性", result)
     }
 
@@ -343,7 +346,7 @@ class ResultAdapterBodyStateTest : BaseTestUnit() {
      */
     @Test
     fun getGenderColorByMan() {
-        val result = resultAdapterBodyState.getGenderColor(Gender.MAN)
+        val result = resultArtistBodyState.getGenderColor(Gender.MAN)
         assertEquals(Color.BLUE, result)
     }
 
@@ -355,7 +358,7 @@ class ResultAdapterBodyStateTest : BaseTestUnit() {
      */
     @Test
     fun getGenderColorByWoman() {
-        val result = resultAdapterBodyState.getGenderColor(Gender.WOMAN)
+        val result = resultArtistBodyState.getGenderColor(Gender.WOMAN)
         assertEquals(Color.RED, result)
     }
 
@@ -371,7 +374,7 @@ class ResultAdapterBodyStateTest : BaseTestUnit() {
      */
     @Test
     fun getGenre1Text() {
-        val result = resultAdapterBodyState.getGenre1Text(Genre1(1))
+        val result = resultArtistBodyState.getGenre1Text(Genre1(1))
         assertEquals("ポップス", result)
     }
 
@@ -387,7 +390,7 @@ class ResultAdapterBodyStateTest : BaseTestUnit() {
      */
     @Test
     fun getGenre2Text() {
-        val result = resultAdapterBodyState.getGenre2Text(Genre1(1), Genre2(2))
+        val result = resultArtistBodyState.getGenre2Text(Genre1(1), Genre2(2))
         assertEquals("アニソン", result)
     }
 

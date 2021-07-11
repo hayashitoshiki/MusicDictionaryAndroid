@@ -5,9 +5,9 @@ import com.example.presentation.R
 import com.example.presentation.util.MessageUtil
 
 /**
- * ResultAdapterのヘッダーView要素保持クラス
+ * アーティスト検索結果（ヘッダー部分）要素保持クラス
  */
-class ResultAdapterHeaderState(private val messageUtil: MessageUtil) {
+class ResultArtistHeaderState(private val messageUtil: MessageUtil) {
 
     // 名前検索の有無
     fun isName(name: String?): Boolean {

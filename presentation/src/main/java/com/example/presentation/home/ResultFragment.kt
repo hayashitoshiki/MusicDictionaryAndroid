@@ -14,6 +14,8 @@ import com.example.domain.model.value.ArtistSearchContents
 import com.example.presentation.R
 import com.example.presentation.databinding.FragmentResultBinding
 import com.example.presentation.util.Status
+import com.xwray.groupie.GroupAdapter
+import com.xwray.groupie.ViewHolder
 import org.koin.android.viewmodel.ext.android.viewModel
 
 /**
@@ -37,23 +39,6 @@ class ResultFragment : Fragment(), DialogFragmentCallbackInterface {
         super.onViewCreated(view, savedInstanceState)
         viewModel.status.observe(viewLifecycleOwner, { onStateChanged(it) })
 
-//        binding.recyclerView.run {
-//            layoutAnimation = AnimationUtils.loadLayoutAnimation(context, R.anim.layout_animation_fall_down)
-//            layoutManager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
-//            val resultAdapter = ResultAdapter(viewLifecycleOwner, resultViewModel, requireContext(), listOf()).also {
-//                userListAdapter = it
-//            }
-//            resultAdapter.setOnItemClickListener {
-//                val dialogFragment = SearchDialogFragment()
-//                val bundle = Bundle()
-//                bundle.putSerializable("artist", args.data)
-//                dialogFragment.arguments = bundle
-//                dialogFragment.setCallbackListener(this@ResultFragment)
-//                dialogFragment.show(requireActivity().supportFragmentManager, null)
-//            }
-//            adapter = resultAdapter
-//        }
-
         if (savedInstanceState != null) {
             val artist = savedInstanceState.getSerializable("artistSave") as ArtistConditions
             viewModel.getArtists(artist)
@@ -76,14 +61,14 @@ class ResultFragment : Fragment(), DialogFragmentCallbackInterface {
 
     // データ反映
     private fun viewUpDate(data: List<ArtistSearchContents<*>>) {
-
-        val adapter = ResultAdapter(viewLifecycleOwner, resultViewModel, requireContext(), data)
         val layoutManager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
         val controller = AnimationUtils.loadLayoutAnimation(context, R.anim.layout_animation_fall_down)
-        binding.recyclerView.layoutAnimation = controller
-        binding.recyclerView.adapter = adapter
+        val groupAdapter = GroupAdapter<ViewHolder>()
+        binding.recyclerView.adapter = groupAdapter
         binding.recyclerView.layoutManager = layoutManager
-        adapter.setOnItemClickListener {
+        binding.recyclerView.layoutAnimation = controller
+
+        val clickListener: (View) -> Unit = {
             val dialogFragment = SearchDialogFragment()
             val bundle = Bundle()
             bundle.putSerializable("artist", args.data)
@@ -91,6 +76,17 @@ class ResultFragment : Fragment(), DialogFragmentCallbackInterface {
             dialogFragment.setCallbackListener(this)
             dialogFragment.show(requireActivity().supportFragmentManager, null)
         }
+        val items = data.map { artistSearchContents ->
+            when (artistSearchContents) {
+                is ArtistSearchContents.Conditions -> {
+                    ResultArtistHeaderItem(artistSearchContents.value, requireContext(), clickListener)
+                }
+                is ArtistSearchContents.Item -> {
+                    ResultArtistBodyItem(artistSearchContents.value, requireContext(), viewLifecycleOwner, resultViewModel)
+                }
+            }
+        }
+        groupAdapter.update(items)
     }
 
     override fun onSaveInstanceState(outState: Bundle) {

@@ -11,8 +11,11 @@ import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.example.domain.model.value.ArtistSearchContents
 import com.example.presentation.R
 import com.example.presentation.databinding.FragmentBookmarkArtistListBinding
-import com.example.presentation.home.ResultAdapter
 import com.example.presentation.home.ResultAdapterViewModel
+import com.example.presentation.home.ResultArtistBodyItem
+import com.example.presentation.home.ResultArtistHeaderItem
+import com.xwray.groupie.GroupAdapter
+import com.xwray.groupie.ViewHolder
 import org.koin.android.viewmodel.ext.android.viewModel
 
 class BookmarkArtistListFragment : Fragment() {
@@ -35,11 +38,24 @@ class BookmarkArtistListFragment : Fragment() {
 
     // データ反映
     private fun viewUpDate(data: List<ArtistSearchContents<*>>) {
-        val adapter = ResultAdapter(viewLifecycleOwner, resultViewModel, requireContext(), data)
         val layoutManager = StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.VERTICAL)
         val controller = AnimationUtils.loadLayoutAnimation(context, R.anim.layout_animation_fall_down)
-        binding.recyclerView.layoutAnimation = controller
-        binding.recyclerView.adapter = adapter
+        val groupAdapter = GroupAdapter<ViewHolder>()
+        binding.recyclerView.adapter = groupAdapter
         binding.recyclerView.layoutManager = layoutManager
+        binding.recyclerView.layoutAnimation = controller
+
+        val clickListener: (View) -> Unit = {}
+        val items = data.map { artistSearchContents ->
+            when (artistSearchContents) {
+                is ArtistSearchContents.Conditions -> {
+                    ResultArtistHeaderItem(artistSearchContents.value, requireContext(), clickListener)
+                }
+                is ArtistSearchContents.Item -> {
+                    ResultArtistBodyItem(artistSearchContents.value, requireContext(), viewLifecycleOwner, resultViewModel)
+                }
+            }
+        }
+        groupAdapter.update(items)
     }
 }

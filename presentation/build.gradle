@@ -20,6 +20,9 @@ dependencies {
     implementation 'com.google.android:flexbox:2.0.1'
     // 円グラフ
     implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'
+    def groupie_version = "2.3.0"
+    implementation "com.xwray:groupie:$groupie_version"
+    implementation "com.xwray:groupie-databinding:$groupie_version"
 
     implementation project(":domain")
 }
