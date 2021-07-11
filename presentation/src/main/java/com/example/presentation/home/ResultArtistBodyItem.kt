@@ -2,7 +2,6 @@ package com.example.presentation.home
 
 import android.content.Context
 import android.os.Handler
-import android.view.View
 import android.view.animation.AnimationUtils
 import androidx.lifecycle.LifecycleOwner
 import com.example.domain.model.entity.ArtistContents
@@ -21,11 +20,12 @@ import com.xwray.groupie.databinding.BindableItem
 /**
  * アーティスト検索結果（コンテンツ部分）アイテム
  */
-class ResultArtistBodyItem  (private val item: ArtistContents,
-                             private val context: Context,
-                             private val viewLifecycleOwner: LifecycleOwner,
-                             private val viewModel: ResultAdapterViewModel
-                                ) : BindableItem<ItemResultArtistBinding>() {
+class ResultArtistBodyItem(
+    private val item: ArtistContents,
+    private val context: Context,
+    private val viewLifecycleOwner: LifecycleOwner,
+    private val viewModel: ResultAdapterViewModel
+) : BindableItem<ItemResultArtistBinding>() {
 
     private val originalHeight = convertDp2Px(352f, context).toInt()
     private val anim1 = AnimationUtils.loadAnimation(context, R.anim.fade_in_offset_150_anim)

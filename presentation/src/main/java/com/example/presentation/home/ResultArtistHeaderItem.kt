@@ -11,9 +11,10 @@ import com.xwray.groupie.databinding.BindableItem
 /**
  * アーティスト検索結果（ヘッダー部分）アイテム
  */
-class ResultArtistHeaderItem (private val item: ArtistConditions,
-                              private val context: Context,
-                              private val listener: View.OnClickListener
+class ResultArtistHeaderItem(
+    private val item: ArtistConditions,
+    private val context: Context,
+    private val listener: View.OnClickListener
 ) : BindableItem<ItemResultArtistHeaderBinding>() {
 
     override fun getLayout(): Int = R.layout.item_result_artist_header

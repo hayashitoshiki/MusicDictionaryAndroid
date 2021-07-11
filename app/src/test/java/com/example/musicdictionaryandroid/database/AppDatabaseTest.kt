@@ -70,7 +70,6 @@ class AppDatabaseTest {
         }
     }
 
-
     /**
      * 更新
      *
@@ -150,7 +149,7 @@ class AppDatabaseTest {
             artistDao.insert(artist2)
             val result = artistDao.getAll().first()
             artistList.forEachIndexed { index, artistEntity ->
-                assertEquals((index+ 1).toLong(), result[index].id)
+                assertEquals((index + 1).toLong(), result[index].id)
                 assertEquals(artistEntity.name, result[index].name)
                 assertEquals(artistEntity.gender, result[index].gender)
                 assertEquals(artistEntity.voice, result[index].voice)
@@ -175,7 +174,7 @@ class AppDatabaseTest {
     @Throws(Exception::class)
     fun bookmarkInsertTest() {
         runBlocking {
-            val bookmarkEntity = BookmarkArtistEntity(null, "test1", 1, 1, 1,1 ,1, 1, "1", "1", 1, 1, 1, 1, 1, 1, 1, 1)
+            val bookmarkEntity = BookmarkArtistEntity(null, "test1", 1, 1, 1, 1, 1, 1, "1", "1", 1, 1, 1, 1, 1, 1, 1, 1)
             bookmarkDao.insert(bookmarkEntity)
             val result = bookmarkDao.getArtistByName(bookmarkEntity.name)
             assertEquals(1L, result?.id)
@@ -209,7 +208,7 @@ class AppDatabaseTest {
     @Throws(Exception::class)
     fun bookmarkDeleteByNameTest() {
         runBlocking {
-            val bookmarkEntity = BookmarkArtistEntity(null, "test1", 1, 1, 1,1 ,1, 1, "1", "1", 1, 1, 1, 1, 1, 1, 1, 1)
+            val bookmarkEntity = BookmarkArtistEntity(null, "test1", 1, 1, 1, 1, 1, 1, "1", "1", 1, 1, 1, 1, 1, 1, 1, 1)
             bookmarkDao.insert(bookmarkEntity)
             bookmarkDao.deleteByName(bookmarkEntity.name)
             val result = bookmarkDao.getArtistByName(bookmarkEntity.name)
@@ -226,8 +225,8 @@ class AppDatabaseTest {
     @Throws(Exception::class)
     fun bookmarkDeleteAllTest() {
         runBlocking {
-            val bookmarkEntity1 = BookmarkArtistEntity(null, "test1", 1, 1, 1,1 ,1, 1, "1", "1", 1, 1, 1, 1, 1, 1, 1, 1)
-            val bookmarkEntity2 = BookmarkArtistEntity(null, "test2", 2, 2, 2,2 ,2, 2, "2", "2", 2, 2, 2, 2, 2, 2, 2, 2)
+            val bookmarkEntity1 = BookmarkArtistEntity(null, "test1", 1, 1, 1, 1, 1, 1, "1", "1", 1, 1, 1, 1, 1, 1, 1, 1)
+            val bookmarkEntity2 = BookmarkArtistEntity(null, "test2", 2, 2, 2, 2, 2, 2, "2", "2", 2, 2, 2, 2, 2, 2, 2, 2)
             bookmarkDao.insert(bookmarkEntity1)
             bookmarkDao.insert(bookmarkEntity2)
             bookmarkDao.deleteAll()
@@ -237,7 +236,6 @@ class AppDatabaseTest {
             assertEquals(null, result2)
         }
     }
-
 
     /**
      * 全お気に入りアーティスト取得
@@ -249,8 +247,8 @@ class AppDatabaseTest {
     @Throws(Exception::class)
     fun bookmarkIGetAllTest() {
         runBlocking {
-            val bookmarkEntity1 = BookmarkArtistEntity(null, "test1", 1, 1, 1,1 ,1, 1, "1", "1", 1, 1, 1, 1, 1, 1, 1, 1)
-            val bookmarkEntity2 = BookmarkArtistEntity(null, "test2", 2, 2, 2,2 ,2, 2, "2", "2", 2, 2, 2, 2, 2, 2, 2, 2)
+            val bookmarkEntity1 = BookmarkArtistEntity(null, "test1", 1, 1, 1, 1, 1, 1, "1", "1", 1, 1, 1, 1, 1, 1, 1, 1)
+            val bookmarkEntity2 = BookmarkArtistEntity(null, "test2", 2, 2, 2, 2, 2, 2, "2", "2", 2, 2, 2, 2, 2, 2, 2, 2)
             bookmarkDao.insert(bookmarkEntity1)
             bookmarkDao.insert(bookmarkEntity2)
             val bookmarkList = listOf(bookmarkEntity1, bookmarkEntity2)
@@ -279,5 +277,4 @@ class AppDatabaseTest {
     }
 
     // endregion
-
 }
