@@ -17,13 +17,16 @@ import org.junit.After
 import org.junit.Before
 import org.junit.Test
 
+/**
+ * アーティスト検索結果リストロジック部分の詳細仕様
+ */
 class ResultAdapterViewModelTest : BaseTestUnit() {
 
     // mock
     private lateinit var artistUseCase: com.example.domain.usecase.ArtistUseCase
     private lateinit var viewModel: ResultAdapterViewModel
-    private lateinit var resultAdapterBodyState1: ResultAdapterBodyState
-    private lateinit var resultAdapterBodyState2: ResultAdapterBodyState
+    private lateinit var resultArtistBodyState1: ResultArtistBodyState
+    private lateinit var resultArtistBodyState2: ResultArtistBodyState
 
     // data
     private val artist = Artist("artist", Gender.MAN, Voice(1), Length(1), Lyrics(1), Genre1(1), Genre2(1))
@@ -38,11 +41,11 @@ class ResultAdapterViewModelTest : BaseTestUnit() {
             coEvery { it.setBookmarkArtist(any()) } returns Unit
             coEvery { it.deleteBookmarkArtist(any()) } returns Unit
         }
-        resultAdapterBodyState1 = mockk<ResultAdapterBodyState>().also {
+        resultArtistBodyState1 = mockk<ResultArtistBodyState>().also {
             coEvery { it.startPlayback(any()) } returns Unit
             coEvery { it.stopPlayback() } returns Unit
         }
-        resultAdapterBodyState2 = mockk<ResultAdapterBodyState>().also {
+        resultArtistBodyState2 = mockk<ResultArtistBodyState>().also {
             coEvery { it.startPlayback(any()) } returns Unit
             coEvery { it.stopPlayback() } returns Unit
         }
@@ -66,8 +69,8 @@ class ResultAdapterViewModelTest : BaseTestUnit() {
      */
     @Test
     fun onClickPlayBackByNull() {
-        viewModel.onClickPlayBack(resultAdapterBodyState1, artistContentsBookmarkFalse)
-        verify(exactly = 1) { (resultAdapterBodyState1).startPlayback(artistContentsBookmarkFalse.preview!!) }
+        viewModel.onClickPlayBack(resultArtistBodyState1, artistContentsBookmarkFalse)
+        verify(exactly = 1) { (resultArtistBodyState1).startPlayback(artistContentsBookmarkFalse.preview!!) }
     }
 
     /**
@@ -80,10 +83,10 @@ class ResultAdapterViewModelTest : BaseTestUnit() {
     fun onClickPlayBackBySelfArtist() {
         val turn: Field = viewModel.javaClass.getDeclaredField("holdState")
         turn.isAccessible = true
-        turn.set(viewModel, resultAdapterBodyState1)
-        viewModel.onClickPlayBack(resultAdapterBodyState1, artistContentsBookmarkFalse)
-        verify(exactly = 1) { (resultAdapterBodyState1).stopPlayback() }
-        verify(exactly = 0) { (resultAdapterBodyState1).startPlayback(any()) }
+        turn.set(viewModel, resultArtistBodyState1)
+        viewModel.onClickPlayBack(resultArtistBodyState1, artistContentsBookmarkFalse)
+        verify(exactly = 1) { (resultArtistBodyState1).stopPlayback() }
+        verify(exactly = 0) { (resultArtistBodyState1).startPlayback(any()) }
     }
 
     /**
@@ -96,11 +99,11 @@ class ResultAdapterViewModelTest : BaseTestUnit() {
     fun onClickPlayBackByOtherArtist() {
         val turn: Field = viewModel.javaClass.getDeclaredField("holdState")
         turn.isAccessible = true
-        turn.set(viewModel, resultAdapterBodyState2)
+        turn.set(viewModel, resultArtistBodyState2)
 
-        viewModel.onClickPlayBack(resultAdapterBodyState1, artistContentsBookmarkFalse)
-        verify(exactly = 1) { (resultAdapterBodyState2).stopPlayback() }
-        verify(exactly = 1) { (resultAdapterBodyState1).startPlayback(artistContentsBookmarkFalse.preview!!) }
+        viewModel.onClickPlayBack(resultArtistBodyState1, artistContentsBookmarkFalse)
+        verify(exactly = 1) { (resultArtistBodyState2).stopPlayback() }
+        verify(exactly = 1) { (resultArtistBodyState1).startPlayback(artistContentsBookmarkFalse.preview!!) }
     }
 
     // endregion

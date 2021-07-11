@@ -10,11 +10,11 @@ import com.example.presentation.R
 import com.example.presentation.util.MessageUtil
 
 /**
- * ResultAdapterのアーティスト要素以外のボティView要素保持クラス
+ * アーティスト検索結果（コンテンツ部分）要素保持クラス
  */
-class ResultAdapterBodyState(private val messageUtil: MessageUtil) {
+class ResultArtistBodyState(private val messageUtil: MessageUtil) {
 
-    // Viewの状態保持
+    // region Viewの状態保持
     private val _isGenerationPieChart = MutableLiveData(false)
     val isGenerationPieChart: LiveData<Boolean> = _isGenerationPieChart
     private val _isGenderPieChart = MutableLiveData(false)
@@ -29,6 +29,8 @@ class ResultAdapterBodyState(private val messageUtil: MessageUtil) {
     val playBackUrl: LiveData<String> = _playBackUrl
     private val _detailButtonText = MutableLiveData("")
     val detailButtonText: LiveData<String> = _detailButtonText
+
+    // endregion
 
     init {
         _detailButtonText.value = messageUtil.getString(R.string.page_open)

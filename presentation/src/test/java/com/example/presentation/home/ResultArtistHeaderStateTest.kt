@@ -10,10 +10,13 @@ import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
 
-class ResultAdapterHeaderStateTest {
+/**
+ * アーティスト検索結果ヘッダーの詳細仕様
+ */
+class ResultArtistHeaderStateTest {
 
     // / mock
-    private lateinit var resultAdapterHeaderState: ResultAdapterHeaderState
+    private lateinit var resultArtistHeaderState: ResultArtistHeaderState
 
     // data
     private val allNullArtistConditions = ArtistConditions(null, null, null, null, null, null, null)
@@ -47,7 +50,7 @@ class ResultAdapterHeaderStateTest {
             every { it.getGenre2(1, 2) } returns "アニソン"
             every { it.getGenre2(2, 1) } returns "パンク"
         }
-        resultAdapterHeaderState = ResultAdapterHeaderState(messageUtil)
+        resultArtistHeaderState = ResultArtistHeaderState(messageUtil)
     }
 
     @After
@@ -64,7 +67,7 @@ class ResultAdapterHeaderStateTest {
      */
     @Test
     fun isNameByNull() {
-        val result = resultAdapterHeaderState.isName(allNullArtistConditions.name)
+        val result = resultArtistHeaderState.isName(allNullArtistConditions.name)
         assertEquals(false, result)
     }
 
@@ -76,7 +79,7 @@ class ResultAdapterHeaderStateTest {
      */
     @Test
     fun isNameByNotNull() {
-        val result = resultAdapterHeaderState.isName(notNullArtistConditions.name)
+        val result = resultArtistHeaderState.isName(notNullArtistConditions.name)
         assertEquals(true, result)
     }
 
@@ -88,7 +91,7 @@ class ResultAdapterHeaderStateTest {
      */
     @Test
     fun isNameByRecommend() {
-        val result = resultAdapterHeaderState.isName(recommendNameArtistConditions.name)
+        val result = resultArtistHeaderState.isName(recommendNameArtistConditions.name)
         assertEquals(false, result)
     }
 
@@ -100,7 +103,7 @@ class ResultAdapterHeaderStateTest {
      */
     @Test
     fun isNameBySoaring() {
-        val result = resultAdapterHeaderState.isName(soaringNameArtistConditions.name)
+        val result = resultArtistHeaderState.isName(soaringNameArtistConditions.name)
         assertEquals(false, result)
     }
 
@@ -116,7 +119,7 @@ class ResultAdapterHeaderStateTest {
      */
     @Test
     fun isGenderByNull() {
-        val result = resultAdapterHeaderState.isGender(allNullArtistConditions.gender)
+        val result = resultArtistHeaderState.isGender(allNullArtistConditions.gender)
         assertEquals(false, result)
     }
 
@@ -128,7 +131,7 @@ class ResultAdapterHeaderStateTest {
      */
     @Test
     fun isGenderByNotNull() {
-        val result = resultAdapterHeaderState.isGender(notNullArtistConditions.gender)
+        val result = resultArtistHeaderState.isGender(notNullArtistConditions.gender)
         assertEquals(true, result)
     }
 
@@ -144,7 +147,7 @@ class ResultAdapterHeaderStateTest {
      */
     @Test
     fun isLyricsByNull() {
-        val result = resultAdapterHeaderState.isLyric(allNullArtistConditions.lyrics)
+        val result = resultArtistHeaderState.isLyric(allNullArtistConditions.lyrics)
         assertEquals(false, result)
     }
 
@@ -156,7 +159,7 @@ class ResultAdapterHeaderStateTest {
      */
     @Test
     fun isLyricByNotNull() {
-        val result = resultAdapterHeaderState.isLyric(notNullArtistConditions.lyrics)
+        val result = resultArtistHeaderState.isLyric(notNullArtistConditions.lyrics)
         assertEquals(true, result)
     }
 
@@ -172,7 +175,7 @@ class ResultAdapterHeaderStateTest {
      */
     @Test
     fun isLengthByNull() {
-        val result = resultAdapterHeaderState.isLength(allNullArtistConditions.length)
+        val result = resultArtistHeaderState.isLength(allNullArtistConditions.length)
         assertEquals(false, result)
     }
 
@@ -184,7 +187,7 @@ class ResultAdapterHeaderStateTest {
      */
     @Test
     fun isLengthByNotNull() {
-        val result = resultAdapterHeaderState.isLength(notNullArtistConditions.length)
+        val result = resultArtistHeaderState.isLength(notNullArtistConditions.length)
         assertEquals(true, result)
     }
 
@@ -200,7 +203,7 @@ class ResultAdapterHeaderStateTest {
      */
     @Test
     fun isVoiceByNull() {
-        val result = resultAdapterHeaderState.isVoice(allNullArtistConditions.voice)
+        val result = resultArtistHeaderState.isVoice(allNullArtistConditions.voice)
         assertEquals(false, result)
     }
 
@@ -212,7 +215,7 @@ class ResultAdapterHeaderStateTest {
      */
     @Test
     fun isVoiceByNotNull() {
-        val result = resultAdapterHeaderState.isVoice(notNullArtistConditions.voice)
+        val result = resultArtistHeaderState.isVoice(notNullArtistConditions.voice)
         assertEquals(true, result)
     }
 
@@ -228,7 +231,7 @@ class ResultAdapterHeaderStateTest {
      */
     @Test
     fun isGenre1ByNull() {
-        val result = resultAdapterHeaderState.isGenre1(allNullArtistConditions.genre1)
+        val result = resultArtistHeaderState.isGenre1(allNullArtistConditions.genre1)
         assertEquals(false, result)
     }
 
@@ -240,7 +243,7 @@ class ResultAdapterHeaderStateTest {
      */
     @Test
     fun isGenre1ByNotNull() {
-        val result = resultAdapterHeaderState.isGenre1(notNullArtistConditions.genre1)
+        val result = resultArtistHeaderState.isGenre1(notNullArtistConditions.genre1)
         assertEquals(true, result)
     }
 
@@ -256,7 +259,7 @@ class ResultAdapterHeaderStateTest {
      */
     @Test
     fun iisGenre2ByNull() {
-        val result = resultAdapterHeaderState.isGenre2(allNullArtistConditions.genre2)
+        val result = resultArtistHeaderState.isGenre2(allNullArtistConditions.genre2)
         assertEquals(false, result)
     }
 
@@ -268,7 +271,7 @@ class ResultAdapterHeaderStateTest {
      */
     @Test
     fun isGenre2ByNotNull() {
-        val result = resultAdapterHeaderState.isGenre2(notNullArtistConditions.genre2)
+        val result = resultArtistHeaderState.isGenre2(notNullArtistConditions.genre2)
         assertEquals(true, result)
     }
 
@@ -284,7 +287,7 @@ class ResultAdapterHeaderStateTest {
      */
     @Test
     fun isSubmitButtonBySoaring() {
-        val result = resultAdapterHeaderState.isSubmitButton(soaringNameArtistConditions.name)
+        val result = resultArtistHeaderState.isSubmitButton(soaringNameArtistConditions.name)
         assertEquals(false, result)
     }
 
@@ -296,7 +299,7 @@ class ResultAdapterHeaderStateTest {
      */
     @Test
     fun isSubmitButtonByRecommend() {
-        val result = resultAdapterHeaderState.isSubmitButton(recommendNameArtistConditions.name)
+        val result = resultArtistHeaderState.isSubmitButton(recommendNameArtistConditions.name)
         assertEquals(false, result)
     }
 
@@ -308,7 +311,7 @@ class ResultAdapterHeaderStateTest {
      */
     @Test
     fun isSubmitButtonByEmpty() {
-        val result = resultAdapterHeaderState.isSubmitButton(emptyNameArtistConditions.name)
+        val result = resultArtistHeaderState.isSubmitButton(emptyNameArtistConditions.name)
         assertEquals(true, result)
     }
 
@@ -320,7 +323,7 @@ class ResultAdapterHeaderStateTest {
      */
     @Test
     fun isSubmitButtonByNull() {
-        val result = resultAdapterHeaderState.isSubmitButton(allNullArtistConditions.name)
+        val result = resultArtistHeaderState.isSubmitButton(allNullArtistConditions.name)
         assertEquals(true, result)
     }
 
@@ -332,7 +335,7 @@ class ResultAdapterHeaderStateTest {
      */
     @Test
     fun isSubmitButtonByOther() {
-        val result = resultAdapterHeaderState.isSubmitButton(notNullArtistConditions.name)
+        val result = resultArtistHeaderState.isSubmitButton(notNullArtistConditions.name)
         assertEquals(true, result)
     }
 
@@ -348,7 +351,7 @@ class ResultAdapterHeaderStateTest {
      */
     @Test
     fun getTitleTextByRecommend() {
-        val result = resultAdapterHeaderState.getTitleText(recommendNameArtistConditions.name)
+        val result = resultArtistHeaderState.getTitleText(recommendNameArtistConditions.name)
         assertEquals("おすすめ", result)
     }
 
@@ -360,7 +363,7 @@ class ResultAdapterHeaderStateTest {
      */
     @Test
     fun getTitleTextBySoaring() {
-        val result = resultAdapterHeaderState.getTitleText(soaringNameArtistConditions.name)
+        val result = resultArtistHeaderState.getTitleText(soaringNameArtistConditions.name)
         assertEquals("急上昇", result)
     }
 
@@ -372,7 +375,7 @@ class ResultAdapterHeaderStateTest {
      */
     @Test
     fun getTitleTextByNull() {
-        val result = resultAdapterHeaderState.getTitleText(allNullArtistConditions.name)
+        val result = resultArtistHeaderState.getTitleText(allNullArtistConditions.name)
         assertEquals("検索条件", result)
     }
 
@@ -384,7 +387,7 @@ class ResultAdapterHeaderStateTest {
      */
     @Test
     fun getTitleTextByEmpty() {
-        val result = resultAdapterHeaderState.getTitleText(emptyNameArtistConditions.name)
+        val result = resultArtistHeaderState.getTitleText(emptyNameArtistConditions.name)
         assertEquals("検索条件", result)
     }
 
@@ -396,7 +399,7 @@ class ResultAdapterHeaderStateTest {
      */
     @Test
     fun getTitleTextByOther() {
-        val result = resultAdapterHeaderState.getTitleText(notNullArtistConditions.name)
+        val result = resultArtistHeaderState.getTitleText(notNullArtistConditions.name)
         assertEquals("検索条件", result)
     }
 
@@ -412,7 +415,7 @@ class ResultAdapterHeaderStateTest {
      */
     @Test
     fun getGenderTextByMan() {
-        val result = resultAdapterHeaderState.getGenderText(Gender.MAN)
+        val result = resultArtistHeaderState.getGenderText(Gender.MAN)
         assertEquals("性別：男性", result)
     }
 
@@ -424,7 +427,7 @@ class ResultAdapterHeaderStateTest {
      */
     @Test
     fun getGenderTextByWoman() {
-        val result = resultAdapterHeaderState.getGenderText(Gender.WOMAN)
+        val result = resultArtistHeaderState.getGenderText(Gender.WOMAN)
         assertEquals("性別：女性", result)
     }
 
@@ -436,7 +439,7 @@ class ResultAdapterHeaderStateTest {
      */
     @Test
     fun getGenderTextByNull() {
-        val result = resultAdapterHeaderState.getGenderText(null)
+        val result = resultArtistHeaderState.getGenderText(null)
         assertEquals(null, result)
     }
 
@@ -452,7 +455,7 @@ class ResultAdapterHeaderStateTest {
      */
     @Test
     fun getVoiceTextBy1() {
-        val result = resultAdapterHeaderState.getVoiceText(Voice(1))
+        val result = resultArtistHeaderState.getVoiceText(Voice(1))
         assertEquals("高さ：低い", result)
     }
 
@@ -464,7 +467,7 @@ class ResultAdapterHeaderStateTest {
      */
     @Test
     fun getVoiceTextBy2() {
-        val result = resultAdapterHeaderState.getVoiceText(Voice(2))
+        val result = resultArtistHeaderState.getVoiceText(Voice(2))
         assertEquals("高さ：やや低い", result)
     }
 
@@ -476,7 +479,7 @@ class ResultAdapterHeaderStateTest {
      */
     @Test
     fun getVoiceTextByNull() {
-        val result = resultAdapterHeaderState.getVoiceText(null)
+        val result = resultArtistHeaderState.getVoiceText(null)
         assertEquals(null, result)
     }
 
@@ -492,7 +495,7 @@ class ResultAdapterHeaderStateTest {
      */
     @Test
     fun getLengthTextBy1() {
-        val result = resultAdapterHeaderState.getLengthText(Length(1))
+        val result = resultArtistHeaderState.getLengthText(Length(1))
         assertEquals("長さ：短い", result)
     }
 
@@ -504,7 +507,7 @@ class ResultAdapterHeaderStateTest {
      */
     @Test
     fun getLengthTextBy2() {
-        val result = resultAdapterHeaderState.getLengthText(Length(2))
+        val result = resultArtistHeaderState.getLengthText(Length(2))
         assertEquals("長さ：やや短い", result)
     }
 
@@ -516,7 +519,7 @@ class ResultAdapterHeaderStateTest {
      */
     @Test
     fun getLengthTextByNull() {
-        val result = resultAdapterHeaderState.getLengthText(null)
+        val result = resultArtistHeaderState.getLengthText(null)
         assertEquals(null, result)
     }
 
@@ -532,7 +535,7 @@ class ResultAdapterHeaderStateTest {
      */
     @Test
     fun getLyricsTextBy1() {
-        val result = resultAdapterHeaderState.getLyricsText(Lyrics(1))
+        val result = resultArtistHeaderState.getLyricsText(Lyrics(1))
         assertEquals("歌詞：日本語", result)
     }
 
@@ -544,7 +547,7 @@ class ResultAdapterHeaderStateTest {
      */
     @Test
     fun getLyricsTextBy2() {
-        val result = resultAdapterHeaderState.getLyricsText(Lyrics(2))
+        val result = resultArtistHeaderState.getLyricsText(Lyrics(2))
         assertEquals("歌詞：日本語多め", result)
     }
 
@@ -556,7 +559,7 @@ class ResultAdapterHeaderStateTest {
      */
     @Test
     fun getLyricsTextByNull() {
-        val result = resultAdapterHeaderState.getLyricsText(null)
+        val result = resultArtistHeaderState.getLyricsText(null)
         assertEquals(null, result)
     }
 
@@ -572,7 +575,7 @@ class ResultAdapterHeaderStateTest {
      */
     @Test
     fun getGenre1TextBy1() {
-        val result = resultAdapterHeaderState.getGenre1Text(Genre1(1))
+        val result = resultArtistHeaderState.getGenre1Text(Genre1(1))
         assertEquals("ジャンル１：ポップス", result)
     }
 
@@ -584,7 +587,7 @@ class ResultAdapterHeaderStateTest {
      */
     @Test
     fun getGenre1TextBy2() {
-        val result = resultAdapterHeaderState.getGenre1Text(Genre1(2))
+        val result = resultArtistHeaderState.getGenre1Text(Genre1(2))
         assertEquals("ジャンル１：ロック", result)
     }
 
@@ -596,7 +599,7 @@ class ResultAdapterHeaderStateTest {
      */
     @Test
     fun getGenre1TextByNull() {
-        val result = resultAdapterHeaderState.getGenre1Text(null)
+        val result = resultArtistHeaderState.getGenre1Text(null)
         assertEquals(null, result)
     }
 
@@ -612,7 +615,7 @@ class ResultAdapterHeaderStateTest {
      */
     @Test
     fun getGenre2TextBy1() {
-        val result = resultAdapterHeaderState.getGenre2Text(Genre1(1), Genre2(2))
+        val result = resultArtistHeaderState.getGenre2Text(Genre1(1), Genre2(2))
         assertEquals("ジャンル２：アニソン", result)
     }
 
@@ -624,7 +627,7 @@ class ResultAdapterHeaderStateTest {
      */
     @Test
     fun getGenre2TextBy2() {
-        val result = resultAdapterHeaderState.getGenre2Text(Genre1(2), Genre2(1))
+        val result = resultArtistHeaderState.getGenre2Text(Genre1(2), Genre2(1))
         assertEquals("ジャンル２：パンク", result)
     }
 
@@ -636,7 +639,7 @@ class ResultAdapterHeaderStateTest {
      */
     @Test
     fun getGenre2TextByNull() {
-        val result = resultAdapterHeaderState.getGenre2Text(null, null)
+        val result = resultArtistHeaderState.getGenre2Text(null, null)
         assertEquals(null, result)
     }
 

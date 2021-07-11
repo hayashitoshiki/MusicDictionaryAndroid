@@ -20,10 +20,10 @@ class ResultAdapterViewModel(private val artistUseCase: ArtistUseCase) : ViewMod
     }
 
     // 現在再生している楽曲
-    private var holdState: ResultAdapterBodyState? = null
+    private var holdState: ResultArtistBodyState? = null
 
     // 再生処理
-    fun onClickPlayBack(state: ResultAdapterBodyState, artistContents: ArtistContents) {
+    fun onClickPlayBack(state: ResultArtistBodyState, artistContents: ArtistContents) {
         if (!artistContents.preview.isNullOrEmpty()) {
             if (holdState == state) {
                 state.stopPlayback()

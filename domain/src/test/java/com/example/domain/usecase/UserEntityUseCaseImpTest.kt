@@ -31,7 +31,7 @@ class UserEntityUseCaseImpTest : BaseTestUnit() {
 
     private val artist = Artist("test", Gender.MAN, Voice(0), Length(0), Lyrics(0), Genre1(0), Genre2(0))
 
-     private val artistListFlow = flow { emit(listOf(artist)) }
+    private val artistListFlow = flow { emit(listOf(artist)) }
     private val failureResult = Result.Error(IllegalArgumentException(""))
     private val successEmail = "success"
     private val failureEmail = "Failure"

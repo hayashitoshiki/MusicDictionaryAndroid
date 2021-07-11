@@ -10,7 +10,6 @@ import java.util.concurrent.TimeUnit
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
-import retrofit2.converter.moshi.MoshiConverterFactory
 
 /**
  * API接続先設定
@@ -45,10 +44,12 @@ object ProviderImp : Provider {
         val retrofit = Retrofit.Builder()
             .baseUrl(BuildConfig.webServer)
             .client(build())
-            .addConverterFactory(Json{
-                isLenient = true
-                ignoreUnknownKeys = true
-            }.asConverterFactory(contentType))
+            .addConverterFactory(
+                Json {
+                    isLenient = true
+                    ignoreUnknownKeys = true
+                }.asConverterFactory(contentType)
+            )
             .build()
         return retrofit.create(MusicDictionaryService::class.java)
     }
